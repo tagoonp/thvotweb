@@ -7,10 +7,15 @@ body, html{
 }
 
 .th200{ font-weight: 200; }
+.th400{ font-weight: 400; }
 a {
    text-decoration: none !important;
 }
 
 .sweet-alert{
     font-family: 'Mitr', sans-serif !important;
+}
+
+body .bg-main{
+    background-color: rgb(180, 180, 180);
 }

@@ -20,7 +20,7 @@ if($stage == 1){ // Login
         $db->close($conn);
         die();
     }
-    $username = mysqli_real_escape_string($conn, $_REQUEST['txtUsername']);
+    $username = mysqli_real_escape_string($conn, trim(strtolower($_REQUEST['txtUsername']), " "));
     $password = mysqli_real_escape_string($conn, $_REQUEST['txtPassword']);
 
     $strSQL = "SELECT * FROM vot2_account WHERE username = '$username' AND delete_status = '0' AND active_status = '1'";
@@ -53,11 +53,11 @@ if($stage == 1){ // Login
 if($stage == 2){ // Checkcode
 
     $code = mysqli_real_escape_string($conn, $_REQUEST['txtCode']);
-    $username = mysqli_real_escape_string($conn, $_REQUEST['txtUsername']);
+    $username = mysqli_real_escape_string($conn, trim(strtolower($_REQUEST['txtUsername']), " "));
     $password = mysqli_real_escape_string($conn, $_REQUEST['txtPassword1']);
     $fname = mysqli_real_escape_string($conn, $_REQUEST['txtFname']);
     $lname = mysqli_real_escape_string($conn, $_REQUEST['txtLname']);
-    $email = mysqli_real_escape_string($conn, $_REQUEST['txtEmail']);
+    $email = mysqli_real_escape_string($conn, trim(strtolower($_REQUEST['txtEmail']), " "));
     $phone = mysqli_real_escape_string($conn, $_REQUEST['txtPhone']);
 
     $options = [

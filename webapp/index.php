@@ -1,7 +1,7 @@
 <?php
 require("../../database_config/thvot/config.inc.php");
-require('../configuration/configuration.php');
-require('../configuration/database.php'); 
+require('./configuration/configuration.php');
+require('./configuration/database.php'); 
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -22,24 +22,16 @@ require('../configuration/database.php');
 </head>
 <body>
 
-    <div class="header pt-2 pb-2">
+    <div class="main-content pl-4 pr-4">
         <div class="container">
             <div class="row">
-                <div class="col-12 col-sm-6 offset-sm-3 pl-0 pt-3 pr-0">
-                    <nav class="navbar navbar-light">
+                <div class="col-12 col-sm-6 offset-sm-3">
+
+                <nav class="navbar navbar-light pl-0 pr-0 pb-4 pt-4">
                         <a class="navbar-brand" href="./">
                             <img src="https://thvot.com/img/thvot-web-logo.png" width="120" alt="">
                         </a>
                     </nav>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="main-content">
-        <div class="container">
-            <div class="row">
-                <div class="col-12 col-sm-6 offset-sm-3">
                     
                     <a href="#" class="text-dark">
                         <i class="fas fa-chevron-left"></i> กลับหน้าหลัก
@@ -54,14 +46,15 @@ require('../configuration/database.php');
                             <form action="./controller/authen.php?stage=1" onsubmit="return checkLogin();" method="post">
                                 <div class="form-group">
                                     <label for="">ชื่อบัญชีผู้ใช้งาน : <span class="text-danger">*</span></label>
-                                    <input type="text" class="form-control">
+                                    <input type="text" class="form-control" require id="txtUsername" name="txtUsername" autofocus>
                                 </div>
                                 <div class="form-group">
                                     <label for="">รหัสผ่าน : <span class="text-danger">*</span></label>
-                                    <input type="password]" class="form-control">
+                                    <input type="password" class="form-control" require id="txtPassword" name="txtPassword">
                                 </div>
                                 <div class="form-group pt-3">
-                                    <button class="btn btn-success th200">ลงชื่อเข้าใช้งาน</button>
+                                    <button class="btn btn-primary th200" type="submit">ลงชื่อเข้าใช้งาน</button>
+                                    <a href="register.php" class="float-right text-muted">สมัครใช้งานระบบ</a>
                                 </div>
                             </form>
                         </div>
@@ -72,5 +65,26 @@ require('../configuration/database.php');
     </div>
     <script src="./node_modules/jquery/dist/jquery.min.js"></script>
     <script src="./node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        $(function(){
+
+        })
+
+        function checkLogin(){
+            $check = 0
+            $('.form-control').removeClass('is-invalid')
+            if($('#txtUsername').val() == ''){
+                $('#txtUsername').addClass('is-invalid')
+                $check++;
+            }
+            if($('#txtPassword').val() == ''){
+                $('#txtPassword').addClass('is-invalid')
+                $check++;
+            }
+            if($check != 0){
+                return false;
+            }
+        }
+    </script>
 </body>
 </html>

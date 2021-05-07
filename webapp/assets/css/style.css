@@ -10,3 +10,7 @@ body, html{
 a {
    text-decoration: none !important;
 }
+
+.sweet-alert{
+    font-family: 'Mitr', sans-serif !important;
+}

@@ -2,6 +2,15 @@
 require("../../database_config/thvot/config.inc.php");
 require('./configuration/configuration.php');
 require('./configuration/database.php'); 
+
+$db = new Database();
+$conn = $db->conn();
+
+$stage = '';
+if((isset($_REQUEST['stage'])) && ($_REQUEST['stage'] != '') && ($_REQUEST['stage'] != null)){
+    $stage = mysqli_real_escape_string($conn, $_REQUEST['stage']);
+}
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -15,6 +24,8 @@ require('./configuration/database.php');
     <title>ระบบติดตามการรับประทานยา :: TH-VOT</title>
 
     <link rel="stylesheet" href="./node_modules/bootstrap/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="./node_modules/sweetalert/dist/sweetalert.css">
+    <link rel="stylesheet" href="./node_modules/preload.js/dist/css/preload.css">
 
     
     <link rel="stylesheet" href="./assets/css/style.css?v=<?php echo filemtime('./assets/css/style.css'); ?>" type="text/css">
@@ -53,8 +64,15 @@ require('./configuration/database.php');
                                     <input type="password" class="form-control" require id="txtPassword" name="txtPassword">
                                 </div>
                                 <div class="form-group pt-3">
-                                    <button class="btn btn-primary th200" type="submit">ลงชื่อเข้าใช้งาน</button>
-                                    <a href="register.php" class="float-right text-muted">สมัครใช้งานระบบ</a>
+                                    <div class="row">
+                                        <div class="col-12 col-sm-6 pb-3"><button class="btn btn-primary th200" type="submit">ลงชื่อเข้าใช้งาน</button></div>
+                                        <div class="col-12 col-sm-6 pb-3">
+                                            <a href="register.php" class="float-right text-muted d-none d-sm-block">สมัครใช้งานระบบ</a>
+                                            <a href="register.php" class="text-muted d-block d-sm-none mt-3">สมัครใช้งานระบบ</a>
+                                        </div>
+                                    </div>
+                                    
+                                    
                                 </div>
                             </form>
                         </div>
@@ -65,7 +83,23 @@ require('./configuration/database.php');
     </div>
     <script src="./node_modules/jquery/dist/jquery.min.js"></script>
     <script src="./node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script type="text/javascript" src="./node_modules/sweetalert/dist/sweetalert.min.js"></script>
+    <script type="text/javascript" src="./node_modules/preload.root.js/dist/js/preload.js"></script>
+
     <script>
+
+        $(document).ready(function(){
+            preload.hide()
+            $login_stage = '<?php echo $stage;?>'
+            if($login_stage == 'fail1'){
+                swal("ขออภัย", "ข้อมูลบัญชีผู้ใช้งานไม่ถูกต้อง", "error")
+            }
+
+            if($login_stage == 'fail2'){               
+                swal("ขออภัย", "รหัสผ่านไม่ถูกต้อง", "error")
+            }
+        })
+
         $(function(){
 
         })

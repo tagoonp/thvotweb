@@ -22,7 +22,32 @@ if($stage == 1){ // Login
     }
     $username = mysqli_real_escape_string($conn, $_REQUEST['txtUsername']);
     $password = mysqli_real_escape_string($conn, $_REQUEST['txtPassword']);
-    // $strSQL = "SELECT * FROM "
+
+    $strSQL = "SELECT * FROM vot2_account WHERE username = '$username' AND delete_status = '0' AND active_status = '1'";
+    $result = $db->fetch($strSQL, false);
+    if($result){
+        if(password_verify($password, $result['password'])){
+
+            $_SESSION['vot_sid'] = session_id();
+            $_SESSION['vot_uid'] = $result['uid'];
+            $_SESSION['vot_role'] = $result['role'];
+
+            $strSQL = "INSERT INTO `vot2_log` (`log_datetime`, `log_info`, `log_message`, `log_ip`, `log_uid`) 
+                  VALUES ('$sysdatetime', 'ลงชื่อเข้าใช้งานระบบ', '', '$ip', '".$result['uid']."')
+                  ";
+            $db->insert($strSQL, false);
+
+            $db->close($conn);
+            header('Location: ../'.$result['role'].'/');
+        }else{
+            $db->close($conn);
+            header('Location: ../?stage=fail2');
+        }
+       
+    }else{
+        $db->close($conn);
+        header('Location: ../?stage=fail1');
+    }
 }
 
 if($stage == 2){ // Checkcode

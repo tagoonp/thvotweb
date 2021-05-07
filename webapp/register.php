@@ -2,6 +2,14 @@
 require("../../database_config/thvot/config.inc.php");
 require('./configuration/configuration.php');
 require('./configuration/database.php'); 
+
+$db = new Database();
+$conn = $db->conn();
+
+$stage = '';
+if((isset($_REQUEST['stage'])) && ($_REQUEST['stage'] != '') && ($_REQUEST['stage'] != null)){
+    $stage = mysqli_real_escape_string($conn, $_REQUEST['stage']);
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">

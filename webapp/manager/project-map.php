@@ -186,8 +186,8 @@ if(!$project){
 
                         <div class="row">
                             <div class="col-12">
-                                <button class="btn btn-sm th200 btn-success" onclick="window.location = './?stage=1'">ตามพื้นที่</button>
-                                <button class="btn btn-sm th200 btn-success" onclick="window.location = './?stage=2'">รายบุคคล</button>
+                                <button class="btn btn-sm th200 btn-success" onclick="window.location = './project-map.php?stage=1'">ตามพื้นที่</button>
+                                <button class="btn btn-sm th200 btn-success" onclick="window.location = './project-map.php?stage=2'">รายบุคคล</button>
                             </div>
                             <div class="col-12 mb-5">
                                 <?php 

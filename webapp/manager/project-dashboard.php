@@ -199,7 +199,7 @@ if(!$project){
                                                 AND b.info_use = '1'
                                                ";
                                                 $resultAll = $db->fetch($strSQL, true, true);
-                                                if($resultAll['status']){ echo $resultAll['count']; }else{ echo "0";}
+                                                if(($resultAll) && ($resultAll['status'])){ echo $resultAll['count']; }else{ echo "0";}
                                                 ?>
                                                 <small style="font-size: 0.5em;">คน</small></h1></div>
                                         </div>
@@ -222,7 +222,7 @@ if(!$project){
                                                 AND a.patient_type IN ('DOT')
                                                ";
                                                 $resultDOT = $db->fetch($strSQL, true, true);
-                                                if($resultDOT['status']){ echo $resultDOT['count']; }else{ echo "0";}
+                                                if(($resultDOT) && ($resultDOT['status'])){ echo $resultDOT['count']; }else{ echo "0";}
                                                 ?>
                                                 <small style="font-size: 0.5em;">คน</small></h1>
                                             </div>
@@ -246,7 +246,7 @@ if(!$project){
                                                 AND a.patient_type IN ('VOT')
                                                ";
                                                 $resultVOT = $db->fetch($strSQL, true, true);
-                                                if($resultVOT['status']){ echo $resultVOT['count']; }else{ echo "0";}
+                                                if(($resultVOT) && ($resultVOT['status'])){ echo $resultVOT['count']; }else{ echo "0";}
                                                 ?>
                                                 <small style="font-size: 0.5em;">คน</small></h1>
                                             </div>
@@ -283,7 +283,7 @@ if(!$project){
                                                            AND b.info_use = '1'
                                                           ";
                                                 $resultAll = $db->fetch($strSQL, true, false);
-                                                if($resultAll['status']){
+                                                if(($resultAll) && ($resultAll['status'])){
 
                                                 }else{
                                                     ?>
@@ -308,7 +308,7 @@ if(!$project){
                                                            AND a.patient_type IN ('DOT')
                                                           ";
                                                 $resultDOT = $db->fetch($strSQL, true, false);
-                                                if($resultDOT['status']){
+                                                if(($resultDOT) && ($resultDOT['status']))
 
                                                 }else{
                                                     ?>
@@ -333,7 +333,7 @@ if(!$project){
                                                            AND a.patient_type IN ('VOT')
                                                           ";
                                                 $resultVOT = $db->fetch($strSQL, true, false);
-                                                if($resultVOT['status']){
+                                                if(($resultVOT) && ($resultVOT['status']))
 
                                                 }else{
                                                     ?>

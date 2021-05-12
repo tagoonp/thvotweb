@@ -5,7 +5,7 @@ require('../configuration/database.php');
 require('../configuration/user.inc.php'); 
 require('../configuration/project.inc.php'); 
 
-$stage = '';
+$stage = '1';
 if((isset($_REQUEST['stage'])) && ($_REQUEST['stage'] != '') && ($_REQUEST['stage'] != null)){
     $stage = mysqli_real_escape_string($conn, $_REQUEST['stage']);
 }
@@ -155,7 +155,7 @@ if(!$project){
             <div class="col-12 col-sm-8 col-md-9">
                 <div class="row">
                     <div class="col-12 pr-sm-5 pl-4 pl-sm-0">
-                        <div>รหัสโครงการ : <?php echo $project['proj_id']; ?></div>
+                        <div>แผนที่ประเมินความสม่ำเสมอในการกินยา</div>
                         <h3><?php echo $project['proj_title']; ?></h3>
                         <p>
                                 <div>รายละเอียด :</div>
@@ -185,169 +185,27 @@ if(!$project){
                         <hr>
 
                         <div class="row">
-                            <div class="col-6 col-sm-4">
-                                <div class="card">
-                                    <div class="card-body bg-success text-white">
-                                        <div class="row">
-                                            <div class="col-8">จำนวนผู้ป่วยติดตาม<h3 class="text-white">ทั้งหมด</h3></div>
-                                            <div class="col-4 text-right pt-2"><h1 class="float-right">
-                                                <?php 
-                                                $strSQL = "SELECT * FROM vot2_account a INNER JOIN vot2_userinfo b ON a.uid = b.info_uid 
-                                                WHERE 
-                                                a.role = 'patient' 
-                                                AND a.delete_status = '0'
-                                                AND b.info_use = '1'
-                                               ";
-                                                $resultAll = $db->fetch($strSQL, true, true);
-                                                if($resultAll['status']){ echo $resultAll['count']; }else{ echo "0";}
-                                                ?>
-                                                <small style="font-size: 0.5em;">คน</small></h1></div>
-                                        </div>
-                                    </div>
-                                </div>
+                            <div class="col-12">
+                                <button class="btn btn-sm th200 btn-success" onclick="window.location = './?stage=1'">ตามพื้นที่</button>
+                                <button class="btn btn-sm th200 btn-success" onclick="window.location = './?stage=2'">รายบุคคล</button>
                             </div>
-
-                            <div class="col-6 col-sm-4">
-                                <div class="card">
-                                    <div class="card-body bg-primary text-white">
-                                        <div class="row">
-                                            <div class="col-8">จำนวนผู้ป่วยติดตาม<h3 class="text-white">DOT</h3></div>
-                                            <div class="col-4 text-right pt-2"><h1 class="float-right">
-                                                <?php 
-                                                $strSQL = "SELECT * FROM vot2_account a INNER JOIN vot2_userinfo b ON a.uid = b.info_uid 
-                                                WHERE 
-                                                a.role = 'patient' 
-                                                AND a.delete_status = '0'
-                                                AND b.info_use = '1'
-                                                AND a.patient_type IN ('DOT')
-                                               ";
-                                                $resultDOT = $db->fetch($strSQL, true, true);
-                                                if($resultDOT['status']){ echo $resultDOT['count']; }else{ echo "0";}
-                                                ?>
-                                                <small style="font-size: 0.5em;">คน</small></h1>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="col-6 col-sm-4">
-                                <div class="card">
-                                    <div class="card-body bg-danger text-white">
-                                        <div class="row">
-                                            <div class="col-8">จำนวนผู้ป่วยติดตาม<h3 class="text-white">VOT</h3></div>
-                                            <div class="col-4 text-right pt-2"><h1 class="float-right">
-                                                <?php 
-                                                $strSQL = "SELECT * FROM vot2_account a INNER JOIN vot2_userinfo b ON a.uid = b.info_uid 
-                                                WHERE 
-                                                a.role = 'patient' 
-                                                AND a.delete_status = '0'
-                                                AND b.info_use = '1'
-                                                AND a.patient_type IN ('VOT')
-                                               ";
-                                                $resultVOT = $db->fetch($strSQL, true, true);
-                                                if($resultVOT['status']){ echo $resultVOT['count']; }else{ echo "0";}
-                                                ?>
-                                                <small style="font-size: 0.5em;">คน</small></h1>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
+                            <div class="col-12 mb-5">
+                                <?php 
+                                if($stage == '1'){
+                                    ?>
+                                    <iframe src="https://thvot.com/thvotweb/webapp/present/2_1.html" frameborder="0" width="100%" height="800"></iframe>
+                                    <?php
+                                }else{
+                                    ?>
+                                    <iframe src="https://thvot.com/thvotweb/webapp/present/2_2.html" frameborder="0" width="100%" height="800"></iframe>
+                                    <?php
+                                }
+                                ?>
+                                
                             </div>
                         </div>
 
-                        <div class="row">
-                            <div class="col-12 pt-4">
-                                <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
-                                    <li class="nav-item">
-                                        <a class="nav-link active" id="pills-home-tab" data-toggle="pill" href="#pills-home" role="tab" aria-controls="pills-home" aria-selected="true">ทั้งหมด</a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a class="nav-link" id="pills-profile-tab" data-toggle="pill" href="#pills-profile" role="tab" aria-controls="pills-profile" aria-selected="false">DOT</a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a class="nav-link" id="pills-contact-tab" data-toggle="pill" href="#pills-contact" role="tab" aria-controls="pills-contact" aria-selected="false">VOT</a>
-                                    </li>
-                                </ul>
-                                <hr>
-                                <div class="tab-content" id="pills-tabContent">
-                                    <div class="tab-pane fade show active" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab">
-                                        <h4>รายชื่อผู้ป่วยติดตามทั้งหมด</h4>
 
-                                        <div class="mb-5">
-
-                                            <?php 
-                                                $strSQL = "SELECT * FROM vot2_account a INNER JOIN vot2_userinfo b ON a.uid = b.info_uid 
-                                                           WHERE a.role = 'patient' 
-                                                           AND a.delete_status = '0'
-                                                           AND b.info_use = '1'
-                                                          ";
-                                                $resultAll = $db->fetch($strSQL, true, false);
-                                                if($resultAll['status']){
-
-                                                }else{
-                                                    ?>
-                                                    <div class="pt-5 mt-3 pb-5 text-center" style="border: dashed; border-width: 1px 1px 1p 1px; border-radius: 10px; border-color: #ccc;">
-                                                        ไม่มีรายชื่อผู้ป่วยติดตาม
-                                                    </div>
-                                                    <?php
-                                                }
-                                            ?>
-
-                                        </div>
-                                    </div>
-                                    <div class="tab-pane fade" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab">
-                                        <h4>รายชื่อผู้ป่วยติดตาม DOT</h4>
-                                        <div class="mb-5">
-                                            <?php 
-                                                $strSQL = "SELECT * FROM vot2_account a INNER JOIN vot2_userinfo b ON a.uid = b.info_uid 
-                                                           WHERE 
-                                                           a.role = 'patient' 
-                                                           AND a.delete_status = '0'
-                                                           AND b.info_use = '1'
-                                                           AND a.patient_type IN ('DOT')
-                                                          ";
-                                                $resultDOT = $db->fetch($strSQL, true, false);
-                                                if($resultDOT['status']){
-
-                                                }else{
-                                                    ?>
-                                                    <div class="pt-5 mt-3 pb-5 text-center" style="border: dashed; border-width: 1px 1px 1p 1px; border-radius: 10px; border-color: #ccc;">
-                                                        ไม่มีรายชื่อผู้ป่วยติดตาม DOT
-                                                    </div>
-                                                    <?php
-                                                }
-                                            ?>
-                                        
-                                        </div>
-                                    </div>
-                                    <div class="tab-pane fade" id="pills-contact" role="tabpanel" aria-labelledby="pills-contact-tab">
-                                        <h4>รายชื่อผู้ป่วยติดตาม VOT</h4>
-                                        <div class="mb-5">
-                                            <?php 
-                                                $strSQL = "SELECT * FROM vot2_account a INNER JOIN vot2_userinfo b ON a.uid = b.info_uid 
-                                                           WHERE 
-                                                           a.role = 'patient' 
-                                                           AND a.delete_status = '0'
-                                                           AND b.info_use = '1'
-                                                           AND a.patient_type IN ('VOT')
-                                                          ";
-                                                $resultVOT = $db->fetch($strSQL, true, false);
-                                                if($resultVOT['status']){
-
-                                                }else{
-                                                    ?>
-                                                    <div class="pt-5 mt-3 pb-5 text-center" style="border: dashed; border-width: 1px 1px 1p 1px; border-radius: 10px; border-color: #ccc;">
-                                                        ไม่มีรายชื่อผู้ป่วยติดตาม DOT
-                                                    </div>
-                                                    <?php
-                                                }
-                                            ?>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
                     </div>
                 </div>
             </div>

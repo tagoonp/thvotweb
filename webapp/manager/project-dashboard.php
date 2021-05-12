@@ -308,7 +308,7 @@ if(!$project){
                                                            AND a.patient_type IN ('DOT')
                                                           ";
                                                 $resultDOT = $db->fetch($strSQL, true, false);
-                                                if(($resultDOT) && ($resultDOT['status']))
+                                                if(($resultDOT) && ($resultDOT['status'])){
 
                                                 }else{
                                                     ?>
@@ -333,7 +333,7 @@ if(!$project){
                                                            AND a.patient_type IN ('VOT')
                                                           ";
                                                 $resultVOT = $db->fetch($strSQL, true, false);
-                                                if(($resultVOT) && ($resultVOT['status']))
+                                                if(($resultVOT) && ($resultVOT['status'])){
 
                                                 }else{
                                                     ?>

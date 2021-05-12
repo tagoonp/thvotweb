@@ -50,7 +50,7 @@ if($stage == 1){ // Login
     }
 }
 
-if($stage == 2){ // Checkcode
+if($stage == 2){ // Register
 
     $code = mysqli_real_escape_string($conn, $_REQUEST['txtCode']);
     $username = mysqli_real_escape_string($conn, trim(strtolower($_REQUEST['txtUsername']), " "));
@@ -96,4 +96,48 @@ if($stage == 2){ // Checkcode
     $db->close($conn);
     die();
 }
+
+if($stage == 3){ // Log out
+
+    $uid = $_SESSION['vot_uid'];
+
+    $strSQL = "INSERT INTO `vot2_log` (`log_datetime`, `log_info`, `log_message`, `log_ip`, `log_uid`) 
+                  VALUES ('$sysdatetime', 'ออกจากระบบ', '', '$ip', '$uid')
+                  ";
+    $db->insert($strSQL, false);
+
+    unset($_SESSION['vot_uid']);
+    unset($_SESSION['vot_role']);
+    session_destroy();
+    $db->close($conn);
+        header('Location: ../');
+    die();
+}
+
+if($stage == 4){ // chage password
+
+    $uid = $_SESSION['vot_uid'];
+    $password = $_REQUEST['txtPassword1'];
+    $len = strlen($password);
+    $password = mysqli_real_escape_string($conn, $password);
+
+    $options = [
+        'cost' => 12,
+    ];
+    $password = password_hash($password, PASSWORD_BCRYPT, $options);
+
+    $strSQL = "UPDATE vot2_account SET password = '$password', password_len = '$len', p_udatetime = '$sysdatetime' WHERE uid = '$uid'";
+    $result = $db->execute($strSQL);
+    if($result){
+        $strSQL = "INSERT INTO `vot2_log` (`log_datetime`, `log_info`, `log_message`, `log_ip`, `log_uid`) 
+        VALUES ('$sysdatetime', 'เปลี่ยนรหัสผ่าน', '', '$ip', '$uid')
+        ";
+        $db->insert($strSQL, false);
+    }
+    
+    $db->close($conn);
+    header('Location: ../'.$_SESSION['vot_role'].'/account-security.php?stage=success');
+    die();
+}
+
 ?>

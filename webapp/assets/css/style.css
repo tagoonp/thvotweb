@@ -19,3 +19,31 @@ a {
 body .bg-main{
     background-color: rgb(180, 180, 180);
 }
+
+.menu-item{
+    padding: 10px 10px 10px 20px;
+    margin-bottom: 5px;
+}
+
+.menu-item:hover{
+    background-color: rgb(247, 247, 247);
+    border-radius: 0px 30px 30px 0px;
+}
+
+.menu-item-active{
+    background-color: rgb(244, 244, 244);
+    border-radius: 0px 30px 30px 0px;
+}
+
+.menu-item-active:hover{
+    background-color: rgb(228, 228, 228);
+}
+
+.nav-pills .nav-link.active, .nav-pills .show>.nav-link{
+    background:rgb(218, 218, 218);
+    color: #000;
+}
+
+a.nav-link{
+    color: rgb(94, 94, 94);
+}

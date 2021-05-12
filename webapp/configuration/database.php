@@ -74,4 +74,8 @@ class Database{
     mysqli_close($this->conn);
   }
 }
+
+$db = new Database();
+$conn = $db->conn();
+
 ?>

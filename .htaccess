@@ -1,0 +1,5 @@
+RewriteEngine On
+
+RewriteCond %{REQUEST_METHOD} !POST
+RewriteCond %{THE_REQUEST} /.+?\.php [NC]
+RewriteRule ^(.+?)\.php$ /$1 [R=301,L,NE]

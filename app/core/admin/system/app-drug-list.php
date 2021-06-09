@@ -13,7 +13,7 @@ if(isset($_GET['stage'])){
 
 require('../../../config/user.inc.php'); 
 
-$menu = 3;
+$menu = 5;
 ?>
 <!DOCTYPE html>
 <html class="loading" lang="en" data-textdirection="ltr">
@@ -35,8 +35,6 @@ $menu = 3;
     <link rel="stylesheet" type="text/css" href="../../../app-assets/vendors/css/tables/datatable/dataTables.bootstrap4.min.css">
     <link rel="stylesheet" type="text/css" href="../../../app-assets/vendors/css/tables/datatable/responsive.bootstrap4.min.css">
     <link rel="stylesheet" type="text/css" href="../../../app-assets/vendors/css/tables/datatable/buttons.bootstrap4.min.css">
-    <link rel="stylesheet" type="text/css" href="../../../app-assets/vendors/css/extensions/sweetalert2.min.css">
-    <link rel="stylesheet" type="text/css" href="../../../app-assets/vendors/css/forms/select/select2.min.css">
     <!-- END: Vendor CSS-->
 
     <!-- BEGIN: Theme CSS-->
@@ -145,97 +143,88 @@ $menu = 3;
 
             </div>
             <div class="content-body">
-                <h2 class="mb-2">รายชื่อหน่วยบริการที่เปิดใช้งานระบบ</h2>
+                <h2 class="mb-2">รายชื่อยา</h2>
                 <!-- users list start -->
                 <section class="users-list-wrapper">
+                    <!-- <div class="users-list-filter px-1">
+                        <form>
+                            <div class="row border rounded py-2 mb-2">
+                                <div class="col-12 col-sm-6 col-lg-3">
+                                    <label for="users-list-verified">จังหวัด</label>
+                                    <fieldset class="form-group">
+                                        <select class="form-control" id="users-list-verified">
+                                            <option value="">ท้ังหมด</option>
+                                        </select>
+                                    </fieldset>
+                                </div>
+                                <div class="col-12 col-sm-6 col-lg-3">
+                                    <label for="users-list-role">สิทธิ์</label>
+                                    <fieldset class="form-group">
+                                        <select class="form-control" id="users-list-role">
+                                            <option value="">ทั้งหมด</option>
+                                            <option value="administrator">ผู้ดูแลระบบ</option>
+                                            <option value="moderator">ผู้รับผิดชอบส่วนกลาง</option>
+                                            <option value="manager">ผู้รับผิดชอบส่วนงานสถานบริการ</option>
+                                            <option value="staff">ผู้ปฏิบัติงานบันทึกข้อมูล</option>
+                                            <option value="patient">ผู้ป่วย</option>
+                                        </select>
+                                    </fieldset>
+                                </div>
+                                <div class="col-12 col-sm-6 col-lg-3">
+                                    <label for="users-list-status">สถานะ</label>
+                                    <fieldset class="form-group">
+                                        <select class="form-control" id="users-list-status">
+                                            <option value="">ทั้งหมด</option>
+                                            <option value="Active">เปิดการใช้งาน</option>
+                                            <option value="Close">ปิดการใช้งาน</option>
+                                        </select>
+                                    </fieldset>
+                                </div>
+                                <div class="col-12 col-sm-6 col-lg-3 d-flex align-items-center">
+                                    <button type="reset" class="btn btn-primary btn-block glow users-list-clear mb-0">Clear</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div> -->
                     <div class="users-list-table">
                         <div class="card">
                             <div class="card-body">
                                 <!-- datatable start -->
                                 <div class="table-responsive">
-                                    <table id="users-list-datatable" class="table">
+                                    <table id="users-list-datatable-" class="table">
                                         <thead>
                                             <tr>
-                                                <th>รหัสสถานบริการ</th>
-                                                <th>ชื่อสถานบริการ</th>
-                                                <th>ต้นสังกัด</th>
-                                                <th>จำนวนผู้ใช้งาน</th>
-                                                <th>จำนวนผู้ป่วย</th>
-                                                <th style="width: 100px;"></th>
+                                                <th style="width: 50px;">#</th>
+                                                <th>ชื่อยา</th>
+                                                <th></th>
                                             </tr>
                                         </thead>
                                         <tbody>
                                             <?php 
-                                            $strSQL = "SELECT a.* , c.*, b.*, b.Name CWNAME FROM vot2_chospital a INNER JOIN vot2_changwat b ON a.provcode = b.Changwat
-                                            LEFT JOIN vot2_projecthospital c ON a.hoscode = c.phoscode
-                                            
-                                            WHERE 
-                                            c.phosstatus = 'Y'";
+                                            $strSQL = "SELECT * FROM vot2_phamalist WHERE 1";
                                             $result_list = $db->fetch($strSQL, true, false);
                                             if($result_list['status']){
                                                 $c = 1;
-                                                // print_r($result_list['data']);
                                                 foreach($result_list['data'] as $row){
                                                     ?>
                                                     <tr>
-                                                        <td style="vertical-align: top;"><a href="../../../html/ltr/vertical-menu-template/app-users-view.html"><?php echo $row['hoscode']; ?></a></td>
-                                                        <td style="vertical-align: top;">
-                                                            <?php echo $row[1]; ?>
-                                                            <div style="font-size: 0.9em;">
-                                                            จังหวัด : <?php echo $row['CWNAME']; ?> 
-                                                            </div>
-                                                            <div style="font-size: 0.9em;">
-                                                            Location : <?php echo $row['hlat'].", ".$row['hlng']; ?>
-                                                            </div>
-                                                        </td>
-                                                        <td style="vertical-align: top;">
-                                                            <?php echo $row['hospname']; ?>
-                                                        </td>
-                                                        <td style="vertical-align: top;">
-                                                        <?php 
-                                                        $strSQL = "SELECT COUNT(*) CN FROM czmod0_account WHERE hcode = '".$row['hoscode']."' AND role NOT IN ('patient')";
-                                                        $r = $db->fetch($strSQL, false, false);
-                                                        if($r){
-                                                            if($r['CN'] == 0){
+                                                        <td><?php echo $c; ?></td>
+                                                        <td><?php echo $row['phama_name']; ?></td>
+                                                        <td class="text-right">
+                                                            <?php 
+                                                            if($_SESSION['thvot_role'] == 'administator'){
                                                                 ?>
-                                                                <a href="Javascript:void(0)" class="text-muted"><i class="bx bx-user"></i> <?php echo $r['CN']; ?></a>
+                                                                
+                                                                <a href="Javascript:update_drug('<?php echo $row['phama_id'];?>', '<?php echo $row['phama_name'];?>')" class="mr-1"><i class="bx bx-edit-alt"></i></a>
+                                                                <a href="Javascript:delete_drug('<?php echo $row['phama_id'];?>')" clsas=""><i class="bx bx-trash-alt text-danger"></i></a>
                                                                 <?php
                                                             }else{
                                                                 ?>
-                                                                <a href="app-user-list.php?search_term=hcode&value=<?php echo $row['hoscode']; ?>"><i class="bx bx-user"></i> <?php echo $r['CN']; ?></a>
+                                                                <a href="Javascript:update_drug('<?php echo $row['phama_id'];?>', '<?php echo $row['phama_name'];?>')" class="mr-1"><i class="bx bx-edit-alt"></i></a>
+                                                                <a href="#" clsas="" disabled><i class="bx bx-trash-alt text-muted"></i></a>
                                                                 <?php
                                                             }
-                                                        }else{
                                                             ?>
-                                                            <a href="Javascript:void(0)" class="text-muted"><i class="bx bx-user"></i> 0</a>
-                                                            <?php
-                                                        }
-                                                        ?>
-                                                        </td>
-                                                        <td style="vertical-align: top;">
-                                                        <?php 
-                                                        $strSQL = "SELECT COUNT(*) CN FROM czmod0_account WHERE hcode = '".$row['hoscode']."' AND role = 'patient'";
-                                                        $r = $db->fetch($strSQL, false, false);
-                                                        if($r){
-                                                            if($r['CN'] == 0){
-                                                                ?>
-                                                                <a href="Javascript:void(0)" class="text-muted"><i class="bx bx-user"></i> <?php echo $r['CN']; ?></a>
-                                                                <?php
-                                                            }else{
-                                                                ?>
-                                                                <a href="app-user-list.php?search_term=hcode&value=<?php echo $row['hoscode']; ?>"><i class="bx bx-user"></i> <?php echo $r['CN']; ?></a>
-                                                                <?php
-                                                            }
-                                                        }else{
-                                                            ?>
-                                                            <a href="Javascript:void(0)" class="text-muted"><i class="bx bx-user"></i> 0</a>
-                                                            <?php
-                                                        }
-                                                        ?>
-                                                        </td>
-                                                        <td class="text-right pl-0 pr-0">
-                                                            <a href="Javascript:setHospconfig('<?php echo $row['hoscode']; ?>')" class="mr-1 mb-1"><i class="bx bxs-edit-alt"></i></a>
-                                                            <a href="Javascript:removeHcode('<?php echo $row['hoscode']; ?>')" class="mr-1 mb-1"><i class="bx bx-trash-alt text-danger"></i></a>
                                                         </td>
                                                     </tr>
                                                     <?php
@@ -253,84 +242,6 @@ $menu = 3;
                 </section>
                 <!-- users list ends -->
 
-                <!-- Vertically Centered modal Modal -->
-                <div class="modal fade" id="modalHospEdit" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-                    <div class="modal-dialog modal-dialog-centered modal-dialog-centered modal-dialog-scrollable">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <h5 class="modal-title" id="exampleModalCenterTitle">แก้ไขข้อมูลสถารบริการร่วมโครงการ</h5>
-                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                    <i class="bx bx-x"></i>
-                                </button>
-                            </div>
-                            <form action="../../../controller/facility?stage=update_project_hosital" method="post" onsubmit="return facility.check_admin_update_hosp()">
-                                <div class="modal-body">
-                                     <div class="form-group">
-                                        <label for="">HCODE : </label>
-                                        <input type="text" class="form-control" readonly placeholder="" id="txtHcode" name="txtHcode">
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="">ชื่อสถานบริการ</label>
-                                        <input type="text" class="form-control" readonly placeholder="" id="txtHospname" name="txtHostpname">
-                                    </div>
-
-                                    <div class="form-group">
-                                        <label for="">หน่วยงาน/โรงพยาบาลต้นสังกัด</label>
-                                        <!-- <input type="text" class="form-control" placeholder="" id="txtMainhname" name="txtMainhname"> -->
-                                        <select name="txtMainhname" id="txtMainhname" class="select2 form-control">
-                                            <option value=""> -- เลือกโรงพยาบาลต้นสังกัด -- </option>
-                                            <?php 
-                                            $strSQL = "SELECT * FROM vot2_chospital WHERE hostype IN ('01', '02', '05', '06', '07') AND provcode IN (SELECT ap_code FROM vot2_active_province WHERE 1) ORDER BY hosname";
-                                            $result_h = $db->fetch($strSQL, true);
-                                            if($result_h['status']){
-                                                foreach($result_h['data'] as $row){
-                                                    ?>
-                                                    <option value="<?php echo $row['hoscode'];?>"><?php echo $row['hosname'];?></option>
-                                                    <?php
-                                                }
-                                            }
-                                            ?>
-                                        </select>
-                                    </div>
-
-                                    <div class="row">
-                                        <div class="form-group col-12 col-sm-4">
-                                            <label for="">ละติจูด :</label>
-                                            <input type="text" class="form-control" placeholder="" id="txtLat" name="txtLat">
-                                        </div>
-                                        <div class="form-group col-12 col-sm-4">
-                                            <label for="">ลองติจูด :</label>
-                                            <input type="text" class="form-control" placeholder="" id="txtLng" name="txtLng">
-                                        </div>
-                                        <div class="form-group col-12 col-sm-4">
-                                            <label for="">ประเภท :</label>
-                                            <select name="txtType" id="txtType" class="form-control">
-                                                <option value=""> -- เลือกประเภท -- </option>
-                                                <option value="Hospital">Hospital</option>
-                                                <option value="HPH">HPH</option>
-                                                <option value="PCU">PCU</option>
-                                                <option value="Municipality">Municipality</option>
-                                                <option value="etc">etc</option>
-                                            </select>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="modal-footer">
-                                    <button type="button" class="btn btn-light-secondary" data-dismiss="modal">
-                                        <i class="bx bx-x d-block d-sm-none"></i>
-                                        <span class="d-none d-sm-block">ยกเลิก</span>
-                                    </button>
-                                    <button type="submit" class="btn btn-primary ml-1">
-                                        <i class="bx bx-check d-block d-sm-none"></i>
-                                        <span class="d-none d-sm-block">บันทึก</span>
-                                    </button>
-                                </div>            
-                            </form>
-                            
-                        </div>
-                    </div>
-                </div>
-
             </div>
         </div>
     </div>
@@ -340,6 +251,43 @@ $menu = 3;
     <?php 
     require("../../control/footer.php");
     ?>
+
+    <!-- Vertically Centered modal Modal -->
+    <div class="modal fade" id="modalDrug" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-dialog-centered modal-dialog-scrollable">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalCenterTitle">แก้ไขชื่อยา</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <i class="bx bx-x"></i>
+                    </button>
+                </div>
+                <form action="../../../controller/facility?stage=update_project_hosital" method="post" onsubmit="return facility.check_admin_update_hosp()">
+                    <div class="modal-body">
+                        <div class="form-group" style="display: none;">
+                            <label for="">รหัสยา : </label>
+                            <input type="text" class="form-control" readonly placeholder="" id="txtDrugId" name="txtDrugId">
+                        </div>
+                        <div class="form-group">
+                            <label for="">ชื่อยา</label>
+                            <input type="text" class="form-control" placeholder="" id="txtDrugName" name="txtDrugName">
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-light-secondary" data-dismiss="modal">
+                            <i class="bx bx-x d-block d-sm-none"></i>
+                            <span class="d-none d-sm-block">ยกเลิก</span>
+                        </button>
+                        <button type="submit" class="btn btn-primary ml-1">
+                            <i class="bx bx-check d-block d-sm-none"></i>
+                            <span class="d-none d-sm-block">บันทึก</span>
+                        </button>
+                    </div>            
+                </form>
+                
+            </div>
+        </div>
+    </div>
 
 
     <!-- BEGIN: Vendor JS-->
@@ -357,9 +305,6 @@ $menu = 3;
     <script src="../../../app-assets/vendors/js/tables/datatable/buttons.bootstrap4.min.js"></script>
     <script src="../../../app-assets/vendors/js/tables/datatable/dataTables.responsive.min.js"></script>
     <script src="../../../app-assets/vendors/js/tables/datatable/responsive.bootstrap4.min.js"></script>
-    <script src="../../../app-assets/vendors/js/extensions/sweetalert2.all.min.js"></script>
-    <script src="../../../app-assets/vendors/js/extensions/polyfill.min.js"></script>
-    <script src="../../../app-assets/vendors/js/forms/select/select2.full.min.js"></script>
     <!-- END: Page Vendor JS-->
 
     <!-- BEGIN: Theme JS-->
@@ -371,7 +316,7 @@ $menu = 3;
     <!-- END: Theme JS-->
 
     <!-- BEGIN: Page JS-->
-    <script src="../../../assets/js/scripts/app-facility.js"></script>
+    <script src="../../../assets/js/scripts/app-drug.js"></script>
     <!-- END: Page JS-->
 
 </body>

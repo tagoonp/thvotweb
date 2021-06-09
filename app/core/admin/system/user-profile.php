@@ -21,10 +21,9 @@ require('../../../config/user.inc.php');
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0">
-    <meta name="description" content="Frest admin is super flexible, powerful, clean &amp; modern responsive bootstrap 4 admin template with unlimited possibilities.">
-    <meta name="keywords" content="admin template, Frest admin template, dashboard template, flat admin template, responsive admin template, web app">
-    <meta name="author" content="PIXINVENT">
-    <title>NCDx : ข้อมูลผู้ใช้งาน</title>
+    <meta name="description" content="THVOT ระบบการติดตามยาผู้ป่วยวัณโรค">
+    <meta name="author" content="Wisnior, Co, Ltd.">
+    <title>THVOT : Administator</title>
     <link rel="apple-touch-icon" href="../../../app-assets/images/ico/apple-icon-120.png">
     <link rel="shortcut icon" type="image/x-icon" href="../../../app-assets/images/ico/favicon.ico">
     <link href="https://fonts.googleapis.com/css?family=Rubik:300,400,500,600%7CIBM+Plex+Sans:300,400,500,600,700" rel="stylesheet">
@@ -129,14 +128,7 @@ require('../../../config/user.inc.php');
         <div class="shadow-bottom"></div>
         <div class="main-menu-content">
             <ul class="navigation navigation-main" id="main-menu-navigation" data-menu="menu-navigation" data-icon-style="lines">
-                <li class=" nav-item"><a href="./"><i class="menu-livicon" data-icon="desktop"></i><span class="menu-title text-truncate" data-i18n="Dashboard">กระดานภาพรวม</span></a>
-                    <ul class="menu-content">
-                        <li><a class="d-flex align-items-center" href="./"><i class="bx bx-right-arrow-alt"></i><span class="menu-item text-truncate" data-i18n="eCommerce">บันทึกรายรับ - รายจ่าย</span></a>
-                        </li>
-                        <li><a class="d-flex align-items-center" href="dashboard-analytics"><i class="bx bx-right-arrow-alt"></i><span class="menu-item text-truncate" data-i18n="Analytics">ผลลัพธ์สุขภาพ</span></a>
-                        </li>
-                    </ul>
-                </li>
+                <li class="nav-item"><a href="./"><i class="menu-livicon" data-icon="desktop"></i><span class="menu-title text-truncate">กระดานภาพรวม</span></a></li>
                 <li class=" navigation-header text-truncate"><span data-i18n="Apps">จัดการข้อมูล</span></li>
                 <li class=" nav-item"><a href="#"><i class="menu-livicon" data-icon="users"></i><span class="menu-title text-truncate" data-i18n="User">ผู้ใช้งานระบบ</span></a>
                     <ul class="menu-content">
@@ -192,8 +184,7 @@ require('../../../config/user.inc.php');
                 </li>
                 
                 <li class=" navigation-header text-truncate"><span data-i18n="Charts &amp; Maps">อื่น ๆ</span></li>
-                <li class=" nav-item"><a href="maps-leaflet"><i class="menu-livicon" data-icon="map"></i><span class="menu-title text-truncate" data-i18n="Leaflet Maps">แผนที่สถานบริการ</span></a>
-                </li>
+                <li class=" nav-item"><a href="maps-leaflet"><i class="menu-livicon" data-icon="map"></i><span class="menu-title text-truncate" data-i18n="Leaflet Maps">แผนที่สถานบริการ</span></a></li>
 
                 <li class=" navigation-header text-truncate"><span data-i18n="Support">สนับสนุน</span>
                 </li>

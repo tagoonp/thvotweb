@@ -54,6 +54,10 @@ if($stage == 'save_project_hosital'){
     $hmain = mysqli_real_escape_string($conn, $_POST['txtMainhname']);
     $hcode = mysqli_real_escape_string($conn, $_POST['txtHcode']);
     
+    $strSQL = "SELECT hosname FROM vot2_chospital WHERE hoscode = '$hmain'";
+    $res1 = $db->fetch($strSQL, false);
+
+    $reshname = $res1['hosname'];
 
     $strSQL = "SELECT a.*, b.Name changwat_name, c.Name ampur_name, d.Name tumbon_name FROM vot2_chospital a INNER JOIN vot2_changwat b ON a.provcode = b.Changwat
                INNER JOIN vot2_ampur c ON a.provcode = c.Changwat AND a.distcode = c.Ampur
@@ -62,9 +66,9 @@ if($stage == 'save_project_hosital'){
               ";
     $res = $db->fetch($strSQL, false);
     if($res){
-        $strSQL = "INSERT INTO vot2_projecthospital (`phoscode`, `phosstatus`, `hserv`, `hlat`, `hlng`, `hamp`, `htum`, `hospname`, `htype_code`)
+        $strSQL = "INSERT INTO vot2_projecthospital (`phoscode`, `phosstatus`, `hserv`, `hlat`, `hlng`, `hamp`, `htum`, `hospname`, `hospcode`, `htype_code`)
                    VALUES (
-                       '$hcode', 'Y', '".$res['hosname']."', '$hlat', '$hlng', '".$res['ampur_name']."', '".$res['tumbon_name']."', '$hmain', '$htype'
+                       '$hcode', 'Y', '".$res['hosname']."', '$hlat', '$hlng', '".$res['ampur_name']."', '".$res['tumbon_name']."', '$reshname', '$hmain', '$htype'
                    )
                   ";
         $res_insert = $db->insert($strSQL, false);
@@ -78,9 +82,8 @@ if($stage == 'save_project_hosital'){
             die();
         }
     }else{
-        $strSQL = "UPDATE vot2_projecthospital SET 
-               WHERE 
-               hserv = '$hname', hlat = '$hlat', hlng = '$hlng', hospname = '$hmain', htype_code '$htype'
+        $strSQL = "UPDATE vot2_projecthospital SET  
+               hserv = '$hname', hlat = '$hlat', hlng = '$hlng', hospname = '$reshname', htype_code = '$htype', hospcode = '$hmain'
                WHERE phoscode = '$hcode'
               ";
         $result = $db->execute($strSQL);
@@ -117,8 +120,13 @@ if($stage == 'update_project_hosital'){
     $hmain = mysqli_real_escape_string($conn, $_POST['txtMainhname']);
     $hcode = mysqli_real_escape_string($conn, $_POST['txtHcode']);
 
+    $strSQL = "SELECT hosname FROM vot2_chospital WHERE hoscode = '$hmain'";
+    $res1 = $db->fetch($strSQL, false);
+
+    $reshname = $res1['hosname'];
+
     $strSQL = "UPDATE vot2_projecthospital SET  
-               hserv = '$hname', hlat = '$hlat', hlng = '$hlng', hospname = '$hmain', htype_code = '$htype'
+               hserv = '$hname', hlat = '$hlat', hlng = '$hlng', hospname = '$reshname', htype_code = '$htype', hospcode = '$hmain'
                WHERE phoscode = '$hcode'
               ";
     $result = $db->execute($strSQL);

@@ -29,6 +29,13 @@ if($stage == 'login'){
             $_SESSION['thvot_id'] = session_id();
             $_SESSION['thvot_uid'] = $result['uid'];
             $_SESSION['thvot_role'] = $result['role'];
+
+
+
+            $strSQL = "INSERT INTO vot2_log (`log_datetime`, `log_info`, `log_message`, `log_ip`, `log_uid`)
+                       VALUES ('$datetime', 'เข้าสู่ระบบ', '', '$remote_ip', '".$_SESSION['thvot_uid']."')
+                      ";
+            $db->insert($strSQL, false);
             $db->close();
             header('Location: ../core/'.$result['role'].'/system/');
             die();
@@ -39,21 +46,26 @@ if($stage == 'login'){
         }
     }else{
         $db->close();
-        // echo $strSQL;
-        // die();
         header('Location: ../login.php?stage=fail1');
         die();
     }
 
 }else if($stage == 'logout'){
 
-  unset($_SESSION['thvot_id']);
-  unset($_SESSION['thvot_uid']);
-  unset($_SESSION['thvot_role']);
-  session_destroy();
-  $db->close();
-  header('Location: ../');
-  die();
+
+    $strSQL = "INSERT INTO vot2_log (`log_datetime`, `log_info`, `log_message`, `log_ip`, `log_uid`)
+                       VALUES ('$datetime', 'ออกจากระบบ', '', '$remote_ip', '".$_SESSION['thvot_uid']."')
+                      ";
+            $db->insert($strSQL, false);
+
+    unset($_SESSION['thvot_id']);
+    unset($_SESSION['thvot_uid']);
+    unset($_SESSION['thvot_role']);
+    
+    session_destroy();
+    $db->close();
+    header('Location: ../');
+    die();
 
 }else if($stage == 'signup'){
 

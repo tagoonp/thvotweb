@@ -34,11 +34,19 @@ if($stage == 'add_hcode'){
                VALUE ('$hcode', '$hcode', '$hcode', '$hcode', '$hcode', '$hcode', '$hcode', '$hcode', '$hcode')";
     $result = $db->insert($strSQL, false);
     if($result){
+
+        $strSQL = "INSERT INTO vot2_log (`log_datetime`, `log_info`, `log_message`, `log_ip`, `log_uid`)
+               VALUES ('$datetime', 'เพิ่มสถานบริการในการติดตาม', 'Target HCODE > $hcode', '$remote_ip', '".$_SESSION['thvot_uid']."')
+              ";
+        $db->insert($strSQL, false);
+
         echo "Success";
         $db->close();
         die();
     }
-}if($stage == 'remove_hcode'){
+}
+
+if($stage == 'remove_hcode'){
 
     if(
         (!isset($_REQUEST['target_hcode']))
@@ -51,12 +59,163 @@ if($stage == 'add_hcode'){
     $strSQL = "DELETE FROM vot2_projecthospital WHERE phoscode = '$hcode'";
     $result = $db->execute($strSQL);
 
+    $strSQL = "INSERT INTO vot2_log (`log_datetime`, `log_info`, `log_message`, `log_ip`, `log_uid`)
+               VALUES ('$datetime', 'ลบสถานบริการในการติดตาม', 'Target HCODE > $hcode', '$remote_ip', '".$_SESSION['thvot_uid']."')
+              ";
+    $db->insert($strSQL, false);
+
     echo "Success";
     $db->close();
     die();    
 
-}else{
-  $db->close(); header('Location: ../404?error=x909'); die();
+}
+
+if($stage == 'admin_delete_user'){
+    if(
+        (!isset($_REQUEST['target_uid']))
+    ){
+        $db->close(); die();
+    }
+
+    $target_uid = mysqli_real_escape_string($conn, $_POST['target_uid']);
+
+    $strSQL = "UPDATE vot2_account SET delete_status = '1' WHERE uid = '$target_uid'";
+    $result = $db->execute($strSQL);
+
+    $strSQL = "INSERT INTO vot2_log (`log_datetime`, `log_info`, `log_message`, `log_ip`, `log_uid`)
+               VALUES ('$datetime', 'ลบบัญชีผู้ใช้งาน', 'Target UID > $target_uid', '$remote_ip', '".$_SESSION['thvot_uid']."')
+              ";
+    $db->insert($strSQL, false);
+
+    echo "Success";
+    $db->close();
+    die();    
+}
+
+if($stage == 'toggle_active'){
+    if(
+        (!isset($_REQUEST['target_id'])) ||
+        (!isset($_REQUEST['toggle_to']))
+    ){
+        $db->close(); die();
+    }
+
+    $target_uid = mysqli_real_escape_string($conn, $_POST['target_id']);
+    $toggle_to = mysqli_real_escape_string($conn, $_POST['toggle_to']);
+
+    $strSQL = "UPDATE vot2_account SET verify_status = '$toggle_to' WHERE ID = '$target_uid'";
+    $result = $db->execute($strSQL);
+
+    $strSQL = "INSERT INTO vot2_log (`log_datetime`, `log_info`, `log_message`, `log_ip`, `log_uid`)
+                       VALUES ('$datetime', 'เปลี่ยนสถานะการยืนยัน (Verify status) เป็น $toggle_to', 'Target UID > $target_uid ', '$remote_ip', '".$_SESSION['thvot_uid']."')
+                      ";
+    $db->insert($strSQL, false);
+
+    echo "Success";
+    $db->close();
+    die();   
+}
+
+if($stage == 'toggle_status'){
+    if(
+        (!isset($_REQUEST['target_id'])) ||
+        (!isset($_REQUEST['toggle_to']))
+    ){
+        $db->close(); die();
+    }
+
+    $target_uid = mysqli_real_escape_string($conn, $_POST['target_id']);
+    $toggle_to = mysqli_real_escape_string($conn, $_POST['toggle_to']);
+
+    $strSQL = "UPDATE vot2_account SET active_status = '$toggle_to' WHERE ID = '$target_uid'";
+    $result = $db->execute($strSQL);
+
+    $strSQL = "INSERT INTO vot2_log (`log_datetime`, `log_info`, `log_message`, `log_ip`, `log_uid`)
+                       VALUES ('$datetime', 'เปลี่ยนสถานะการใช้งาน (Active status) เป็น $toggle_to', 'Target UID > $target_uid', '$remote_ip', '".$_SESSION['thvot_uid']."')
+                      ";
+    $db->insert($strSQL, false);
+
+    echo "Success";
+    $db->close();
+    die();   
+}
+
+if($stage == 'toggle_access'){
+    if(
+        (!isset($_REQUEST['target_id'])) ||
+        (!isset($_REQUEST['toggle_to'])) ||
+        (!isset($_REQUEST['level']))
+    ){
+        $db->close(); die();
+    }
+
+    $target_uid = mysqli_real_escape_string($conn, $_POST['target_id']);
+    $toggle_to = mysqli_real_escape_string($conn, $_POST['toggle_to']);
+    $level = mysqli_real_escape_string($conn, $_POST['level']);
+
+    $strSQL = "UPDATE vot2_account SET ".$level." = '$toggle_to' WHERE ID = '$target_uid'";
+    $result = $db->execute($strSQL);
+
+    $strSQL = "INSERT INTO vot2_log (`log_datetime`, `log_info`, `log_message`, `log_ip`, `log_uid`)
+               VALUES ('$datetime', 'เปลี่ยนระดับการเข้าถึงข้อมูล ($level) เป็น $toggle_to', 'Target UID > $target_uid', '$remote_ip', '".$_SESSION['thvot_uid']."')
+              ";
+    $db->insert($strSQL, false);
+
+    echo "Success";
+    $db->close();
+    die();   
+
+
+}
+
+if($stage == 'admin_reset_patient_location'){
+    if(
+        (!isset($_REQUEST['target_uid']))
+    ){
+        $db->close(); die();
+    }
+
+    $target_uid = mysqli_real_escape_string($conn, $_POST['target_uid']);
+
+    $strSQL = "UPDATE vot2_patient_location SET loc_status = '0' WHERE loc_patient_uid = '$target_uid'";
+    $res = $db->execute($strSQL);
+
+    $strSQL = "INSERT INTO vot2_log (`log_datetime`, `log_info`, `log_message`, `log_ip`, `log_uid`)
+                       VALUES ('$datetime', 'รีเซ็ตพิกัดผู้ป่วย', 'Target UID > $target_uid', '$remote_ip', '".$_SESSION['thvot_uid']."')
+                      ";
+    $db->insert($strSQL, false);
+
+    echo "Success";
+    $db->close();
+    die();   
+}
+
+if($stage == 'checkuser'){
+    if(
+        (!isset($_REQUEST['username'])) ||
+        (!isset($_REQUEST['role'])) ||
+        (!isset($_REQUEST['hcode']))
+    ){
+        $db->close(); die();
+    }
+
+    $username = mysqli_real_escape_string($conn, $_POST['username']);
+    $role = mysqli_real_escape_string($conn, $_POST['role']);
+    $hcode = mysqli_real_escape_string($conn, $_POST['hcode']);
+
+    if($role == 'patient'){
+        $username = $hcode."-".$username;
+    }
+
+    $strSQL = "SELECT * FROM vot2_account WHERE username = '$username' AND delete_status = '0' LIMIT 1";
+    $res = $db->fetch($strSQL, false);
+    if(($res['status']) && ($res['count'] > 0)){
+        echo "Duplicate";
+    }else{
+        echo "Success";
+    }
+    $db->close();
+    die();   
 }
 
 

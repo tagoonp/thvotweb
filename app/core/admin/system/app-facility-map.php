@@ -13,7 +13,7 @@ if(isset($_GET['stage'])){
 
 require('../../../config/user.inc.php'); 
 
-$menu = 3;
+$menu = 11;
 ?>
 <!DOCTYPE html>
 <html class="loading" lang="en" data-textdirection="ltr">
@@ -145,110 +145,17 @@ $menu = 3;
 
             </div>
             <div class="content-body">
-                <h2 class="mb-2">รายชื่อหน่วยบริการที่เปิดใช้งานระบบ</h2>
+                <h2 class="mb-2">แผนที่หน่วยบริการ</h2>
                 <!-- users list start -->
                 <section class="users-list-wrapper">
                     <div class="users-list-table">
-                        <div class="card">
-                            <div class="card-body">
-                                <!-- datatable start -->
-                                <div class="table-responsive">
-                                    <table id="users-list-datatable" class="table">
-                                        <thead>
-                                            <tr>
-                                                <th>รหัสสถานบริการ</th>
-                                                <th>ชื่อสถานบริการ</th>
-                                                <th>ต้นสังกัด</th>
-                                                <th>จำนวนผู้ใช้งาน</th>
-                                                <th>จำนวนผู้ป่วย</th>
-                                                <th style="width: 100px;"></th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <?php 
-                                            $strSQL = "SELECT a.* , c.*, b.*, b.Name CWNAME FROM vot2_chospital a INNER JOIN vot2_changwat b ON a.provcode = b.Changwat
-                                            LEFT JOIN vot2_projecthospital c ON a.hoscode = c.phoscode
-                                            
-                                            WHERE 
-                                            c.phosstatus = 'Y'";
-                                            $result_list = $db->fetch($strSQL, true, false);
-                                            if($result_list['status']){
-                                                $c = 1;
-                                                // print_r($result_list['data']);
-                                                foreach($result_list['data'] as $row){
-                                                    ?>
-                                                    <tr>
-                                                        <td style="vertical-align: top;"><a href="../../../html/ltr/vertical-menu-template/app-users-view.html"><?php echo $row['hoscode']; ?></a></td>
-                                                        <td style="vertical-align: top;">
-                                                            <?php echo $row[1]; ?>
-                                                            <div style="font-size: 0.9em;">
-                                                            จังหวัด : <?php echo $row['CWNAME']; ?> 
-                                                            </div>
-                                                            <div style="font-size: 0.9em;">
-                                                            Location : <?php echo $row['hlat'].", ".$row['hlng']; ?>
-                                                            </div>
-                                                        </td>
-                                                        <td style="vertical-align: top;">
-                                                            <?php echo $row['hospname']; ?>
-                                                        </td>
-                                                        <td style="vertical-align: top;">
-                                                        <?php 
-                                                        $strSQL = "SELECT COUNT(*) CN FROM czmod0_account WHERE hcode = '".$row['hoscode']."' AND role NOT IN ('patient')";
-                                                        $r = $db->fetch($strSQL, false, false);
-                                                        if($r){
-                                                            if($r['CN'] == 0){
-                                                                ?>
-                                                                <a href="Javascript:void(0)" class="text-muted"><i class="bx bx-user"></i> <?php echo $r['CN']; ?></a>
-                                                                <?php
-                                                            }else{
-                                                                ?>
-                                                                <a href="app-user-list.php?search_term=hcode&value=<?php echo $row['hoscode']; ?>"><i class="bx bx-user"></i> <?php echo $r['CN']; ?></a>
-                                                                <?php
-                                                            }
-                                                        }else{
-                                                            ?>
-                                                            <a href="Javascript:void(0)" class="text-muted"><i class="bx bx-user"></i> 0</a>
-                                                            <?php
-                                                        }
-                                                        ?>
-                                                        </td>
-                                                        <td style="vertical-align: top;">
-                                                        <?php 
-                                                        $strSQL = "SELECT COUNT(*) CN FROM czmod0_account WHERE hcode = '".$row['hoscode']."' AND role = 'patient'";
-                                                        $r = $db->fetch($strSQL, false, false);
-                                                        if($r){
-                                                            if($r['CN'] == 0){
-                                                                ?>
-                                                                <a href="Javascript:void(0)" class="text-muted"><i class="bx bx-user"></i> <?php echo $r['CN']; ?></a>
-                                                                <?php
-                                                            }else{
-                                                                ?>
-                                                                <a href="app-user-list.php?search_term=hcode&value=<?php echo $row['hoscode']; ?>"><i class="bx bx-user"></i> <?php echo $r['CN']; ?></a>
-                                                                <?php
-                                                            }
-                                                        }else{
-                                                            ?>
-                                                            <a href="Javascript:void(0)" class="text-muted"><i class="bx bx-user"></i> 0</a>
-                                                            <?php
-                                                        }
-                                                        ?>
-                                                        </td>
-                                                        <td class="text-right pl-0 pr-0">
-                                                            <a href="Javascript:setHospconfig('<?php echo $row['hoscode']; ?>')" class="mr-1 mb-1"><i class="bx bxs-edit-alt"></i></a>
-                                                            <a href="Javascript:removeHcode('<?php echo $row['hoscode']; ?>')" class="mr-1 mb-1"><i class="bx bx-trash-alt text-danger"></i></a>
-                                                        </td>
-                                                    </tr>
-                                                    <?php
-                                                    $c++;
-                                                }
-                                            }
-                                            ?>
-                                        </tbody>
-                                    </table>
-                                </div>
-                                <!-- datatable ends -->
+                        <!-- <div class="card">
+                            <div class="card-body p-0">
+                                <iframe src="https://thvot.com/hname.html" height="600" width="100%" title="THVOT facilities map"></iframe>
                             </div>
-                        </div>
+                        </div> -->
+
+                        <iframe src="https://thvot.com/hname.html" id="mapDiv" height="600" width="100%" title="THVOT facilities map" style="border:none;"></iframe>
                     </div>
                 </section>
                 <!-- users list ends -->
@@ -373,6 +280,16 @@ $menu = 3;
     <!-- BEGIN: Page JS-->
     <script src="../../../assets/js/scripts/app-facility.js"></script>
     <!-- END: Page JS-->
+
+    <script>
+        $(document).ready(function(){
+            alert('a')
+            $h = $(document).height()
+            console.log($h);
+            $('#mapDiv').css('height', ($h - 200) + 'px')
+
+        })
+    </script>
 
 </body>
 <!-- END: Body-->

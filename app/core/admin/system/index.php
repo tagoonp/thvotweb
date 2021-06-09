@@ -12,6 +12,8 @@ if(isset($_GET['stage'])){
 }
 
 require('../../../config/user.inc.php'); 
+
+$menu = 0;
 ?>
 <!DOCTYPE html>
 <html class="loading" lang="en" data-textdirection="ltr">
@@ -21,10 +23,9 @@ require('../../../config/user.inc.php');
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0">
-    <meta name="description" content="Frest admin is super flexible, powerful, clean &amp; modern responsive bootstrap 4 admin template with unlimited possibilities.">
-    <meta name="keywords" content="admin template, Frest admin template, dashboard template, flat admin template, responsive admin template, web app">
-    <meta name="author" content="PIXINVENT">
-    <title>NCDx : Administator</title>
+    <meta name="description" content="THVOT ระบบการติดตามยาผู้ป่วยวัณโรค">
+    <meta name="author" content="Wisnior, Co, Ltd.">
+    <title>THVOT : Administator</title>
     <link rel="apple-touch-icon" href="../../../app-assets/images/ico/apple-icon-120.png">
     <link rel="shortcut icon" type="image/x-icon" href="../../../app-assets/images/ico/favicon.ico">
     <link href="https://fonts.googleapis.com/css?family=Rubik:300,400,500,600%7CIBM+Plex+Sans:300,400,500,600,700" rel="stylesheet">
@@ -127,80 +128,7 @@ require('../../../config/user.inc.php');
         </div>
         <div class="shadow-bottom"></div>
         <div class="main-menu-content">
-            <ul class="navigation navigation-main" id="main-menu-navigation" data-menu="menu-navigation" data-icon-style="lines">
-                <li class=" nav-item"><a href="./"><i class="menu-livicon" data-icon="desktop"></i><span class="menu-title text-truncate" data-i18n="Dashboard">กระดานภาพรวม</span></a>
-                    <ul class="menu-content">
-                        <li class="active"><a class="d-flex align-items-center" href="./"><i class="bx bx-right-arrow-alt"></i><span class="menu-item text-truncate" data-i18n="eCommerce">บันทึกรายรับ - รายจ่าย</span></a>
-                        </li>
-                        <li><a class="d-flex align-items-center" href="dashboard-analytics"><i class="bx bx-right-arrow-alt"></i><span class="menu-item text-truncate" data-i18n="Analytics">ผลลัพธ์สุขภาพ</span></a>
-                        </li>
-                    </ul>
-                </li>
-                <li class=" navigation-header text-truncate"><span data-i18n="Apps">จัดการข้อมูล</span></li>
-                <li class=" nav-item"><a href="#"><i class="menu-livicon" data-icon="users"></i><span class="menu-title text-truncate" data-i18n="User">ผู้ใช้งานระบบ</span></a>
-                    <ul class="menu-content">
-                        <li><a class="d-flex align-items-center" href="app-users-list"><i class="bx bx-right-arrow-alt"></i><span class="menu-item text-truncate" data-i18n="List">รายชื่อผู้ใช้งานระบบ</span></a>
-                        </li>
-                        <li><a class="d-flex align-items-center" href="app-users-view"><i class="bx bx-right-arrow-alt"></i><span class="menu-item text-truncate" data-i18n="View">เพิ่มผู้ใช้งานใหม่</span></a>
-                        </li>
-                    </ul>
-                </li>
-
-                <li class=" nav-item"><a href="#"><i class="menu-livicon" data-icon="heart"></i><span class="menu-title text-truncate" data-i18n="User">สถานบริการ</span></a>
-                    <ul class="menu-content">
-                        <li><a class="d-flex align-items-center" href="app-facility-list"><i class="bx bx-right-arrow-alt"></i><span class="menu-item text-truncate" data-i18n="List">รายชื่อเปิดใช้งาน</span></a></li>
-                        <li><a class="d-flex align-items-center" href="app-facility-add"><i class="bx bx-right-arrow-alt"></i><span class="menu-item text-truncate" data-i18n="View">เพิ่มสถานบริการใหม่</span></a></li>
-                    </ul>
-                </li>
-
-                
-                
-                <li class=" navigation-header text-truncate"><span data-i18n="UI Elements">ระบบบัญชีเสมือน</span></li>
-                <li class=" nav-item"><a href="#"><i class="menu-livicon" data-icon="calculator"></i><span class="menu-title text-truncate" data-i18n="Content">ระบบบันทึกข้อมูล</span></a>
-                    <ul class="menu-content">
-                        <li><a class="d-flex align-items-center" href="content-grid"><i class="bx bx-right-arrow-alt"></i><span class="menu-item text-truncate" data-i18n="Grid">Grid</span></a>
-                        </li>
-                        <li><a class="d-flex align-items-center" href="content-typography"><i class="bx bx-right-arrow-alt"></i><span class="menu-item text-truncate" data-i18n="Typography">Typography</span></a>
-                        </li>
-                        <li><a class="d-flex align-items-center" href="content-text-utilities"><i class="bx bx-right-arrow-alt"></i><span class="menu-item text-truncate" data-i18n="Text Utilities">Text Utilities</span></a>
-                        </li>
-                        <li><a class="d-flex align-items-center" href="content-syntax-highlighter"><i class="bx bx-right-arrow-alt"></i><span class="menu-item text-truncate" data-i18n="Syntax Highlighter">Syntax Highlighter</span></a>
-                        </li>
-                        <li><a class="d-flex align-items-center" href="content-helper-classes"><i class="bx bx-right-arrow-alt"></i><span class="menu-item text-truncate" data-i18n="Helper Classes">Helper Classes</span></a>
-                        </li>
-                    </ul>
-                </li>
-                <li class=" nav-item"><a href="colors"><i class="menu-livicon" data-icon="line-chart"></i><span class="menu-title text-truncate" data-i18n="Colors">รายงาน</span></a>
-                </li>
-
-                <li class=" navigation-header text-truncate"><span data-i18n="UI Elements">ระบบการเชื่อมโยงข้อมูล</span></li>
-
-                <li class=" nav-item"><a href="#"><i class="menu-livicon" data-icon="unlock"></i><span class="menu-title text-truncate" data-i18n="Authentication">Authentication</span></a>
-                    <ul class="menu-content">
-                        <li><a class="d-flex align-items-center" href="auth-login" target="_blank"><i class="bx bx-right-arrow-alt"></i><span class="menu-item text-truncate" data-i18n="Login">Login</span></a>
-                        </li>
-                        <li><a class="d-flex align-items-center" href="auth-register" target="_blank"><i class="bx bx-right-arrow-alt"></i><span class="menu-item text-truncate" data-i18n="Register">Register</span></a>
-                        </li>
-                        <li><a class="d-flex align-items-center" href="auth-forgot-password" target="_blank"><i class="bx bx-right-arrow-alt"></i><span class="menu-item text-truncate" data-i18n="Forgot Password">Forgot Password</span></a>
-                        </li>
-                        <li><a class="d-flex align-items-center" href="auth-reset-password" target="_blank"><i class="bx bx-right-arrow-alt"></i><span class="menu-item text-truncate" data-i18n="Reset Password">Reset Password</span></a>
-                        </li>
-                        <li><a class="d-flex align-items-center" href="auth-lock-screen" target="_blank"><i class="bx bx-right-arrow-alt"></i><span class="menu-item text-truncate" data-i18n="Lock Screen">Lock Screen</span></a>
-                        </li>
-                    </ul>
-                </li>
-                
-                <li class=" navigation-header text-truncate"><span data-i18n="Charts &amp; Maps">อื่น ๆ</span></li>
-                <li class=" nav-item"><a href="maps-leaflet"><i class="menu-livicon" data-icon="map"></i><span class="menu-title text-truncate" data-i18n="Leaflet Maps">แผนที่สถานบริการ</span></a>
-                </li>
-
-                <li class=" navigation-header text-truncate"><span data-i18n="Support">สนับสนุน</span>
-                </li>
-                <li class=" nav-item"><a href="https://pixinvent.com/demo/frest-clean-bootstrap-admin-dashboard-template/documentation" target="_blank"><i class="menu-livicon" data-icon="morph-folder"></i><span class="menu-title text-truncate" data-i18n="Documentation">คู่มือการใช้งาน</span></a>
-                </li>
-                <li class=" nav-item"><a href="https://pixinvent.ticksy.com/" target="_blank"><i class="menu-livicon" data-icon="help"></i><span class="menu-title text-truncate" data-i18n="Raise Support">ติดต่อฝ่ายสนับสนุน</span></a>
-                </li>
-            </ul>
+            <?php require("../../control/admin-menu.php"); ?>
         </div>
     </div>
     <!-- END: Main Menu-->

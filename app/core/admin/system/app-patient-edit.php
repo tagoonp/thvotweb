@@ -11,7 +11,7 @@ if(isset($_GET['stage'])){
     $stage = mysqli_real_escape_string($conn, $_GET['stage']);
 }
 
-$menu = 2;
+$menu = 7;
 
 require('../../../config/user.inc.php'); 
 
@@ -30,6 +30,10 @@ if(!$selected_user){
     die();
     header('Location: ./app-user-list');
 }
+
+$strSQL = "SELECT * FROM vot2_patient_location WHERE loc_patient_uid = '$id' AND loc_status = '1'";
+$selected_location = $db->fetch($strSQL, false);
+
 
 ?>
 <!DOCTYPE html>
@@ -54,6 +58,8 @@ if(!$selected_user){
     <link rel="stylesheet" type="text/css" href="../../../app-assets/vendors/css/tables/datatable/buttons.bootstrap4.min.css">
     <link rel="stylesheet" type="text/css" href="../../../app-assets/vendors/css/extensions/sweetalert2.min.css">
     <link rel="stylesheet" type="text/css" href="../../../app-assets/vendors/css/forms/select/select2.min.css">
+    <link rel="stylesheet" type="text/css" href="../../../app-assets/vendors/css/pickers/pickadate/pickadate.css">
+    <link rel="stylesheet" type="text/css" href="../../../app-assets/vendors/css/pickers/daterange/daterangepicker.css">
     <!-- END: Vendor CSS-->
 
     <!-- BEGIN: Theme CSS-->
@@ -160,7 +166,7 @@ if(!$selected_user){
             <div class="content-header row">
             </div>
             <div class="content-body">
-            <h2 class="mb-2">แก้ไขข้อมูลผู้ใช้งาน</h2>
+            <h2 class="mb-2">แก้ไขข้อมูลผู้ป่วย</h2>
                 <!-- users edit start -->
                 <section class="users-edit">
                     <div class="card">
@@ -173,7 +179,12 @@ if(!$selected_user){
                                 </li>
                                 <li class="nav-item">
                                     <a class="nav-link d-flex align-items-center" id="information-tab" data-toggle="tab" href="#information" aria-controls="information" role="tab" aria-selected="false">
-                                        <i class="bx bxs-layer mr-25"></i><span class="d-none d-sm-block">สิทธิ์การเข้าถึงข้อมูล</span>
+                                        <i class="bx bx-navigation mr-25"></i><span class="d-none d-sm-block">การติดตาม</span>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link d-flex align-items-center" id="information-tab" data-toggle="tab" href="#location" aria-controls="information" role="tab" aria-selected="false">
+                                        <i class="bx bxs-map mr-25"></i><span class="d-none d-sm-block">พิกัดตำแหน่ง</span>
                                     </a>
                                 </li>
                                 <li class="nav-item">
@@ -181,11 +192,6 @@ if(!$selected_user){
                                         <i class="bx bx-key mr-25"></i><span class="d-none d-sm-block">ตั้งรหัสผ่าน</span>
                                     </a>
                                 </li>
-                                <!-- <li class="nav-item">
-                                    <a class="nav-link d-flex align-items-center" id="information-tab" data-toggle="tab" href="#log" aria-controls="information" role="tab" aria-selected="false">
-                                        <i class="bx bx-list-ul mr-25"></i><span class="d-none d-sm-block">บันทึกการใช้งาน</span>
-                                    </a>
-                                </li> -->
                             </ul>
                             <div class="tab-content">
                                 <div class="tab-pane active fade show" id="account" aria-labelledby="account-tab" role="tabpanel">
@@ -195,18 +201,47 @@ if(!$selected_user){
                                             <img src="../../../app-assets/images/portrait/small/avatar-s-26.jpg" alt="users avatar" class="users-avatar-shadow rounded-circle" height="64" width="64">
                                         </a>
                                         <div class="media-body">
-                                            <h4 class="media-heading">Avatar</h4>
+                                            <h4 class="media-heading"><?php echo $selected_user['fname']." ".$selected_user['lname'];?></h4>
                                             <div class="col-12 px-0 d-flex">
-                                                <a href="javascript:void(0);" class="btn btn-sm btn-primary mr-25">Change</a>
                                                 <a href="javascript:void(0);" class="btn btn-sm btn-light-secondary">Reset</a>
                                             </div>
                                         </div>
                                     </div>
                                     <!-- users edit media object ends -->
                                     <!-- users edit account form start -->
-                                    <form class="userform">
+                                    <form class="patientupdateform" onsubmit="return admin_user.check_patientupdate_form()" method="post" action="../../../controller/user?stage=update_patient">
                                         <div class="row">
+                                            <div class="col-12">
+                                                <?php 
+                                                if($selected_user['start_obsdate'] == null){
+                                                    ?>
+                                                    <div class="alert alert-danger alert-dismissible mb-2" role="alert">
+                                                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                                            <span aria-hidden="true">&times;</span>
+                                                        </button>
+                                                        <div class="d-flex align-items-center">
+                                                            <i class="bx bx-error"></i>
+                                                            <span>
+                                                                ผู้ป่วยยังไม่มีการตั้งค่าวันที่เริ่มและสิ้นสุดการติดตาม
+                                                            </span>
+                                                        </div>
+                                                    </div>
+                                                    <?php
+                                                }
+                                                ?>
+                                            </div>
                                             <div class="col-12 col-sm-6">
+
+                                                <div class="row" style="">
+                                                    <div class="col-12 col-sm-12">
+                                                        <div class="form-group">
+                                                            <div class="controls">
+                                                                <label>UID : <span class="text-danger">*</span></label>
+                                                                <input type="text" class="form-control" placeholder="" id="txtUid" name="txtUid" readonly value="<?php echo $selected_user['uid'];?>">
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
                                                 
                                                 <div class="row">
                                                     <div class="col-12 col-sm-12">
@@ -224,13 +259,13 @@ if(!$selected_user){
                                                         <div class="col-12 col-sm-6">
                                                             <div class="controls">
                                                                 <label>ชื่อ :</label>
-                                                                <input type="text" class="form-control" placeholder="Name" value="<?php echo $selected_user['fname'];?>" name="name">
+                                                                <input type="text" class="form-control" placeholder="Name" value="<?php echo $selected_user['fname'];?>" name="txtFname" id="txtFname">
                                                             </div>
                                                         </div>
                                                         <div class="col-12 col-sm-6">
                                                             <div class="controls">
                                                                 <label>นามสกุล :</label>
-                                                                <input type="text" class="form-control" placeholder="Name" value="<?php echo $selected_user['lname'];?>" name="name">
+                                                                <input type="text" class="form-control" placeholder="Name" value="<?php echo $selected_user['lname'];?>" name="txtLname" id="txtLname">
                                                             </div>
                                                         </div>
                                                     </div>
@@ -240,12 +275,6 @@ if(!$selected_user){
                                                     <div class="controls">
                                                         <label>หมายเลขโทรศัพท์ : <span class="text-danger">*</span></label>
                                                         <input type="text" class="form-control" placeholder="Phone number" name="txtPhone" id="txtPhone" value="<?php echo $selected_user['phone'];?>">
-                                                    </div>
-                                                </div>
-                                                <div class="form-group">
-                                                    <div class="controls">
-                                                        <label>E-mail :</label>
-                                                        <input type="email" class="form-control" placeholder="Email" name="txtEmail" id="txtEmail" value="<?php echo $selected_user['email'];?>">
                                                     </div>
                                                 </div>
 
@@ -274,39 +303,37 @@ if(!$selected_user){
                                                     
                                                 </div>
                                                 <div class="form-group">
-                                                    <label>สิทธิ์การใช้งาน : <span class="text-danger">*</span></label>
+                                                    <label>ประเภทการติดตาม : <span class="text-danger">*</span></label>
                                                     <select class="form-control" id="txtRole" name="txtRole">
-                                                        <option value="">-- เลือกสิทธิ์ --</option>
-                                                        <option value="admin" <?php if($selected_user['role'] == 'admin'){ echo "selected"; } ?>>ผู้ดูแลระบบ (Admin)</option>
-                                                        <option value="moderator" <?php if($selected_user['role'] == 'moderator'){ echo "selected"; } ?>>ผู้รับผิดชอบส่วนกลาง (Moderator)</option>
-                                                        <option value="manager" <?php if($selected_user['role'] == 'manager'){ echo "selected"; } ?>>ผู้รับผิดชอบส่วนงานของสถานบริการ (Manage)</option>
-                                                        <option value="staff" <?php if($selected_user['role'] == 'staff'){ echo "selected"; } ?>>ผู้ปฏิบัติงานบันทึก/ตรวจสอบข้อมูล (Staff)</option>
-                                                        <!-- <option value="patient">ผู้ป่วย (VOT)</option> -->
+                                                        <option value="">-- เลือกประเภท --</option>
+                                                        <option value="VOT" <?php if($selected_user['patient_type'] == 'VOT'){ echo "selected"; } ?>>ผู้ป่วย (VOT)</option>
+                                                        <option value="DOT" <?php if($selected_user['patient_type'] == 'DOT'){ echo "selected"; } ?>>ผู้ป่วย (DOT)</option>
                                                     </select>
                                                 </div>
                                                 
-                                                <div class="form-group">
-                                                    <label>สถานะการใช้งาน : <span class="text-danger">*</span></label>
-                                                    <select class="form-control" id="txtStatus" name="txtStatus">
-                                                        <option value="" selected>-- เลือกสถานะ --</option>
-                                                        <option value="1" <?php if($selected_user['active_status'] == '1'){ echo "selected"; } ?>>เปิดใช้งาน</option>
-                                                        <option value="0" <?php if($selected_user['active_status'] == '0'){ echo "selected"; } ?>>ปิดใช้งาน</option>
-                                                    </select>
+                                                <div class="row">
+                                                    <div class="form-group col-12 col-sm-6">
+                                                        <label>สถานะการใช้งาน : <span class="text-danger">*</span></label>
+                                                        <select class="form-control" id="txtStatus" name="txtStatus">
+                                                            <option value="" selected>-- เลือกสถานะ --</option>
+                                                            <option value="1" <?php if($selected_user['active_status'] == '1'){ echo "selected"; } ?>>เปิดใช้งาน</option>
+                                                            <option value="0" <?php if($selected_user['active_status'] == '0'){ echo "selected"; } ?>>ปิดใช้งาน</option>
+                                                        </select>
+                                                    </div>
+                                                    <div class="form-group col-12 col-sm-6">
+                                                        <label>สถานะการตรวจสอบบัญชีผู้ใช้ : <span class="text-danger">*</span></label>
+                                                        <select class="form-control" id="txtVerify" name="txtVerify">
+                                                            <option value="" selected>-- เลือกสถานะ --</option>
+                                                            <option value="1" <?php if($selected_user['verify_status'] == '1'){ echo "selected"; } ?>>ยืนยันแล้ว</option>
+                                                            <option value="0" <?php if($selected_user['verify_status'] == '0'){ echo "selected"; } ?>>รอการยืนยัน</option>
+                                                        </select>
+                                                    </div>
                                                 </div>
-                                                <div class="form-group">
-                                                    <label>สถานะการตรวจสอบบัญชีผู้ใช้ : <span class="text-danger">*</span></label>
-                                                    <select class="form-control" id="txtVerify" name="txtVerify">
-                                                        <option value="" selected>-- เลือกสถานะ --</option>
-                                                        <option value="1" <?php if($selected_user['verify_status'] == '1'){ echo "selected"; } ?>>ยืนยันแล้ว</option>
-                                                        <option value="0" <?php if($selected_user['verify_status'] == '0'){ echo "selected"; } ?>>รอการยืนยัน</option>
-                                                    </select>
-                                                </div>
+                                                
                                                 
                                             </div>
                                             <div class="col-12 d-flex flex-sm-row flex-column justify-content-end mt-1">
-                                                <button type="submit" class="btn btn-primary glow mb-1 mb-sm-0 mr-0 mr-sm-1">Save
-                                                    changes</button>
-                                                <button type="reset" class="btn btn-light">Cancel</button>
+                                                <button type="submit" class="btn btn-primary glow mb-1 mb-sm-0 mr-0 mr-sm-1">บันทึก</button>
                                             </div>
                                         </div>
                                     </form>
@@ -314,68 +341,97 @@ if(!$selected_user){
                                 </div>
                                 <div class="tab-pane fade show" id="information" aria-labelledby="information-tab" role="tabpanel">
                                     <!-- users edit Info form start -->
-                                    <div class="table-responsive">
-                                        <table class="table mt-1">
-                                            <thead>
-                                                <tr>
-                                                    <th>ระะดับการเข้าถึงข้อมูล</th>
-                                                    <th class="text-right">เปิด/ปิด สิทธิ์</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                <tr>
-                                                    <td>ประเทศ</td>
-                                                    <td class="text-right">
-                                                        <div class="custom-control mt-1 custom-switch custom-switch-success mr-2 mb-1">
-                                                            <input type="checkbox"  onclick="admin_user.toggle_access('<?php echo $selected_user['user_id'];?>', 'lv_country')" class="custom-control-input" id="lv_country<?php echo $selected_user['user_id'];?>" <?php if($selected_user['lv_country'] == 1){ echo "checked"; } ?>>
-                                                            <label class="custom-control-label" for="lv_country<?php echo $selected_user['user_id'];?>"></label>
-                                                        </div>
-                                                    </td>
-                                                </tr>
+                                    <form class="passwordform" method="post" action="../../../controller/user?stage=updatemonitor" onsubmit="return admin_user.check_date_form();">
+                                        <div class="row">
 
-                                                <tr>
-                                                    <td>เขตบริการสุขภาพ</td>
-                                                    <td class="text-right">
-                                                        <div class="custom-control mt-1 custom-switch custom-switch-success mr-2 mb-1">
-                                                            <input type="checkbox"  onclick="admin_user.toggle_access('<?php echo $selected_user['user_id'];?>', 'lv_area')" class="custom-control-input" id="lv_area<?php echo $selected_user['user_id'];?>" <?php if($selected_user['lv_area'] == 1){ echo "checked"; } ?>>
-                                                            <label class="custom-control-label" for="lv_area<?php echo $selected_user['user_id'];?>"></label>
-                                                        </div>
-                                                    </td>
-                                                </tr>
+                                            <div class="col-12 col-sm-6" style="display: none;">
+                                                <div class="form-group">
+                                                    <label>UID : <span class="text-danger">*</span></label>
+                                                    <input class="form-control" type="text" id="txtMonitorUid" name="txtMonitorUid" value="<?php echo $selected_user['uid'];?>">
+                                                </div>
+                                            </div>
 
-                                                <tr>
-                                                    <td>จังหวัด</td>
-                                                    <td class="text-right">
-                                                        <div class="custom-control mt-1 custom-switch custom-switch-success mr-2 mb-1">
-                                                            <input type="checkbox"  onclick="admin_user.toggle_access('<?php echo $selected_user['user_id'];?>', 'lv_province')" class="custom-control-input" id="lv_province<?php echo $selected_user['user_id'];?>" <?php if($selected_user['lv_province'] == 1){ echo "checked"; } ?>>
-                                                            <label class="custom-control-label" for="lv_province<?php echo $selected_user['user_id'];?>"></label>
-                                                        </div>
-                                                    </td>
-                                                </tr>
+                                            <div class="col-12 col-sm-6">
 
-                                                <tr>
-                                                    <td>อำเภอ</td>
-                                                    <td class="text-right">
-                                                        <div class="custom-control mt-1 custom-switch custom-switch-success mr-2 mb-1">
-                                                            <input type="checkbox"  onclick="admin_user.toggle_access('<?php echo $selected_user['user_id'];?>', 'lv_district')" class="custom-control-input" id="lv_district<?php echo $selected_user['user_id'];?>" <?php if($selected_user['lv_district'] == 1){ echo "checked"; } ?>>
-                                                            <label class="custom-control-label" for="lv_district<?php echo $selected_user['user_id'];?>"></label>
+                                                <div class="mb-1">
+                                                    <h6>วันที่เริ่มติดตาม : <span class="text-danger">*</span> </h6>
+                                                    <fieldset class="form-group position-relative has-icon-left">
+                                                        <input type="text" class="form-control pickadate" placeholder="Select Date" id="txtStartmonitor" name="txtStartmonitor" value="<?php echo $selected_user['start_obsdate'];?>">
+                                                        <div class="form-control-position">
+                                                            <i class='bx bx-calendar'></i>
                                                         </div>
-                                                    </td>
-                                                </tr>
+                                                    </fieldset>
+                                                </div>
+                                                
+                                            </div>
 
-                                                <tr>
-                                                    <td>ตำบล</td>
-                                                    <td class="text-right">
-                                                        <div class="custom-control mt-1 custom-switch custom-switch-success mr-2 mb-1">
-                                                            <input type="checkbox"  onclick="admin_user.toggle_access('<?php echo $selected_user['user_id'];?>', 'lv_subdistrict')" class="custom-control-input" id="lv_subdistrict<?php echo $selected_user['user_id'];?>" <?php if($selected_user['lv_subdistrict'] == 1){ echo "checked"; } ?>>
-                                                            <label class="custom-control-label" for="lv_subdistrict<?php echo $selected_user['user_id'];?>"></label>
+                                            <div class="col-12 col-sm-6">
+
+                                                <div class="mb-1">
+                                                    <h6>วันสิ้นสุดการของติดตาม : <span class="text-danger">*</span> </h6>
+                                                    <fieldset class="form-group position-relative has-icon-left">
+                                                        <input type="text" class="form-control pickadate" placeholder="Select Date" id="txtEndmonitor" name="txtEndmonitor" value="<?php echo $selected_user['end_obsdate'];?>">
+                                                        <div class="form-control-position">
+                                                            <i class='bx bx-calendar'></i>
                                                         </div>
-                                                    </td>
-                                                </tr>
+                                                    </fieldset>
+                                                    <p><a href="Javascript:admin_user.calculate_findate()">คลิกที่นี่</a> เพื่อให้ระบบคำนวณอัตโนมัติจากวันเริ่มต้น</p>
+                                                </div>
 
-                                            </tbody>
-                                        </table>
-                                    </div>
+                                            </div>
+                                            
+                                            <div class="col-12 d-flex flex-sm-row flex-column justify-content-end mt-1">
+                                                <button type="submit" class="btn btn-primary glow mb-1 mb-sm-0 mr-0 mr-sm-1">บันทึก</button>
+                                            </div>
+                                        </div>
+                                    </form>
+                                    <!-- users edit Info form ends -->
+                                </div>
+                                <div class="tab-pane fade show" id="location" aria-labelledby="information-tab" role="tabpanel">
+                                    <!-- users edit Info form start -->
+                                    <form class="locationform" method="post" action="#">
+                                        <div class="row">
+
+                                            <div class="col-12 col-sm-6" style="display: none;">
+                                                <div class="form-group">
+                                                    <label>UID : <span class="text-danger">*</span></label>
+                                                    <input class="form-control" type="text" id="txtLocationUid" name="txtLocationUid" value="<?php echo $selected_user['uid'];?>">
+                                                </div>
+                                            </div>
+
+                                            <div class="col-12">
+                                                <div class="alert bg-rgba-danger alert-dismissible mb-2" role="alert">
+                                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                                        <span aria-hidden="true">&times;</span>
+                                                    </button>
+                                                    <div class="d-flex align-items-center">
+                                                        <i class="bx bx-error"></i>
+                                                        <span>
+                                                        ใช้ Application เพื่อทำการบันทึกพิกัด
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-12 col-sm-6">
+                                                <div class="form-group">
+                                                    <label>ละติจูด : <span class="text-danger">*</span></label>
+                                                    <input class="form-control" type="text" readonly id="txtLat" name="txtLat" value="<?php if($selected_location){ echo $selected_location['loc_lat']; }?>">
+                                                </div>
+                                            </div>
+
+                                            <div class="col-12 col-sm-6">
+                                                <div class="form-group">
+                                                    <label>ลองติจูด : <span class="text-danger">*</span></label>
+                                                    <input class="form-control" type="text" readonly id="txtLng" name="txtLng" value="<?php if($selected_location){ echo $selected_location['loc_lng']; }?>">
+                                                </div>
+                                            </div>
+
+                                            <div class="col-12">
+                                                <p><a href="Javascript:admin_user.resetLocation('<?php echo $selected_user['uid'];?>')" class="text-danger">- คลิกที่นี่ -</a> เพื่อทำการรีเซ็ตการบันทึกพิกัดของผู้ป่วย</p>
+                                            </div>
+                                        </div>
+                                    </form>
                                     <!-- users edit Info form ends -->
                                 </div>
                                 <div class="tab-pane fade show" id="password" aria-labelledby="information-tab" role="tabpanel">
@@ -392,14 +448,14 @@ if(!$selected_user){
 
                                             <div class="col-12 col-sm-6">
                                                 <div class="form-group">
-                                                    <label>ตั้งรหัสผ่านใหม่ : <span class="text-danger">*</span></label>
+                                                    <h6>ตั้งรหัสผ่านใหม่ : <span class="text-danger">*</span></h6>
                                                     <input class="form-control" type="password" id="txtPassword1" name="txtPassword1">
                                                 </div>
                                             </div>
 
                                             <div class="col-12 col-sm-6">
                                                 <div class="form-group">
-                                                    <label>ยืนยันรหัสผ่านใหม่ : <span class="text-danger">*</span></label>
+                                                    <h6>ยืนยันรหัสผ่านใหม่ : <span class="text-danger">*</span></h6>
                                                     <input class="form-control" type="password" id="txtPassword2" name="txtPassword2">
                                                 </div>
                                             </div>
@@ -412,17 +468,59 @@ if(!$selected_user){
                                     </form>
                                     <!-- users edit Info form ends -->
                                 </div>
-                                <div class="tab-pane fade show" id="log" aria-labelledby="information-tab" role="tabpanel">
-                                    
-                                </div>
                             </div>
                         </div>
                     </div>
                 </section>
                 <!-- users edit ends -->
+                <h3><i class="bx bxs-videos mr-25"></i> บันทึกการส่งวีดีโอ</h3>
+                <div class="card">
+                    <div class="card-body">
+                        <!-- datatable start -->
+                        <div class="table-responsive">
+                            <table id="video-list-datatable" class="table">
+                                <thead>
+                                    <tr>
+                                        <th>Log datetime</th>
+                                        <th>กิจกรรม</th>
+                                        <th>รายละเอียด</th>
+                                        <th>IP</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <?php 
+                                    $strSQL =  "SELECT * FROM vot2_log l INNER JOIN vot2_account a ON l.log_uid = a.uid 
+                                                INNER JOIN vot2_userinfo b ON a.uid = b.info_uid 
+                                                WHERE 
+                                                a.delete_status = '0' 
+                                                AND b.info_use = '1'
+                                                AND a.uid = '$id'
+                                                ORDER BY log_datetime DESC
+                                            ";
+                                    $result_list = $db->fetch($strSQL, true, false);
+                                    if($result_list['status']){
+                                        $c = 1;
+                                        foreach($result_list['data'] as $row){
+                                            ?>
+                                            <tr>
+                                                <td><?php echo $row['log_datetime']; ?></td>
+                                                <td><?php echo $row['log_info']; ?></td>
+                                                <td><?php echo $row['log_message']; ?></td>
+                                                <td><?php echo $row['log_ip']; ?></td>
+                                            </tr>
+                                            <?php
+                                            $c++;
+                                        }
+                                    }
+                                    ?>
+                                </tbody>
+                            </table>
+                        </div>
+                        <!-- datatable ends -->
+                    </div>
+                </div>
 
-
-                <h4>บันทึกการใช้งาน</h4>
+                <h3><i class="bx bx-list-ul mr-25"></i>บันทึกการใช้งาน</h3>
                 <div class="card">
                     <div class="card-body">
                         <!-- datatable start -->
@@ -498,6 +596,12 @@ if(!$selected_user){
     <script src="../../../app-assets/vendors/js/extensions/sweetalert2.all.min.js"></script>
     <script src="../../../app-assets/vendors/js/extensions/polyfill.min.js"></script>
     <script src="../../../app-assets/vendors/js/forms/select/select2.full.min.js"></script>
+    <script src="../../../app-assets/vendors/js/pickers/pickadate/picker.js"></script>
+    <script src="../../../app-assets/vendors/js/pickers/pickadate/picker.date.js"></script>
+    <script src="../../../app-assets/vendors/js/pickers/pickadate/picker.time.js"></script>
+    <script src="../../../app-assets/vendors/js/pickers/pickadate/legacy.js"></script>
+    <script src="../../../app-assets/vendors/js/extensions/moment.min.js"></script>
+    <script src="../../../app-assets/vendors/js/pickers/daterange/daterangepicker.js"></script>
     <!-- END: Page Vendor JS-->
 
     <!-- BEGIN: Theme JS-->
@@ -514,15 +618,23 @@ if(!$selected_user){
     <!-- END: Page JS-->
 
     <script>
+
+            $('.pickadate').pickadate({
+                format: 'yyyy-mm-dd',
+                formatSubmit: 'yyyy-mm-dd',
+            });
+
             if ($("#log-list-datatable").length > 0) {
                 usersTable = $("#log-list-datatable").DataTable({
                     responsive: true,
                     ordering: false
-                    // 'columnDefs': [
-                    //     {
-                    //         "orderable": false,
-                    //         "targets": [1, 3]
-                    //     }]
+                });
+            };
+
+            if ($("#video-list-datatable").length > 0) {
+                usersTable = $("#video-list-datatable").DataTable({
+                    responsive: true,
+                    ordering: false
                 });
             };
 

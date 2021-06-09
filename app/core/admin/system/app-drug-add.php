@@ -13,7 +13,7 @@ if(isset($_GET['stage'])){
 
 require('../../../config/user.inc.php'); 
 
-$menu = 1;
+$menu = 6;
 ?>
 <!DOCTYPE html>
 <html class="loading" lang="en" data-textdirection="ltr">
@@ -35,8 +35,6 @@ $menu = 1;
     <link rel="stylesheet" type="text/css" href="../../../app-assets/vendors/css/tables/datatable/dataTables.bootstrap4.min.css">
     <link rel="stylesheet" type="text/css" href="../../../app-assets/vendors/css/tables/datatable/responsive.bootstrap4.min.css">
     <link rel="stylesheet" type="text/css" href="../../../app-assets/vendors/css/tables/datatable/buttons.bootstrap4.min.css">
-    <link rel="stylesheet" type="text/css" href="../../../app-assets/vendors/css/extensions/sweetalert2.min.css">
-    <link rel="stylesheet" type="text/css" href="../../../app-assets/vendors/css/forms/select/select2.min.css">
     <!-- END: Vendor CSS-->
 
     <!-- BEGIN: Theme CSS-->
@@ -145,101 +143,53 @@ $menu = 1;
 
             </div>
             <div class="content-body">
-                <h2 class="mb-2">รายชื่อผู้ใช้งานระบบ</h2>
-                <!-- users list start -->
-                <div class="row">
-                    <div class="col-12 pb-1">
-                        <button class="btn btn-primary" onclick="window.location = 'app-users-add'"><i class="bx bxs-user-plus"></i> เพิ่มบัญชีผู้ใช้ใหม่</button>
-                    </div>
-                </div>
-                <section class="users-list-wrapper">
-                    <div class="users-list-table">
-                        <div class="card">
-                            <div class="card-body">
-                                <!-- datatable start -->
-                                <div class="table-responsive">
-                                    <table id="users-list-datatable" class="table">
-                                        <thead>
-                                            <tr>
-                                                <th>Username</th>
-                                                <th>รหัสสถานบริการ</th>
-                                                <th>ชื่อ - นามสกุล</th>
-                                                <th>เวลาของกิจกรรมล่าสุด</th>
-                                                <th>ยืนยันการใช้งาน</th>
-                                                <th>สิทธิ์</th>
-                                                <th>เปิด/ปิดการใช้งาน</th>
-                                                <th style="width: 80px;"></th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <?php 
-                                            $strSQL = "SELECT a.*, a.ID user_id, b.* FROM vot2_account a INNER JOIN vot2_userinfo b ON a.uid = b.info_uid 
-                                                      WHERE 
-                                                      a.delete_status = '0' 
-                                                      AND b.info_use = '1'
-                                                      AND a.role != 'patient'
-                                                      ";
-                                            $result_list = $db->fetch($strSQL, true, false);
-                                            if($result_list['status']){
-                                                $c = 1;
-                                                foreach($result_list['data'] as $row){
-                                                    ?>
-                                                    <tr>
-                                                        <td><?php echo $row['username']; ?></td>
-                                                        <td><a href="../../../html/ltr/vertical-menu-template/app-users-view.html"><?php echo $row['hcode']; ?></a>
-                                                        </td>
-                                                        <td><?php echo $row['fname']." ".$row['lname']; ?></td>
-                                                        <td>30/04/2019</td>
-                                                        <td class="pt-2">
-                                                            <div class="custom-control mt-1 custom-switch custom-switch-success mr-2 mb-1">
-                                                                <input type="checkbox"  onclick="admin_user.toggle_active('<?php echo $row['user_id'];?>')" class="custom-control-input" id="sw_active_<?php echo $row['user_id'];?>" <?php if($row['verify_status'] == 1){ echo "checked"; } ?>>
-                                                                <label class="custom-control-label" for="sw_active_<?php echo $row['user_id'];?>"></label>
-                                                            </div>
-                                                        </td>
-                                                        <td>
-                                                            <?php 
-                                                            if($row['role'] == 'admin'){ echo "ผู้ดูแลระบบ"; }
-                                                            if($row['role'] == 'moderator'){ echo "ผู้รับผิดชอบส่วนกลาง"; }
-                                                            if($row['role'] == 'manager'){ echo "ผู้รับผิดชอบส่วนงานของสถานบริการ"; }
-                                                            if($row['role'] == 'staff'){ echo "ผู้ปฏิบัติงานบันทึกข้อมูล"; }
-                                                            if($row['role'] == 'patient'){ echo "ผู้ป่วย"; }
-                                                            ?>
-                                                        </td>
-                                                        <td>
-                                                            <div class="custom-control mt-1 custom-switch custom-switch-success mr-2 mb-1">
-                                                                <input type="checkbox" onclick="admin_user.toggle_status('<?php echo $row['user_id'];?>')" class="custom-control-input"  id="sw_status_<?php echo $row['user_id'];?>" <?php if($row['active_status'] == '1'){ echo "checked"; } ?>>
-                                                                <label class="custom-control-label" for="sw_status_<?php echo $row['user_id'];?>"></label>
-                                                            </div>
-                                                        </td>
-                                                        <td class="text-right">
-                                                            <a href="app-users-edit?id=<?php echo $row['uid'];?>" class="mr-1"><i class="bx bx-edit-alt"></i></a>
-                                                            <?php 
-                                                            if($row['role'] != 'admin'){
-                                                                ?>
-                                                                <a href="Javascript:admin_user.delete_user('<?php echo $row['uid'];?>')" clsas=""><i class="bx bx-trash-alt text-danger"></i></a>
-                                                                <?php
-                                                            }else{
-                                                                ?>
-                                                                <a href="#" clsas="" disabled><i class="bx bx-trash-alt text-muted"></i></a>
-                                                                <?php
-                                                            }
-                                                            ?>
-                                                        </td>
-                                                    </tr>
-                                                    <?php
-                                                    $c++;
-                                                }
-                                            }
-                                            ?>
-                                        </tbody>
-                                    </table>
+                <h2 class="mb-2">เพิ่มยาใหม่</h2>
+                <!-- users edit start -->
+                <section class="users-edit">
+                    <div class="card">
+                        <div class="card-body">
+                        <div class="tab-content">
+                                <div class="tab-pane active fade show" id="account" aria-labelledby="account-tab" role="tabpanel">
+                                    <!-- users edit media object start -->
+                                    <div class="media mb-2">
+                                        <a class="mr-2" href="javascript:void(0);">
+                                            <img src="../../../app-assets/images/portrait/small/avatar-s-26.jpg" alt="users avatar" class="users-avatar-shadow rounded-circle" height="64" width="64">
+                                        </a>
+                                        <div class="media-body">
+                                            <h4 class="media-heading">Avatar</h4>
+                                            <div class="col-12 px-0 d-flex">
+                                                <a href="javascript:void(0);" class="btn btn-sm btn-primary mr-25">Change</a>
+                                                <a href="javascript:void(0);" class="btn btn-sm btn-light-secondary">Reset</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- users edit media object ends -->
+                                    <!-- users edit account form start -->
+                                    <form class="form-validate">
+                                        <div class="row">
+                                            <div class="col-12">
+                                                <div class="form-group">
+                                                    <div class="controls">
+                                                        <label>ชื่อยา</label>
+                                                        <input type="text" class="form-control" placeholder="Username" value="dean3004" name="username">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-12 d-flex flex-sm-row flex-column justify-content-end mt-1">
+                                                <button type="submit" class="btn btn-primary glow mb-1 mb-sm-0 mr-0 mr-sm-1">Save
+                                                    changes</button>
+                                                <button type="reset" class="btn btn-light">Cancel</button>
+                                            </div>
+                                        </div>
+                                    </form>
+                                    <!-- users edit account form ends -->
                                 </div>
-                                <!-- datatable ends -->
                             </div>
+                            
                         </div>
                     </div>
                 </section>
-                <!-- users list ends -->
+                <!-- users edit ends -->
 
             </div>
         </div>
@@ -267,9 +217,6 @@ $menu = 1;
     <script src="../../../app-assets/vendors/js/tables/datatable/buttons.bootstrap4.min.js"></script>
     <script src="../../../app-assets/vendors/js/tables/datatable/dataTables.responsive.min.js"></script>
     <script src="../../../app-assets/vendors/js/tables/datatable/responsive.bootstrap4.min.js"></script>
-    <script src="../../../app-assets/vendors/js/extensions/sweetalert2.all.min.js"></script>
-    <script src="../../../app-assets/vendors/js/extensions/polyfill.min.js"></script>
-    <script src="../../../app-assets/vendors/js/forms/select/select2.full.min.js"></script>
     <!-- END: Page Vendor JS-->
 
     <!-- BEGIN: Theme JS-->
@@ -281,8 +228,7 @@ $menu = 1;
     <!-- END: Theme JS-->
 
     <!-- BEGIN: Page JS-->
-    <script src="../../../app-assets/js/scripts/pages/app-users.js"></script>
-    <script src="../../../assets/js/scripts/admin-user.js"></script>
+    <script src="../../../assets/js/scripts/app-drug.js"></script>
     <!-- END: Page JS-->
 
 </body>

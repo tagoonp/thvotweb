@@ -1,5 +1,5 @@
 <?php 
-header("Access-Control-Allow-*: *");
+header("Access-Control-Allow-Origin: *");
 $return = array();
 $return['a'] = '123';
 $return['b'] = 'asd';

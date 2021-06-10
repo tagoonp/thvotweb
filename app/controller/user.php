@@ -108,6 +108,78 @@ if($stage == 'create'){
     }
 }
 
+if($stage == 'updateinfo'){
+    if(
+        (!(isset($_POST['txtUsername']))) ||
+        (!(isset($_POST['txtFname']))) ||
+        (!(isset($_POST['txtLname']))) ||
+        (!(isset($_POST['txtPhone']))) ||
+        (!(isset($_POST['txtRole']))) ||
+        (!(isset($_POST['txtStatus']))) ||
+        (!(isset($_POST['txtVerify']))) || 
+        (!(isset($_POST['txtHcode'])))
+    ){
+        ?>
+        <script>
+            alert('Can not create new account');
+            window.history.back()
+        </script>
+        <?php
+        $db->close();
+        die();
+    }
+    $prefix = mysqli_real_escape_string($conn, $_POST['txtPrefix']);
+    $username = mysqli_real_escape_string($conn, $_POST['txtUsername']);
+    $fname = mysqli_real_escape_string($conn, $_POST['txtFname']);
+    $lname = mysqli_real_escape_string($conn, $_POST['txtLname']);
+    $phone = mysqli_real_escape_string($conn, $_POST['txtPhone']);
+    $email = mysqli_real_escape_string($conn, $_POST['txtEmail']);
+    $role = mysqli_real_escape_string($conn, $_POST['txtRole']);
+    $status = mysqli_real_escape_string($conn, $_POST['txtStatus']);
+    $verify = mysqli_real_escape_string($conn, $_POST['txtVerify']);
+    $hcode = mysqli_real_escape_string($conn, $_POST['txtHcode']);
+
+    
+
+    $strSQL = "SELECT uid FROM vot2_account WHERE username = '$username'";
+    $result = $db->fetch($strSQL, false);
+    if($result){
+        $strSQL = "UPDATE vot2_account 
+              SET 
+              role = '$role',
+              hcode = '$hcode',
+              verify_status = '$verify',
+              active_status = '$status',
+              u_datetime = '$datetime'
+              WHERE username = '$username'
+              ";
+        $res = $db->execute($strSQL);
+
+        $uid = $result['uid'];
+
+        $strSQL = "UPDATE vot2_userinfo SET info_use = '0' WHERE info_uid = '$uid'";
+        $res = $db->execute($strSQL);
+
+        $strSQL = "INSERT INTO vot2_userinfo (`fname`, `lname`, `phone`, `info_udatetime`, `info_use`, `info_uid`) 
+                   VALUES ('$fname', '$lname', '$phone', '$datetime', '1', '$uid')";
+        $res = $db->insert($strSQL, false);
+
+        $strSQL = "INSERT INTO vot2_log (`log_datetime`, `log_info`, `log_message`, `log_ip`, `log_uid`)
+                    VALUES ('$datetime', 'ปรับปรุงข้อมูลผู้ใช้งาน', 'Target UID -> $uid', '$remote_ip', '".$_SESSION['thvot_uid']."')
+                    ";
+        $db->insert($strSQL, false);
+
+
+    }
+
+    
+    header('Location: ../core/'.$_SESSION['thvot_role'].'/system/app-users-list');
+    $db->close();
+    die();
+
+    
+}
+
 if($stage == 'updatemonitor'){
     if(
         (!(isset($_POST['txtMonitorUid']))) ||

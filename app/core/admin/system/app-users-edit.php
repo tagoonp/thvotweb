@@ -204,10 +204,9 @@ if(!$selected_user){
                                     </div>
                                     <!-- users edit media object ends -->
                                     <!-- users edit account form start -->
-                                    <form class="userform">
+                                    <form class="userform" onsubmit="return admin_user.check_add_form()" method="post" action="../../../controller/user?stage=updateinfo">
                                         <div class="row">
                                             <div class="col-12 col-sm-6">
-                                                
                                                 <div class="row">
                                                     <div class="col-12 col-sm-12">
                                                         <div class="form-group">
@@ -224,13 +223,13 @@ if(!$selected_user){
                                                         <div class="col-12 col-sm-6">
                                                             <div class="controls">
                                                                 <label>ชื่อ :</label>
-                                                                <input type="text" class="form-control" placeholder="Name" value="<?php echo $selected_user['fname'];?>" name="name">
+                                                                <input type="text" class="form-control" placeholder="Name" value="<?php echo $selected_user['fname'];?>" name="txtFname" id="txtFname">
                                                             </div>
                                                         </div>
                                                         <div class="col-12 col-sm-6">
                                                             <div class="controls">
                                                                 <label>นามสกุล :</label>
-                                                                <input type="text" class="form-control" placeholder="Name" value="<?php echo $selected_user['lname'];?>" name="name">
+                                                                <input type="text" class="form-control" placeholder="Name" value="<?php echo $selected_user['lname'];?>" name="txtLname" id="txtLname">
                                                             </div>
                                                         </div>
                                                     </div>
@@ -304,9 +303,7 @@ if(!$selected_user){
                                                 
                                             </div>
                                             <div class="col-12 d-flex flex-sm-row flex-column justify-content-end mt-1">
-                                                <button type="submit" class="btn btn-primary glow mb-1 mb-sm-0 mr-0 mr-sm-1">Save
-                                                    changes</button>
-                                                <button type="reset" class="btn btn-light">Cancel</button>
+                                                <button type="submit" class="btn btn-primary glow mb-1 mb-sm-0 mr-0 mr-sm-1">บันทึก</button>
                                             </div>
                                         </div>
                                     </form>

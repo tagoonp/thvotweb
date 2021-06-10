@@ -215,6 +215,74 @@ $menu = 12;
                                                         <input type="text" class="form-control" placeholder="Phone number" name="txtPhone" id="txtPhone">
                                                     </div>
                                                 </div>
+
+                                                <div class="form-group">
+                                                    <label>จังหวัด : <span class="text-danger">*</span></label>
+                                                    <div class="select-error">
+                                                        <select name="txtHcode" id="txtHcode" data-required class="form-control select2">
+                                                            <option value="">-- เลือกจังหวัด --</option>
+                                                            <?php 
+                                                            $strSQL = "SELECT vot2_projecthospital.* FROM vot2_projecthospital 
+                                                            WHERE phosstatus = 'Y' ORDER BY hserv";
+                                                            $result_list = $db->fetch($strSQL, true, false);
+                                                            if($result_list['status']){
+                                                                $c = 1;
+                                                                foreach($result_list['data'] as $row){
+                                                                    ?>
+                                                                    <option value="<?php echo $row['phoscode'];?>" <?php  ?>>[<?php echo $row['phoscode'];?>] <?php echo $row['hserv'];?></option>
+                                                                    <?php
+                                                                }
+                                                            }
+                                                            ?>
+                                                        </select>
+                                                    </div>
+                                                </div>
+
+                                                <div class="form-group">
+                                                    <label>อำเภอ : <span class="text-danger">*</span></label>
+                                                    <div class="select-error">
+                                                        <select name="txtHcode" id="txtHcode" data-required class="form-control select2">
+                                                            <option value="">-- เลือกอำเภอ --</option>
+                                                            <?php 
+                                                            $strSQL = "SELECT vot2_projecthospital.* FROM vot2_projecthospital 
+                                                            WHERE phosstatus = 'Y' ORDER BY hserv";
+                                                            $result_list = $db->fetch($strSQL, true, false);
+                                                            if($result_list['status']){
+                                                                $c = 1;
+                                                                foreach($result_list['data'] as $row){
+                                                                    ?>
+                                                                    <option value="<?php echo $row['phoscode'];?>" <?php  ?>>[<?php echo $row['phoscode'];?>] <?php echo $row['hserv'];?></option>
+                                                                    <?php
+                                                                }
+                                                            }
+                                                            ?>
+                                                        </select>
+                                                    </div>
+                                                </div>
+
+                                                <div class="form-group">
+                                                    <label>ตำบล : <span class="text-danger">*</span></label>
+                                                    <div class="select-error">
+                                                        <select name="txtHcode" id="txtHcode" data-required class="form-control select2">
+                                                            <option value="">-- เลือกตำบล --</option>
+                                                            <?php 
+                                                            $strSQL = "SELECT vot2_projecthospital.* FROM vot2_projecthospital 
+                                                            WHERE phosstatus = 'Y' ORDER BY hserv";
+                                                            $result_list = $db->fetch($strSQL, true, false);
+                                                            if($result_list['status']){
+                                                                $c = 1;
+                                                                foreach($result_list['data'] as $row){
+                                                                    ?>
+                                                                    <option value="<?php echo $row['phoscode'];?>" <?php  ?>>[<?php echo $row['phoscode'];?>] <?php echo $row['hserv'];?></option>
+                                                                    <?php
+                                                                }
+                                                            }
+                                                            ?>
+                                                        </select>
+                                                    </div>
+                                                </div>
+
+
                                             </div>
                                             <div class="col-12 col-sm-6">
                                                 <div class="form-group">

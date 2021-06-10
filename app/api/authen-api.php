@@ -11,6 +11,52 @@ if(!isset($_GET['stage'])){ $db->close(); header('Location: ../404?stage=001'); 
 $stage = mysqli_real_escape_string($conn, $_GET['stage']);
 $return = array();
 
+if($stage == 'savelocation'){
+    $json = file_get_contents('php://input');
+    $array = json_decode($json, true);
+
+    if(
+        (!isset($array['lat'])) ||
+        (!isset($array['lng'])) ||
+        (!isset($array['uid']))
+    ){
+        $return['status'] = 'Fail (x101)';
+        echo json_encode($return);
+        $db->close(); 
+        die();
+    }
+
+    $lat = mysqli_real_escape_string($conn, $array['lat']);
+    $lng = mysqli_real_escape_string($conn, $array['lng']);
+    $uid = mysqli_real_escape_string($conn, $array['uid']);
+
+    $strSQL = "UPDATE vot2_patient_location SET loc_status = '0' WHERE loc_patient_uid = '$uid'";
+    $db->execute($strSQL);
+
+    $strSQL = "SELECT * FROM vot2_account WHERE uid = '$uid'";
+    $resp = $db->fetch($strSQL, false);
+    if($resp){
+        $username = $resp['username'];
+        $strSQL = "INSERT INTO vot2_patient_location 
+                (`loc_patient_uid`, `loc_patient_username`, `loc_lat`, `loc_lng`, `loc_udatetime`, `loc_status`)
+                   VALUES (
+                    '$uid', '$username', '$lat', '$lng', '$datetime', '1'
+                   )
+                  ";
+        $db->insert($strSQL, false);
+
+        $strSQL = "INSERT INTO vot2_log (`log_datetime`, `log_info`, `log_message`, `log_ip`, `log_uid`)
+                       VALUES ('$datetime', 'ปรับปรุงพิกัดที่อยู่ผู้ป่วย', '', '$remote_ip', '$uid')
+                      ";
+            $db->insert($strSQL, false);
+    }
+
+    $return['status'] = 'Success';
+    echo json_encode($return);
+    $db->close(); 
+    die();
+}
+
 if($stage == 'login'){
 
     $json = file_get_contents('php://input');
@@ -177,9 +223,11 @@ if($stage == 'user'){
 
     $strSQL = "SELECT * FROM vot2_account INNER JOIN vot2_chospital ON vot2_account.hcode = vot2_chospital.hoscode 
                INNER JOIN vot2_userinfo ON vot2_account.uid = vot2_userinfo.info_uid
+               LEFT JOIN vot2_patient_location ON vot2_account.uid = vot2_patient_location.loc_patient_uid
                WHERE 
                vot2_account.UID = '$uid' AND vot2_account.role = '$role'
                AND info_use = '1'
+               AND (loc_status '1' OR loc_status IS NULL)
                LIMIT 1
           ";
     $user = $db->fetch($strSQL, false);

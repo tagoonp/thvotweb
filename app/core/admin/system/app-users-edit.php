@@ -204,7 +204,7 @@ if(!$selected_user){
                                     </div>
                                     <!-- users edit media object ends -->
                                     <!-- users edit account form start -->
-                                    <form class="userform" onsubmit="return admin_user.check_add_form()" method="post" action="../../../controller/user?stage=updateinfo">
+                                    <form class="userform" onsubmit="return admin_user.check_update_form()" method="post" action="../../../controller/user?stage=updateinfo">
                                         <div class="row">
                                             <div class="col-12 col-sm-6">
                                                 <div class="row">

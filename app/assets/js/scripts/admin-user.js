@@ -230,6 +230,41 @@ var admin_user = {
               return false;
         }
     },
+    check_update_form(){
+        $check = 0
+        $('.form-control').removeClass('is-invalid')
+        $('.select-error').css({'border': 'none'});
+        if($('#txtUsername').val() == ''){ $check++; $('#txtUsername').addClass('is-invalid') }
+        if($('#txtFname').val() == ''){ $check++; $('#txtFname').addClass('is-invalid') }
+        if($('#txtLname').val() == ''){ $check++; $('#txtLname').addClass('is-invalid') }
+        if($('#txtRole').val() == ''){ $check++; $('#txtRole').addClass('is-invalid') }
+        if($('#txtPhone').val() == ''){ $check++; $('#txtPhone').addClass('is-invalid') }
+        if($('#txtStatus').val() == ''){ $check++; $('#txtStatus').addClass('is-invalid') }
+        if($('#txtVerify').val() == ''){ $check++; $('#txtVerify').addClass('is-invalid') }
+
+        $('[data-required]').each(function() {
+            if (!$(this).val()) {
+                $check++;
+              if ($(this).data('select2')) {
+                $('.select-error').css({
+                  'border': '1px solid #FF5B5C',
+                  'border-radius': '4px'
+                });
+            }
+        }});
+
+        if($check != 0){
+            Swal.fire(
+                {
+                  icon: "error",
+                  title: 'คำเตือน',
+                  text: 'กรุณากรอกข้อมูลให้ครบถ้วน',
+                  confirmButtonClass: 'btn btn-danger',
+                }
+              )
+              return false;
+        }
+    },
     check_add_form(){
         $check = 0
         $('.form-control').removeClass('is-invalid')

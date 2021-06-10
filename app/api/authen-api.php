@@ -225,9 +225,10 @@ if($stage == 'user'){
                INNER JOIN vot2_userinfo ON vot2_account.uid = vot2_userinfo.info_uid
                LEFT JOIN vot2_patient_location ON vot2_account.uid = vot2_patient_location.loc_patient_uid
                WHERE 
-               vot2_account.UID = '$uid' AND vot2_account.role = '$role'
+               vot2_account.UID = '$uid' 
+               AND vot2_account.role = '$role'
                AND info_use = '1'
-               AND (loc_status '1' OR loc_status IS NULL)
+               AND (loc_status = '1' OR loc_status IS NULL)
                LIMIT 1
           ";
     $user = $db->fetch($strSQL, false);

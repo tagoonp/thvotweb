@@ -30,7 +30,7 @@ if($stage == 'savelocation'){
     $lng = mysqli_real_escape_string($conn, $array['lng']);
     $uid = mysqli_real_escape_string($conn, $array['uid']);
 
-    $strSQL = "UPDATE vot2_patient_location SET loc_status = '0' WHERE loc_patient_uid = '$uid'";
+    $strSQL = "DELETE FROM vot2_patient_location WHERE loc_patient_uid = '$uid'";
     $db->execute($strSQL);
 
     $strSQL = "SELECT * FROM vot2_account WHERE uid = '$uid'";
@@ -48,7 +48,10 @@ if($stage == 'savelocation'){
         $strSQL = "INSERT INTO vot2_log (`log_datetime`, `log_info`, `log_message`, `log_ip`, `log_uid`)
                        VALUES ('$datetime', 'ปรับปรุงพิกัดที่อยู่ผู้ป่วย', '', '$remote_ip', '$uid')
                       ";
-            $db->insert($strSQL, false);
+        $db->insert($strSQL, false);
+
+        $strSQL = "UPDATE vot2_account SET location_status = '0' WHERE uid = '$uid'";
+        $db->execute($strSQL);
     }
 
     $return['status'] = 'Success';

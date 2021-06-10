@@ -311,8 +311,9 @@ $menu = 12;
                                                     <label>ประเภทการติดตาม : <span class="text-danger">*</span></label>
                                                     <select class="form-control" id="txtRole" name="txtRole">
                                                         <option value="">-- เลือกประเภท --</option>
-                                                        <option value="VOT">ผู้ป่วย (VOT)</option>
-                                                        <option value="DOT">ผู้ป่วย (DOT)</option>
+                                                        <option value="VOT">VOT</option>
+                                                        <option value="DOT">DOT</option>
+                                                        <option value="TESTER">TESTER</option>
                                                     </select>
                                                 </div>
                                                 

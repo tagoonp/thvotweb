@@ -20,6 +20,6 @@ if($stage == 'check4month'){
 
     $csdate = mysqli_real_escape_string($conn, $_POST['csdate']);
 
-    echo Date("Y-m-d", strtotime("$csdate +4 Month"));
+    echo Date("Y-m-d", strtotime("$csdate +2 Month"));
     die();
 }

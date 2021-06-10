@@ -169,7 +169,7 @@ $menu = 12;
                                                     <div class="col-9">
                                                         <div class="form-group">
                                                             <div class="controls">
-                                                                <label>HN ของผู้ป่วย : <span class="text-danger">*</span></label>
+                                                                <label>HN ของผู้ป่วย (NTIP) : <span class="text-danger">*</span></label>
                                                                 <input type="text" class="form-control" placeholder="" id="txtUsername" name="txtUsername" >
                                                             </div>
                                                         </div>

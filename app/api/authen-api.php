@@ -14,7 +14,7 @@ $return = array();
 if($stage == 'profileimg'){
 
     if(
-        (!isset($_POST['uid'])
+        (!isset($_POST['uid']))
     ){
         $return['status'] = 'Fail (x101)';
         echo json_encode($return);

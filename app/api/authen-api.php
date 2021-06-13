@@ -13,6 +13,21 @@ $return = array();
 
 if($stage == 'profileimg'){
 
+    // $json = file_get_contents('php://input');
+    // $array = json_decode($json, true);
+
+    // if(
+    //     (!isset($array['uid']))
+    // ){
+    //     $return['status'] = 'Fail (x101)';
+    //     echo json_encode($return);
+    //     $db->close(); 
+    //     die();
+    // }
+
+
+
+
     if(
         (!isset($_POST['uid']))
     ){
@@ -22,7 +37,7 @@ if($stage == 'profileimg'){
         die();
     }
 
-    $uid = mysqli_real_escape_string($conn, $array['uid']);
+    $uid = mysqli_real_escape_string($conn, $_POST['uid']);
 
     if($_FILES['file']){
         $path = '../uploads/';

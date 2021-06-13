@@ -29,6 +29,8 @@ if($stage == 'profileimg'){
         if (!file_exists($path)) {
             mkdir($path, 0777, true);
         }
+
+
         $originalName = $_FILES['file']['name'];
         $ext = '.'.pathinfo($originalName, PATHINFO_EXTENSION);
         $t=time();
@@ -36,7 +38,7 @@ if($stage == 'profileimg'){
         $filePath = $path.$generatedName;
         if (move_uploaded_file($_FILES['file']['tmp_name'], $filePath)) {
 
-            $strSQL = "UPDATE vot2_account SET profile_img = '$filePath' WHERE uid = '$uid'";
+            $strSQL = "UPDATE vot2_account SET profile_img = '$generatedName' WHERE uid = '$uid'";
             $db->execute($strSQL);
 
             $strSQL = "INSERT INTO vot2_log (`log_datetime`, `log_info`, `log_message`, `log_ip`, `log_uid`) VALUES ('$datetime', 'เปลี่ยนรูปโปไฟล์', '', '$remote_ip', '$uid')";

@@ -35,6 +35,13 @@ if($stage == 'profileimg'){
         $generatedName = md5($t.$originalName).$ext;
         $filePath = $path.$generatedName;
         if (move_uploaded_file($_FILES['file']['tmp_name'], $filePath)) {
+
+            $strSQL = "UPDATE vot2_account SET profile_img = '$filePath' WHERE uid = '$uid'";
+            $db->execute($strSQL);
+
+            $strSQL = "INSERT INTO vot2_log (`log_datetime`, `log_info`, `log_message`, `log_ip`, `log_uid`) VALUES ('$datetime', 'เปลี่ยนรูปโปไฟล์', '', '$remote_ip', '$uid')";
+            $db->insert($strSQL, false);
+
             echo json_encode(array(
                 'result' => 'success',
                 'status' => true,

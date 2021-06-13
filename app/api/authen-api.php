@@ -11,6 +11,35 @@ if(!isset($_GET['stage'])){ $db->close(); header('Location: ../404?stage=001'); 
 $stage = mysqli_real_escape_string($conn, $_GET['stage']);
 $return = array();
 
+if($stage == 'profileimg'){
+    $json = file_get_contents('php://input');
+    $array = json_decode($json, true);
+
+    if(
+        (!isset($array['file'])) ||
+        (!isset($array['uid']))
+    ){
+        $return['status'] = 'Fail (x101)';
+        echo json_encode($return);
+        $db->close(); 
+        die();
+    }
+
+    $file = mysqli_real_escape_string($conn, $array['file']);
+    $uid = mysqli_real_escape_string($conn, $array['uid']);
+
+    $strSQL = "UPDATE vot2_account SET profile_img = '$file' WHERE uid = '$uid'";
+    $db->execute($strSQL);
+
+    $strSQL = "INSERT INTO vot2_log (`log_datetime`, `log_info`, `log_message`, `log_ip`, `log_uid`) VALUES ('$datetime', 'เปลี่ยนรูปโปไฟล์', '', '$remote_ip', '$uid')";
+    $db->insert($strSQL, false);
+
+    $return['status'] = 'Success';
+    echo json_encode($return);
+    $db->close(); 
+    die();
+}
+
 if($stage == 'savelocation'){
     $json = file_get_contents('php://input');
     $array = json_decode($json, true);

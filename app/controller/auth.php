@@ -10,43 +10,21 @@ $conn = $db->conn();
 if(!isset($_GET['stage'])){ $db->close(); header('Location: ../404?stage=001'); die(); }
 $stage = mysqli_real_escape_string($conn, $_GET['stage']);
 
-if($stage == 'login'){
+if($stage == 'line_login'){
 
-    if(
-        (!isset($_REQUEST['txtUsername'])) ||
-        (!isset($_REQUEST['txtPassword']))
-    ){
-        $db->close(); header('Location: ../404?error=x101'); die();
-    }
+    $token = mysqli_real_escape_string($conn, $_GET['token']);
 
-    $username = mysqli_real_escape_string($conn, $_POST['txtUsername']);
-    $password = mysqli_real_escape_string($conn, $_POST['txtPassword']);
+    $strSQL = "SELECT * FROM vot2_account WHERE uid = '$token' AND delete_status = '0' AND patient_type = 'DOT' LIMIT 1";
+    $result = mysqli_query($conn, $strSQL);
 
-    $strSQL = "SELECT * FROM vot2_account WHERE (username = '$username' OR email = '$username') AND active_status = '1' AND verify_status = '1' AND delete_status = '0'";
-    $result = $db->fetch($strSQL, false);
-    if($result){
-        if (password_verify($_POST["txtPassword"], $result['password'])) {
-            $_SESSION['thvot_id'] = session_id();
-            $_SESSION['thvot_uid'] = $result['uid'];
-            $_SESSION['thvot_role'] = $result['role'];
-
-
-
-            $strSQL = "INSERT INTO vot2_log (`log_datetime`, `log_info`, `log_message`, `log_ip`, `log_uid`)
-                       VALUES ('$datetime', 'เข้าสู่ระบบ', '', '$remote_ip', '".$_SESSION['thvot_uid']."')
-                      ";
-            $db->insert($strSQL, false);
-            $db->close();
-            header('Location: ../core/'.$result['role'].'/system/');
-            die();
-        } else {
-        $db->close();
-        header('Location: ../login.php?stage=fail2');
+    if(($result) && (mysqli_num_rows($result) > 0)){
+        // Already registered
+        mysqli_close($conn);
+        header('Location: ../app/register_dot?uid=' . $token . '&referal=webapp');
         die();
-        }
     }else{
-        $db->close();
-        header('Location: ../login.php?stage=fail1');
+        mysqli_close($conn);
+        header('Location: ../app/register_dot?uid=' . $token . '&referal=webapp');
         die();
     }
 

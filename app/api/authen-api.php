@@ -12,6 +12,40 @@ $stage = mysqli_real_escape_string($conn, $_GET['stage']);
 $return = array();
 
 if($stage == 'profileimg'){
+
+    if(
+        (!isset($_POST['uid'])
+    ){
+        $return['status'] = 'Fail (x101)';
+        echo json_encode($return);
+        $db->close(); 
+        die();
+    }
+
+    $uid = mysqli_real_escape_string($conn, $array['uid']);
+
+    if($_FILES['file']){
+        $path = '../uploads/';
+        if (!file_exists($path)) {
+            mkdir($path, 0777, true);
+        }
+        $originalName = $_FILES['file']['name'];
+        $ext = '.'.pathinfo($originalName, PATHINFO_EXTENSION);
+        $t=time();
+        $generatedName = md5($t.$originalName).$ext;
+        $filePath = $path.$generatedName;
+        if (move_uploaded_file($_FILES['file']['tmp_name'], $filePath)) {
+            echo json_encode(array(
+                'result' => 'success',
+                'status' => true,
+            ));
+        }
+    }
+    
+    $db->close(); 
+    die();
+    /////
+
     $json = file_get_contents('php://input');
     $array = json_decode($json, true);
 

@@ -65,7 +65,7 @@ if($stage == 'login'){
                       ";
             $db->insert($strSQL, false);
 
-            header('Location: ../core/'.$_SESSION['thvot_role'].'/');
+            header('Location: ../core/'.$result['role'].'/');
             $db->close();
             die();
         } else {

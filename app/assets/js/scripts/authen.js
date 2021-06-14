@@ -91,6 +91,68 @@ var auth = {
     }});
 
     if($check != 0){ return false; }
+  },
+  chk_register_vot(){
+    $check = 0;
+    $('.form-control').removeClass('is-invalid')
+    $('.select-error').css({'border': 'none'});
+
+    if($('#txtHn').val() == ''){
+      $check++; $('#txtHn').addClass('is-invalid')
+    }
+
+    if($('#txtUsername').val() == ''){
+      $check++; $('#txtUsername').addClass('is-invalid')
+    }
+  
+    if($('#txtPhone').val() == ''){
+      $check++; $('#txtPhone').addClass('is-invalid')
+    }
+
+    if($('#txtFname').val() == ''){
+      $check++; $('#txtFname').addClass('is-invalid')
+    }
+
+    if($('#txtLname').val() == ''){
+      $check++; $('#txtLname').addClass('is-invalid')
+    }
+
+    if($('#txtProvince').val() == ''){
+      $check++; $('#txtProvince').addClass('is-invalid')
+    }
+
+    if($('#txtDist').val() == ''){
+      $check++; $('#txtDist').addClass('is-invalid')
+    }
+
+    if($('#txtSubdist').val() == ''){
+      $check++; $('#txtSubdist').addClass('is-invalid')
+    }
+
+    if($('#txtPassword1').val() == ''){
+      $check++; $('#txtPassword1').addClass('is-invalid')
+    }
+
+    if($('#txtPassword2').val() == ''){
+      $check++; $('#txtPassword2').addClass('is-invalid')
+    }
+
+    if($('#txtPassword1').val() != $('#txtPassword2').val()){
+      $check++; $('#txtPassword2').addClass('is-invalid')
+    }
+
+    $('[data-required]').each(function() {
+        if (!$(this).val()) {
+            $check++;
+          if ($(this).data('select2')) {
+            $('.select-error').css({
+              'border': '1px solid #FF5B5C',
+              'border-radius': '4px'
+            });
+        }
+    }});
+
+    if($check != 0){ return false; }
   }
 }
 

@@ -88,7 +88,7 @@ $uid = mysqli_real_escape_string($conn, $_GET['uid']);
                                         <div class="card-header pb-1">
                                             <div class="card-title">
                                                 <h3 class="text-left mb-1">THVOT</h3>
-                                                <h4 class="text-left mb-1">ลงทะเบียนผู้ป่วย DOT</h4>
+                                                <h4 class="text-left mb-1">ลงทะเบียนผู้ป่วย VOT</h4>
                                                 <!-- <h6 class="text-danger">กรุณากรอกข้อมูลให้ครบถ้วน</h6> -->
                                                 <div class="alert alert-danger alert-dismissible mb-2" role="alert">
                                                     <button type="button" class="close" data-dismiss="alert" aria-label="Close">
@@ -103,7 +103,7 @@ $uid = mysqli_real_escape_string($conn, $_GET['uid']);
                                             </div>
                                         </div>
                                         <div class="card-body">
-                                            <form  action="./controller/auth?stage=signup_dot" method="POST" autocomplete="off"  onsubmit="return auth.chk_register_dot();">
+                                            <form  action="./controller/auth?stage=signup_vot" method="POST" autocomplete="off"  onsubmit="return auth.chk_register_vot();">
 
                                                 <div class="form-group mb-50" style="display: none;">
                                                     <label class="text-bold-600" for="exampleInputPassword1">UID :</label>
@@ -123,12 +123,22 @@ $uid = mysqli_real_escape_string($conn, $_GET['uid']);
 
                                                 <div class="form-group mb-50">
                                                     <label class="" for="exampleInputPassword1">TB NO. (ใน NTIP) : <span class="text-danger">*</span></label>
+                                                    <input type="text" class="form-control" id="txtUsername" name="txtUsername">
+                                                </div>
+
+                                                <div class="form-group mb-50">
+                                                    <label class="" for="exampleInputPassword1">HN : <span class="text-danger">*</span></label>
                                                     <input type="text" class="form-control" id="txtHn" name="txtHn">
                                                 </div>
 
                                                 <div class="form-group mb-50">
-                                                    <label class="" for="exampleInputEmail1">หมายเลขโทรศัพท์ : <span class="text-danger">*</span></label>
+                                                    <label class="" for="exampleInputEmail1">หมายเลขโทรศัพท์คนไข้ : <span class="text-danger">*</span></label>
                                                     <input type="text" class="form-control" id="txtPhone" name="txtPhone" placeholder="">
+                                                </div>
+
+                                                <div class="form-group mb-50">
+                                                    <label class="" for="exampleInputEmail1">หมายเลขโทรศัพท์ (ญาติ) : </label>
+                                                    <input type="text" class="form-control" id="txtPhone2" name="txtPhone2" placeholder="">
                                                 </div>
 
                                                 <hr>
@@ -199,6 +209,18 @@ $uid = mysqli_real_escape_string($conn, $_GET['uid']);
                                                             ?>
                                                         </select>
                                                     </div>
+                                                </div>
+
+                                                <h6 class="text-bold-600">ตั้งรหัสผ่านของแอพ</h6>
+
+                                                <div class="form-group mb-50">
+                                                    <label class="" for="exampleInputEmail1">ตั้งรหัสผ่าน : <span class="text-danger">*</span></label>
+                                                    <input type="text" class="form-control" id="txtPassword1" name="txtPassword1" placeholder="">
+                                                </div>
+
+                                                <div class="form-group mb-50">
+                                                    <label class="" for="exampleInputEmail1">ยืนยันรหัสผ่าน : <span class="text-danger">*</span></label>
+                                                    <input type="text" class="form-control" id="txtPassword2" name="txtPassword2" placeholder="">
                                                 </div>
 
                                                 <button type="submit" class="mt-1 btn btn-primary glow position-relative w-100">ลงทะเบียน<i id="icon-arrow" class="bx bx-right-arrow-alt"></i></button>

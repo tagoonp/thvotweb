@@ -25,7 +25,13 @@ try {
         $ukey = $value;
       }
     }
-    header('Location: ./app/controller/auth?stage=line_login&token='.$ukey);
+
+    if($_REQUEST['t'] == 'vot'){
+        header('Location: ./app/controller/auth?stage=line_login&t=vot&token='.$ukey);
+    }else{
+        header('Location: ./app/controller/auth?stage=line_login&t=dot&token='.$ukey);
+    }
+    
     
     $adapter->disconnect();
 }

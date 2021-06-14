@@ -112,7 +112,7 @@ if($stage == 'signup_dot'){
     }
 
     $fname = mysqli_real_escape_string($conn, $_POST['txtFname']);
-    $lname = mysqli_real_escape_string($conn, $_POST['txtFname']);
+    $lname = mysqli_real_escape_string($conn, $_POST['txtLname']);
     $hcode = mysqli_real_escape_string($conn, $_POST['txtHcode']);
     $hn = mysqli_real_escape_string($conn, $_POST['txtHn']);
     $uid = mysqli_real_escape_string($conn, $_POST['txtUid']);
@@ -156,7 +156,7 @@ if($stage == 'signup_dot'){
         $db->insert($strSQL, false);
 
         $strSQL = "INSERT INTO vot2_userinfo (`fname`, `lname`, `phone`, `info_udatetime`, `info_use`, `info_prov`, `info_district`, `info_subdistrict`, `info_uid`) 
-                   VALUES ('$fname', '$lname', '$phone', '$datetime', '1', 'tprovince', '$dist', '$subdist', '$uid')";
+                   VALUES ('$fname', '$lname', '$phone', '$datetime', '1', '$tprovince', '$dist', '$subdist', '$uid')";
         $res = $db->insert($strSQL, false);
         mysqli_close($conn);
         header('Location: ../dot_info?uid=' . $uid . '&referal=webapp');

@@ -26,7 +26,7 @@ try {
       }
     }
 
-    header('Location: ./app/controller/auth?stage=line_login&t=dot&token='.$ukey);
+    header('Location: ./app/controller/auth?stage=line_login&t='.$_GET['t'].'&token='.$ukey);
     
     
     $adapter->disconnect();

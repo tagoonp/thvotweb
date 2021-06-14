@@ -1,9 +1,9 @@
 <?php 
 
-echo $_SESSION['thvot_uid'];
-echo $_SESSION['thvot_role'];
+// echo $_SESSION['thvot_uid'];
+// echo $_SESSION['thvot_role'];
 
-die();
+// die();
 
 if((!isset($_SESSION['thvot_uid'])) || (!isset($_SESSION['thvot_role']))){
     $db->close();

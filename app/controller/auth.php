@@ -1,4 +1,5 @@
 <?php 
+session_start();
 require('../../../database_config/thvot/config.inc.php');
 require('../config/configuration.php');
 require('../config/database.php'); 
@@ -52,12 +53,11 @@ if($stage == 'login'){
     $result = $db->fetch($strSQL, false);
     if($result){
         if (password_verify($password, $result['password'])) {
-
-            $return['status'] = 'Success';
-            $return['thvot_session'] = session_id();
-            $return['thvot_uid'] = $result['uid'];
-            $return['thvot_role'] = $result['role'];
-            $return['thvot_hcode'] = $result['hcode'];
+            
+            $_SESSION['thvot_session'] = session_id();
+            $_SESSION['thvot_uid'] = $result['uid'];
+            $_SESSION['thvot_role'] = $result['role'];
+            $_SESSION['thvot_hcode'] = $result['hcode'];
 
             $strSQL = "INSERT INTO vot2_log (`log_datetime`, `log_info`, `log_message`, `log_ip`, `log_uid`)
                        VALUES ('$datetime', 'เข้าสู่ระบบ (Mobile)', '', '$remote_ip', '".$result['uid']."')

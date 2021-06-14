@@ -186,7 +186,7 @@ $menu = 7;
                                                         <td><?php echo $row['fname']." ".$row['lname']; ?></td>
                                                         <td>
                                                             <?php 
-                                                            $ptt = echo $row['patient_type'];
+                                                            $ptt = $row['patient_type'];
                                                             if($row['patient_type'] == 'DOT'){
                                                                 ?>
                                                                 <span class="badge badge-warning"><?php echo $ptt; ?></span>

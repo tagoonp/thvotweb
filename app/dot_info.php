@@ -18,7 +18,7 @@ if(!isset($_GET['uid'])){
 }
 
 $uid = mysqli_real_escape_string($conn, $_GET['uid']);
-$strSQL = "SELECT * FROM vot2_account WHERE uid = '$uid' AND role = 'patient'";
+$strSQL = "SELECT * FROM vot2_account WHERE uid = '$uid' AND role = 'patient' AND delete_status = '0'";
 $res = $db->fetch($strSQL, true, true);
 
 if(($res['status']) && ($res['count'] > 0)){

@@ -138,7 +138,7 @@ if($stage == 'signup_dot'){
 
     $strSQL = "SELECT * FROM vot2_account WHERE uid = '$uid' AND role = 'patient' AND delete_status = '0'";
     $res = $db->fetch($strSQL, true, true);
-    if(($res['status']) && ($res['count'] > 0)){
+    if(($res) && ($res['status']) && ($res['count'] > 0)){
         mysqli_close($conn);
         header('Location: ../dot_info?uid=' . $uid . '&referal=webapp');
         die();
@@ -223,7 +223,7 @@ if($stage == 'signup_vot'){
 
     $strSQL = "SELECT * FROM vot2_account WHERE uid = '$uid' AND role = 'patient' AND delete_status = '0'";
     $res = $db->fetch($strSQL, true, true);
-    if(($res['status']) && ($res['count'] > 0)){
+    if(($res) && ($res['status']) && ($res['count'] > 0)){
         mysqli_close($conn);
         header('Location: ../vot_info?uid=' . $uid . '&referal=webapp');
         die();

@@ -342,7 +342,7 @@ if($stage == 'create_patient'){
 
         $strSQL = "INSERT INTO vot2_userinfo (`fname`, `lname`, `phone`, `info_udatetime`, `info_use`, `info_prov`, `info_district`, `info_subdistrict`, `info_uid`) 
         VALUES ('$fname', '$lname', '$phone', '$datetime', '1', '$prov', '$dist', '$subdist', '$uid')";
-
+        $res = $db->insert($strSQL, false);
         // echo $strSQL;
         // die();
 

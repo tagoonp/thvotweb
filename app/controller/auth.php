@@ -49,7 +49,7 @@ if($stage == 'login'){
     $username = mysqli_real_escape_string($conn, $_POST['txtUsername']);
     $password = mysqli_real_escape_string($conn, $_POST['txtPassword']);
 
-    $strSQL = "SELECT * FROM vot2_account WHERE (username = '$username' OR email = '$username') AND active_status = '1' AND verify_status = '1' AND delete_status = '0'";
+    $strSQL = "SELECT * FROM vot2_account WHERE (username = '$username' OR email = '$username') AND active_status = '1' AND role != 'patient' AND verify_status = '1' AND delete_status = '0'";
     $result = $db->fetch($strSQL, false);
     if($result){
         if (password_verify($password, $result['password'])) {

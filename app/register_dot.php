@@ -89,7 +89,18 @@ $uid = mysqli_real_escape_string($conn, $_GET['uid']);
                                             <div class="card-title">
                                                 <h3 class="text-left mb-1">THVOT</h3>
                                                 <h4 class="text-left mb-1">ลงทะเบียนผู้ป่วย DOT</h4>
-                                                <h6 class="text-danger">กรุณากรอกข้อมูลให้ครบถ้วน</h6>
+                                                <!-- <h6 class="text-danger">กรุณากรอกข้อมูลให้ครบถ้วน</h6> -->
+                                                <div class="alert alert-danger alert-dismissible mb-2" role="alert">
+                                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                                        <span aria-hidden="true">&times;</span>
+                                                    </button>
+                                                    <div class="d-flex align-items-center">
+                                                        <i class="bx bx-error"></i>
+                                                        <span>
+                                                        กรุณากรอกข้อมูลให้ครบถ้วน
+                                                        </span>
+                                                    </div>
+                                                </div>
                                             </div>
                                         </div>
                                         <div class="card-body">
@@ -102,22 +113,22 @@ $uid = mysqli_real_escape_string($conn, $_GET['uid']);
 
                                                 <div class="form-row">
                                                     <div class="form-group col-md-6 mb-50">
-                                                        <label for="inputfirstname4">ชื่อ :  <span class="text-danger">*</span><</label>
+                                                        <label for="inputfirstname4">ชื่อ :  <span class="text-danger">*</span></label>
                                                         <input type="text" class="form-control" id="txtFname" name="txtFname">
                                                     </div>
                                                     <div class="form-group col-md-6 mb-50">
-                                                        <label for="inputlastname4">นามสกุล : <span class="text-danger">*</span><</label>
+                                                        <label for="inputlastname4">นามสกุล : <span class="text-danger">*</span></label>
                                                         <input type="text" class="form-control" id="txtLname" name="txtLname">
                                                     </div>
                                                 </div>
 
                                                 <div class="form-group mb-50">
-                                                    <label class="" for="exampleInputPassword1">TB NO. (ใน NTIP) : <span class="text-danger">*</span><</label>
+                                                    <label class="" for="exampleInputPassword1">TB NO. (ใน NTIP) : <span class="text-danger">*</span></label>
                                                     <input type="text" class="form-control" id="txtHn" name="txtHn">
                                                 </div>
 
                                                 <div class="form-group mb-50">
-                                                    <label class="" for="exampleInputEmail1">หมายเลขโทรศัพท์ : <span class="text-danger">*</span><</label>
+                                                    <label class="" for="exampleInputEmail1">หมายเลขโทรศัพท์ : <span class="text-danger">*</span></label>
                                                     <input type="text" class="form-control" id="txtPhone" name="txtPhone" placeholder="">
                                                 </div>
 
@@ -126,7 +137,7 @@ $uid = mysqli_real_escape_string($conn, $_GET['uid']);
                                                 <h6 class="text-bold-600">ที่อยู่ผู้ป่วย</h6>
 
                                                 <div class="form-group mb-50">
-                                                    <label class="" for="exampleInputPassword1">จังหวัดที่อยู่ : <span class="text-danger">*</span><</label>
+                                                    <label class="" for="exampleInputPassword1">จังหวัดที่อยู่ : <span class="text-danger">*</span></label>
                                                     <div>
                                                         <select id="txtProvince" name="txtProvince" class="form-control">
                                                             <option value="">-- เลือกจังหวัด --</option>
@@ -148,7 +159,7 @@ $uid = mysqli_real_escape_string($conn, $_GET['uid']);
                                                 </div>
 
                                                 <div class="form-group mb-50">
-                                                    <label class="" for="exampleInputPassword1">อำเภอ : <span class="text-danger">*</span><</label>
+                                                    <label class="" for="exampleInputPassword1">อำเภอ : <span class="text-danger">*</span></label>
                                                     <div>
                                                         <select id="txtDist" name="txtDist" class="form-control">
                                                             <option value="">-- เลือกอำเภอ --</option>
@@ -157,7 +168,7 @@ $uid = mysqli_real_escape_string($conn, $_GET['uid']);
                                                 </div>
 
                                                 <div class="form-group mb-50">
-                                                    <label class="" for="exampleInputPassword1">ตำบล : <span class="text-danger">*</span><</label>
+                                                    <label class="" for="exampleInputPassword1">ตำบล : <span class="text-danger">*</span></label>
                                                     <div>
                                                         <select id="txtSubdist" name="txtSubdist" class="form-control">
                                                             <option value="">-- เลือกตำบล --</option>

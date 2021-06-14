@@ -95,7 +95,6 @@ $uid = mysqli_real_escape_string($conn, $_GET['uid']);
                                                         <span aria-hidden="true">&times;</span>
                                                     </button>
                                                     <div class="d-flex align-items-center">
-                                                        <i class="bx bx-error"></i>
                                                         <span>
                                                         กรุณากรอกข้อมูลให้ครบถ้วน
                                                         </span>

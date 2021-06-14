@@ -1,5 +1,4 @@
 <?php 
-session_start();
 require('../../../database_config/thvot/config.inc.php');
 require('../config/configuration.php');
 require('../config/database.php'); 
@@ -65,7 +64,7 @@ if($stage == 'login'){
                       ";
             $db->insert($strSQL, false);
 
-            header('Location: ../core/'.$result['role'].'/');
+            header('Location: ../core/'.$result['role'].'/system/');
             $db->close();
             die();
         } else {

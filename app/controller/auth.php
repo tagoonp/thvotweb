@@ -15,7 +15,7 @@ if($stage == 'line_login'){
     $token = mysqli_real_escape_string($conn, $_GET['token']);
     $t = mysqli_real_escape_string($conn, $_GET['t']);
 
-    $strSQL = "SELECT * FROM vot2_account WHERE uid = '$token' AND delete_status = '0' AND patient_type = 'DOT' LIMIT 1";
+    $strSQL = "SELECT * FROM vot2_account WHERE uid = '$token' AND delete_status = '0' LIMIT 1";
     $result = mysqli_query($conn, $strSQL);
 
     if(($result) && (mysqli_num_rows($result) > 0)){

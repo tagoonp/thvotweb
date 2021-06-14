@@ -186,7 +186,17 @@ $menu = 7;
                                                         <td><?php echo $row['fname']." ".$row['lname']; ?></td>
                                                         <td>
                                                             <?php 
-                                                            echo $row['patient_type'];
+                                                            $ptt = echo $row['patient_type'];
+                                                            if($row['patient_type'] == 'DOT'){
+                                                                ?>
+                                                                <span class="badge badge-warning"><?php echo $ptt; ?></span>
+                                                                <?php
+                                                            }else if($row['patient_type'] == 'VOT'){
+                                                                ?>
+                                                                <span class="badge badge-primary"><?php echo $ptt; ?></span>
+                                                                <?php
+                                                            }
+                                                            
                                                             ?>
                                                         </td>
                                                         <td>

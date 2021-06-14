@@ -13,6 +13,7 @@ $stage = mysqli_real_escape_string($conn, $_GET['stage']);
 if($stage == 'line_login'){
 
     $token = mysqli_real_escape_string($conn, $_GET['token']);
+    $t = mysqli_real_escape_string($conn, $_GET['t']);
 
     $strSQL = "SELECT * FROM vot2_account WHERE uid = '$token' AND delete_status = '0' AND patient_type = 'DOT' LIMIT 1";
     $result = mysqli_query($conn, $strSQL);
@@ -20,11 +21,24 @@ if($stage == 'line_login'){
     if(($result) && (mysqli_num_rows($result) > 0)){
         // Already registered
         mysqli_close($conn);
-        header('Location: ../dot_info?uid=' . $token . '&referal=webapp');
+        if($t == 'dot')
+        {
+            header('Location: ../dot_info?uid=' . $token . '&referal=webapp');
+        }else{
+            header('Location: ../vot_info?uid=' . $token . '&referal=webapp');
+        }
         die();
     }else{
         mysqli_close($conn);
-        header('Location: ../register_dot?uid=' . $token . '&referal=webapp');
+
+        if($t == 'dot')
+        {
+            header('Location: ../register_dot?uid=' . $token . '&referal=webapp');
+        }else
+        {
+            header('Location: ../register_vot?uid=' . $token . '&referal=webapp');
+        }
+
         die();
     }
 

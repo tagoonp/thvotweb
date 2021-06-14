@@ -156,9 +156,12 @@ $menu = 12;
                             <!-- users edit account form start -->
                                     <form class="patientaddform" onsubmit="return admin_user.check_patientadd_form()" method="post" action="../../../controller/user?stage=create_patient">
                                         <div class="row">
+                                            <div class="col-12">
+                                                <h5 class="text-bold-600">ข้อมูลเบื้องต้นและบัญชีการใช้งานของผู้ป่วย</h5>
+                                            </div>
                                             <div class="col-12 col-sm-6">
                                                 <div class="row">
-                                                    <div class="col-3">
+                                                    <div class="col-3" style="display: none;">
                                                         <div class="form-group">
                                                             <div class="controls">
                                                                 <label>Prefix (เฉพาะผู้ป่วย)</label>
@@ -167,7 +170,7 @@ $menu = 12;
                                                         </div>
                                                     </div>
 
-                                                    <div class="col-9">
+                                                    <div class="col-6">
                                                         <div class="form-group">
                                                             <div class="controls">
                                                                 <label>TB NO. (ใน NTIP) : <span class="text-danger">*</span></label>
@@ -176,7 +179,7 @@ $menu = 12;
                                                         </div>
                                                     </div>
 
-                                                    <div class="col-9">
+                                                    <div class="col-6">
                                                         <div class="form-group">
                                                             <div class="controls">
                                                                 <label>HN : <span class="text-danger">*</span></label>
@@ -225,74 +228,6 @@ $menu = 12;
                                                         <input type="text" class="form-control" placeholder="Phone number" name="txtPhone" id="txtPhone">
                                                     </div>
                                                 </div>
-
-                                                <div class="form-group">
-                                                    <label>จังหวัด : <span class="text-danger">*</span></label>
-                                                    <div class="select-error">
-                                                        <select name="txtHcode" id="txtHcode" data-required class="form-control select2">
-                                                            <option value="">-- เลือกจังหวัด --</option>
-                                                            <?php 
-                                                            $strSQL = "SELECT vot2_projecthospital.* FROM vot2_projecthospital 
-                                                            WHERE phosstatus = 'Y' ORDER BY hserv";
-                                                            $result_list = $db->fetch($strSQL, true, false);
-                                                            if($result_list['status']){
-                                                                $c = 1;
-                                                                foreach($result_list['data'] as $row){
-                                                                    ?>
-                                                                    <option value="<?php echo $row['phoscode'];?>" <?php  ?>>[<?php echo $row['phoscode'];?>] <?php echo $row['hserv'];?></option>
-                                                                    <?php
-                                                                }
-                                                            }
-                                                            ?>
-                                                        </select>
-                                                    </div>
-                                                </div>
-
-                                                <div class="form-group">
-                                                    <label>อำเภอ : <span class="text-danger">*</span></label>
-                                                    <div class="select-error">
-                                                        <select name="txtHcode" id="txtHcode" data-required class="form-control select2">
-                                                            <option value="">-- เลือกอำเภอ --</option>
-                                                            <?php 
-                                                            $strSQL = "SELECT vot2_projecthospital.* FROM vot2_projecthospital 
-                                                            WHERE phosstatus = 'Y' ORDER BY hserv";
-                                                            $result_list = $db->fetch($strSQL, true, false);
-                                                            if($result_list['status']){
-                                                                $c = 1;
-                                                                foreach($result_list['data'] as $row){
-                                                                    ?>
-                                                                    <option value="<?php echo $row['phoscode'];?>" <?php  ?>>[<?php echo $row['phoscode'];?>] <?php echo $row['hserv'];?></option>
-                                                                    <?php
-                                                                }
-                                                            }
-                                                            ?>
-                                                        </select>
-                                                    </div>
-                                                </div>
-
-                                                <div class="form-group">
-                                                    <label>ตำบล : <span class="text-danger">*</span></label>
-                                                    <div class="select-error">
-                                                        <select name="txtHcode" id="txtHcode" data-required class="form-control select2">
-                                                            <option value="">-- เลือกตำบล --</option>
-                                                            <?php 
-                                                            $strSQL = "SELECT vot2_projecthospital.* FROM vot2_projecthospital 
-                                                            WHERE phosstatus = 'Y' ORDER BY hserv";
-                                                            $result_list = $db->fetch($strSQL, true, false);
-                                                            if($result_list['status']){
-                                                                $c = 1;
-                                                                foreach($result_list['data'] as $row){
-                                                                    ?>
-                                                                    <option value="<?php echo $row['phoscode'];?>" <?php  ?>>[<?php echo $row['phoscode'];?>] <?php echo $row['hserv'];?></option>
-                                                                    <?php
-                                                                }
-                                                            }
-                                                            ?>
-                                                        </select>
-                                                    </div>
-                                                </div>
-
-
                                             </div>
                                             <div class="col-12 col-sm-6">
                                                 <div class="form-group">
@@ -344,6 +279,46 @@ $menu = 12;
                                                     </select>
                                                 </div>
                                                 
+                                            </div>
+
+                                            <div class="col-12">
+                                            <hr>
+                                                <h5 class="text-bold-600">ที่อยู่ของผู้ป่วย</h5>
+                                                <div class="row">
+                                                    <div class="form-group col-12 col-sm-4">
+                                                        <label>จังหวัด : <span class="text-danger">*</span></label>
+                                                        <select id="txtProvince" name="txtProvince" class="form-control">
+                                                            <option value="">-- เลือกจังหวัด --</option>
+                                                            <?php 
+                                                            $strSQL = "SELECT * FROM vot2_changwat 
+                                                            WHERE Changwat in (SELECT ap_code FROM vot2_active_province WHERE 1) ORDER BY Name ASC";
+                                                            $result_list = $db->fetch($strSQL, true, false);
+                                                            if($result_list['status']){
+                                                                $c = 1;
+                                                                foreach($result_list['data'] as $row){
+                                                                    ?>
+                                                                    <option value="<?php echo $row['Changwat'];?>" <?php  ?>>[<?php echo $row['Changwat'];?>] <?php echo $row['Name'];?></option>
+                                                                    <?php
+                                                                }
+                                                            }
+                                                            ?>
+                                                        </select>
+                                                    </div>
+
+                                                    <div class="form-group col-12 col-sm-4">
+                                                        <label>อำเภอ : <span class="text-danger">*</span></label>
+                                                        <select id="txtDist" name="txtDist" class="form-control">
+                                                            <option value="">-- เลือกอำเภอ --</option>
+                                                        </select>
+                                                    </div>
+
+                                                    <div class="form-group col-12 col-sm-4">
+                                                        <label>ตำบล : <span class="text-danger">*</span></label>
+                                                        <select id="txtSubdist" name="txtSubdist" class="form-control">
+                                                            <option value="">-- เลือกตำบล --</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
                                             </div>
                                             <div class="col-12 d-flex flex-sm-row flex-column justify-content-end mt-1">
                                                 <!-- <button type="button" onclick="admin_user.check_add_form()" class="btn btn-primary glow mb-1 mb-sm-0 mr-0 mr-sm-1">บันทึก</button> -->
@@ -399,7 +374,7 @@ $menu = 12;
 
     <!-- BEGIN: Page JS-->
     <script src="../../../app-assets/js/scripts/pages/app-users.js"></script>
-    <script src="../../../assets/js/scripts/admin-user.js"></script>
+    <script src="../../../assets/js/scripts/admin-user.js?v=<?php echo filemtime('../../../assets/js/scripts/admin-user.js'); ?>"></script>
     <!-- END: Page JS-->
     <script>
         $(document).ready(function(){
@@ -474,7 +449,41 @@ $menu = 12;
                                 })
                 }
             })
+
+            $('#txtProvince').change(function(){
+                $('#txtDist').empty()
+                $('#txtSubdist').empty()
+
+                $('#txtDist').append('<option value="">-- เลือกอำเภอ --</option>')
+                $('#txtSubdist').append('<option value="">-- เลือกตำบล --</option>')
+
+                var jxt = $.post('../../../api/core-api?stage=district', {province : $('#txtProvince').val()}, function(){}, 'json')
+                        .always(function(snap){
+                            if(snap.status == 'Success'){
+                            snap.data.forEach(i => {
+                                $('#txtDist').append('<option value="' + i.Ampur + '">' + i.Name + '</option>')
+                            });
+                            }
+                        })
+                })
+
+            $('#txtDist').change(function(){
+                $('#txtSubdist').empty()
+                $('#txtSubdist').append('<option value="">-- เลือกตำบล --</option>')
+
+                var jxt = $.post('../../../api/core-api?stage=subdistrict', {province : $('#txtProvince').val(), dist: $('#txtDist').val() }, function(){}, 'json')
+                        .always(function(snap){
+                            console.log(snap);
+                            if(snap.status == 'Success'){
+                            snap.data.forEach(i => {
+                                $('#txtSubdist').append('<option value="' + i.Tumbon + '">' + i.Name + '</option>')
+                            });
+                            }
+                        })
+             })
+            
         })
+
     </script>
 </body>
 <!-- END: Body-->

@@ -289,7 +289,12 @@ if($stage == 'create_patient'){
     $hcode = mysqli_real_escape_string($conn, $_POST['txtHcode']);
     $password = mysqli_real_escape_string($conn, $_POST['txtPassword1']);
 
-    $username = $prefix."-".$username;
+    $hn = mysqli_real_escape_string($conn, $_POST['txtHn']);
+    $prov = mysqli_real_escape_string($conn, $_POST['txtProvince']);
+    $dist = mysqli_real_escape_string($conn, $_POST['txtDist']);
+    $subdist = mysqli_real_escape_string($conn, $_POST['txtSubdist']);
+
+    // $username = $username;
 
     $strSQL = "SELECT * FROM vot2_account WHERE username = '$username' AND delete_status = '0' LIMIT 1";
     $res1 = $db->fetch($strSQL, true, true);
@@ -314,11 +319,11 @@ if($stage == 'create_patient'){
     $endmondate = Date("Y-m-d", strtotime("$date +4 Month"));    
 
     $strSQL = "INSERT INTO vot2_account 
-              (`uid`, `username`, `password`, `password_len`, 
+              (`uid`, `hn`,  `username`, `password`, `password_len`, 
               `phone`, `role`, `patient_type`, `hcode`, 
               `verify_status`, `active_status`, `u_datetime`, `p_udatetime`, `start_obsdate`, `end_obsdate`)
               VALUES (
-                  '$uid', '$username', '$password', '$passwordlen', 
+                  '$uid', '$hn', '$username', '$password', '$passwordlen', 
                   '$phone', 'patient', '$role', '$hcode',
                   '$verify', '$status', '$datetime', '$datetime', '$date', '$endmondate'
               )
@@ -331,9 +336,12 @@ if($stage == 'create_patient'){
                     ";
         $db->insert($strSQL, false);
 
-        $strSQL = "INSERT INTO vot2_userinfo (`fname`, `lname`, `phone`, `info_udatetime`, `info_use`, `info_uid`) 
-                   VALUES ('$fname', '$lname', '$phone', '$datetime', '1', '$uid')";
-        $res = $db->insert($strSQL, false);
+        // $strSQL = "INSERT INTO vot2_userinfo (`fname`, `lname`, `phone`, `info_udatetime`, `info_use`, `info_uid`) 
+        //            VALUES ('$fname', '$lname', '$phone', '$datetime', '1', '$uid')";
+        // $res = $db->insert($strSQL, false);
+
+        $strSQL = "INSERT INTO vot2_userinfo (`fname`, `lname`, `phone`, `info_udatetime`, `info_use`, `info_prov`, `info_district`, `info_subdistrict`, `info_uid`) 
+        VALUES ('$fname', '$lname', '$phone', '$datetime', '1', '$prov', '$dist', '$subdist', '$uid')";
 
         header('Location: ../core/'.$_SESSION['thvot_role'].'/system/app-patient-edit?id='.$uid);
         $db->close();

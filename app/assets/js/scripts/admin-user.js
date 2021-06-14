@@ -152,6 +152,10 @@ var admin_user = {
         if($('#txtPassword1').val() == ''){ $check++; $('#txtPassword1').addClass('is-invalid') }
         if($('#txtPassword2').val() == ''){ $check++; $('#txtPassword2').addClass('is-invalid') }
         if($('#txtPassword1').val() != $('#txtPassword2').val()){ $check++; $('#txtPassword2').addClass('is-invalid') }
+        if($('#txtHn').val() == ''){ $check++; $('#txtHn').addClass('is-invalid') }
+        if($('#txtProvince').val() == ''){ $check++; $('#txtProvince').addClass('is-invalid') }
+        if($('#txtDist').val() == ''){ $check++; $('#txtDist').addClass('is-invalid') }
+        if($('#txtSubdist').val() == ''){ $check++; $('#txtSubdist').addClass('is-invalid') }
 
         $('[data-required]').each(function() {
             if (!$(this).val()) {
@@ -187,6 +191,10 @@ var admin_user = {
         if($('#txtPhone').val() == ''){ $check++; $('#txtPhone').addClass('is-invalid') }
         if($('#txtStatus').val() == ''){ $check++; $('#txtStatus').addClass('is-invalid') }
         if($('#txtVerify').val() == ''){ $check++; $('#txtVerify').addClass('is-invalid') }
+        if($('#txtHn').val() == ''){ $check++; $('#txtHn').addClass('is-invalid') }
+        if($('#txtProvince').val() == ''){ $check++; $('#txtProvince').addClass('is-invalid') }
+        if($('#txtDist').val() == ''){ $check++; $('#txtDist').addClass('is-invalid') }
+        if($('#txtSubdist').val() == ''){ $check++; $('#txtSubdist').addClass('is-invalid') }
 
         $('[data-required]').each(function() {
             if (!$(this).val()) {

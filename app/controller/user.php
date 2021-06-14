@@ -343,6 +343,9 @@ if($stage == 'create_patient'){
         $strSQL = "INSERT INTO vot2_userinfo (`fname`, `lname`, `phone`, `info_udatetime`, `info_use`, `info_prov`, `info_district`, `info_subdistrict`, `info_uid`) 
         VALUES ('$fname', '$lname', '$phone', '$datetime', '1', '$prov', '$dist', '$subdist', '$uid')";
 
+        echo $strSQL;
+        die();
+
         header('Location: ../core/'.$_SESSION['thvot_role'].'/system/app-patient-edit?id='.$uid);
         $db->close();
         die();

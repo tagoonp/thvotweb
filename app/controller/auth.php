@@ -30,6 +30,73 @@ if($stage == 'line_login'){
 
 }
 
+if($stage == 'login'){
+
+    if(
+        (!isset($_POST['txtUsername'])) ||
+        (!isset($_POST['txtPassword']))
+    ){
+        ?>
+        <script>
+            alert('ไม่สามารถเข้าสู่ระบบได้');
+            window.history.back()
+        </script>
+        <?php
+        $db->close();
+        die();
+    }
+
+    $username = mysqli_real_escape_string($conn, $_POST['txtUsername']);
+    $password = mysqli_real_escape_string($conn, $_POST['txtPassword']);
+
+    $strSQL = "SELECT * FROM vot2_account WHERE (username = '$username' OR email = '$username') AND active_status = '1' AND verify_status = '1' AND delete_status = '0'";
+    $result = $db->fetch($strSQL, false);
+    if($result){
+        if (password_verify($password, $result['password'])) {
+
+            $return['status'] = 'Success';
+            $return['thvot_session'] = session_id();
+            $return['thvot_uid'] = $result['uid'];
+            $return['thvot_role'] = $result['role'];
+            $return['thvot_hcode'] = $result['hcode'];
+
+            $strSQL = "INSERT INTO vot2_log (`log_datetime`, `log_info`, `log_message`, `log_ip`, `log_uid`)
+                       VALUES ('$datetime', 'เข้าสู่ระบบ (Mobile)', '', '$remote_ip', '".$result['uid']."')
+                      ";
+            $db->insert($strSQL, false);
+
+            header('Location: ../core/'.$_SESSION['thvot_role'].'/');
+            $db->close();
+            die();
+        } else {
+            ?>
+            <script>
+                alert('รหัสผ่านไม่ถูกต้อง');
+                window.history.back()
+            </script>
+            <?php
+            $db->close();
+            die();
+        }
+    }else{
+        // $return['status'] = 'Fail (x103)';
+        // echo json_encode($return);
+        // $db->close(); 
+        // die();
+
+        ?>
+        <script>
+            alert('ไม่พบบัญชีผู้ใช้งานหรือข้อมูลไม่ถูกต้อง');
+            window.history.back()
+        </script>
+        <?php
+        $db->close();
+        die();
+
+    }
+
+}
+
 if($stage == 'signup_dot'){
     if(
         (!isset($_REQUEST['txtFname'])) ||
@@ -96,7 +163,7 @@ if($stage == 'signup_dot'){
         header('Location: ../dot_info?uid=' . $uid . '&referal=webapp');
         die();
     }else{
-        echo $strSQL;
+        // echo $strSQL;
         die();
         ?>
         <script>

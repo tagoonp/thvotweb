@@ -282,7 +282,7 @@ $menu = 12;
                                             </div>
 
                                             <div class="col-12">
-                                            <hr>
+                                                <hr>
                                                 <h5 class="text-bold-600">ที่อยู่ของผู้ป่วย</h5>
                                                 <div class="row">
                                                     <div class="form-group col-12 col-sm-4">
@@ -450,7 +450,7 @@ $menu = 12;
                                 })
                 }
             })
-            
+
             $('#txtRole').change(function(){
                 if(($('#txtUsername').val() != '') && ($('#txtRole').val() != '')){
                     $hcode = $('#txtHcode').select2('val')

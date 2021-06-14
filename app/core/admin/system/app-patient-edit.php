@@ -25,7 +25,7 @@ $id = mysqli_real_escape_string($conn, $_GET['id']);
 $strSQL = "SELECT a.*, b.*, a.ID user_id FROM vot2_account a INNER JOIN vot2_userinfo b ON a.uid = b.info_uid WHERE a.uid = '$id' AND a.delete_status = '0' AND b.info_use = '1' LIMIT 1";
 $selected_user = $db->fetch($strSQL, false);
 if(!$selected_user){
-    echo $strSQL;
+    // echo $strSQL;
     $db->close();
     die();
     header('Location: ./app-user-list');
@@ -232,7 +232,7 @@ $selected_location = $db->fetch($strSQL, false);
                                             </div>
                                             <div class="col-12 col-sm-6">
 
-                                                <div class="row" style="">
+                                                <div class="row" style="display: none;">
                                                     <div class="col-12 col-sm-12">
                                                         <div class="form-group">
                                                             <div class="controls">
@@ -332,6 +332,48 @@ $selected_location = $db->fetch($strSQL, false);
                                                 
                                                 
                                             </div>
+
+                                            <div class="col-12">
+                                                <hr>
+                                                <h5 class="text-bold-600">ที่อยู่ของผู้ป่วย</h5>
+                                                <div class="row">
+                                                    <div class="form-group col-12 col-sm-4">
+                                                        <label>จังหวัด : <span class="text-danger">*</span></label>
+                                                        <select id="txtProvince" name="txtProvince" class="form-control">
+                                                            <option value="">-- เลือกจังหวัด --</option>
+                                                            <?php 
+                                                            $strSQL = "SELECT * FROM vot2_changwat 
+                                                            WHERE Changwat in (SELECT ap_code FROM vot2_active_province WHERE 1) ORDER BY Name ASC";
+                                                            $result_list = $db->fetch($strSQL, true, false);
+                                                            if($result_list['status']){
+                                                                $c = 1;
+                                                                foreach($result_list['data'] as $row){
+                                                                    ?>
+                                                                    <option value="<?php echo $row['Changwat'];?>" <?php if($selected_user['info_prov'] == $row['Changwat']){ echo "selected";} ?>>[<?php echo $row['Changwat'];?>] <?php echo $row['Name'];?></option>
+                                                                    <?php
+                                                                }
+                                                            }
+                                                            ?>
+                                                        </select>
+                                                    </div>
+
+                                                    <div class="form-group col-12 col-sm-4">
+                                                        <label>อำเภอ : <span class="text-danger">*</span></label>
+                                                        <select id="txtDist" name="txtDist" class="form-control">
+                                                            <option value="">-- เลือกอำเภอ --</option>
+                                                        </select>
+                                                    </div>
+
+                                                    <div class="form-group col-12 col-sm-4">
+                                                        <label>ตำบล : <span class="text-danger">*</span></label>
+                                                        <select id="txtSubdist" name="txtSubdist" class="form-control">
+                                                            <option value="">-- เลือกตำบล --</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+
                                             <div class="col-12 d-flex flex-sm-row flex-column justify-content-end mt-1">
                                                 <button type="submit" class="btn btn-primary glow mb-1 mb-sm-0 mr-0 mr-sm-1">บันทึก</button>
                                             </div>
@@ -642,6 +684,40 @@ $selected_location = $db->fetch($strSQL, false);
             dropdownAutoWidth: true,
             width: '100%'
             });
+
+            $(function(){
+                $('#txtProvince').change(function(){
+                    $('#txtDist').empty()
+                    $('#txtSubdist').empty()
+
+                    $('#txtDist').append('<option value="">-- เลือกอำเภอ --</option>')
+                    $('#txtSubdist').append('<option value="">-- เลือกตำบล --</option>')
+
+                    var jxt = $.post('../../../api/core-api?stage=district', {province : $('#txtProvince').val()}, function(){}, 'json')
+                            .always(function(snap){
+                                if(snap.status == 'Success'){
+                                snap.data.forEach(i => {
+                                    $('#txtDist').append('<option value="' + i.Ampur + '">' + i.Name + '</option>')
+                                });
+                                }
+                            })
+                    })
+
+                $('#txtDist').change(function(){
+                    $('#txtSubdist').empty()
+                    $('#txtSubdist').append('<option value="">-- เลือกตำบล --</option>')
+
+                    var jxt = $.post('../../../api/core-api?stage=subdistrict', {province : $('#txtProvince').val(), dist: $('#txtDist').val() }, function(){}, 'json')
+                            .always(function(snap){
+                                console.log(snap);
+                                if(snap.status == 'Success'){
+                                snap.data.forEach(i => {
+                                    $('#txtSubdist').append('<option value="' + i.Tumbon + '">' + i.Name + '</option>')
+                                });
+                                }
+                            })
+                })
+            })
     </script>
 
 </body>

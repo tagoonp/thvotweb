@@ -206,7 +206,7 @@ if($stage == 'checkuser'){
     $strSQL = "SELECT * FROM vot2_account WHERE username = '$username' AND delete_status = '0' LIMIT 1";
     $res = $db->fetch($strSQL, true, true);
     if(($res) && ($res['status']) && ($res['count'] > 0)){
-        echo $strSQL;
+        // echo $strSQL;
         echo "Duplicate";
     }else{
         echo "Success";

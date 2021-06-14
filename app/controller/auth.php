@@ -136,7 +136,7 @@ if($stage == 'signup_dot'){
     $subdist = mysqli_real_escape_string($conn, $_POST['txtSubdist']);
     $tprovince = mysqli_real_escape_string($conn, $_POST['txtProvince']);
 
-    $strSQL = "SELECT * FROM vot2_account WHERE uid = '$uid' AND role = 'patient'";
+    $strSQL = "SELECT * FROM vot2_account WHERE uid = '$uid' AND role = 'patient' AND delete_status = '0'";
     $res = $db->fetch($strSQL, true, true);
     if(($res['status']) && ($res['count'] > 0)){
         mysqli_close($conn);
@@ -221,7 +221,7 @@ if($stage == 'signup_vot'){
     $username = mysqli_real_escape_string($conn, $_POST['txtUsername']);
     $password = mysqli_real_escape_string($conn, $_POST['txtPassword1']);
 
-    $strSQL = "SELECT * FROM vot2_account WHERE uid = '$uid' AND role = 'patient'";
+    $strSQL = "SELECT * FROM vot2_account WHERE uid = '$uid' AND role = 'patient' AND delete_status = '0'";
     $res = $db->fetch($strSQL, true, true);
     if(($res['status']) && ($res['count'] > 0)){
         mysqli_close($conn);

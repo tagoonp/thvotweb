@@ -148,19 +148,20 @@ if($stage == 'signup_dot'){
     $passwordlen = strlen($password);
     $password = password_hash($password, PASSWORD_DEFAULT);
 
+    $endmondate = Date("Y-m-d", strtotime("$date +4 Month"));    
+
     $strSQL = "INSERT INTO vot2_account 
               (`uid`, `username`, `password`, `password_len`, `email`, 
               `phone`, `role`, `patient_type`, `hcode`, 
-              `verify_status`, `active_status`, `u_datetime`, `p_udatetime`)
+              `verify_status`, `active_status`, `u_datetime`, `p_udatetime`, `start_obsdate`, `end_obsdate`)
               VALUES (
                   '$uid', '$hn', '$password', '$passwordlen', '', 
                   '$phone', 'patient', 'DOT', '$hcode',
-                  '1', '0', '$datetime', '$datetime'
+                  '1', '0', '$datetime', '$datetime', '$date', '$endmondate'
               )
               ";
     $res = $db->insert($strSQL, false);
     if($res){
-
         $strSQL = "UPDATE vot2_userinfo SET info_use = '0' WHERE info_uid = '$uid'";
         $db->execute($strSQL);
 

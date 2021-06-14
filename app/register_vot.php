@@ -215,12 +215,12 @@ $uid = mysqli_real_escape_string($conn, $_GET['uid']);
 
                                                 <div class="form-group mb-50">
                                                     <label class="" for="exampleInputEmail1">ตั้งรหัสผ่าน : <span class="text-danger">*</span></label>
-                                                    <input type="text" class="form-control" id="txtPassword1" name="txtPassword1" placeholder="">
+                                                    <input type="password" class="form-control" id="txtPassword1" name="txtPassword1" placeholder="">
                                                 </div>
 
                                                 <div class="form-group mb-50">
                                                     <label class="" for="exampleInputEmail1">ยืนยันรหัสผ่าน : <span class="text-danger">*</span></label>
-                                                    <input type="text" class="form-control" id="txtPassword2" name="txtPassword2" placeholder="">
+                                                    <input type="password" class="form-control" id="txtPassword2" name="txtPassword2" placeholder="">
                                                 </div>
 
                                                 <button type="submit" class="mt-1 btn btn-primary glow position-relative w-100">ลงทะเบียน<i id="icon-arrow" class="bx bx-right-arrow-alt"></i></button>

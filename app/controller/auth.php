@@ -232,6 +232,8 @@ if($stage == 'signup_vot'){
     $passwordlen = strlen($password);
     $password = password_hash($password, PASSWORD_DEFAULT);
 
+    $endmondate = Date("Y-m-d", strtotime("$date +4 Month"));  
+
     $strSQL = "INSERT INTO vot2_account 
               (`uid`, `username`, `hn`, `password`, `password_len`, `email`, 
               `phone`, `role`, `patient_type`, `hcode`, 

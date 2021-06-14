@@ -199,17 +199,14 @@ if($stage == 'checkuser'){
         $db->close(); die();
     }
 
-    $username = mysqli_real_escape_string($conn, $_POST['username']);
-    $role = mysqli_real_escape_string($conn, $_POST['role']);
-    $hcode = mysqli_real_escape_string($conn, $_POST['hcode']);
-
-    if($role == 'patient'){
-        $username = $hcode."-".$username;
-    }
+    $username = mysqli_real_escape_string($conn, $_REQUEST['username']);
+    $role = mysqli_real_escape_string($conn, $_REQUEST['role']);
+    $hcode = mysqli_real_escape_string($conn, $_REQUEST['hcode']);
 
     $strSQL = "SELECT * FROM vot2_account WHERE username = '$username' AND delete_status = '0' LIMIT 1";
     $res = $db->fetch($strSQL, false);
-    if(($res['status']) && ($res['count'] > 0)){
+    if(($res) && ($res['status']) && ($res['count'] > 0)){
+        echo $strSQL;
         echo "Duplicate";
     }else{
         echo "Success";

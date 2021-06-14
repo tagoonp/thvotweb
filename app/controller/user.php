@@ -298,7 +298,7 @@ if($stage == 'create_patient'){
 
     $strSQL = "SELECT * FROM vot2_account WHERE username = '$username' AND delete_status = '0' LIMIT 1";
     $res1 = $db->fetch($strSQL, true, true);
-    if(($res1['status']) && ($res1['count'] > 0)){
+    if(($res1) && ($res1['status']) && ($res1['count'] > 0)){
         ?>
         <script>
             alert('Duplicate username');

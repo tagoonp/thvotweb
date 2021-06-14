@@ -198,7 +198,18 @@ $selected_location = $db->fetch($strSQL, false);
                                     <!-- users edit media object start -->
                                     <div class="media mb-2">
                                         <a class="mr-2" href="javascript:void(0);">
-                                            <img src="../../../app-assets/images/portrait/small/avatar-s-26.jpg" alt="users avatar" class="users-avatar-shadow rounded-circle" height="64" width="64">
+                                            <?php 
+                                            if(($selected_user['profile_img'] != NULL) && ($selected_user['profile_img'] != '')){
+                                                ?>
+                                                <img src="https://thvot.com/thvotweb/app/uploads/<?php echo $selected_user['profile_img']; ?>" alt="users avatar" class="users-avatar-shadow rounded-circle" height="64" width="64">
+                                                <?php
+                                            }else{
+                                                ?>
+                                                <img src="../../../app-assets/images/portrait/small/avatar-s-26.jpg" alt="users avatar" class="users-avatar-shadow rounded-circle" height="64" width="64">
+                                                <?php
+                                            }
+                                            ?>
+                                            
                                         </a>
                                         <div class="media-body">
                                             <h4 class="media-heading"><?php echo $selected_user['fname']." ".$selected_user['lname'];?></h4>
@@ -660,6 +671,10 @@ $selected_location = $db->fetch($strSQL, false);
     <!-- END: Page JS-->
 
     <script>
+
+            $(document).ready(function(){
+
+            })
 
             $('.pickadate').pickadate({
                 format: 'yyyy-mm-dd',

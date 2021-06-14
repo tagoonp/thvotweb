@@ -204,7 +204,7 @@ if($stage == 'checkuser'){
     $hcode = mysqli_real_escape_string($conn, $_REQUEST['hcode']);
 
     $strSQL = "SELECT * FROM vot2_account WHERE username = '$username' AND delete_status = '0' LIMIT 1";
-    $res = $db->fetch($strSQL, true);
+    $res = $db->fetch($strSQL, true, true);
     if(($res) && ($res['status']) && ($res['count'] > 0)){
         echo $strSQL;
         echo "Duplicate";

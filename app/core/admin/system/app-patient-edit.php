@@ -25,7 +25,7 @@ $id = mysqli_real_escape_string($conn, $_GET['id']);
 $strSQL = "SELECT a.*, b.*, a.ID user_id FROM vot2_account a INNER JOIN vot2_userinfo b ON a.uid = b.info_uid WHERE a.uid = '$id' AND a.delete_status = '0' AND b.info_use = '1' LIMIT 1";
 $selected_user = $db->fetch($strSQL, false);
 if(!$selected_user){
-    // echo $strSQL;
+    echo $strSQL;
     $db->close();
     die();
     header('Location: ./app-user-list');

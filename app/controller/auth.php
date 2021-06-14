@@ -235,11 +235,11 @@ if($stage == 'signup_vot'){
     $strSQL = "INSERT INTO vot2_account 
               (`uid`, `username`, `hn`, `password`, `password_len`, `email`, 
               `phone`, `role`, `patient_type`, `hcode`, 
-              `verify_status`, `active_status`, `u_datetime`, `p_udatetime`)
+              `verify_status`, `active_status`, `u_datetime`, `p_udatetime`, `start_obsdate`, `end_obsdate`)
               VALUES (
                   '$uid', '$username', '$hn', '$password', '$passwordlen', '', 
                   '$phone', 'patient', 'VOT', '$hcode',
-                  '1', '1', '$datetime', '$datetime'
+                  '1', '1', '$datetime', '$datetime', '$date', '$endmondate'
               )
               ";
     $res = $db->insert($strSQL, false);

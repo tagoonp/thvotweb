@@ -166,11 +166,21 @@ $menu = 12;
                                                             </div>
                                                         </div>
                                                     </div>
+
                                                     <div class="col-9">
                                                         <div class="form-group">
                                                             <div class="controls">
-                                                                <label>HN ของผู้ป่วย (NTIP) : <span class="text-danger">*</span></label>
+                                                                <label>TB NO. (ใน NTIP) : <span class="text-danger">*</span></label>
                                                                 <input type="text" class="form-control" placeholder="" id="txtUsername" name="txtUsername" >
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="col-9">
+                                                        <div class="form-group">
+                                                            <div class="controls">
+                                                                <label>HN : <span class="text-danger">*</span></label>
+                                                                <input type="text" class="form-control" placeholder="" id="txtHn" name="txtHn" >
                                                             </div>
                                                         </div>
                                                     </div>

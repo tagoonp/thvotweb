@@ -20,15 +20,98 @@ if($stage == 'line_login'){
     if(($result) && (mysqli_num_rows($result) > 0)){
         // Already registered
         mysqli_close($conn);
-        header('Location: ../app/register_dot?uid=' . $token . '&referal=webapp');
+        header('Location: ../dot_info?uid=' . $token . '&referal=webapp');
         die();
     }else{
         mysqli_close($conn);
-        header('Location: ../app/register_dot?uid=' . $token . '&referal=webapp');
+        header('Location: ../register_dot?uid=' . $token . '&referal=webapp');
         die();
     }
 
-}else if($stage == 'logout'){
+}
+
+if($stage == 'signup_dot'){
+    if(
+        (!isset($_REQUEST['txtFname'])) ||
+        (!isset($_REQUEST['txtLname'])) ||
+        (!isset($_REQUEST['txtHcode'])) ||
+        (!isset($_REQUEST['txtUid'])) ||
+        (!isset($_REQUEST['txtHn'])) ||
+        (!isset($_REQUEST['txtProvince'])) ||
+        (!isset($_REQUEST['txtPhone'])) ||
+        (!isset($_REQUEST['txtDist'])) ||
+        (!isset($_REQUEST['txtSubdist']))
+    ){
+        $db->close(); header('Location: ../404?error=x103'); die();
+    }
+
+    $fname = mysqli_real_escape_string($conn, $_POST['txtFname']);
+    $lname = mysqli_real_escape_string($conn, $_POST['txtFname']);
+    $hcode = mysqli_real_escape_string($conn, $_POST['txtHcode']);
+    $hn = mysqli_real_escape_string($conn, $_POST['txtHn']);
+    $uid = mysqli_real_escape_string($conn, $_POST['txtUid']);
+    
+    $phone = mysqli_real_escape_string($conn, $_POST['txtPhone']);
+    $dist = mysqli_real_escape_string($conn, $_POST['txtDist']);
+    $subdist = mysqli_real_escape_string($conn, $_POST['txtSubdist']);
+    $tprovince = mysqli_real_escape_string($conn, $_POST['txtProvince']);
+
+    $strSQL = "SELECT * FROM vot2_account WHERE uid = '$uid' AND role = 'patient'";
+    $res = $db->fetch($strSQL, true, true);
+    if(($res['status']) && ($res['count'] > 0)){
+        mysqli_close($conn);
+        header('Location: ../dot_info?uid=' . $uid . '&referal=webapp');
+        die();
+    }
+
+    $password = $dateuniversal;
+    $passwordlen = strlen($password);
+    $password = password_hash($password, PASSWORD_DEFAULT);
+
+    $strSQL = "INSERT INTO vot2_account 
+              (`uid`, `username`, `password`, `password_len`, `email`, 
+              `phone`, `role`, `patient_type`, `hcode`, 
+              `verify_status`, `active_status`, `u_datetime`, `p_udatetime`)
+              VALUES (
+                  '$uid', '$hn', '$password', '$passwordlen', '', 
+                  '$phone', 'patient', 'DOT', '$hcode',
+                  '1', '1', '$datetime', '$datetime'
+              )
+              ";
+    $res = $db->insert($strSQL, false);
+    if($res){
+
+        $strSQL = "UPDATE vot2_userinfo SET info_use = '0' WHERE info_uid = '$uid'";
+        $db->execute($strSQL);
+
+        $strSQL = "INSERT INTO vot2_log (`log_datetime`, `log_info`, `log_message`, `log_ip`, `log_uid`)
+                    VALUES ('$datetime', 'ลงทะเบียนบัญชีผู้ใช้งาน DOT', '$fname $lname', '$remote_ip', '$uid')
+                    ";
+        $db->insert($strSQL, false);
+
+        $strSQL = "INSERT INTO vot2_userinfo (`fname`, `lname`, `phone`, `info_udatetime`, `info_use`, `info_uid`) 
+                   VALUES ('$fname', '$lname', '$phone', '$datetime', '1', '$uid')";
+        $res = $db->insert($strSQL, false);
+        mysqli_close($conn);
+        header('Location: ../dot_info?uid=' . $uid . '&referal=webapp');
+        die();
+    }else{
+        echo $strSQL;
+        die();
+        ?>
+        <script>
+            alert('Can not create new account');
+            window.history.back()
+        </script>
+        <?php
+        $db->close();
+        die();
+    }
+
+
+}
+
+if($stage == 'logout'){
 
 
     $strSQL = "INSERT INTO vot2_log (`log_datetime`, `log_info`, `log_message`, `log_ip`, `log_uid`)
@@ -45,7 +128,9 @@ if($stage == 'line_login'){
     header('Location: ../');
     die();
 
-}else if($stage == 'signup'){
+}
+
+if($stage == 'signup'){
 
     if(
         (!isset($_REQUEST['txtFname'])) ||
@@ -98,11 +183,5 @@ if($stage == 'line_login'){
     $db->close();
     header('Location: ../');
     die();
-  
-}else{
-  $db->close(); header('Location: ../404?error=x909'); die();
 }
-
-
-
 ?>

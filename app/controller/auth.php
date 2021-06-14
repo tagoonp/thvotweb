@@ -53,7 +53,7 @@ if($stage == 'login'){
     $result = $db->fetch($strSQL, false);
     if($result){
         if (password_verify($password, $result['password'])) {
-            
+
             $_SESSION['thvot_session'] = session_id();
             $_SESSION['thvot_uid'] = $result['uid'];
             $_SESSION['thvot_role'] = $result['role'];
@@ -141,7 +141,7 @@ if($stage == 'signup_dot'){
               VALUES (
                   '$uid', '$hn', '$password', '$passwordlen', '', 
                   '$phone', 'patient', 'DOT', '$hcode',
-                  '1', '1', '$datetime', '$datetime'
+                  '1', '0', '$datetime', '$datetime'
               )
               ";
     $res = $db->insert($strSQL, false);
@@ -155,8 +155,8 @@ if($stage == 'signup_dot'){
                     ";
         $db->insert($strSQL, false);
 
-        $strSQL = "INSERT INTO vot2_userinfo (`fname`, `lname`, `phone`, `info_udatetime`, `info_use`, `info_uid`) 
-                   VALUES ('$fname', '$lname', '$phone', '$datetime', '1', '$uid')";
+        $strSQL = "INSERT INTO vot2_userinfo (`fname`, `lname`, `phone`, `info_udatetime`, `info_use`, `info_prov`, `info_district`, `info_subdistrict`, `info_uid`) 
+                   VALUES ('$fname', '$lname', '$phone', '$datetime', '1', 'tprovince', '$dist', '$subdist', '$uid')";
         $res = $db->insert($strSQL, false);
         mysqli_close($conn);
         header('Location: ../dot_info?uid=' . $uid . '&referal=webapp');

@@ -102,31 +102,31 @@ $uid = mysqli_real_escape_string($conn, $_GET['uid']);
 
                                                 <div class="form-row">
                                                     <div class="form-group col-md-6 mb-50">
-                                                        <label for="inputfirstname4">ชื่อ : </label>
+                                                        <label for="inputfirstname4">ชื่อ :  <span class="text-danger">*</span><</label>
                                                         <input type="text" class="form-control" id="txtFname" name="txtFname">
                                                     </div>
                                                     <div class="form-group col-md-6 mb-50">
-                                                        <label for="inputlastname4">นามสกุล :</label>
+                                                        <label for="inputlastname4">นามสกุล : <span class="text-danger">*</span><</label>
                                                         <input type="text" class="form-control" id="txtLname" name="txtLname">
                                                     </div>
                                                 </div>
 
                                                 <div class="form-group mb-50">
-                                                    <label class="text-bold-600" for="exampleInputPassword1">TB NO. (ใน NTIP) :</label>
+                                                    <label class="" for="exampleInputPassword1">TB NO. (ใน NTIP) : <span class="text-danger">*</span><</label>
                                                     <input type="text" class="form-control" id="txtHn" name="txtHn">
                                                 </div>
 
                                                 <div class="form-group mb-50">
-                                                    <label class="text-bold-600" for="exampleInputEmail1">หมายเลขโทรศัพท์ :</label>
+                                                    <label class="" for="exampleInputEmail1">หมายเลขโทรศัพท์ : <span class="text-danger">*</span><</label>
                                                     <input type="text" class="form-control" id="txtPhone" name="txtPhone" placeholder="">
                                                 </div>
 
                                                 <hr>
 
-                                                <h6>ที่อยู่ผู้ป่วย</h6>
+                                                <h6 class="text-bold-600">ที่อยู่ผู้ป่วย</h6>
 
                                                 <div class="form-group mb-50">
-                                                    <label class="text-bold-600" for="exampleInputPassword1">จังหวัดที่อยู่ :</label>
+                                                    <label class="" for="exampleInputPassword1">จังหวัดที่อยู่ : <span class="text-danger">*</span><</label>
                                                     <div>
                                                         <select id="txtProvince" name="txtProvince" class="form-control">
                                                             <option value="">-- เลือกจังหวัด --</option>
@@ -148,7 +148,7 @@ $uid = mysqli_real_escape_string($conn, $_GET['uid']);
                                                 </div>
 
                                                 <div class="form-group mb-50">
-                                                    <label class="text-bold-600" for="exampleInputPassword1">อำเภอ :</label>
+                                                    <label class="" for="exampleInputPassword1">อำเภอ : <span class="text-danger">*</span><</label>
                                                     <div>
                                                         <select id="txtDist" name="txtDist" class="form-control">
                                                             <option value="">-- เลือกอำเภอ --</option>
@@ -157,7 +157,7 @@ $uid = mysqli_real_escape_string($conn, $_GET['uid']);
                                                 </div>
 
                                                 <div class="form-group mb-50">
-                                                    <label class="text-bold-600" for="exampleInputPassword1">ตำบล :</label>
+                                                    <label class="" for="exampleInputPassword1">ตำบล : <span class="text-danger">*</span><</label>
                                                     <div>
                                                         <select id="txtSubdist" name="txtSubdist" class="form-control">
                                                             <option value="">-- เลือกตำบล --</option>
@@ -167,10 +167,10 @@ $uid = mysqli_real_escape_string($conn, $_GET['uid']);
 
                                                 <hr>
 
-                                                <h6>สถานบริการสุขภาพ</h6>
+                                                <h6 class="text-bold-600">สถานบริการสุขภาพ</h6>
 
                                                 <div class="form-group mb-50">
-                                                    <label class="text-bold-600" for="exampleInputPassword1">สถานบริการสุขภาพ :</label>
+                                                    <label class="" for="exampleInputPassword1">สถานบริการสุขภาพ : <span class="text-danger">*</span></label>
                                                     <div class="select-error">
                                                         <select name="txtHcode" id="txtHcode" data-required class="form-control select2">
                                                             <option value="">-- สถานบริการสุขภาพ --</option>

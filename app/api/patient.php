@@ -26,12 +26,14 @@ if($stage == 'list'){
     $hcode = mysqli_real_escape_string($conn, $_GET['hcode']);
     $page = mysqli_real_escape_string($conn, $_GET['page']);
     $limit = mysqli_real_escape_string($conn, $_GET['limit']);
-    $page = $page - 1;
-    if($page != 1){
-        $page = ($page - 1) * $limit;
-    }
+    // $page = $page - 1;
+    // if($page != 1){
+    //     $page = ($page - 1) * $limit;
+    // }
 
-    if($page < 0){ $page = 0; }
+    $page = ($page * $limit) - $limit;
+
+    // if($page < 0){ $page = 0; }
 
     $strSQL = "SELECT role FROM vot2_account WHERE uid = '$uid'";
     $res1 = $db->fetch($strSQL, false);

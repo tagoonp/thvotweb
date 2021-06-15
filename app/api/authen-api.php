@@ -172,7 +172,7 @@ if($stage == 'register_staff'){
     $phone = mysqli_real_escape_string($conn, $array['phone']);
     $hcode = mysqli_real_escape_string($conn, $array['hcode']);
 
-    $strSQL = "SELECT * FROM vot2_account WHERE username = '$username' AND delete_status = '0' LIMIT 1";
+    $strSQL = "SELECT * FROM vot2_account WHERE username = '$username' AND delete_status = '0' AND verify_status = '1' AND active_status = '1' LIMIT 1";
     $res1 = $db->fetch($strSQL, true, true);
     if(($res1) && ($res1['status']) && ($res1['count'] > 0)){
         $return['status'] = 'Duplicate)';

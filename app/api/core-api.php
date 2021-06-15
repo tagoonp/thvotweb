@@ -12,6 +12,37 @@ $stage = mysqli_real_escape_string($conn, $_GET['stage']);
 
 $return = array();
 
+if($stage == 'save_problem'){
+    $json = file_get_contents('php://input');
+    $array = json_decode($json, true);
+    if(
+        (!isset($array['msg'])) ||
+        (!isset($array['uid']))
+    ){
+        $return['status'] = 'Fail (x101)';
+        echo json_encode($return);
+        $db->close(); 
+        die();
+    }
+
+    $msg = mysqli_real_escape_string($conn, $array['msg']);
+    $uid = mysqli_real_escape_string($conn, $array['uid']);
+
+    $strSQL = "INSERT INTO vot2_problem (`prob_msg`, `prob_datetime`, `prob_uid`)
+               VALUES ('$msg', '$datetime', '$uid')
+              ";
+    $db->insert($strSQL, false);
+
+    $strSQL = "INSERT INTO vot2_log (`log_datetime`, `log_info`, `log_message`, `log_ip`, `log_uid`) 
+               VALUES ('$datetime', 'รายงานปัญหากาารใช้งาน', '$msg', '$remote_ip', '$uid')";
+    $db->insert($strSQL, false);
+
+    $return['status'] = 'Success';
+    echo json_encode($return);
+    $db->close(); 
+    die();
+}
+
 if($stage == 'check4month'){
 
     if(

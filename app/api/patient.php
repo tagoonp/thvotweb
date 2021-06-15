@@ -31,6 +31,8 @@ if($stage == 'list'){
         $page = ($page - 1) * $limit;
     }
 
+    if($page < 0){ $page = 0; }
+
     $strSQL = "SELECT role FROM vot2_account WHERE uid = '$uid'";
     $res1 = $db->fetch($strSQL, false);
     if($res1){

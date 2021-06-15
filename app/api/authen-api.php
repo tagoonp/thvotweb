@@ -147,6 +147,77 @@ if($stage == 'savelocation'){
     die();
 }
 
+if($stage == 'register_staff'){
+    $json = file_get_contents('php://input');
+    $array = json_decode($json, true);
+
+    if(
+        (!isset($array['username'])) ||
+        (!isset($array['password'])) ||
+        (!isset($array['fname'])) ||
+        (!isset($array['lname'])) ||
+        (!isset($array['phone'])) ||
+        (!isset($array['hcode']))
+    ){
+        $return['status'] = 'Fail (x101)';
+        echo json_encode($return);
+        $db->close(); 
+        die();
+    }
+
+    $username = mysqli_real_escape_string($conn, $array['username']);
+    $password = mysqli_real_escape_string($conn, $array['password']);
+    $fname = mysqli_real_escape_string($conn, $array['fname']);
+    $lname = mysqli_real_escape_string($conn, $array['lname']);
+    $phone = mysqli_real_escape_string($conn, $array['phone']);
+    $hcode = mysqli_real_escape_string($conn, $array['hcode']);
+
+    $strSQL = "SELECT * FROM vot2_account WHERE username = '$username' AND delete_status = '0' LIMIT 1";
+    $res1 = $db->fetch($strSQL, true, true);
+    if(($res1) && ($res1['status']) && ($res1['count'] > 0)){
+        $return['status'] = 'Duplicate)';
+        echo json_encode($return);
+        $db->close(); 
+        die();
+    }
+
+    $passwordlen = strlen($password);
+    $password = password_hash($password, PASSWORD_DEFAULT);
+    $uid = base64_encode($dateuniversal.$hcode);
+
+    $strSQL = "INSERT INTO vot2_account 
+              (`uid`, `username`, `password`, `password_len`, `email`, 
+              `phone`, `role`, `patient_type`, `hcode`, 
+              `verify_status`, `active_status`, `u_datetime`, `p_udatetime`)
+              VALUES (
+                  '$uid', '$username', '$password', '$passwordlen', '$username', 
+                  '$phone', 'staff', 'NA', '$hcode',
+                  '0', '0', '$datetime', '$datetime'
+              )
+              ";
+    $res = $db->insert($strSQL, false);
+    if($res){
+        $strSQL = "INSERT INTO vot2_log (`log_datetime`, `log_info`, `log_message`, `log_ip`, `log_uid`)
+                    VALUES ('$datetime', 'สมัครใช้งานระบบ (Mobile)', '$fname $lname', '$remote_ip', '$uid')
+                    ";
+        $db->insert($strSQL, false);
+
+        $strSQL = "INSERT INTO vot2_userinfo (`fname`, `lname`, `phone`, `info_udatetime`, `info_use`, `info_uid`) 
+                   VALUES ('$fname', '$lname', '$phone', '$datetime', '1', '$uid')";
+        $res = $db->insert($strSQL, false);
+
+        $db->close();
+        $return['status'] = 'Success';
+        echo json_encode($return);
+        die();
+    }else{
+        $return['status'] = 'Fail (x103)';
+        echo json_encode($return);
+        $db->close(); 
+        die();
+    }
+}
+
 if($stage == 'line_login'){
     $json = file_get_contents('php://input');
     $array = json_decode($json, true);
@@ -290,7 +361,7 @@ if($stage == 'signup'){
 
     $strSQL = "SELECT * FROM vot2_account WHERE username = '$username' AND delete_status = '0' LIMIT 1";
     $res1 = $db->fetch($strSQL, true, true);
-    if(($res1['status']) && ($res1['count'] > 0)){
+    if(($res1) && ($res1['status']) && ($res1['count'] > 0)){
         $return['status'] = 'Fail (x102)';
         echo json_encode($return);
         $db->close(); 

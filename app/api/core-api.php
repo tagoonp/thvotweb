@@ -43,6 +43,33 @@ if($stage == 'save_problem'){
     die();
 }
 
+if($stage == 'activity_list'){
+    if(
+        (!isset($_GET['uid']))
+    ){
+        $return['status'] = 'Fail (x101)';
+        echo json_encode($return);
+        $db->close(); 
+        die();
+    }
+
+    $uid = mysqli_real_escape_string($conn, $_GET['uid']);
+
+    $strSQL = "SELECT * FROM vot2_log WHERE log_uid = '$uid' ORDER BY log_datetime DESC LIMIT 100";
+    $res = $db->fetch($strSQL, true, false);
+
+    f(($res) && ($res['status'])){
+        $return['status'] = 'Success';
+        $return['data'] = $res['data'];
+    }else{
+        $return['status'] = 'Fail (x102)'.$strSQL;
+    }
+    echo json_encode($return);
+    $db->close(); 
+    die();
+
+}
+
 if($stage == 'check4month'){
 
     if(

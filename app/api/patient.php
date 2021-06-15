@@ -24,9 +24,12 @@ if($stage == 'list'){
 
     $uid = mysqli_real_escape_string($conn, $_GET['uid']);
     $hcode = mysqli_real_escape_string($conn, $_GET['hcode']);
+    $page = mysqli_real_escape_string($conn, $_GET['page']);
+    $limit = mysqli_real_escape_string($conn, $_GET['limit']);
 
     $strSQL = "SELECT * FROM vot2_account a INNER JOIN vot2_userinfo b ON a.uid = b.info_uid 
-              WHERE a.hcode = '$hcode' AND b.info_use AND a.delete_status = '0'";
+              WHERE a.hcode = '$hcode' AND b.info_use AND a.delete_status = '0' AND a.role = 'patient'
+              LIMIT $page, $limit";
     $res = $db->fetch($strSQL,true,false);
     if(($res) && ($res['status'])){
         $return['status'] = 'Success';

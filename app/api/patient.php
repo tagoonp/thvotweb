@@ -35,7 +35,7 @@ if($stage == 'list'){
         $return['status'] = 'Success';
         $return['data'] = $res['data'];
     }else{
-        $return['status'] = 'Fail (x102)';
+        $return['status'] = 'Fail (x102)'.$strSQL;
     }
     echo json_encode($return);
     $db->close(); 

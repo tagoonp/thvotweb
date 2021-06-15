@@ -147,6 +147,56 @@ if($stage == 'savelocation'){
     die();
 }
 
+if($stage == 'login_staff'){
+    $json = file_get_contents('php://input');
+    $array = json_decode($json, true);
+
+    if(
+        (!isset($array['username'])) ||
+        (!isset($array['password']))
+    ){
+        $return['status'] = 'Fail (x101)';
+        echo json_encode($return);
+        $db->close(); 
+        die();
+    }
+
+    $username = mysqli_real_escape_string($conn, $array['username']);
+    $password = mysqli_real_escape_string($conn, $array['password']);
+
+    $strSQL = "SELECT * FROM vot2_account WHERE (username = '$username' OR email = '$username') AND active_status = '1' AND verify_status = '1' AND delete_status = '0'";
+    $result = $db->fetch($strSQL, false);
+    if($result){
+        if (password_verify($password, $result['password'])) {
+
+            $return['status'] = 'Success';
+            $return['thvot_session'] = session_id();
+            $return['thvot_uid'] = $result['uid'];
+            $return['thvot_role'] = $result['role'];
+            $return['thvot_hcode'] = $result['hcode'];
+
+            $strSQL = "INSERT INTO vot2_log (`log_datetime`, `log_info`, `log_message`, `log_ip`, `log_uid`)
+                       VALUES ('$datetime', 'เข้าสู่ระบบ (Mobile)', '', '$remote_ip', '".$result['uid']."')
+                      ";
+            $db->insert($strSQL, false);
+
+            echo json_encode($return);
+            $db->close();
+            die();
+        } else {
+            $return['status'] = 'Fail (x102)';
+            echo json_encode($return);
+            $db->close(); 
+            die();
+        }
+    }else{
+        $return['status'] = 'Fail (x103)';
+        echo json_encode($return);
+        $db->close(); 
+        die();
+    }
+}
+
 if($stage == 'register_staff'){
     $json = file_get_contents('php://input');
     $array = json_decode($json, true);

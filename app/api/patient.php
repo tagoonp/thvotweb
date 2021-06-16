@@ -115,7 +115,12 @@ if($stage == 'patient_info'){
     $uid = mysqli_real_escape_string($conn, $_GET['uid']);
     $patient_id = mysqli_real_escape_string($conn, $_GET['patient_id']);
 
-    $strSQL = "SELECT a.*, b.*, a.ID user_id FROM vot2_account a INNER JOIN vot2_userinfo b ON a.uid = b.info_uid WHERE a.uid = '$patient_id' AND a.delete_status = '0' AND b.info_use = '1' LIMIT 1";
+    $strSQL = "SELECT a.*, b.*, a.ID user_id 
+               FROM vot2_account a INNER JOIN vot2_userinfo b ON a.uid = b.info_uid 
+               WHERE a.username = '$patient_id' 
+               AND a.delete_status = '0' 
+               AND b.info_use = '1'
+               LIMIT 1";
     $selected_user = $db->fetch($strSQL, false);
     if(!$selected_user){
         $return['status'] = 'Fail (x102)';

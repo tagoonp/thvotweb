@@ -81,7 +81,7 @@ if($stage == 'list_noti'){
                 $strSQL = "SELECT uid FROM vot2_account WHERE username = '".$row['noti_specific_uid']."'";
                 $resp = $db->fetch($strSQL, false);
                 if($resp){
-                    $item['noti_uid'] = $resp['uid'];
+                    $item['uid'] = $resp['uid'];
                 }
                 if($row['noti_header'] == 'แจ้งเตือนการสมัครใช้งาน'){
                     $item['noti_redirect'] = 'userinfo';

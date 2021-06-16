@@ -93,3 +93,55 @@ if($stage == 'list'){
     die();
 
 }
+
+if($stage == 'user_info'){
+    if(
+        (!isset($_GET['uid'])) ||
+        (!isset($_GET['user_uid']))
+    ){
+        $return['status'] = 'Fail (x101)';
+        echo json_encode($return);
+        $db->close(); 
+        die();
+    }
+
+    $uid = mysqli_real_escape_string($conn, $_GET['uid']);
+    $user_uid = mysqli_real_escape_string($conn, $_GET['user_uid']);
+
+    $strSQL = "SELECT a.*, b.*, a.ID user_id, c.hosname
+               FROM vot2_account a INNER JOIN vot2_userinfo b ON a.uid = b.info_uid 
+               INNER JOIN vot2_chospital c ON a.hcode = c.hoscode
+               WHERE a.uid = '$user_uid' 
+               AND a.delete_status = '0' 
+               AND b.info_use = '1'
+               LIMIT 1";
+    $selected_user = $db->fetch($strSQL, false);
+    if(!$selected_user){
+        $return['status'] = 'Fail (x102)';
+        echo json_encode($return);
+        $db->close(); 
+        die();
+    }
+
+    $return['status'] = 'Success';
+
+    // $selected_user['location_status_c'] = '';
+    // if($selected_user['location_status'] == 1){
+    //     $selected_user['location_status_c'] = 'checked';
+    // }
+
+    // $selected_user['limg_status_c'] = '';
+    // if($selected_user['profile_status'] == 1){
+    //     $selected_user['limg_status_c'] = 'checked';
+    // }
+
+    $selected_user['active_status_c'] = '';
+    if($selected_user['active_status'] == 1){
+        $selected_user['active_status_c'] = 'checked';
+    }
+
+    $return['data'] = $selected_user;
+    echo json_encode($return);
+    $db->close(); 
+    die();
+}

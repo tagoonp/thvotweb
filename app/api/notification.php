@@ -23,14 +23,14 @@ if($stage == 'admin_notinumber'){
     if($res){
         if($res['cnt'] != null){
             $return['status'] = 'Success';
-            $return['data'] = $res['cnt'];
+            $return['data']['cn'] = $res['cnt'];
         }else{
             $return['status'] = 'Success';
-            $return['data'] = 0;
+            $return['data']['cn'] = 0;
         }
     }else{
         $return['status'] = 'Success';
-        $return['data'] = 0;
+        $return['data']['cn'] = 0;
     }
     echo json_encode($return);
     $db->close(); 

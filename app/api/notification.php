@@ -70,7 +70,7 @@ if($stage == 'list_noti'){
             $return['status'] = 'Success';
             $return['data'] = $res['data'];
         }else{
-            $return['status'] = 'Fail';
+            $return['status'] = 'Fail'.$strSQL;
         }
         echo json_encode($return);
         $db->close(); 

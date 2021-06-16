@@ -58,7 +58,7 @@ if($stage == 'list_noti'){
     $limit = mysqli_real_escape_string($conn, $_GET['limit']);
 
     if($role == 'admin'){
-        $strSQL = "SELECT COUNT(noti_id) cnt FROM vot2_notification 
+        $strSQL = "SELECT * FROM vot2_notification 
               WHERE 
               noti_allow_admin = '1' 
               AND noti_view = '0' 
@@ -76,7 +76,7 @@ if($stage == 'list_noti'){
         $db->close(); 
         die();
     }else if($role == 'manager'){
-        $strSQL = "SELECT COUNT(noti_id) cnt FROM vot2_notification 
+        $strSQL = "SELECT * FROM vot2_notification 
               WHERE 
               noti_view = '0' 
               AND noti_type = 'workprocess'
@@ -96,7 +96,7 @@ if($stage == 'list_noti'){
         $db->close(); 
         die();
     }else if($role == 'staff'){
-        $strSQL = "SELECT COUNT(noti_id) cnt FROM vot2_notification 
+        $strSQL = "SELECT * FROM vot2_notification 
               WHERE 
               noti_view = '0' 
               AND noti_type = 'workprocess'

@@ -258,12 +258,12 @@ if($stage == 'register_staff'){
 
         $strSQL = "INSERT INTO vot2_notification 
                    (
-                       `noti_header`, `noti_content`, `noti_datetime`, `noti_view`, `noti_type`, 
+                       `noti_header`, `noti_content`, `noti_datetime`, `noti_view`, `noti_type`, `noti_allow_admin`, 
                        `noti_specific_uid`, `noti_url`, `noti_hcode`
                     )
                     VALUES 
                     (
-                        'แจ้งเตือนการสมัครใช้งาน', 'โดยคุณ$fname $lname', '$datetime', '0', 'workprocess', 
+                        'แจ้งเตือนการสมัครใช้งาน', 'โดยคุณ$fname $lname', '$datetime', '0', 'workprocess', '1',
                         '', '', '$hcode'
                     )
                   ";

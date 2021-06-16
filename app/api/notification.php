@@ -68,7 +68,9 @@ if($stage == 'list_noti'){
         $res = $db->fetch($strSQL, true, false);
         if(($res) && ($res['status'])){
             $return['status'] = 'Success';
+            $a = array();
             foreach($res['data'] as $row){
+
                 foreach ($row as $key => $value) {
                     $b = array();
                     if(!is_integer($key)){
@@ -79,10 +81,11 @@ if($stage == 'list_noti'){
                             $b['icon'] = 'http://thvot.com/img/notification-icon.png';
                         }
                     }
-                    $return['data'] = $b;
+                    $a[] = $bl
+                    // $return['data'] = $b;
                 }
             }
-            // $return['data'] = $res['data'];
+            $return['data'] = $a;
         }else{
             $return['status'] = 'Fail';
         }

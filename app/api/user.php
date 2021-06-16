@@ -177,3 +177,58 @@ if($stage == 'user_delete'){
     $db->close(); 
     die();
 }
+
+if($stage == 'user_stage'){
+    if(
+        (!isset($_GET['uid'])) ||
+        (!isset($_GET['user_uid'])) ||
+        (!isset($_GET['var']))
+    ){
+        $return['status'] = 'Fail (x101)';
+        echo json_encode($return);
+        $db->close(); 
+        die();
+    }
+
+    $uid = mysqli_real_escape_string($conn, $_GET['uid']);
+    $user_uid = mysqli_real_escape_string($conn, $_GET['user_uid']);
+    $var = mysqli_real_escape_string($conn, $_GET['var']);
+
+
+    if($var == 'active'){
+
+        $strSQL = "SELECT verify_status FROM vot2_account WHERE uid = '$user_uid' AND delete_status = '0'";
+        $res = $db->fetch($strSQL, false);
+        if($res){
+
+            if($res['verify_status'] == '0'){
+                $strSQL = "UPDATE vot2_account SET verify_status = '1' WHERE uid = '$user_uid' AND delete_status = '0'";
+                $db->execute($strSQL);
+            }
+        }
+
+        $strSQL = "SELECT active_status FROM vot2_account WHEREuid = '$user_uid' AND delete_status = '0'";
+        $res = $db->fetch($strSQL, false);
+        if($res){
+            $c = $res['active_status'];
+            $ts = '1';
+            if($c == '1'){
+                $ts = '0';
+            }
+
+            $strSQL = "UPDATE vot2_account SET active_status = '$ts' WHERE uid = '$user_uid' AND delete_status = '0'";
+            $db->execute($strSQL);
+        }
+    }
+
+    $strSQL = "INSERT INTO vot2_log (`log_datetime`, `log_info`, `log_message`, `log_ip`, `log_uid`)
+        VALUES ('$datetime', 'ปรับปรุงสถานะ ($var)', 'USER UID : $user_uid', '$remote_ip', '$uid')
+    ";
+    $db->insert($strSQL, false);
+
+    $return['status'] = 'Success';
+    echo json_encode($return);
+    $db->close(); 
+    die();
+    
+}

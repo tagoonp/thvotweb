@@ -43,7 +43,7 @@ if($stage == 'list_noti'){
         (!isset($_GET['role'])) ||
         (!isset($_GET['hcode'])) ||
         (!isset($_GET['page'])) ||
-        (!isset($_GET['limie']))
+        (!isset($_GET['limit']))
     ){
         $return['status'] = 'Fail (x101)';
         echo json_encode($return);
@@ -63,6 +63,7 @@ if($stage == 'list_noti'){
               noti_allow_admin = '1' 
               AND noti_view = '0' 
               AND noti_type = 'workprocess'
+              LIMIT $page, $limit
               ";
         $res = $db->fetch($strSQL, true, false);
         if(($res) && ($res['status'])){
@@ -82,6 +83,7 @@ if($stage == 'list_noti'){
               AND nti_hcode IN (
                   SELECT phoscode FROM vot2_projecthospital WHERE hospcode = '$hcode'
               )
+              LIMIT $page, $limit
               ";
         $res = $db->fetch($strSQL, true, false);
         if(($res) && ($res['status'])){
@@ -98,7 +100,9 @@ if($stage == 'list_noti'){
               WHERE 
               noti_view = '0' 
               AND noti_type = 'workprocess'
-              AND nti_hcode = '$hcode'";
+              AND nti_hcode = '$hcode'
+              LIMIT $page, $limit
+              ";
         $res = $db->fetch($strSQL, true, false);
         if(($res) && ($res['status'])){
             $return['status'] = 'Success';

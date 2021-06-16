@@ -256,6 +256,18 @@ if($stage == 'register_staff'){
                    VALUES ('$fname', '$lname', '$phone', '$datetime', '1', '$uid')";
         $res = $db->insert($strSQL, false);
 
+        $strSQL = "INSERT INTO vot2_notification 
+                   (
+                       `noti_header`, `noti_content`, `noti_datetime`, `noti_view`, `noti_type`, 
+                       `noti_specific_uid`, `noti_url`, `noti_hcode`
+                    )
+                    VALUES 
+                    (
+                        'แจ้งเตือนการสมัครใช้งาน', 'โดยคุณ$fname $lname', '$datetime', '0', 'workprocess', 
+                        '', '', '$hcode'
+                    )
+                  ";
+        $res = $db->insert($strSQL, false);
         $db->close();
         $return['status'] = 'Success';
         echo json_encode($return);

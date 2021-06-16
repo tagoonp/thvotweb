@@ -57,7 +57,7 @@ if($stage == 'list'){
                 $return['status'] = 'Success';
                 $return['data'] = $res['data'];
             }else{
-                $return['status'] = 'Fail (x102)'.$strSQL;
+                $return['status'] = 'Fail (x102)';
             }
         }else if($role == 'staff'){
             $strSQL = "SELECT a.uid, a.username, a.profile_img, b.fname, b.lname, a.hcode, c.hosname , a.patient_type
@@ -76,7 +76,7 @@ if($stage == 'list'){
                 $return['status'] = 'Success';
                 $return['data'] = $res['data'];
             }else{
-                $return['status'] = 'Fail (x102)'.$strSQL;
+                $return['status'] = 'Fail (x102)';
             }
         }else if($role == 'moderator'){
             // $strSQL = "SELECT a.uid, a.profile_img, b.fname, b.lname, a.hcode, c.hosname 
@@ -103,7 +103,7 @@ if($stage == 'list'){
                 $return['status'] = 'Success';
                 $return['data'] = $res['data'];
             }else{
-                $return['status'] = 'Fail (x102)'.$strSQL;
+                $return['status'] = 'Fail (x102)';
             }
         }
     }

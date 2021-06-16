@@ -58,7 +58,7 @@ if($stage == 'activity_list'){
     $strSQL = "SELECT * FROM vot2_log WHERE log_uid = '$uid' ORDER BY log_datetime DESC LIMIT 100";
     $res = $db->fetch($strSQL, true, false);
 
-    f(($res) && ($res['status'])){
+    if(($res) && ($res['status'])){
         $return['status'] = 'Success';
         $return['data'] = $res['data'];
     }else{

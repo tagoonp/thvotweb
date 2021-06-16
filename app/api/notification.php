@@ -72,16 +72,16 @@ if($stage == 'list_noti'){
             foreach($res['data'] as $row){
                 $b = array();
                 foreach ($row as $key => $value) {
-                    
-                    if(!is_integer($key)){
-                        $b['key'] = $value;
-                        if($key == 'noti_header'){
+                    $b['key'] = $value;
+                    if($key == 'noti_header'){
+                        if($value == 'แจ้งเตือนการสมัครใช้งาน'){
                             $b['icon'] = 'http://thvot.com/img/register-icon.png';
                         }else{
                             $b['icon'] = 'http://thvot.com/img/notification-icon.png';
                         }
+                    }else{
+                        $b['icon'] = 'http://thvot.com/img/notification-icon.png';
                     }
-                    // $return['data'] = $b;
                 }
                 $a[] = $b;
             }

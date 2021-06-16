@@ -70,20 +70,16 @@ if($stage == 'list_noti'){
             $return['status'] = 'Success';
             $a = array();
             foreach($res['data'] as $row){
-                $b = array();
-                foreach ($row as $key => $value) {
-                    $b['key'] = $value;
-                    if($key == 'noti_header'){
-                        if($value == 'แจ้งเตือนการสมัครใช้งาน'){
-                            $b['icon'] = 'http://thvot.com/img/register-icon.png';
-                        }else{
-                            $b['icon'] = 'http://thvot.com/img/notification-icon.png';
-                        }
-                    }else{
-                        $b['icon'] = 'http://thvot.com/img/notification-icon.png';
-                    }
+                $item = array();
+                $item['noti_header'] = $row['noti_header'];
+                $item['noti_content'] = $row['noti_content'];
+                $item['noti_datetime'] = $row['noti_datetime'];
+                $item['noti_url'] = $row['noti_url'];
+                $item['noti_hcode'] = $row['noti_hcode'];
+                if($row['noti_header'] == 'แจ้งเตือนการสมัครใช้งาน'){
+                    $item['noti_redirect'] = 'userinfo';
                 }
-                $a[] = $b;
+                $a[] = $item;
             }
             $return['data'] = $a;
         }else{

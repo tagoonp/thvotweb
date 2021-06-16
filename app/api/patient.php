@@ -40,7 +40,7 @@ if($stage == 'list'){
     if($res1){
         $role = $res1['role'];
         if($role == 'manager'){
-            $strSQL = "SELECT a.uid, a.profile_img, b.fname, b.lname, a.hcode, c.hosname , a.patient_type
+            $strSQL = "SELECT a.uid, a.username, a.profile_img, b.fname, b.lname, a.hcode, c.hosname , a.patient_type
                        FROM vot2_account a INNER JOIN vot2_userinfo b ON a.uid = b.info_uid 
                        INNER JOIN vot2_chospital c ON a.hcode = c.hoscode 
                        WHERE a.hcode IN (
@@ -56,7 +56,7 @@ if($stage == 'list'){
                 $return['status'] = 'Fail (x102)'.$strSQL;
             }
         }else if($role == 'staff'){
-            $strSQL = "SELECT a.uid, a.profile_img, b.fname, b.lname, a.hcode, c.hosname , a.patient_type
+            $strSQL = "SELECT a.uid, a.username, a.profile_img, b.fname, b.lname, a.hcode, c.hosname , a.patient_type
                        FROM vot2_account a INNER JOIN vot2_userinfo b ON a.uid = b.info_uid 
                        INNER JOIN vot2_chospital c ON a.hcode = c.hoscode 
                        WHERE a.hcode = '$hcode' AND b.info_use AND a.delete_status = '0' AND a.role = 'patient'
@@ -78,7 +78,7 @@ if($stage == 'list'){
             //            AND b.info_use AND a.delete_status = '0' AND a.role = 'patient'
             //            LIMIT $page, $limit";
         }else if($role == 'admin'){
-            $strSQL = "SELECT a.uid, a.profile_img, b.fname, b.lname, a.hcode, c.hosname , a.patient_type
+            $strSQL = "SELECT a.uid, a.username, a.profile_img, b.fname, b.lname, a.hcode, c.hosname , a.patient_type
             FROM vot2_account a INNER JOIN vot2_userinfo b ON a.uid = b.info_uid 
             INNER JOIN vot2_chospital c ON a.hcode = c.hoscode 
             WHERE b.info_use AND a.delete_status = '0' AND a.role = 'patient'

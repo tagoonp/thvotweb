@@ -76,6 +76,7 @@ if($stage == 'list_noti'){
                 $item['noti_datetime'] = $row['noti_datetime'];
                 $item['noti_url'] = $row['noti_url'];
                 $item['noti_hcode'] = $row['noti_hcode'];
+                $item['noti_uid'] = $row['noti_specific_uid'];
                 if($row['noti_header'] == 'แจ้งเตือนการสมัครใช้งาน'){
                     $item['noti_redirect'] = 'userinfo';
                 }

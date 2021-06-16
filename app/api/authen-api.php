@@ -264,7 +264,7 @@ if($stage == 'register_staff'){
                     VALUES 
                     (
                         'แจ้งเตือนการสมัครใช้งาน', 'โดยคุณ$fname $lname', '$datetime', '0', 'workprocess', '1',
-                        '', '', '$hcode'
+                        '$username', '', '$hcode'
                     )
                   ";
         $res = $db->insert($strSQL, false);

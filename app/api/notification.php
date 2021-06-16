@@ -61,7 +61,7 @@ if($stage == 'list_noti'){
         $strSQL = "SELECT * FROM vot2_notification 
               WHERE 
               noti_allow_admin = '1' 
-              AND noti_view = '0' 
+              AND noti_hide = '0' 
               AND noti_type = 'workprocess'
               LIMIT $page, $limit
               ";

@@ -77,6 +77,12 @@ if($stage == 'list_noti'){
                 $item['noti_url'] = $row['noti_url'];
                 $item['noti_hcode'] = $row['noti_hcode'];
                 $item['noti_uid'] = $row['noti_specific_uid'];
+
+                $strSQL = "SELECT uid FROM vot2_account WHERE username = '".$row['noti_specific_uid']."'";
+                $resp = $db->fetch($strSQL, false);
+                if($resp){
+                    $item['noti_uid'] = $resp['uid'];
+                }
                 if($row['noti_header'] == 'แจ้งเตือนการสมัครใช้งาน'){
                     $item['noti_redirect'] = 'userinfo';
                     $item['noti_icon'] = 'https://thvot.com/img/register-icon.png';

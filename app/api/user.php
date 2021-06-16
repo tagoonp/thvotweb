@@ -145,3 +145,35 @@ if($stage == 'user_info'){
     $db->close(); 
     die();
 }
+
+if($stage == 'user_delete'){
+    if(
+        (!isset($_GET['uid'])) ||
+        (!isset($_GET['user_uid']))
+    ){
+        $return['status'] = 'Fail (x101)';
+        echo json_encode($return);
+        $db->close(); 
+        die();
+    }
+
+    $uid = mysqli_real_escape_string($conn, $_GET['uid']);
+    $user_uid = mysqli_real_escape_string($conn, $_GET['user_uid']);
+
+
+    $strSQL = "UPDATE vot2_account SET delete_status = '1' WHERE uid = '$user_uid' ";
+    $res = $db->execute($strSQL, false);
+
+    $strSQL = "UPDATE vot2_userinfo SET info_use = '0' WHERE info_uid = '$user_uid' ";
+    $res = $db->execute($strSQL, false);
+
+    $strSQL = "INSERT INTO vot2_log (`log_datetime`, `log_info`, `log_message`, `log_ip`, `log_uid`)
+        VALUES ('$datetime', 'ลบผู้ใช้งานระบบ', 'Target TB NO : $user_uid', '$remote_ip', '$uid')
+    ";
+    $db->insert($strSQL, false);
+
+    $return['status'] = 'Success';
+    echo json_encode($return);
+    $db->close(); 
+    die();
+}

@@ -146,6 +146,22 @@ if($stage == 'patient_info'){
     }
 
     $return['status'] = 'Success';
+
+    $selected_user['location_status_c'] = '';
+    if($selected_user['location_status'] == 1){
+        $selected_user['location_status_c'] = 'checked';
+    }
+
+    $selected_user['limg_status_c'] = '';
+    if($selected_user['profile_status'] == 1){
+        $selected_user['limg_status_c'] = 'checked';
+    }
+
+    $selected_user['active_status_c'] = '';
+    if($selected_user['active_status'] == 1){
+        $selected_user['active_status_c'] = 'checked';
+    }
+
     $return['data'] = $selected_user;
     echo json_encode($return);
     $db->close(); 

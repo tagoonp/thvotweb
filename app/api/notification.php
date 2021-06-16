@@ -71,13 +71,16 @@ if($stage == 'list_noti'){
             $a = array();
             foreach($res['data'] as $row){
                 $item = array();
+                
+                $item['noti_id'] = $row['noti_id'];
                 $item['noti_header'] = $row['noti_header'];
                 $item['noti_content'] = $row['noti_content'];
                 $item['noti_datetime'] = $row['noti_datetime'];
                 $item['noti_url'] = $row['noti_url'];
                 $item['noti_hcode'] = $row['noti_hcode'];
                 $item['noti_uid'] = $row['noti_specific_uid'];
-
+                $item['noti_hide'] = $row['noti_hide'];
+                
                 $strSQL = "SELECT uid FROM vot2_account WHERE username = '".$row['noti_specific_uid']."'";
                 $resp = $db->fetch($strSQL, false);
                 if($resp){

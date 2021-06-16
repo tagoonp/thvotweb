@@ -218,6 +218,7 @@ if($stage == 'user_stage'){
 
             $strSQL = "UPDATE vot2_account SET active_status = '$ts' WHERE uid = '$user_uid' AND delete_status = '0'";
             $db->execute($strSQL);
+            
         }
     }
 

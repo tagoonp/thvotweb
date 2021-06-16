@@ -142,3 +142,24 @@ if($stage == 'list_noti'){
         die();
     }
 }
+
+if($stage == 'read_noti'){
+    if(
+        (!isset($_GET['uid'])) ||
+        (!isset($_GET['record_id']))
+    ){
+        $return['status'] = 'Fail (x101)';
+        echo json_encode($return);
+        $db->close(); 
+        die();
+    }
+
+    $uid = mysqli_real_escape_string($conn, $_GET['uid']);
+    $record_id = mysqli_real_escape_string($conn, $_GET['record_id']);
+
+    $strSQL = "UPDATE vot2_notification SET noti_view = '1' WHERE noti_id = '$record_id'";
+    $db->execute($strSQL);
+    $return['status'] = 'Success';
+    $db->close(); 
+    die();
+}

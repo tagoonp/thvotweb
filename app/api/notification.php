@@ -70,9 +70,9 @@ if($stage == 'list_noti'){
             $return['status'] = 'Success';
             $a = array();
             foreach($res['data'] as $row){
-
+                $b = array();
                 foreach ($row as $key => $value) {
-                    $b = array();
+                    
                     if(!is_integer($key)){
                         $b['key'] = $value;
                         if($key == 'noti_header'){

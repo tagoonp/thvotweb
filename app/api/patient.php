@@ -46,7 +46,11 @@ if($stage == 'list'){
                        WHERE a.hcode IN (
                            SELECT phoscode FROM vot2_projecthospital WHERE hospcode = '$hcode'
                        )
-                       AND b.info_use = '1' AND a.delete_status = '0' AND a.role = 'patient'
+                       AND b.info_use = '1' 
+                       AND a.delete_status = '0' 
+                       AND a.role = 'patient'
+                       AND a.active_status = '1'
+                       AND a.verify_status = '1'
                        LIMIT $page, $limit";
             $res = $db->fetch($strSQL,true,false);
             if(($res) && ($res['status'])){
@@ -59,7 +63,13 @@ if($stage == 'list'){
             $strSQL = "SELECT a.uid, a.username, a.profile_img, b.fname, b.lname, a.hcode, c.hosname , a.patient_type
                        FROM vot2_account a INNER JOIN vot2_userinfo b ON a.uid = b.info_uid 
                        INNER JOIN vot2_chospital c ON a.hcode = c.hoscode 
-                       WHERE a.hcode = '$hcode' AND b.info_use = '1' AND a.delete_status = '0' AND a.role = 'patient'
+                       WHERE 
+                       a.hcode = '$hcode' 
+                       AND b.info_use = '1' 
+                       AND a.delete_status = '0' 
+                       AND a.role = 'patient'
+                       AND a.active_status = '1'
+                       AND a.verify_status = '1'
                        LIMIT $page, $limit";
             $res = $db->fetch($strSQL,true,false);
             if(($res) && ($res['status'])){
@@ -81,7 +91,12 @@ if($stage == 'list'){
             $strSQL = "SELECT a.uid, a.username, a.profile_img, b.fname, b.lname, a.hcode, c.hosname , a.patient_type
             FROM vot2_account a INNER JOIN vot2_userinfo b ON a.uid = b.info_uid 
             INNER JOIN vot2_chospital c ON a.hcode = c.hoscode 
-            WHERE b.info_use = '1' AND a.delete_status = '0' AND a.role = 'patient'
+            WHERE 
+            b.info_use = '1' 
+            AND a.delete_status = '0' 
+            AND a.role = 'patient'
+            AND a.active_status = '1'
+            AND a.verify_status = '1'
             LIMIT $page, $limit";
             $res = $db->fetch($strSQL,true,false);
             if(($res) && ($res['status'])){

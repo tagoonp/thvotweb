@@ -81,7 +81,7 @@ if($stage == 'list_noti'){
                             $b['icon'] = 'http://thvot.com/img/notification-icon.png';
                         }
                     }
-                    $a[] = $bl
+                    $a[] = $b;
                     // $return['data'] = $b;
                 }
             }

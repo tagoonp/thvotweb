@@ -183,3 +183,32 @@ if($stage == 'patient_location'){
     $db->close(); 
     die();
 }
+
+if($stage == 'patient_delete'){
+    if(
+        (!isset($_GET['uid'])) ||
+        (!isset($_GET['patient_id']))
+    ){
+        $return['status'] = 'Fail (x101)';
+        echo json_encode($return);
+        $db->close(); 
+        die();
+    }
+
+    $uid = mysqli_real_escape_string($conn, $_GET['uid']);
+    $patient_id = mysqli_real_escape_string($conn, $_GET['patient_id']);
+
+
+    $strSQL = "UPDATE vot2_account SET delete_status = '1' WHERE username = '$patient_id' ";
+    $res = $db->execute($strSQL, false);
+
+    $strSQL = "INSERT INTO vot2_log (`log_datetime`, `log_info`, `log_message`, `log_ip`, `log_uid`)
+        VALUES ('$datetime', 'ลบผู้ป่วย', 'Target TB NO : $patient_id', '$remote_ip', '$uid')
+    ";
+    $db->insert($strSQL, false);
+
+    $return['status'] = 'Success';
+    echo json_encode($return);
+    $db->close(); 
+    die();
+}

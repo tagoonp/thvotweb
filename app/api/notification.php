@@ -56,7 +56,7 @@ if($stage == 'list_noti'){
     $hcode = mysqli_real_escape_string($conn, $_GET['hcode']);
     $page = mysqli_real_escape_string($conn, $_GET['page']);
     $limit = mysqli_real_escape_string($conn, $_GET['limit']);
-
+    $page = ($page * $limit) - $limit;
     if($role == 'admin'){
         $strSQL = "SELECT * FROM vot2_notification 
               WHERE 
@@ -70,7 +70,7 @@ if($stage == 'list_noti'){
             $return['status'] = 'Success';
             $return['data'] = $res['data'];
         }else{
-            $return['status'] = 'Fail'.$strSQL;
+            $return['status'] = 'Fail';
         }
         echo json_encode($return);
         $db->close(); 

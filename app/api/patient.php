@@ -200,6 +200,79 @@ if($stage == 'patient_location'){
     die();
 }
 
+if($stage == 'patient_stage'){
+    if(
+        (!isset($_GET['uid'])) ||
+        (!isset($_GET['patient_id'])) ||
+        (!isset($_GET['var']))
+    ){
+        $return['status'] = 'Fail (x101)';
+        echo json_encode($return);
+        $db->close(); 
+        die();
+    }
+
+    $uid = mysqli_real_escape_string($conn, $_GET['uid']);
+    $patient_id = mysqli_real_escape_string($conn, $_GET['patient_id']);
+    $var = mysqli_real_escape_string($conn, $_GET['var']);
+
+    if($var == 'location'){
+        $strSQL = "SELECT location_status FROM vot2_account WHERE username = '$patient_id' AND delete_status = '0'";
+        $res = $db->fetch($strSQL, false);
+        if($res){
+            $c = $res['location_status'];
+            $ts = '1';
+            if($c == '1'){
+                $ts = '0';
+            }
+
+            $strSQL = "UPDATE vot2_account SET location_status = '$ts' WHERE  username = '$patient_id' AND delete_status = '0'";
+            $db->execute($strSQL);
+        }
+    }
+
+    if($var == 'active'){
+        $strSQL = "SELECT active_status FROM vot2_account WHERE username = '$patient_id' AND delete_status = '0'";
+        $res = $db->fetch($strSQL, false);
+        if($res){
+            $c = $res['active_status'];
+            $ts = '1';
+            if($c == '1'){
+                $ts = '0';
+            }
+
+            $strSQL = "UPDATE vot2_account SET active_status = '$ts' WHERE  username = '$patient_id' AND delete_status = '0'";
+            $db->execute($strSQL);
+        }
+    }
+
+    if($var == 'img'){
+        $strSQL = "SELECT profile_status FROM vot2_account WHERE username = '$patient_id' AND delete_status = '0'";
+        $res = $db->fetch($strSQL, false);
+        if($res){
+            $c = $res['profile_status'];
+            $ts = '1';
+            if($c == '1'){
+                $ts = '0';
+            }
+
+            $strSQL = "UPDATE vot2_account SET profile_status = '$ts' WHERE  username = '$patient_id' AND delete_status = '0'";
+            $db->execute($strSQL);
+        }
+    }
+
+    $strSQL = "INSERT INTO vot2_log (`log_datetime`, `log_info`, `log_message`, `log_ip`, `log_uid`)
+        VALUES ('$datetime', 'ปรับปรุงสถานะ ($var)', 'Target TB NO : $patient_id', '$remote_ip', '$uid')
+    ";
+    $db->insert($strSQL, false);
+
+    $return['status'] = 'Success';
+    echo json_encode($return);
+    $db->close(); 
+    die();
+    
+}
+
 if($stage == 'patient_delete'){
     if(
         (!isset($_GET['uid'])) ||

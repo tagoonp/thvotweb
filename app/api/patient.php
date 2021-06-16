@@ -100,3 +100,65 @@ if($stage == 'list'){
     die();
 
 }
+
+if($stage == 'patient_info'){
+    if(
+        (!isset($_GET['uid'])) ||
+        (!isset($_GET['patient_id']))
+    ){
+        $return['status'] = 'Fail (x101)';
+        echo json_encode($return);
+        $db->close(); 
+        die();
+    }
+
+    $uid = mysqli_real_escape_string($conn, $_GET['uid']);
+    $patient_id = mysqli_real_escape_string($conn, $_GET['patient_id']);
+
+    $strSQL = "SELECT a.*, b.*, a.ID user_id FROM vot2_account a INNER JOIN vot2_userinfo b ON a.uid = b.info_uid WHERE a.uid = '$patient_id' AND a.delete_status = '0' AND b.info_use = '1' LIMIT 1";
+    $selected_user = $db->fetch($strSQL, false);
+    if(!$selected_user){
+        $return['status'] = 'Fail (x102)';
+        echo json_encode($return);
+        $db->close(); 
+        die();
+    }
+
+    $return['status'] = 'Success';
+    $return['data'] = $selected_user;
+    echo json_encode($return);
+    $db->close(); 
+    die();
+}
+
+if($stage == 'patient_location'){
+    if(
+        (!isset($_GET['uid'])) ||
+        (!isset($_GET['patient_id']))
+    ){
+        $return['status'] = 'Fail (x101)';
+        echo json_encode($return);
+        $db->close(); 
+        die();
+    }
+
+    $uid = mysqli_real_escape_string($conn, $_GET['uid']);
+    $patient_id = mysqli_real_escape_string($conn, $_GET['patient_id']);
+
+
+    $strSQL = "SELECT * FROM vot2_patient_location WHERE loc_patient_uid = '$patient_id' AND loc_status = '1'";
+    $selected_location = $db->fetch($strSQL, false);
+
+    if(!$selected_location){
+        $return['status'] = 'Fail (x102)';
+        echo json_encode($return);
+        $db->close(); 
+        die();
+    }
+
+    $return['status'] = 'Success';
+    $return['data'] = $selected_location;
+    echo json_encode($return);
+    $db->close(); 
+    die();
+}

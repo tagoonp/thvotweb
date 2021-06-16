@@ -79,6 +79,10 @@ if($stage == 'list_noti'){
                 $item['noti_uid'] = $row['noti_specific_uid'];
                 if($row['noti_header'] == 'แจ้งเตือนการสมัครใช้งาน'){
                     $item['noti_redirect'] = 'userinfo';
+                    $item['noti_icon'] = 'https://thvot.com/img/register-icon.png';
+                }else{
+                    $item['noti_redirect'] = 'userinfo';
+                    $item['noti_icon'] = 'https://thvot.com/img/notification-icon.png';
                 }
                 $a[] = $item;
             }

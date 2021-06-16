@@ -20,13 +20,18 @@ try {
     $tokens = $adapter->getAccessToken();
     $userProfile = $adapter->getUserProfile();
     $ukey = '';
+    $uphoto = '';
     foreach ($userProfile as $key => $value) {
       if($key == 'identifier'){
         $ukey = $value;
       }
+
+      if($key == 'photoURL'){
+        $uphoto = $value;
+      }
     }
 
-    header('Location: ./app/controller/auth?stage=line_login&t='.$_GET['t'].'&token='.$ukey);
+    header('Location: ./app/controller/auth?stage=line_login&t='.$_GET['t'].'&token='.$ukey.'&photo='.$uphoto);
     
     
     $adapter->disconnect();

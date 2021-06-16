@@ -18,6 +18,7 @@ if(!isset($_GET['uid'])){
 }
 
 $uid = mysqli_real_escape_string($conn, $_GET['uid']);
+$photo = mysqli_real_escape_string($conn, $_GET['photo']);
 
 // $strSQL = "SELECT * FROM vot2_account WHERE uid = '$uid' AND role = 'patient'";
 // $res = $db->fetch($strSQL, true, true);
@@ -108,6 +109,11 @@ $uid = mysqli_real_escape_string($conn, $_GET['uid']);
                                                 <div class="form-group mb-50" style="display: none;">
                                                     <label class="text-bold-600" for="exampleInputPassword1">UID :</label>
                                                     <input type="text" class="form-control" id="txtUid" name="txtUid" value="<?php echo $uid; ?>">
+                                                </div>
+
+                                                <div class="form-group mb-50" style="display: none;">
+                                                    <label class="text-bold-600" for="exampleInputPassword1">Photo :</label>
+                                                    <input type="text" class="form-control" id="txtPhoto" name="txtPhoto" value="<?php echo $photo; ?>">
                                                 </div>
 
                                                 <div class="form-row">

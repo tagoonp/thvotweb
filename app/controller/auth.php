@@ -13,6 +13,7 @@ $stage = mysqli_real_escape_string($conn, $_GET['stage']);
 if($stage == 'line_login'){
 
     $token = mysqli_real_escape_string($conn, $_GET['token']);
+    $photo = mysqli_real_escape_string($conn, $_GET['photo']);
     $t = mysqli_real_escape_string($conn, $_GET['t']);
 
     $strSQL = "SELECT * FROM vot2_account WHERE uid = '$token' AND delete_status = '0' LIMIT 1";
@@ -23,9 +24,9 @@ if($stage == 'line_login'){
         mysqli_close($conn);
         if($t == 'dot')
         {
-            header('Location: ../dot_info?uid=' . $token . '&referal=webapp');
+            header('Location: ../dot_info?uid=' . $token . '&referal=webapp&photo='.$photo);
         }else{
-            header('Location: ../vot_info?uid=' . $token . '&referal=webapp');
+            header('Location: ../vot_info?uid=' . $token . '&referal=webapp&photo='.$photo);
         }
         die();
     }else{
@@ -33,10 +34,10 @@ if($stage == 'line_login'){
 
         if($t == 'dot')
         {
-            header('Location: ../register_dot?uid=' . $token . '&referal=webapp');
+            header('Location: ../register_dot?uid=' . $token . '&referal=webapp&photo='.$photo);
         }else
         {
-            header('Location: ../register_vot?uid=' . $token . '&referal=webapp');
+            header('Location: ../register_vot?uid=' . $token . '&referal=webapp&photo='.$photo);
         }
 
         die();
@@ -120,7 +121,8 @@ if($stage == 'signup_dot'){
         (!isset($_REQUEST['txtProvince'])) ||
         (!isset($_REQUEST['txtPhone'])) ||
         (!isset($_REQUEST['txtDist'])) ||
-        (!isset($_REQUEST['txtSubdist']))
+        (!isset($_REQUEST['txtSubdist'])) ||
+        (!isset($_REQUEST['txtPhoto']))
     ){
         $db->close(); header('Location: ../404?error=x103'); die();
     }
@@ -135,6 +137,7 @@ if($stage == 'signup_dot'){
     $dist = mysqli_real_escape_string($conn, $_POST['txtDist']);
     $subdist = mysqli_real_escape_string($conn, $_POST['txtSubdist']);
     $tprovince = mysqli_real_escape_string($conn, $_POST['txtProvince']);
+    $photo = mysqli_real_escape_string($conn, $_POST['txtPhoto']);
 
     $strSQL = "SELECT * FROM vot2_account WHERE uid = '$uid' AND role = 'patient' AND delete_status = '0'";
     $res = $db->fetch($strSQL, true, true);
@@ -152,12 +155,12 @@ if($stage == 'signup_dot'){
 
     $strSQL = "INSERT INTO vot2_account 
               (`uid`, `username`, `password`, `password_len`, `email`, 
-              `phone`, `role`, `patient_type`, `hcode`, 
-              `verify_status`, `active_status`, `u_datetime`, `p_udatetime`, `start_obsdate`, `end_obsdate`)
+              `phone`, `role`, `patient_type`, `hcode`, `profile_img`, 
+              `verify_status`, `active_status`, `line_token`, `u_datetime`, `p_udatetime`, `start_obsdate`, `end_obsdate`)
               VALUES (
                   '$uid', '$hn', '$password', '$passwordlen', '', 
-                  '$phone', 'patient', 'DOT', '$hcode',
-                  '1', '0', '$datetime', '$datetime', '$date', '$endmondate'
+                  '$phone', 'patient', 'DOT', '$hcode', '$photo',
+                  '1', '0', '$uid', '$datetime', '$datetime', '$date', '$endmondate'
               )
               ";
     $res = $db->insert($strSQL, false);
@@ -202,7 +205,8 @@ if($stage == 'signup_vot'){
         (!isset($_REQUEST['txtProvince'])) ||
         (!isset($_REQUEST['txtPhone'])) ||
         (!isset($_REQUEST['txtDist'])) ||
-        (!isset($_REQUEST['txtSubdist']))
+        (!isset($_REQUEST['txtSubdist'])) ||
+        (!isset($_REQUEST['txtPhoto']))
     ){
         $db->close(); header('Location: ../404?error=x103'); die();
     }
@@ -214,12 +218,14 @@ if($stage == 'signup_vot'){
     $uid = mysqli_real_escape_string($conn, $_POST['txtUid']);
     
     $phone = mysqli_real_escape_string($conn, $_POST['txtPhone']);
+    $phone2 = mysqli_real_escape_string($conn, $_POST['txtPhone2']);
     $dist = mysqli_real_escape_string($conn, $_POST['txtDist']);
     $subdist = mysqli_real_escape_string($conn, $_POST['txtSubdist']);
     $tprovince = mysqli_real_escape_string($conn, $_POST['txtProvince']);
 
     $username = mysqli_real_escape_string($conn, $_POST['txtUsername']);
     $password = mysqli_real_escape_string($conn, $_POST['txtPassword1']);
+    $photo = mysqli_real_escape_string($conn, $_POST['txtPhoto']);
 
     $strSQL = "SELECT * FROM vot2_account WHERE uid = '$uid' AND role = 'patient' AND delete_status = '0'";
     $res = $db->fetch($strSQL, true, true);
@@ -236,12 +242,12 @@ if($stage == 'signup_vot'){
 
     $strSQL = "INSERT INTO vot2_account 
               (`uid`, `username`, `hn`, `password`, `password_len`, `email`, 
-              `phone`, `role`, `patient_type`, `hcode`, 
-              `verify_status`, `active_status`, `u_datetime`, `p_udatetime`, `start_obsdate`, `end_obsdate`)
+              `phone`, `relative_phone`, `role`, `patient_type`, `hcode`,  `profile_img`, 
+              `verify_status`, `active_status`, `line_token`, `u_datetime`, `p_udatetime`, `start_obsdate`, `end_obsdate`)
               VALUES (
                   '$uid', '$username', '$hn', '$password', '$passwordlen', '', 
-                  '$phone', 'patient', 'VOT', '$hcode',
-                  '1', '1', '$datetime', '$datetime', '$date', '$endmondate'
+                  '$phone', '$phone2', 'patient', 'VOT', '$hcode', '$photo',
+                  '1', '1', '$uid', '$datetime', '$datetime', '$date', '$endmondate'
               )
               ";
     $res = $db->insert($strSQL, false);

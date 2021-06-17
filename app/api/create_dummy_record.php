@@ -11,7 +11,7 @@ $strSQL = "SELECT * FROM vot2_account
            role = 'patient' 
            AND patient_type = 'VOT' 
            AND delete_status = '0' 
-           AND (end_obsdate IS NULL OR end_obsdate <= '$date')
+           AND (end_obsdate IS NULL OR end_obsdate >= '$date')
            AND uid NOT IN (SELECT fud_uid FROM vot2_followup_dummy WHERE fud_date = '$date')
            ";
 $res = $db->fetch($strSQL, true, false);

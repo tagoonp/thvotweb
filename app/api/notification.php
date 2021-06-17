@@ -187,7 +187,7 @@ if($stage == 'patient_noti_list'){
               WHERE
               noti_hide = '0' 
               AND noti_type = 'patient_message'
-              AND noti_specific_uid = '$uid'
+              AND noti_specific_uid IN (SELECT username FROM vot2_account WHERE uid = '$uid')
               LIMIT $page, $limit
               ";
         $res = $db->fetch($strSQL, true, false);
@@ -205,6 +205,12 @@ if($stage == 'patient_noti_list'){
                 $item['noti_hcode'] = $row['noti_hcode'];
                 $item['noti_uid'] = $row['noti_specific_uid'];
                 $item['noti_hide'] = $row['noti_hide'];
+
+                $strSQL = "SELECT uid FROM vot2_account WHERE username = '".$row['noti_specific_uid']."'";
+                $resp = $db->fetch($strSQL, false);
+                if($resp){
+                    $item['uid'] = $resp['uid'];
+                }
                 
                 if($row['noti_header'] == 'แจ้งเตือนการรับประทานยา'){
                     $item['noti_redirect'] = 'tabs/tab1';
@@ -231,6 +237,7 @@ if($stage == 'patient_noti_num'){
               AND noti_view = '0' 
               AND noti_type = 'patient_message'
               AND noti_hide = '0' 
+              AND noti_specific_uid IN (SELECT username FROM vot2_account WHERE uid = '$uid')
               ";
     $res = $db->fetch($strSQL, false);
     if($res){

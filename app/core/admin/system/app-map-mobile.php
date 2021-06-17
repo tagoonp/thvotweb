@@ -114,7 +114,7 @@ $menu = 0;
                                                     <td><?php echo $row['Name'];?></td>
                                                     <td>
                                                         <?php 
-                                                        $strSQL = "SELECT COUNT(uid) cn FROM vot2_account WHERE role = 'patient' AND delete_status = '0'";
+                                                        $strSQL = "SELECT COUNT(uid) cn FROM vot2_account WHERE role = 'patient' AND delete_status = '0' AND hcode IN (SELECT hoscode FROM vot2_chospital WHERE provcode = '90' AND distcode = '".$row['Ampur']."')";
                                                         $res2 = $db->fetch($strSQL, false);
                                                         if($res2){
                                                             echo $res2['cn'];

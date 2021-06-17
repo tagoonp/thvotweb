@@ -15,6 +15,7 @@ if(!isset($_GET['uid']){
 }
 $uid = mysqli_real_escape_string($conn, $_GET['uid']);
 $menu = 0;
+
 ?>
 <!DOCTYPE html>
 <html class="loading" lang="en" data-textdirection="ltr">
@@ -62,17 +63,6 @@ $menu = 0;
 
 <body class="vertical-layout vertical-menu-modern 2-columns  navbar-sticky footer-static  " data-open="click" data-menu="vertical-menu-modern" data-col="2-columns">
 
-
-    <div style="position: fixed; width: 100%; top: 0px; left: 0px; background: #fff; padding: 0px; z-index: 999;">
-        <div class="row">
-            <div class="col-sm-12">
-                <!-- simple sizes -->
-                <div class="btn-group btn-group-lg mb-0" role="group" aria-label="Size Large" style="border-radius: 0px; width: 100%;">
-                    <button type="button" class="btn <?php if($stage == '1'){ echo "btn-primary"; }else{ echo "btn-outline-primary"; } ?>" <?php if($stage != '1'){ ?> onclick="window.location = 'app-map-mobile.php?stage=1&session_view=1&uid=<?php echo $uid; ?>'" <?php } ?> style="border-radius: 0px;">ภาพรวม</button>
-                </div>
-            </div>
-        </div>
-    </div>
 
     <!-- BEGIN: Content-->
     <div class="app-content content" style="padding: 0px;">

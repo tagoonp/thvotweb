@@ -8,12 +8,11 @@ $db = new Database();
 $conn = $db->conn();
 
 $stage = '1';
-if((!isset($_GET['stage'])) && (isset($_GET['uid']))){ 
+if((!isset($_GET['stage'])) && (!isset($_GET['uid']))){ 
     $db->close();
     header('Location: ../../../404.php');
     die();
 }
-
 
 
 if(isset($_GET['stage'])){

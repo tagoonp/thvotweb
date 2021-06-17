@@ -33,7 +33,7 @@ if (!empty($_FILES)) {
         $uploadExt = '.mp4';
     }
 
-    $generatedName = date('U').'-'.$_FILES['file']['name'].$ext;
+    $generatedName = date('U').'-'.$_FILES['file']['name'].$origin_ext;
     $uploadName = date('U').'-'.$_FILES['file']['name'].$uploadExt;
 
     $strSQL = "SELECT username, hcode FROM vot2_account WHERE uid = '$uid' AND delete_status = '0'";
@@ -51,7 +51,7 @@ if (!empty($_FILES)) {
     if (move_uploaded_file($_FILES['file']['tmp_name'], $filePath)) {
         $fileUrl = 'https://thvot.com/thvotweb/app/uploads/video/'.$uploadName;
 
-        if($ext != 'mp4'){
+        if($origin_ext != 'mp4'){
             shell_exec('ffmpeg -i /home/thvot/public_html/thvotweb/app/uploads/video/'.$generatedName.' /home/thvot/public_html/thvotweb/app/uploads/video/'.$uploadName);
         }
 

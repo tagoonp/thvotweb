@@ -143,10 +143,10 @@ if($stage == 'followup_list'){
     }
 }
 
-if($stage == 'read_noti'){
+if($stage == 'followup_view'){
     if(
         (!isset($_GET['uid'])) ||
-        (!isset($_GET['record_id']))
+        (!isset($_GET['patient_username']))
     ){
         $return['status'] = 'Fail (x101)';
         echo json_encode($return);
@@ -155,11 +155,17 @@ if($stage == 'read_noti'){
     }
 
     $uid = mysqli_real_escape_string($conn, $_GET['uid']);
-    $record_id = mysqli_real_escape_string($conn, $_GET['record_id']);
+    $patient_username = mysqli_real_escape_string($conn, $_GET['patient_username']);
 
-    $strSQL = "UPDATE vot2_notification SET noti_view = '1' WHERE noti_id = '$record_id'";
-    $db->execute($strSQL);
-    $return['status'] = 'Success';
+    $strSQL = "SELECT * FROM patient_username WHERE fu_username = '$patient_username' AND fu_date = '$date'";
+    $res = $db->fetch($strSQL, true, false);
+    if(($res) && ($res['status'])){
+        $return['status'] = 'Success';
+        $return['data'] = $res['data'];
+    }else{
+        $return['status'] = 'Fail';
+    }
+    echo json_encode($return);
     $db->close(); 
     die();
 }

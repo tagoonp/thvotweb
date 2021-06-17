@@ -232,6 +232,18 @@ if($stage == 'patient_noti_list'){
 }
 
 if($stage == 'patient_noti_num'){
+    if(
+        (!isset($_GET['uid'])) ||
+        (!isset($_GET['role']))
+    ){
+        $return['status'] = 'Fail (x101)';
+        echo json_encode($return);
+        $db->close(); 
+        die();
+    }
+
+    $uid = mysqli_real_escape_string($conn, $_GET['uid']);
+    $role = mysqli_real_escape_string($conn, $_GET['role']);
     $strSQL = "SELECT COUNT(noti_id) cnt FROM vot2_notification 
               WHERE 
               AND noti_view = '0' 

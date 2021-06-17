@@ -33,7 +33,7 @@ if (!empty($_FILES)) {
         $uploadExt = '.mp4';
     }
 
-    $generatedName = date('U').'-'.$_FILES['file']['name'].$origin_ext;
+    $generatedName = date('U').'-'.$_FILES['file']['name'];
     $uploadName = date('U').'-'.$_FILES['file']['name'].$uploadExt;
 
     $strSQL = "SELECT username, hcode FROM vot2_account WHERE uid = '$uid' AND delete_status = '0'";

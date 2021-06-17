@@ -247,7 +247,7 @@ if($stage == 'patient_noti_num'){
 
     $strSQL = "SELECT COUNT(noti_id) cnt FROM vot2_notification 
               WHERE 
-              AND noti_view = '0' 
+              noti_view = '0' 
               AND noti_hide = '0' 
               AND noti_type = 'patient_message'
               AND noti_specific_uid IN (SELECT username FROM vot2_account WHERE uid = '$uid')
@@ -259,11 +259,11 @@ if($stage == 'patient_noti_num'){
             $return['data']['cn'] = $res['cnt'];
         }else{
             $return['status'] = 'Success';
-            $return['data']['cn'] = 0.$strSQL;
+            $return['data']['cn'] = 0;
         }
     }else{
         $return['status'] = 'Success';
-        $return['data']['cn'] = 0.$strSQL;
+        $return['data']['cn'] = 0;
     }
     echo json_encode($return);
     $db->close(); 

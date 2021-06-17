@@ -170,6 +170,70 @@ if($stage == 'followup_view'){
     die();
 }
 
+if($stage == 'followup_review'){
+    $uid = mysqli_real_escape_string($conn, $_GET['uid']);
+    $vid = mysqli_real_escape_string($conn, $_GET['vid']);
+    $eff1 = mysqli_real_escape_string($conn, $_GET['eff1']);
+    $eff2 = mysqli_real_escape_string($conn, $_GET['eff2']);
+    $eff3 = mysqli_real_escape_string($conn, $_GET['eff3']);
+    $eff4 = mysqli_real_escape_string($conn, $_GET['eff4']);
+    $eff5 = mysqli_real_escape_string($conn, $_GET['eff5']);
+    $eff6 = mysqli_real_escape_string($conn, $_GET['eff6']);
+    $vstatus = mysqli_real_escape_string($conn, $_GET['vstatus']);
+    $sop = mysqli_real_escape_string($conn, $_GET['sop']);
+
+    $ef1 = 0; $ef2 = 0; $ef3 = 0; $ef4 = 0; $ef5 = 0; $ef6 = 0;
+    if($eff1 == true){ $ef1 = 1; }
+    if($eff2 == true){ $ef2 = 1; }
+    if($eff3 == true){ $ef3 = 1; }
+    if($eff4 == true){ $ef4 = 1; }
+    if($eff5 == true){ $ef5 = 1; }
+    if($eff6 == true){ $ef6 = 1; }
+
+    $strSQL = "UPDATE vot2_followup SET 
+                fu_eff1 = '$ef1',
+                fu_eff2 = '$ef1',
+                fu_eff3 = '$ef1',
+                fu_eff4 = '$ef1',
+                fu_eff5 = '$ef1',
+                fu_eff6 = '$ef1',
+                fu_status = '$vstatus',
+                fu_view = '1',
+                fu_verify_pct = '$sop',
+                fu_verify_by = '$uid',
+                fu_verify_datetime = '$datetime',
+                fu_cnf = '1'
+                WHERE fu_id = '$vid'
+              ";
+    $db->execute($strSQL);
+
+    $strSQL = "SELECT * FROM vot2_followup WHERE fu_id = '$vid'";
+    $res = $db->fetch($strSQL, false);
+    if($res){
+       $patient_uid = $res['fu_uid'];
+       $patient_date = $res['fu_date'];
+
+       $intime = 0;
+       if($patient_date == $date){
+        $intime = 1;
+       }
+
+       $strSQL = "UPDATE vot2_followup_dummy SET fud_status = '$vstatus', fud_dateview = '$intime', fud_viewdate = '$date', fud_lastedby = '$uid', fud_udatetime = '$datetime'
+               WHERE fud_date = '$patient_date' AND fud_uid = '$patient_uid'
+              ";
+        $db->execute($strSQL);
+
+        $strSQL = "INSERT INTO vot2_log (`log_datetime`, `log_info`, `log_message`, `log_ip`, `log_uid`) VALUES ('$datetime', 'ส่งผลการตรวจสอบวิดีโอ', '', '$remote_ip', '$uid')";
+        $db->insert($strSQL, false);
+    }
+
+    $return['status'] = 'Success';
+    echo json_encode($return);
+    $db->close(); 
+    die();
+    
+}
+
 if($stage == 'patient_noti_list'){
     if(
         (!isset($_GET['uid'])) ||

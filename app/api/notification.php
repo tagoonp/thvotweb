@@ -206,11 +206,11 @@ if($stage == 'patient_noti_list'){
                 $item['noti_uid'] = $row['noti_specific_uid'];
                 $item['noti_hide'] = $row['noti_hide'];
                 
-                if($row['noti_header'] == 'แจ้งเตือนการสมัครใช้งาน'){
-                    $item['noti_redirect'] = 'userinfo';
-                    $item['noti_icon'] = 'https://thvot.com/img/register-icon.png';
+                if($row['noti_header'] == 'แจ้งเตือนการรับประทานยา'){
+                    $item['noti_redirect'] = 'tabs/tab1';
+                    $item['noti_icon'] = 'https://thvot.com/img/drug-noti-icon.png';
                 }else{
-                    $item['noti_redirect'] = 'userinfo';
+                    $item['noti_redirect'] = 'tabs/tab1';
                     $item['noti_icon'] = 'https://thvot.com/img/notification-icon.png';
                 }
 

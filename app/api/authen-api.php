@@ -477,7 +477,7 @@ if($stage == 'user'){
                AND vot2_account.role = '$role'
                AND info_use = '1'
                AND (loc_status = '1' OR loc_status IS NULL)
-               AND vot2_account.delete_statys = '0'
+               AND vot2_account.delete_status = '0'
                LIMIT 1
           ";
     $user = $db->fetch($strSQL, false);

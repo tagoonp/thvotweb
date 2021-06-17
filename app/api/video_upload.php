@@ -26,9 +26,10 @@ if (!empty($_FILES)) {
 
     $originalName = $_FILES['file']['name'];
     $ext = '.'.pathinfo($originalName, PATHINFO_EXTENSION);
+    $origin_ext = pathinfo($originalName, PATHINFO_EXTENSION);
     $t=time();
     $uploadExt = $ext;
-    if($ext != 'mp4'){
+    if($origin_ext != 'mp4'){
         $uploadExt = '.mp4';
     }
 

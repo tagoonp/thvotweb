@@ -244,11 +244,12 @@ if($stage == 'patient_noti_num'){
 
     $uid = mysqli_real_escape_string($conn, $_GET['uid']);
     $role = mysqli_real_escape_string($conn, $_GET['role']);
+
     $strSQL = "SELECT COUNT(noti_id) cnt FROM vot2_notification 
               WHERE 
               AND noti_view = '0' 
-              AND noti_type = 'patient_message'
               AND noti_hide = '0' 
+              AND noti_type = 'patient_message'
               AND noti_specific_uid IN (SELECT username FROM vot2_account WHERE uid = '$uid')
               ";
     $res = $db->fetch($strSQL, false);
@@ -258,11 +259,11 @@ if($stage == 'patient_noti_num'){
             $return['data']['cn'] = $res['cnt'];
         }else{
             $return['status'] = 'Success';
-            $return['data']['cn'] = 0;
+            $return['data']['cn'] = 0.$strSQL;
         }
     }else{
         $return['status'] = 'Success';
-        $return['data']['cn'] = 0;
+        $return['data']['cn'] = 0.$strSQL;
     }
     echo json_encode($return);
     $db->close(); 

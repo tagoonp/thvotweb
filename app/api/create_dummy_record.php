@@ -16,7 +16,7 @@ $strSQL = "SELECT * FROM vot2_account
            ";
 $res = $db->fetch($strSQL, true, false);
 if(($res) && ($res['status'])){
-    foreach ($res['data'] as $row) {
+    foreach($res['data'] as $row) {
         $strSQL = "INSERT INTO vot2_followup_dummy 
                     (`fud_uid`, `fud_username`, `fud_status`, `fud_date`)
                    VALUES

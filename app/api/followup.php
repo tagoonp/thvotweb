@@ -98,7 +98,7 @@ if($stage == 'followup_list'){
         $db->close(); 
         die();
     }else if($role == 'staff'){
-        $strSQL = "SELECT *, d.hosname hospital_name, (SELECT COUNT(fud_id) cx FROM vot2_followup_dummy WHERE 1) as curedate FROM vot2_followup_dummy a INNER JOIN vot2_account b ON a.fud_uid = b.uid 
+        $strSQL = "SELECT *, d.hosname hospital_name FROM vot2_followup_dummy a INNER JOIN vot2_account b ON a.fud_uid = b.uid 
               INNER JOIN vot2_userinfo c ON b.uid = c.info_uid
               INNER JOIN vot2_chospital d ON b.hcode = d.hoscode
               WHERE 
@@ -112,7 +112,27 @@ if($stage == 'followup_list'){
         $res = $db->fetch($strSQL, true, false);
         if(($res) && ($res['status'])){
             $return['status'] = 'Success';
-            $return['data'] = $res['data'];
+
+            $a = array();
+            foreach($res['data'] as $row){
+                $item = array();
+                
+                $item['uid'] = $row['uid'];
+                $item['username'] = $row['username'];
+                $item['fname'] = $row['fname'];
+                $item['lname'] = $row['lname'];
+                $item['hospital_name'] = $row['hospital_name'];
+                
+                $strSQL = "SELECT COUNT(fud_uid) cn FROM vot2_followup_dummy WHERE fud_uid = '".$row['uid']."'";
+                $resp = $db->fetch($strSQL, false);
+                if($resp){
+                    $item['curedate'] = $resp['cn'];
+                }
+                $a[] = $item;
+            }
+            $return['data'] = $a;
+
+            // $return['data'] = $res['data'];
         }else{
             $return['status'] = 'No record';
         }

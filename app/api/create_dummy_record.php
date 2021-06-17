@@ -16,6 +16,9 @@ if(($res) && ($res['status'])){
                    ('".$row['uid']."', '".$row['username']."', 'non-response', '$date')
                   ";
         $res2 = $db->insert($strSQL, false);
+        if($res2){
+            echo "Success<br>";
+        }
     }
 }
 

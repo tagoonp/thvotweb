@@ -1,5 +1,5 @@
 <?php 
-session_start();
+// session_start();
 require('../../../database_config/thvot/config.inc.php');
 require('../config/configuration.php');
 require('../config/database.php'); 
@@ -12,22 +12,6 @@ $stage = mysqli_real_escape_string($conn, $_GET['stage']);
 $return = array();
 
 if($stage == 'profileimg'){
-
-    // $json = file_get_contents('php://input');
-    // $array = json_decode($json, true);
-
-    // if(
-    //     (!isset($array['uid']))
-    // ){
-    //     $return['status'] = 'Fail (x101)';
-    //     echo json_encode($return);
-    //     $db->close(); 
-    //     die();
-    // }
-
-
-
-
     if(
         (!isset($_POST['uid']))
     ){

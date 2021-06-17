@@ -69,7 +69,7 @@ if (!empty($_FILES)) {
         $db->execute($strSQL);
 
         $strSQL = "INSERT INTO vot2_log (`log_datetime`, `log_info`, `log_message`, `log_ip`, `log_uid`) VALUES ('$datetime', 'อัพโหลดวีดีโอ', '', '$remote_ip', '$uid')";
-        $db->insert($strSQL, false);
+        $res1 = $db->insert($strSQL, false);
 
         $strSQL = "INSERT INTO vot2_notification 
                   (
@@ -77,10 +77,10 @@ if (!empty($_FILES)) {
                   )
                   VALUES 
                   (
-                      'ผู้ป่วยส่งวีดีโอการรับประทานยา', 'การรับประทานยาของวันที่ ".$date('Y-m-d')."', '$datetime', 'workprocess', '$hcode'
+                      'ผู้ป่วยส่งวีดีโอการรับประทานยา', 'การรับประทานยาของวันที่ $date', '$datetime', 'workprocess', '$hcode'
                   )
-                  "
-        $db->insert($strSQL, false);
+                  ";
+        $res01 = $db->insert($strSQL, false);
         $return['status'] = 'Success';
         echo json_encode($return);
         $db->close(); 

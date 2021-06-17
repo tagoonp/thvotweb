@@ -18,6 +18,8 @@ if((!isset($_GET['stage'])) || (!isset($_GET['uid']))){
 if(isset($_GET['stage'])){
     $stage = mysqli_real_escape_string($conn, $_GET['stage']);
 }
+
+$uid = mysqli_real_escape_string($conn, $_GET['uid']);
 // require('../../../config/user.inc.php'); 
 
 $menu = 0;
@@ -74,9 +76,9 @@ $menu = 0;
             <div class="col-sm-12">
                 <!-- simple sizes -->
                 <div class="btn-group btn-group-lg mb-0" role="group" aria-label="Size Large" style="border-radius: 0px; width: 100%;">
-                    <button type="button" class="btn <?php if($stage == '1'){ echo "btn-primary"; }else{ echo "btn-outline-primary"; } ?>" <?php if($stage != '1'){ ?> onclick="window.location = 'app-map-mobile.php?stage=1&session_view=1'" <?php } ?> style="border-radius: 0px;">ภาพรวม</button>
-                    <button type="button" class="btn <?php if($stage == '2'){ echo "btn-primary"; }else{ echo "btn-outline-primary"; } ?>" <?php if($stage != '2'){ ?> onclick="window.location = 'app-map-mobile.php?stage=2&session_view=1'" <?php } ?>  style="border-radius: 0px;">Map 1</button>
-                    <button type="button" class="btn <?php if($stage == '3'){ echo "btn-primary"; }else{ echo "btn-outline-primary"; } ?>" <?php if($stage != '3'){ ?> onclick="window.location = 'app-map-mobile.php?stage=3&session_view=1'" <?php } ?>   style="border-radius: 0px;">Map 2</button>
+                    <button type="button" class="btn <?php if($stage == '1'){ echo "btn-primary"; }else{ echo "btn-outline-primary"; } ?>" <?php if($stage != '1'){ ?> onclick="window.location = 'app-map-mobile.php?stage=1&session_view=1&uid=<?php echo $uid; ?>'" <?php } ?> style="border-radius: 0px;">ภาพรวม</button>
+                    <button type="button" class="btn <?php if($stage == '2'){ echo "btn-primary"; }else{ echo "btn-outline-primary"; } ?>" <?php if($stage != '2'){ ?> onclick="window.location = 'app-map-mobile.php?stage=2&session_view=1&uid=<?php echo $uid; ?>'" <?php } ?>  style="border-radius: 0px;">Map 1</button>
+                    <button type="button" class="btn <?php if($stage == '3'){ echo "btn-primary"; }else{ echo "btn-outline-primary"; } ?>" <?php if($stage != '3'){ ?> onclick="window.location = 'app-map-mobile.php?stage=3&session_view=1&uid=<?php echo $uid; ?>'" <?php } ?>   style="border-radius: 0px;">Map 2</button>
                 </div>
             </div>
         </div>

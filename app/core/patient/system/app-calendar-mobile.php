@@ -34,8 +34,9 @@ $menu = 0;
 
     <!-- BEGIN: Vendor CSS-->
     <link rel="stylesheet" type="text/css" href="../../../app-assets/vendors/css/vendors.min.css">
-    <link rel="stylesheet" type="text/css" href="../../../app-assets/vendors/css/charts/apexcharts.css">
-    <link rel="stylesheet" type="text/css" href="../../../app-assets/vendors/css/extensions/swiper.min.css">
+    <link rel="stylesheet" type="text/css" href="../../../app-assets/vendors/css/calendars/tui-time-picker.css">
+    <link rel="stylesheet" type="text/css" href="../../../app-assets/vendors/css/calendars/tui-date-picker.css">
+    <link rel="stylesheet" type="text/css" href="../../../app-assets/vendors/css/calendars/tui-calendar.min.css">
     <!-- END: Vendor CSS-->
 
     <!-- BEGIN: Theme CSS-->
@@ -48,6 +49,8 @@ $menu = 0;
 
     <link rel="stylesheet" type="text/css" href="../../../app-assets/css/core/menu/menu-types/vertical-menu.css">
     <link rel="stylesheet" type="text/css" href="../../../app-assets/css/plugins/calendars/app-calendar.css">
+
+    
     <!-- END: Theme CSS-->
 
     <!-- BEGIN: Custom CSS-->

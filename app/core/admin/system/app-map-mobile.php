@@ -96,7 +96,46 @@ $menu = 0;
                     <div  style="padding: 20px;">
                         <div class="card">
                             <div class="card-body">
-                                asd
+                                <table class="table table-striped">
+                                    <thead>
+                                        <tr>
+                                            <th>อำเภอ</th>
+                                            <th>จำนวนผู้ป่วย</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <?php
+                                        $strSQL = "SELECT * FROM vot2_ampur WHERE Changwat = '90'";
+                                        $res = $db->fetch($strSQL, true, false);
+                                        if(($res) && ($res['status'])){
+                                            foreach ($res['data'] as $row) {
+                                                ?>
+                                                 <tr>
+                                                    <td><?php echo $row['Name'];?></td>
+                                                    <td>
+                                                        <?php 
+                                                        $strSQL = "SELECT COUNT(uid) cn FROM vot2_account WHERE role = 'patient' AND delete_status = '0'";
+                                                        $res2 = $db->fetch($strSQL, false);
+                                                        if($res2){
+                                                            echo $res2['cn'];
+                                                        }else{
+                                                            echo "0";
+                                                        }
+                                                        ?>
+                                                    </td>
+                                                </tr>
+                                                <?php
+                                            }
+                                        }else{
+                                            ?>
+                                            <tr>
+                                                <td colspan="2" class="text-center">ไม่พบข้อมูล</td>
+                                            </tr>
+                                            <?php
+                                        }
+                                        ?>
+                                    </tbody>
+                                </table>
                             </div>
                         </div>
                     </div>

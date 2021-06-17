@@ -207,7 +207,7 @@ if($stage == 'user_stage'){
             }
         }
 
-        $strSQL = "SELECT active_status FROM vot2_account WHEREuid = '$user_uid' AND delete_status = '0'";
+        $strSQL = "SELECT active_status FROM vot2_account WHERE uid = '$user_uid' AND delete_status = '0'";
         $res = $db->fetch($strSQL, false);
         if($res){
             $c = $res['active_status'];

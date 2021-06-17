@@ -98,7 +98,7 @@ if($stage == 'followup_list'){
         $db->close(); 
         die();
     }else if($role == 'staff'){
-        $strSQL = "SELECT * FROM vot2_followup_dummy a INNER JOIN vot2_account b ON a.uid = b.uid 
+        $strSQL = "SELECT * FROM vot2_followup_dummy a INNER JOIN vot2_account b ON a.fud_uid = b.uid 
               INNER JOIN vot2_userinfo c ON b.uid = c.info_uid
               WHERE 
               b.delete_status = '0' 
@@ -113,7 +113,7 @@ if($stage == 'followup_list'){
             $return['status'] = 'Success';
             $return['data'] = $res['data'];
         }else{
-            $return['status'] = 'Fail'.$strSQL;
+            $return['status'] = 'No record';
         }
         echo json_encode($return);
         $db->close(); 

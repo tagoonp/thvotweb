@@ -8,7 +8,7 @@ $db = new Database();
 $conn = $db->conn();
 
 $stage = '1';
-if(!isset($_GET['uid']){ 
+if(!isset($_GET['uid'])){ 
     $db->close();
     header('Location: ../../../404.php');
     die();

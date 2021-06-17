@@ -157,7 +157,7 @@ if($stage == 'followup_view'){
     $uid = mysqli_real_escape_string($conn, $_GET['uid']);
     $patient_username = mysqli_real_escape_string($conn, $_GET['patient_username']);
 
-    $strSQL = "SELECT * FROM patient_username WHERE fu_username = '$patient_username' AND fu_date = '$date'";
+    $strSQL = "SELECT * FROM vot2_followup WHERE fu_username = '$patient_username' AND fu_date = '$date'";
     $res = $db->fetch($strSQL, true, false);
     if(($res) && ($res['status'])){
         $return['status'] = 'Success';

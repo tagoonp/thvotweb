@@ -49,7 +49,7 @@ if (!empty($_FILES)) {
     
     $filePath = $path.$generatedName;
     if (move_uploaded_file($_FILES['file']['tmp_name'], $filePath)) {
-        $fileUrl = 'https://thvot.com/thvotweb/app/uploads/video/'.$uploadName;
+        $fileUrl = 'https://thvot.com/thvotweb/app/uploads/video/'.$generatedName;
 
         if($origin_ext != 'mp4'){
             shell_exec('ffmpeg -i /home/thvot/public_html/thvotweb/app/uploads/video/'.$generatedName.' /home/thvot/public_html/thvotweb/app/uploads/video/'.$uploadName);

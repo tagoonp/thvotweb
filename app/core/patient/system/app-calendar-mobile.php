@@ -68,7 +68,7 @@ $menu = 0;
    <!-- BEGIN: Content-->
    <div class="app-content content">
         <div class="content-overlay"></div>
-        <div class="content-wrapper">
+        <div class="content-wrapper p-0 m-0">
             <div class="content-header row">
             </div>
             <div class="content-body">

@@ -122,6 +122,7 @@ if($stage == 'followup_list'){
                 $item['fname'] = $row['fname'];
                 $item['lname'] = $row['lname'];
                 $item['hospital_name'] = $row['hospital_name'];
+                $item['profile_img'] = $row['profile_img'];
                 
                 $strSQL = "SELECT COUNT(fud_uid) cn FROM vot2_followup_dummy WHERE fud_uid = '".$row['uid']."'";
                 $resp = $db->fetch($strSQL, false);

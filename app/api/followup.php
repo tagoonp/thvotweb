@@ -105,7 +105,7 @@ if($stage == 'followup_list'){
               AND a.fud_status = 'sended'
               AND a.fud_date = '$date'
               AND c.info_use = '1'
-              AND a.hcode = '$hcode'
+              AND b.hcode = '$hcode'
               LIMIT $page, $limit
               ";
         $res = $db->fetch($strSQL, true, false);

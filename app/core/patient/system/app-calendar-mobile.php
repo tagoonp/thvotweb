@@ -62,7 +62,7 @@ $menu = 0;
 
 <!-- BEGIN: Body-->
 
-<body class="vertical-layout vertical-menu-modern 2-columns  navbar-sticky footer-static  " data-open="click" data-menu="vertical-menu-modern" data-col="2-columns">
+<body  style="background: #fff;" class="vertical-layout vertical-menu-modern 2-columns  navbar-sticky footer-static  " data-open="click" data-menu="vertical-menu-modern" data-col="2-columns">
 
 
    <!-- BEGIN: Content-->
@@ -76,37 +76,9 @@ $menu = 0;
                 <div class="calendar-wrapper position-relative">
                     <!-- calendar app overlay -->
                     <div class="app-content-overlay"></div>
-                    <!-- calendar sidebar start -->
-                    <div id="sidebar" class="sidebar">
-                        <div class="sidebar-new-schedule">
-                            <!-- create new schedule button -->
-                            <button id="btn-new-schedule" type="button" class="btn btn-primary btn-block sidebar-new-schedule-btn">
-                                New schedule
-                            </button>
-                        </div>
-                        <!-- sidebar calendar labels -->
-                        <div id="sidebar-calendars" class="sidebar-calendars">
-                            <div>
-                                <div class="sidebar-calendars-item">
-                                    <!-- view All checkbox -->
-                                    <div class="checkbox">
-                                        <input type="checkbox" class="checkbox-input tui-full-calendar-checkbox-square" id="checkbox1" value="all" checked>
-                                        <label for="checkbox1">View all</label>
-                                    </div>
-                                </div>
-                            </div>
-                            <div id="calendarList" class="sidebar-calendars-d1"></div>
-                        </div>
-                        <!-- / sidebar calendar labels -->
-                    </div>
-                    <!-- calendar sidebar end -->
                     <!-- calendar view start  -->
                     <div class="calendar-view">
                         <div class="calendar-action d-flex align-items-center flex-wrap">
-                            <!-- sidebar toggle button for small sceen -->
-                            <button class="btn btn-icon sidebar-toggle-btn">
-                                <i class="bx bx-menu font-large-1"></i>
-                            </button>
                             <!-- dropdown button to change calendar-view -->
                             <div class="dropdown d-inline mr-75">
                                 <button id="dropdownMenu-calendarType" class="btn btn-action dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
@@ -178,7 +150,7 @@ $menu = 0;
                                     <i class="bx bx-chevron-right" data-action="move-next"></i>
                                 </button>
                             </span>
-                            <span id="renderRange" class="render-range"></span>
+                            <span id="renderRange" class="render-range" style="display: none;"></span>
                         </div>
                         <!-- calendar view  -->
                         <div id="calendar" class="calendar-content"></div>

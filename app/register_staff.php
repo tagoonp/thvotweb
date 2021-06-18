@@ -100,7 +100,7 @@ $photo = mysqli_real_escape_string($conn, $_GET['photo']);
                                             </div>
                                         </div>
                                         <div class="card-body">
-                                            <form  action="./controller/auth?stage=signup_vot" method="POST" autocomplete="off"  onsubmit="return auth.chk_register_vot();">
+                                            <form  action="./controller/auth?stage=signup_vot" method="POST" autocomplete="off"  onsubmit="return auth.chk_register_staff();">
 
                                                 <div class="form-group mb-50" style="display: none;">
                                                     <label class="text-bold-600" for="exampleInputPassword1">UID :</label>

@@ -12,6 +12,10 @@ $stage = mysqli_real_escape_string($conn, $_GET['stage']);
 
 if($stage == 'line_login'){
 
+    $t = $_SESSION['reg_type'];
+    echo $t;
+    die();
+
     $token = mysqli_real_escape_string($conn, $_GET['token']);
     $photo = mysqli_real_escape_string($conn, $_GET['photo']);
     $t = mysqli_real_escape_string($conn, $_GET['t']);
@@ -20,7 +24,7 @@ if($stage == 'line_login'){
     $result = mysqli_query($conn, $strSQL);
 
     $t = $_SESSION['reg_type'];
-    
+
     if(($result) && (mysqli_num_rows($result) > 0)){
         // Already registered
         mysqli_close($conn);

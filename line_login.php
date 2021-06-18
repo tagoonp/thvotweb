@@ -1,5 +1,6 @@
 <?php
 session_start();
+
 include 'vendor/autoload.php';
 use Hybridauth\Hybridauth;
 use Hybridauth\HttpClient;

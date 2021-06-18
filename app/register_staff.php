@@ -138,7 +138,7 @@ $photo = mysqli_real_escape_string($conn, $_GET['photo']);
                                                     <input type="text" class="form-control" id="txtHcode" name="txtHcode" placeholder="">
                                                 </div>
 
-                                                <div class="form-group col-md-6 mb-50">
+                                                <div class="form-group mb-50">
                                                     <label for="inputlastname4">สิทธิ์ที่ต้องการ : <span class="text-danger">*</span></label>
                                                     <select name="txtRole" id="txtRole" class="form-control">
                                                         <option value="">-- เลือกสิทธิ์ --</option>

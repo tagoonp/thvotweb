@@ -34,6 +34,9 @@ if($stage == 'line_login'){
     }else{
         mysqli_close($conn);
 
+        echo $t;
+        die();
+
         if($t == 'dot'){
             header('Location: ../register_dot?uid=' . $token . '&referal=webapp&photo='.$photo);
         }else if($t = 'vot'){

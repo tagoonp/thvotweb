@@ -9,12 +9,29 @@ $conn = $db->conn();
 if(!isset($_GET['stage'])){ $db->close(); header('Location: ../404?stage=001'); die(); }
 $stage = mysqli_real_escape_string($conn, $_GET['stage']);
 
-if($stage == 'line_login'){
+
+if($stage == 'line_login_staff'){
+    $token = mysqli_real_escape_string($conn, $_GET['token']);
+    $photo = mysqli_real_escape_string($conn, $_GET['photo']);
+    $t = mysqli_real_escape_string($conn, $_GET['t']);
+
+    $strSQL = "SELECT * FROM vot2_account WHERE uid = '$token' AND delete_status = '0' LIMIT 1";
+    $result = mysqli_query($conn, $strSQL);
 
     $t = $_SESSION['reg_type'];
-    echo $t;
-    echo $_SESSION['reg_type'];
-    die();
+
+    if(($result) && (mysqli_num_rows($result) > 0)){
+        // Already registered
+        mysqli_close($conn);
+        header('Location: ../staff_info?uid=' . $token . '&referal=webapp&photo='.$photo);
+        die();
+    }else{
+        mysqli_close($conn);
+        header('Location: ../register_staff?uid=' . $token . '&referal=webapp&photo='.$photo);
+        die();
+    }
+}
+if($stage == 'line_login'){
 
     $token = mysqli_real_escape_string($conn, $_GET['token']);
     $photo = mysqli_real_escape_string($conn, $_GET['photo']);

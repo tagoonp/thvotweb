@@ -187,10 +187,10 @@ var auth = {
       $check++; $('#txtRole').addClass('is-invalid')
     }
 
-    if($('#txtPassword1').val() == ''){
-      $check++; $('#txtPassword1').addClass('is-invalid')
+    if($('#txtPassword').val() == ''){
+      $check++; $('#txtPassword').addClass('is-invalid')
     }
-    
+
     $('[data-required]').each(function() {
         if (!$(this).val()) {
             $check++;

@@ -1,5 +1,7 @@
 {
     "require": {
-        "linecorp/line-bot-sdk": "^7.0"
+        "linecorp/line-bot-sdk": "^7.0",
+        "hybridauth/hybridauth" : "3.0.0-rc.7",
+        "firebase/php-jwt": "^5.0"
     }
 }

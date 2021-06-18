@@ -1,92 +1,126 @@
 {
     "packages": [
         {
-            "name": "linecorp/line-bot-sdk",
-            "version": "7.0.0",
-            "version_normalized": "7.0.0.0",
+            "name": "firebase/php-jwt",
+            "version": "v5.2.0",
+            "version_normalized": "5.2.0.0",
             "source": {
                 "type": "git",
-                "url": "https://github.com/line/line-bot-sdk-php.git",
-                "reference": "210d87af3f5fa3ed7837c3c875e39e1e3caeb9b7"
+                "url": "https://github.com/firebase/php-jwt.git",
+                "reference": "feb0e820b8436873675fd3aca04f3728eb2185cb"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/line/line-bot-sdk-php/zipball/210d87af3f5fa3ed7837c3c875e39e1e3caeb9b7",
-                "reference": "210d87af3f5fa3ed7837c3c875e39e1e3caeb9b7",
+                "url": "https://api.github.com/repos/firebase/php-jwt/zipball/feb0e820b8436873675fd3aca04f3728eb2185cb",
+                "reference": "feb0e820b8436873675fd3aca04f3728eb2185cb",
                 "shasum": ""
             },
             "require": {
-                "ext-curl": "*",
-                "ext-json": "*",
-                "ext-sockets": "*",
-                "php": ">=5.6"
+                "php": ">=5.3.0"
             },
             "require-dev": {
-                "orchestra/testbench": "*",
-                "phpmd/phpmd": "~2.9",
-                "phpunit/phpunit": "^4.8.36||^5||^6||^7",
-                "squizlabs/php_codesniffer": "~3.5"
+                "phpunit/phpunit": ">=4.8 <=9"
             },
-            "suggest": {
-                "apigen/apigen": "Install with roave/better-reflection:dev-master to generate docs",
-                "roave/better-reflection": "Required by apigen/apigen:dev-master"
+            "time": "2020-03-25T18:49:23+00:00",
+            "type": "library",
+            "installation-source": "dist",
+            "autoload": {
+                "psr-4": {
+                    "Firebase\\JWT\\": "src"
+                }
             },
-            "time": "2021-03-11T12:19:26+00:00",
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "BSD-3-Clause"
+            ],
+            "authors": [
+                {
+                    "name": "Neuman Vong",
+                    "email": "neuman+pear@twilio.com",
+                    "role": "Developer"
+                },
+                {
+                    "name": "Anant Narayanan",
+                    "email": "anant@php.net",
+                    "role": "Developer"
+                }
+            ],
+            "description": "A simple library to encode and decode JSON Web Tokens (JWT) in PHP. Should conform to the current spec.",
+            "homepage": "https://github.com/firebase/php-jwt",
+            "keywords": [
+                "jwt",
+                "php"
+            ],
+            "support": {
+                "issues": "https://github.com/firebase/php-jwt/issues",
+                "source": "https://github.com/firebase/php-jwt/tree/master"
+            },
+            "install-path": "../firebase/php-jwt"
+        },
+        {
+            "name": "hybridauth/hybridauth",
+            "version": "v3.0.0-rc.7",
+            "version_normalized": "3.0.0.0-RC7",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/hybridauth/hybridauth.git",
+                "reference": "a635b61b65d798ff1557628cacce28cd992fcbb7"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/hybridauth/hybridauth/zipball/a635b61b65d798ff1557628cacce28cd992fcbb7",
+                "reference": "a635b61b65d798ff1557628cacce28cd992fcbb7",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.4.0"
+            },
+            "require-dev": {
+                "ext-curl": "*",
+                "phpunit/phpunit": "~4.8.35"
+            },
+            "time": "2018-08-15T05:54:25+00:00",
             "type": "library",
             "extra": {
-                "laravel": {
-                    "providers": [
-                        "LINE\\Laravel\\LINEBotServiceProvider"
-                    ],
-                    "aliases": {
-                        "LINEBot": "LINE\\Laravel\\Facade\\LINEBot"
-                    }
+                "branch-alias": {
+                    "dev-master": "3.0-dev"
                 }
             },
             "installation-source": "dist",
             "autoload": {
                 "psr-4": {
-                    "LINE\\": "src/"
+                    "Hybridauth\\": "src/"
                 }
             },
             "notification-url": "https://packagist.org/downloads/",
             "license": [
-                "Apache-2.0"
+                "MIT"
             ],
             "authors": [
                 {
-                    "name": "moznion",
-                    "email": "moznion@gmail.com",
-                    "role": "Retired"
-                },
-                {
-                    "name": "Satoru Yoshihara",
-                    "email": "vaduz0@gmail.com",
-                    "role": "Maintainer"
-                },
-                {
-                    "name": "Satoshi Shibuya",
-                    "email": "satosby@gmail.com",
-                    "role": "Maintainer"
-                },
-                {
-                    "name": "Shunsuke Mori",
-                    "email": "morimorim7180@gmail.com",
-                    "role": "Maintainer"
+                    "name": "Miled",
+                    "email": "hybridauth@gmail.com"
                 }
             ],
-            "description": "SDK of the LINE BOT API for PHP",
-            "homepage": "https://github.com/line/line-bot-sdk-php",
+            "description": "PHP Social Authentication Library",
+            "homepage": "https://hybridauth.github.io",
             "keywords": [
-                "bot",
-                "line",
-                "sdk"
+                "Authentication",
+                "OpenId",
+                "api",
+                "authorization",
+                "facebook",
+                "google",
+                "oauth",
+                "social",
+                "twitter"
             ],
             "support": {
-                "issues": "https://github.com/line/line-bot-sdk-php/issues",
-                "source": "https://github.com/line/line-bot-sdk-php/tree/7.0.0"
+                "gitter": "https://gitter.im/hybridauth/hybridauth",
+                "issues": "https://github.com/hybridauth/hybridauth/issues",
+                "source": "https://github.com/hybridauth/hybridauth/tree/master"
             },
-            "install-path": "../linecorp/line-bot-sdk"
+            "install-path": "../hybridauth/hybridauth"
         }
     ],
     "dev": true,

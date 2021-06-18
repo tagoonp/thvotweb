@@ -5,6 +5,10 @@ include 'vendor/autoload.php';
 use Hybridauth\Hybridauth;
 use Hybridauth\HttpClient;
 
+$_SESSION['reg_type'] = $_GET['t'];
+echo $_SESSION['reg_type'];
+die();
+
 $config = [
     'callback' => HttpClient\Util::getCurrentUrl(),
     'providers' => [
@@ -33,7 +37,7 @@ try {
       }
     }
 
-    $_SESSION['reg_type'] = $_GET['t'];
+    
 
     header('Location: ./app/controller/auth?stage=line_login&t='.$_GET['t'].'&token='.$ukey.'&photo='.$uphoto);
     $adapter->disconnect();

@@ -1,24 +1,24 @@
 <?php return array (
   'root' => 
   array (
-    'pretty_version' => '1.0.0+no-version-set',
-    'version' => '1.0.0.0',
+    'pretty_version' => 'dev-master',
+    'version' => 'dev-master',
     'aliases' => 
     array (
     ),
-    'reference' => NULL,
+    'reference' => 'bef3217a9abb9d9137ddd6ced33b69dfeffd5c82',
     'name' => '__root__',
   ),
   'versions' => 
   array (
     '__root__' => 
     array (
-      'pretty_version' => '1.0.0+no-version-set',
-      'version' => '1.0.0.0',
+      'pretty_version' => 'dev-master',
+      'version' => 'dev-master',
       'aliases' => 
       array (
       ),
-      'reference' => NULL,
+      'reference' => 'bef3217a9abb9d9137ddd6ced33b69dfeffd5c82',
     ),
     'firebase/php-jwt' => 
     array (
@@ -37,6 +37,15 @@
       array (
       ),
       'reference' => 'a635b61b65d798ff1557628cacce28cd992fcbb7',
+    ),
+    'linecorp/line-bot-sdk' => 
+    array (
+      'pretty_version' => '7.0.0',
+      'version' => '7.0.0.0',
+      'aliases' => 
+      array (
+      ),
+      'reference' => '210d87af3f5fa3ed7837c3c875e39e1e3caeb9b7',
     ),
   ),
 );

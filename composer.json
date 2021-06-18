@@ -1,6 +1,7 @@
 {
     "require" : {
         "hybridauth/hybridauth" : "3.0.0-rc.7",
-        "firebase/php-jwt": "^5.0"
+        "firebase/php-jwt": "^5.0",
+        "linecorp/line-bot-sdk": "^7.0"
     }
 }

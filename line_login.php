@@ -6,8 +6,6 @@ use Hybridauth\Hybridauth;
 use Hybridauth\HttpClient;
 
 $_SESSION['reg_type'] = $_GET['t'];
-echo $_SESSION['reg_type'];
-die();
 
 $config = [
     'callback' => HttpClient\Util::getCurrentUrl(),
@@ -39,7 +37,7 @@ try {
 
     
 
-    header('Location: ./app/controller/auth?stage=line_login&t='.$_GET['t'].'&token='.$ukey.'&photo='.$uphoto);
+    header('Location: ./app/controller/auth?stage=line_login&t='.$_SESSION['reg_type'].'&token='.$ukey.'&photo='.$uphoto);
     $adapter->disconnect();
 }
 catch (\Exception $e) {

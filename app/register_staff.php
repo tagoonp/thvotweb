@@ -85,7 +85,7 @@ $photo = mysqli_real_escape_string($conn, $_GET['photo']);
                                         <div class="card-header pb-1">
                                             <div class="card-title">
                                                 <h3 class="text-left mb-1">THVOT</h3>
-                                                <h4 class="text-left mb-1">ลงทะเบียนผู้ป่วย VOT</h4>
+                                                <h4 class="text-left mb-1">ลงทะเบียนเจ้าหน้าที่</h4>
                                                 <!-- <h6 class="text-danger">กรุณากรอกข้อมูลให้ครบถ้วน</h6> -->
                                                 <div class="alert alert-danger alert-dismissible mb-2" role="alert">
                                                     <button type="button" class="close" data-dismiss="alert" aria-label="Close">
@@ -136,6 +136,16 @@ $photo = mysqli_real_escape_string($conn, $_GET['photo']);
                                                 <div class="form-group mb-50">
                                                     <label class="" for="exampleInputEmail1">รหัสสถานบริการที่สังกัด : <span class="text-danger">*</span></label>
                                                     <input type="text" class="form-control" id="txtHcode" name="txtHcode" placeholder="">
+                                                </div>
+
+                                                <div class="form-group col-md-6 mb-50">
+                                                    <label for="inputlastname4">สิทธิ์ที่ต้องการ : <span class="text-danger">*</span></label>
+                                                    <select name="txtRole" id="txtRole" class="form-control">
+                                                        <option value="">-- เลือกสิทธิ์ --</option>
+                                                        <option value="moderator">ผู้ตรวจสอบข้อมูล</option>
+                                                        <option value="manager">พยาบาลคลินิก TB</option>
+                                                        <option value="staff">พี่เลี้ยง / ผู้ติดตามการรับประทานยา</option>
+                                                    </select>
                                                 </div>
 
                                                 <div class="form-group mb-50">

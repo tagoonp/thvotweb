@@ -19,6 +19,8 @@ if($stage == 'line_login'){
     $strSQL = "SELECT * FROM vot2_account WHERE uid = '$token' AND delete_status = '0' LIMIT 1";
     $result = mysqli_query($conn, $strSQL);
 
+    $t = $_SESSION['reg_type'];
+    
     if(($result) && (mysqli_num_rows($result) > 0)){
         // Already registered
         mysqli_close($conn);
@@ -33,9 +35,6 @@ if($stage == 'line_login'){
         die();
     }else{
         mysqli_close($conn);
-
-        echo $t;
-        die();
 
         if($t == 'dot'){
             header('Location: ../register_dot?uid=' . $token . '&referal=webapp&photo='.$photo);

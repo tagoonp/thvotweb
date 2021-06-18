@@ -1,4 +1,5 @@
 <?php
+session_start();
 include 'vendor/autoload.php';
 use Hybridauth\Hybridauth;
 use Hybridauth\HttpClient;
@@ -30,6 +31,8 @@ try {
         $uphoto = $value;
       }
     }
+
+    $_SESSION['reg_type'] = $_GET['t'];
 
     header('Location: ./app/controller/auth?stage=line_login&t='.$_GET['t'].'&token='.$ukey.'&photo='.$uphoto);
     $adapter->disconnect();

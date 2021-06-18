@@ -4,7 +4,7 @@ require('../../../database_config/thvot/config.inc.php');
 require('../config/configuration.php');
 require('../config/database.php'); 
 
-include 'vendor/autoload.php';
+include '../../vendor/autoload.php';
 // use Hybridauth\Hybridauth;
 // use Hybridauth\HttpClient;
 

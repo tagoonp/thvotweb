@@ -6,6 +6,5 @@ $vendorDir = dirname(dirname(__FILE__));
 $baseDir = dirname($vendorDir);
 
 return array(
-    'Hybridauth\\' => array($vendorDir . '/hybridauth/hybridauth/src'),
-    'Firebase\\JWT\\' => array($vendorDir . '/firebase/php-jwt/src'),
+    'LINE\\' => array($vendorDir . '/linecorp/line-bot-sdk/src'),
 );

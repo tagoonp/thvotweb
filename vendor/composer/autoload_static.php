@@ -7,24 +7,16 @@ namespace Composer\Autoload;
 class ComposerStaticInit8a1cd89bc3e35ce28ac9515007548c67
 {
     public static $prefixLengthsPsr4 = array (
-        'H' => 
+        'L' => 
         array (
-            'Hybridauth\\' => 11,
-        ),
-        'F' => 
-        array (
-            'Firebase\\JWT\\' => 13,
+            'LINE\\' => 5,
         ),
     );
 
     public static $prefixDirsPsr4 = array (
-        'Hybridauth\\' => 
+        'LINE\\' => 
         array (
-            0 => __DIR__ . '/..' . '/hybridauth/hybridauth/src',
-        ),
-        'Firebase\\JWT\\' => 
-        array (
-            0 => __DIR__ . '/..' . '/firebase/php-jwt/src',
+            0 => __DIR__ . '/..' . '/linecorp/line-bot-sdk/src',
         ),
     );
 

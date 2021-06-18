@@ -32,8 +32,6 @@ try {
     }
 
     header('Location: ./app/controller/auth?stage=line_login&t='.$_GET['t'].'&token='.$ukey.'&photo='.$uphoto);
-    
-    
     $adapter->disconnect();
 }
 catch (\Exception $e) {

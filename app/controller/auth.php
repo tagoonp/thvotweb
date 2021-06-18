@@ -1,5 +1,4 @@
 <?php 
-session_start();
 require('../../../database_config/thvot/config.inc.php');
 require('../config/configuration.php');
 require('../config/database.php'); 
@@ -14,6 +13,7 @@ if($stage == 'line_login'){
 
     $t = $_SESSION['reg_type'];
     echo $t;
+    echo $_SESSION['reg_type'];
     die();
 
     $token = mysqli_real_escape_string($conn, $_GET['token']);

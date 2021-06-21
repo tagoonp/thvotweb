@@ -37,7 +37,7 @@ if($stage == 'profileimg'){
         $filePath = $path.$generatedName;
         if (move_uploaded_file($_FILES['file']['tmp_name'], $filePath)) {
 
-            $strSQL = "UPDATE vot2_account SET profile_img = 'https://thvot.com/thvotweb/app/uploads/$generatedName' WHERE uid = '$uid'";
+            $strSQL = "UPDATE vot2_account SET profile_img = 'https://thvot.com/thvotweb/app/uploads/$generatedName', profileimg = '0' WHERE uid = '$uid'";
             $db->execute($strSQL);
 
             $strSQL = "INSERT INTO vot2_log (`log_datetime`, `log_info`, `log_message`, `log_ip`, `log_uid`) VALUES ('$datetime', 'เปลี่ยนรูปโปไฟล์', '', '$remote_ip', '$uid')";

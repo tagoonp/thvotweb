@@ -27,6 +27,8 @@ if($stage == 'listofstaff'){
     $page = mysqli_real_escape_string($conn, $_GET['page']);
     $limit = mysqli_real_escape_string($conn, $_GET['limit']);
     $page = ($page * $limit) - $limit;
+
+
     $strSQL = "SELECT a.uid, a.username, a.profile_img, b.fname, b.lname, a.hcode, c.hosname , a.patient_type
                 FROM vot2_account a INNER JOIN vot2_userinfo b ON a.uid = b.info_uid 
                 INNER JOIN vot2_chospital c ON a.hcode = c.hoscode 
@@ -44,7 +46,7 @@ if($stage == 'listofstaff'){
         $return['status'] = 'Success';
         $return['data'] = $res['data'];
     }else{
-        $return['status'] = 'Fail (x102)';
+        $return['status'] = 'Fail (x102)'.$strSQL;
     }
     
     echo json_encode($return);

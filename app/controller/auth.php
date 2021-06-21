@@ -395,7 +395,7 @@ if($stage == 'signup_vot'){
                    VALUES ('$fname', '$lname', '$phone', '$datetime', '1', '$tprovince', '$dist', '$subdist', '$uid')";
         $res = $db->insert($strSQL, false);
         mysqli_close($conn);
-        header('Location: ../vot_info?uid=' . $uid . '&referal=webapp');
+        header('Location: ../register_patient_success?uid=' . $uid . '&referal=webapp');
         die();
     }else{
         // echo $strSQL;

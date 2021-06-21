@@ -9,12 +9,17 @@
 <body>
     <div style="text-align: center;">
         <a href="market://details?id=com.thvot.vot">ดาวน์โหลดแอปพลิเคชันสำหรับผู้ป่วย</a>
-        <img src="https://thvot.com/thvotweb/app/img/patient.png" alt="" width="300">
+        <div>
+        <img src="https://thvot.com/thvotweb/app/img/patient.png" alt="" width="200">
+        </div>
     </div>
 
     <div style="text-align: center;">
-    <a href="market://details?id=com.thvot.votview">ดาวน์โหลดแอปพลิเคชันสำหรับเจ้าหน้าที่</a>
-    <img src="https://thvot.com/thvotweb/app/img/nurse.png" alt="" width="300">
+        <a href="market://details?id=com.thvot.votview">ดาวน์โหลดแอปพลิเคชันสำหรับเจ้าหน้าที่</a>
+        <div>
+        <img src="https://thvot.com/thvotweb/app/img/nurse.png" alt="" width="200">
+        </div>
+    
     </div>
 </body>
 </html>

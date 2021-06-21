@@ -73,6 +73,13 @@ if(!$resu){
     <link rel="stylesheet" type="text/css" href="../../../assets/css/style.css">
     <!-- END: Custom CSS-->
 
+    <style>
+        .redEvent {
+            background-color:#FF0000;
+            opacity: 0.6;
+        }
+    </style>
+
 </head>
 <!-- END: Head-->
 
@@ -162,7 +169,8 @@ if(!$resu){
                     title: '',
                     start: $('#txtStartMon').val(),
                     end: $('#txtEndMon').val(),
-                    backgroundColor: '#06c'
+                    // backgroundColor: '#06c'
+                    className: ["redEvent"]
                 }
                 ]
             });

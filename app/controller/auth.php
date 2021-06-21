@@ -266,7 +266,7 @@ if($stage == 'signup_staff'){
               VALUES (
                   '$uid', '$username', '$password', '$passwordlen', '', 
                   '$phone', '$phone2', '$role', '$hcode', '$photo',
-                  '1', '1', '$uid', '$datetime', '$datetime', '$date', '$endmondate'
+                  '0', '0', '$uid', '$datetime', '$datetime', '$date', '$endmondate'
               )
               ";
     $res = $db->insert($strSQL, false);
@@ -283,6 +283,21 @@ if($stage == 'signup_staff'){
         $strSQL = "INSERT INTO vot2_userinfo (`fname`, `lname`, `phone`, `info_udatetime`, `info_use`, `info_uid`) 
                    VALUES ('$fname', '$lname', '$phone', '$datetime', '1', '$uid')";
         $res = $db->insert($strSQL, false);
+
+        $strSQL = "INSERT INTO vot2_notification 
+                    (
+                        `noti_header`, `noti_content`, `noti_datetime`, `noti_view`, `noti_type`, `noti_allow_admin`, 
+                        `noti_specific_uid`, `noti_url`, `noti_hcode`
+                    )
+                    VALUES 
+                    (
+                        'แจ้งเตือนการสมัครใช้งาน', 'โดยคุณ$fname $lname', '$datetime', '0', 'workprocess', '1',
+                        '', '', '$hcode'
+                    )
+                    ";
+
+        $res = $db->insert($strSQL, false);
+        
         mysqli_close($conn);
         header('Location: ../staff_info?uid=' . $uid . '&referal=webapp');
         die();

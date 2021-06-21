@@ -79,6 +79,7 @@ $menu = 0;
                     <button type="button" class="btn <?php if($stage == '1'){ echo "btn-primary"; }else{ echo "btn-outline-primary"; } ?>" <?php if($stage != '1'){ ?> onclick="window.location = 'app-map-mobile.php?stage=1&session_view=1&uid=<?php echo $uid; ?>'" <?php } ?> style="border-radius: 0px;">ภาพรวม</button>
                     <button type="button" class="btn <?php if($stage == '2'){ echo "btn-primary"; }else{ echo "btn-outline-primary"; } ?>" <?php if($stage != '2'){ ?> onclick="window.location = 'app-map-mobile.php?stage=2&session_view=1&uid=<?php echo $uid; ?>'" <?php } ?>  style="border-radius: 0px;">Map 1</button>
                     <button type="button" class="btn <?php if($stage == '3'){ echo "btn-primary"; }else{ echo "btn-outline-primary"; } ?>" <?php if($stage != '3'){ ?> onclick="window.location = 'app-map-mobile.php?stage=3&session_view=1&uid=<?php echo $uid; ?>'" <?php } ?>   style="border-radius: 0px;">Map 2</button>
+                    <button type="button" class="btn <?php if($stage == '4'){ echo "btn-primary"; }else{ echo "btn-outline-primary"; } ?>" <?php if($stage != '3'){ ?> onclick="window.location = 'app-map-mobile.php?stage=4&session_view=1&uid=<?php echo $uid; ?>'" <?php } ?>   style="border-radius: 0px;">เปรียบเทียบ</button>
                 </div>
             </div>
         </div>
@@ -146,6 +147,10 @@ $menu = 0;
                     <iframe src="https://thvot.com/myMap.html" id="mapDiv" height="600" width="100%" title="THVOT facilities map" style="border:none;"></iframe>
                     <?php
                 }else if($stage == '3'){
+                    ?>
+                    <iframe src="https://thvot.com/myMap2.html" id="mapDiv" height="600" width="100%" title="THVOT facilities map" style="border:none;"></iframe>
+                    <?php
+                }else if($stage == '4'){
                     ?>
                     <iframe src="https://thvot.com/myMap2.html" id="mapDiv" height="600" width="100%" title="THVOT facilities map" style="border:none;"></iframe>
                     <?php

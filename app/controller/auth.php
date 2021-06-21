@@ -218,6 +218,93 @@ if($stage == 'signup_dot'){
     }
 }
 
+if($stage == 'signup_staff'){
+    if(
+        (!isset($_REQUEST['txtFname'])) ||
+        (!isset($_REQUEST['txtLname'])) ||
+        (!isset($_REQUEST['txtHcode'])) ||
+        (!isset($_REQUEST['txtUid'])) ||
+        (!isset($_REQUEST['txtHn'])) ||
+        (!isset($_REQUEST['txtUsername'])) ||
+        (!isset($_REQUEST['txtPassword1'])) ||
+        (!isset($_REQUEST['txtProvince'])) ||
+        (!isset($_REQUEST['txtPhone'])) ||
+        (!isset($_REQUEST['txtDist'])) ||
+        (!isset($_REQUEST['txtSubdist'])) ||
+        (!isset($_REQUEST['txtPhoto']))
+    ){
+        $db->close(); header('Location: ../404?error=x103'); die();
+    }
+
+    $fname = mysqli_real_escape_string($conn, $_POST['txtFname']);
+    $lname = mysqli_real_escape_string($conn, $_POST['txtLname']);
+    $hcode = mysqli_real_escape_string($conn, $_POST['txtHcode']);
+    $hn = mysqli_real_escape_string($conn, $_POST['txtHn']);
+    $uid = mysqli_real_escape_string($conn, $_POST['txtUid']);
+    
+    $phone = mysqli_real_escape_string($conn, $_POST['txtPhone']);
+    $phone2 = mysqli_real_escape_string($conn, $_POST['txtPhone2']);
+    $dist = mysqli_real_escape_string($conn, $_POST['txtDist']);
+    $subdist = mysqli_real_escape_string($conn, $_POST['txtSubdist']);
+    $tprovince = mysqli_real_escape_string($conn, $_POST['txtProvince']);
+
+    $username = mysqli_real_escape_string($conn, $_POST['txtUsername']);
+    $password = mysqli_real_escape_string($conn, $_POST['txtPassword1']);
+    $photo = mysqli_real_escape_string($conn, $_POST['txtPhoto']);
+
+    $strSQL = "SELECT * FROM vot2_account WHERE uid = '$uid' AND role = 'patient' AND delete_status = '0'";
+    $res = $db->fetch($strSQL, true, true);
+    if(($res) && ($res['status']) && ($res['count'] > 0)){
+        mysqli_close($conn);
+        header('Location: ../vot_info?uid=' . $uid . '&referal=webapp');
+        die();
+    }
+
+    $passwordlen = strlen($password);
+    $password = password_hash($password, PASSWORD_DEFAULT);
+
+    $endmondate = Date("Y-m-d", strtotime("$date +4 Month"));  
+
+    $strSQL = "INSERT INTO vot2_account 
+              (`uid`, `username`, `hn`, `password`, `password_len`, `email`, 
+              `phone`, `relative_phone`, `role`, `patient_type`, `hcode`,  `profile_img`, 
+              `verify_status`, `active_status`, `line_token`, `u_datetime`, `p_udatetime`, `start_obsdate`, `end_obsdate`)
+              VALUES (
+                  '$uid', '$username', '$hn', '$password', '$passwordlen', '', 
+                  '$phone', '$phone2', 'patient', 'VOT', '$hcode', '$photo',
+                  '1', '1', '$uid', '$datetime', '$datetime', '$date', '$endmondate'
+              )
+              ";
+    $res = $db->insert($strSQL, false);
+    if($res){
+
+        $strSQL = "UPDATE vot2_userinfo SET info_use = '0' WHERE info_uid = '$uid'";
+        $db->execute($strSQL);
+
+        $strSQL = "INSERT INTO vot2_log (`log_datetime`, `log_info`, `log_message`, `log_ip`, `log_uid`)
+                    VALUES ('$datetime', 'ลงทะเบียนบัญชีผู้ใช้งาน VOT', '$fname $lname', '$remote_ip', '$uid')
+                    ";
+        $db->insert($strSQL, false);
+
+        $strSQL = "INSERT INTO vot2_userinfo (`fname`, `lname`, `phone`, `info_udatetime`, `info_use`, `info_prov`, `info_district`, `info_subdistrict`, `info_uid`) 
+                   VALUES ('$fname', '$lname', '$phone', '$datetime', '1', '$tprovince', '$dist', '$subdist', '$uid')";
+        $res = $db->insert($strSQL, false);
+        mysqli_close($conn);
+        header('Location: ../vot_info?uid=' . $uid . '&referal=webapp');
+        die();
+    }else{
+        die();
+        ?>
+        <script>
+            alert('Can not create new account');
+            window.history.back()
+        </script>
+        <?php
+        $db->close();
+        die();
+    }
+}
+
 if($stage == 'signup_vot'){
     if(
         (!isset($_REQUEST['txtFname'])) ||

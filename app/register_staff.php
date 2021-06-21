@@ -100,7 +100,7 @@ $photo = mysqli_real_escape_string($conn, $_GET['photo']);
                                             </div>
                                         </div>
                                         <div class="card-body">
-                                            <form  action="./controller/auth?stage=signup_vot" method="POST" autocomplete="off"  onsubmit="return auth.chk_register_staff();">
+                                            <form  action="./controller/auth?stage=signup_staff" method="POST" autocomplete="off"  onsubmit="return auth.chk_register_staff();">
 
                                                 <div class="form-group mb-50" style="display: none;">
                                                     <label class="text-bold-600" for="exampleInputPassword1">UID :</label>
@@ -133,9 +133,31 @@ $photo = mysqli_real_escape_string($conn, $_GET['photo']);
                                                     <input type="text" class="form-control" id="txtUsername" name="txtUsername" placeholder="">
                                                 </div>
 
-                                                <div class="form-group mb-50">
+                                                <!-- <div class="form-group mb-50">
                                                     <label class="" for="exampleInputEmail1">รหัสสถานบริการที่สังกัด : <span class="text-danger">*</span></label>
                                                     <input type="text" class="form-control" id="txtHcode" name="txtHcode" placeholder="">
+                                                </div> -->
+
+                                                <div class="form-group mb-50">
+                                                    <label class="" for="exampleInputPassword1">สถานบริการสุขภาพ : <span class="text-danger">*</span></label>
+                                                    <div class="select-error">
+                                                        <select name="txtHcode" id="txtHcode" data-required class="form-control select2">
+                                                            <option value="">-- สถานบริการสุขภาพ --</option>
+                                                            <?php 
+                                                            $strSQL = "SELECT vot2_projecthospital.* FROM vot2_projecthospital 
+                                                            WHERE phosstatus = 'Y' ORDER BY hserv";
+                                                            $result_list = $db->fetch($strSQL, true, false);
+                                                            if($result_list['status']){
+                                                                $c = 1;
+                                                                foreach($result_list['data'] as $row){
+                                                                    ?>
+                                                                    <option value="<?php echo $row['phoscode'];?>" <?php  ?>>[<?php echo $row['phoscode'];?>] <?php echo $row['hserv'];?></option>
+                                                                    <?php
+                                                                }
+                                                            }
+                                                            ?>
+                                                        </select>
+                                                    </div>
                                                 </div>
 
                                                 <div class="form-group mb-50">

@@ -45,6 +45,7 @@ if($stage == 'profileimg'){
 
             echo json_encode(array(
                 'result' => 'success',
+                'filename' => $generatedName,
                 'status' => true,
             ));
         }
@@ -304,6 +305,52 @@ if($stage == 'line_login'){
         die();
     }
 }
+
+if($stage == 'line_login_staff'){
+    $json = file_get_contents('php://input');
+    $array = json_decode($json, true);
+
+    if(
+        (!isset($array['uid']))
+    ){
+        $return['status'] = 'Fail (x101)';
+        echo json_encode($return);
+        $db->close(); 
+        die();
+    }
+
+    $uid = mysqli_real_escape_string($conn, $array['uid']);
+
+    $strSQL = "SELECT * FROM vot2_account WHERE uid = '$uid' AND active_status = '1' AND verify_status = '1' AND delete_status = '0' AND role IN ('staff', 'manager', 'admin', 'moderator')";
+    $result = $db->fetch($strSQL, false);
+
+    if($result){
+        $return['status'] = 'Success';
+        $return['thvot_session'] = session_id();
+        $return['thvot_uid'] = $result['uid'];
+        $return['thvot_role'] = $result['role'];
+        $return['thvot_hcode'] = $result['hcode'];
+
+        $strSQL = "INSERT INTO vot2_log (`log_datetime`, `log_info`, `log_message`, `log_ip`, `log_uid`)
+                    VALUES ('$datetime', 'เข้าสู่ระบบ (Mobile)', '', '$remote_ip', '".$result['uid']."')
+                    ";
+        $db->insert($strSQL, false);
+
+        $return['status'] = 'Success';
+        $return['thvot_uid'] = $result['uid'];
+        $return['thvot_role'] = $result['role'];
+
+        echo json_encode($return);
+        $db->close();
+        die();
+    }else{
+        $return['status'] = 'Fail';
+        echo json_encode($return);
+        $db->close(); 
+        die();
+    }
+}
+
 
 if($stage == 'login'){
 

@@ -88,29 +88,29 @@
   // });
 
   // Create Event according to their Template
-  function getTimeTemplate(schedule, isAllDay) {
-    var html = [];
-    var start = moment(schedule.start.toUTCString());
-    if (!isAllDay) {
-      html.push('<span>' + start.format('HH:mm') + '</span> ');
-    }
-    if (schedule.isPrivate) {
-      html.push('<span class="bx bxs-lock-alt font-size-small align-middle"></span>');
-      html.push(' Private');
-    } else {
-      if (schedule.isReadOnly) {
-        html.push('<span class="bx bx-block font-size-small align-middle"></span>');
-      } else if (schedule.recurrenceRule) {
-        html.push('<span class="bx bx-repeat font-size-small align-middle"></span>');
-      } else if (schedule.attendees.length) {
-        html.push('<span class="bx bxs-user font-size-small align-middle"></span>');
-      } else if (schedule.location) {
-        html.push('<span class="bx bxs-map font-size-small align-middle"></span>');
-      }
-      html.push(' ' + schedule.title);
-    }
-    return html.join('');
-  }
+  // function getTimeTemplate(schedule, isAllDay) {
+  //   var html = [];
+  //   var start = moment(schedule.start.toUTCString());
+  //   if (!isAllDay) {
+  //     html.push('<span>' + start.format('HH:mm') + '</span> ');
+  //   }
+  //   if (schedule.isPrivate) {
+  //     html.push('<span class="bx bxs-lock-alt font-size-small align-middle"></span>');
+  //     html.push(' Private');
+  //   } else {
+  //     if (schedule.isReadOnly) {
+  //       html.push('<span class="bx bx-block font-size-small align-middle"></span>');
+  //     } else if (schedule.recurrenceRule) {
+  //       html.push('<span class="bx bx-repeat font-size-small align-middle"></span>');
+  //     } else if (schedule.attendees.length) {
+  //       html.push('<span class="bx bxs-user font-size-small align-middle"></span>');
+  //     } else if (schedule.location) {
+  //       html.push('<span class="bx bxs-map font-size-small align-middle"></span>');
+  //     }
+  //     html.push(' ' + schedule.title);
+  //   }
+  //   return html.join('');
+  // }
 
   // A listener for click the menu
   // function onClickMenu(e) {
@@ -187,90 +187,90 @@
       default:
         return;
     }
-    setRenderRangeText();
-    setSchedules();
+    // setRenderRangeText();
+    // setSchedules();
   }
 
   // Click of new schedule button's open schedule create popup
-  function createNewSchedule(event) {
-    var start = event.start ? new Date(event.start.getTime()) : new Date();
-    var end = event.end ? new Date(event.end.getTime()) : moment().add(1, 'hours').toDate();
+  // function createNewSchedule(event) {
+  //   var start = event.start ? new Date(event.start.getTime()) : new Date();
+  //   var end = event.end ? new Date(event.end.getTime()) : moment().add(1, 'hours').toDate();
 
-    if (useCreationPopup) {
-      cal.openCreationPopup({
-        start: start,
-        end: end
-      });
-    }
-  }
+  //   if (useCreationPopup) {
+  //     cal.openCreationPopup({
+  //       start: start,
+  //       end: end
+  //     });
+  //   }
+  // }
   // new schedule create
-  function saveNewSchedule(scheduleData) {
-    var calendar = scheduleData.calendar || findCalendar(scheduleData.calendarId);
-    var schedule = {
-      id: String(chance.guid()),
-      title: scheduleData.title,
-      isAllDay: scheduleData.isAllDay,
-      start: scheduleData.start,
-      end: scheduleData.end,
-      category: scheduleData.isAllDay ? 'allday' : 'time',
-      dueDateClass: '',
-      color: calendar.color,
-      bgColor: calendar.bgColor,
-      dragBgColor: calendar.bgColor,
-      borderColor: calendar.borderColor,
-      location: scheduleData.location,
-      raw: {
-        class: scheduleData.raw['class']
-      },
-      state: scheduleData.state
-    };
-    if (calendar) {
-      schedule.calendarId = calendar.id;
-      schedule.color = calendar.color;
-      schedule.bgColor = calendar.bgColor;
-      schedule.borderColor = calendar.borderColor;
-    }
+  // function saveNewSchedule(scheduleData) {
+  //   var calendar = scheduleData.calendar || findCalendar(scheduleData.calendarId);
+  //   var schedule = {
+  //     id: String(chance.guid()),
+  //     title: scheduleData.title,
+  //     isAllDay: scheduleData.isAllDay,
+  //     start: scheduleData.start,
+  //     end: scheduleData.end,
+  //     category: scheduleData.isAllDay ? 'allday' : 'time',
+  //     dueDateClass: '',
+  //     color: calendar.color,
+  //     bgColor: calendar.bgColor,
+  //     dragBgColor: calendar.bgColor,
+  //     borderColor: calendar.borderColor,
+  //     location: scheduleData.location,
+  //     raw: {
+  //       class: scheduleData.raw['class']
+  //     },
+  //     state: scheduleData.state
+  //   };
+  //   if (calendar) {
+  //     schedule.calendarId = calendar.id;
+  //     schedule.color = calendar.color;
+  //     schedule.bgColor = calendar.bgColor;
+  //     schedule.borderColor = calendar.borderColor;
+  //   }
 
-    cal.createSchedules([schedule]);
+  //   cal.createSchedules([schedule]);
 
-    refreshScheduleVisibility();
-  }
+  //   refreshScheduleVisibility();
+  // }
 
   // view all checkbox initialize
-  function onChangeCalendars(e) {
-    var calendarId = e.target.value;
-    var checked = e.target.checked;
-    var viewAll = document.querySelector('.sidebar-calendars-item input');
-    var calendarElements = Array.prototype.slice.call(document.querySelectorAll('#calendarList input'));
-    var allCheckedCalendars = true;
+  // function onChangeCalendars(e) {
+  //   var calendarId = e.target.value;
+  //   var checked = e.target.checked;
+  //   var viewAll = document.querySelector('.sidebar-calendars-item input');
+  //   var calendarElements = Array.prototype.slice.call(document.querySelectorAll('#calendarList input'));
+  //   var allCheckedCalendars = true;
 
-    if (calendarId === 'all') {
-      allCheckedCalendars = checked;
+  //   if (calendarId === 'all') {
+  //     allCheckedCalendars = checked;
 
-      calendarElements.forEach(function (input) {
-        var span = input.parentNode;
-        input.checked = checked;
-        span.style.backgroundColor = checked ? span.style.borderColor : 'transparent';
-      });
+  //     calendarElements.forEach(function (input) {
+  //       var span = input.parentNode;
+  //       input.checked = checked;
+  //       span.style.backgroundColor = checked ? span.style.borderColor : 'transparent';
+  //     });
 
-      CalendarList.forEach(function (calendar) {
-        calendar.checked = checked;
-      });
-    } else {
-      findCalendar(calendarId).checked = checked;
+  //     CalendarList.forEach(function (calendar) {
+  //       calendar.checked = checked;
+  //     });
+  //   } else {
+  //     findCalendar(calendarId).checked = checked;
 
-      allCheckedCalendars = calendarElements.every(function (input) {
-        return input.checked;
-      });
+  //     allCheckedCalendars = calendarElements.every(function (input) {
+  //       return input.checked;
+  //     });
 
-      if (allCheckedCalendars) {
-        viewAll.checked = true;
-      } else {
-        viewAll.checked = false;
-      }
-    }
-    refreshScheduleVisibility();
-  }
+  //     if (allCheckedCalendars) {
+  //       viewAll.checked = true;
+  //     } else {
+  //       viewAll.checked = false;
+  //     }
+  //   }
+  //   refreshScheduleVisibility();
+  // }
   // schedule refresh according to view
   function refreshScheduleVisibility() {
     var calendarElements = Array.prototype.slice.call(document.querySelectorAll('#calendarList input'));
@@ -314,23 +314,23 @@
   //   calendarTypeIcon.className = iconClassName;
   // }
 
-  function setRenderRangeText() {
-    var renderRange = document.getElementById('renderRange');
-    var options = cal.getOptions();
-    var viewName = cal.getViewName();
-    var html = [];
-    if (viewName === 'day') {
-      html.push(moment(cal.getDate().getTime()).format('YYYY-MM-DD'));
-    } else if (viewName === 'month' &&
-      (!options.month.visibleWeeksCount || options.month.visibleWeeksCount > 4)) {
-      html.push(moment(cal.getDate().getTime()).format('YYYY-MM'));
-    } else {
-      html.push(moment(cal.getDateRangeStart().getTime()).format('YYYY-MM-DD'));
-      html.push('-');
-      html.push(moment(cal.getDateRangeEnd().getTime()).format(' MM.DD'));
-    }
-    renderRange.innerHTML = html.join('');
-  }
+  // function setRenderRangeText() {
+  //   var renderRange = document.getElementById('renderRange');
+  //   var options = cal.getOptions();
+  //   var viewName = cal.getViewName();
+  //   var html = [];
+  //   if (viewName === 'day') {
+  //     html.push(moment(cal.getDate().getTime()).format('YYYY-MM-DD'));
+  //   } else if (viewName === 'month' &&
+  //     (!options.month.visibleWeeksCount || options.month.visibleWeeksCount > 4)) {
+  //     html.push(moment(cal.getDate().getTime()).format('YYYY-MM'));
+  //   } else {
+  //     html.push(moment(cal.getDateRangeStart().getTime()).format('YYYY-MM-DD'));
+  //     html.push('-');
+  //     html.push(moment(cal.getDateRangeEnd().getTime()).format(' MM.DD'));
+  //   }
+  //   renderRange.innerHTML = html.join('');
+  // }
 
   // // Randome Generated schedule
   function setSchedules() {

@@ -512,15 +512,18 @@ if($stage == 'user'){
     $uid = mysqli_real_escape_string($conn, $array['uid']);
     $role = mysqli_real_escape_string($conn, $array['role']);
 
-    $strSQL = "SELECT * FROM vot2_account INNER JOIN vot2_chospital ON vot2_account.hcode = vot2_chospital.hoscode 
-               INNER JOIN vot2_userinfo ON vot2_account.uid = vot2_userinfo.info_uid
-               LEFT JOIN vot2_patient_location ON vot2_account.uid = vot2_patient_location.loc_patient_uid
+    $strSQL = "SELECT a.*, b.hoscod, b.hosname, c.*, d.* , e.hserve mhname,  f.hserve  ohname
+               FROM vot2_account  a INNER JOIN vot2_chospital b ON a.hcode = b.hoscode 
+               INNER JOIN vot2_userinfo c   ON a.uid = c.info_uid
+               LEFT JOIN vot2_patient_location d  ON a.uid = d.loc_patient_uid
+               LEFT JOIN vot2_projecthospital e ON a.hcode = e.phoscode
+               LEFT JOIN vot2_projecthospital f ON a.obs_hcode = f.phoscode
                WHERE 
-               vot2_account.UID = '$uid' 
-               AND vot2_account.role = '$role'
-               AND info_use = '1'
-               AND (loc_status = '1' OR loc_status IS NULL)
-               AND vot2_account.delete_status = '0'
+               a.UID = '$uid' 
+               AND a.role = '$role'
+               AND c.info_use = '1'
+               AND (d.loc_status = '1' OR d.loc_status IS NULL)
+               AND a.delete_status = '0'
                LIMIT 1
           ";
     $user = $db->fetch($strSQL, false);

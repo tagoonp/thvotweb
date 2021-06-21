@@ -49,9 +49,10 @@ if(!$resu){
 
     <!-- BEGIN: Vendor CSS-->
     <link rel="stylesheet" type="text/css" href="../../../app-assets/vendors/css/vendors.min.css">
-    <link rel="stylesheet" type="text/css" href="../../../app-assets/vendors/css/calendars/tui-time-picker.css">
+    <!-- <link rel="stylesheet" type="text/css" href="../../../app-assets/vendors/css/calendars/tui-time-picker.css">
     <link rel="stylesheet" type="text/css" href="../../../app-assets/vendors/css/calendars/tui-date-picker.css">
-    <link rel="stylesheet" type="text/css" href="../../../app-assets/vendors/css/calendars/tui-calendar.min.css">
+    <link rel="stylesheet" type="text/css" href="../../../app-assets/vendors/css/calendars/tui-calendar.min.css"> -->
+    <link rel="stylesheet" type="text/css" href="../../../assets/fullcalendar/fullcalendar.min.css">
     <!-- END: Vendor CSS-->
 
     <!-- BEGIN: Theme CSS-->
@@ -98,27 +99,7 @@ if(!$resu){
                     <!-- calendar app overlay -->
                     <div class="app-content-overlay"></div>
                     <!-- calendar view start  -->
-                    <div class="calendar-view">
-                        <div class="calendar-action d-flex align-items-center flex-wrap">
-                            <!-- dropdown button to change calendar-view -->
-                            <div class="dropdown d-inline mr-75">
-                                <button id="dropdownMenu-calendarType" style="display: none;" class="btn btn-action dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-                                    <i id="calendarTypeIcon" class="bx bx-calendar-alt"></i>
-                                    <span id="calendarTypeName">Dropdown</span>
-                                </button>
-                            </div>
-                            <!-- calenadar next and previous navigate button -->
-                            <span id="menu-navi" class="menu-navigation">
-                                <button type="button" class="btn btn-action move-today mr-50 px-75" data-action="move-today">Today</button>
-                                <button type="button" class="btn btn-icon btn-action  move-day mr-50 px-50" data-action="move-prev">
-                                    <i class="bx bx-chevron-left" data-action="move-prev"></i>
-                                </button>
-                                <button type="button" class="btn btn-icon btn-action move-day mr-50 px-50" data-action="move-next">
-                                    <i class="bx bx-chevron-right" data-action="move-next"></i>
-                                </button>
-                            </span>
-                            <span id="renderRange" class="render-range" style="display: none;"></span>
-                        </div>
+                    <div class="calendar-view p-1">
                         <!-- calendar view  -->
                         <div id="calendar" class="calendar-content"></div>
                     </div>
@@ -157,10 +138,37 @@ if(!$resu){
     <!-- END: Theme JS-->
 
     <!-- BEGIN: Page JS-->
-    <script src="../../../app-assets/js/scripts/extensions/calendar/calendars-data-thvot.js"></script>
-    <!-- <script src="../../../app-assets/js/scripts/extensions/calendar/schedules.js"></script> -->
-    <script src="../../../app-assets/js/scripts/extensions/calendar/app-calendar.js"></script>
+    <script src="../../../assets/fullcalendar/fullcalendar.min.js"></script>
     <!-- END: Page JS-->
+
+    <script>
+        var calendar = ''
+        $(document).ready(function(){
+            calendar = $("#calendar").fullCalendar({
+            // defaultView: 'agendaMonth',
+            height: 'auto',
+            header: {
+                left: 'prev',
+                center: 'title',
+                right: 'next'
+            },
+            editable: false,
+            allDaySlot: false,
+            minTime : "08:00:00",
+            maxTime : "17:00:00",
+            height: 650,
+            events: [
+                {
+                    title: '',
+                    start: $('#txtStartMon').val(),
+                    end: $('#txtEndMon').val(),
+                    backgroundColor: '#06c'
+                }
+                ]
+            });
+            calendar.fullCalendar('render');
+        })
+    </script>
 
 </body>
 <!-- END: Body-->

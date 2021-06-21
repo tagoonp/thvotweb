@@ -129,12 +129,21 @@ var auth = {
       $check++; $('#txtSubdist').addClass('is-invalid')
     }
 
+    if($('#txtPatientType').val() == ''){
+      $check++; $('#txtPatientType').addClass('is-invalid')
+    }
+
     if($('#txtPassword1').val() == ''){
       $check++; $('#txtPassword1').addClass('is-invalid')
     }
 
     if($('#txtPassword2').val() == ''){
       $check++; $('#txtPassword2').addClass('is-invalid')
+    }
+
+    console.log($('#txtObserver').val());
+    if($('#txtObserver').val() == ''){
+      $check++; $('#txtObserver').addClass('is-invalid')
     }
 
     if($('#txtPassword1').val() != $('#txtPassword2').val()){

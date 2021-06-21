@@ -113,83 +113,83 @@
   }
 
   // A listener for click the menu
-  function onClickMenu(e) {
-    var target = $(e.target).closest('[role="menuitem"]')[0];
-    var action = getDataAction(target);
-    var options = cal.getOptions();
-    var viewName = '';
-    // on click of dropdown button change calendar view
-    switch (action) {
-      case 'toggle-daily':
-        viewName = 'day';
-        break;
-      case 'toggle-weekly':
-        viewName = 'week';
-        break;
-      case 'toggle-monthly':
-        options.month.visibleWeeksCount = 0;
-        options.month.isAlways6Week = false;
-        viewName = 'month';
-        break;
-      case 'toggle-weeks2':
-        options.month.visibleWeeksCount = 2;
-        viewName = 'month';
-        break;
-      case 'toggle-weeks3':
-        options.month.visibleWeeksCount = 3;
-        viewName = 'month';
-        break;
-      case 'toggle-narrow-weekend':
-        options.month.narrowWeekend = !options.month.narrowWeekend;
-        options.week.narrowWeekend = !options.week.narrowWeekend;
-        viewName = cal.getViewName();
+  // function onClickMenu(e) {
+  //   var target = $(e.target).closest('[role="menuitem"]')[0];
+  //   var action = getDataAction(target);
+  //   var options = cal.getOptions();
+  //   var viewName = '';
+  //   // on click of dropdown button change calendar view
+  //   switch (action) {
+  //     case 'toggle-daily':
+  //       viewName = 'day';
+  //       break;
+  //     case 'toggle-weekly':
+  //       viewName = 'week';
+  //       break;
+  //     case 'toggle-monthly':
+  //       options.month.visibleWeeksCount = 0;
+  //       options.month.isAlways6Week = false;
+  //       viewName = 'month';
+  //       break;
+  //     case 'toggle-weeks2':
+  //       options.month.visibleWeeksCount = 2;
+  //       viewName = 'month';
+  //       break;
+  //     case 'toggle-weeks3':
+  //       options.month.visibleWeeksCount = 3;
+  //       viewName = 'month';
+  //       break;
+  //     case 'toggle-narrow-weekend':
+  //       options.month.narrowWeekend = !options.month.narrowWeekend;
+  //       options.week.narrowWeekend = !options.week.narrowWeekend;
+  //       viewName = cal.getViewName();
 
-        target.querySelector('input').checked = options.month.narrowWeekend;
-        break;
-      case 'toggle-start-day-1':
-        options.month.startDayOfWeek = options.month.startDayOfWeek ? 0 : 1;
-        options.week.startDayOfWeek = options.week.startDayOfWeek ? 0 : 1;
-        viewName = cal.getViewName();
+  //       target.querySelector('input').checked = options.month.narrowWeekend;
+  //       break;
+  //     case 'toggle-start-day-1':
+  //       options.month.startDayOfWeek = options.month.startDayOfWeek ? 0 : 1;
+  //       options.week.startDayOfWeek = options.week.startDayOfWeek ? 0 : 1;
+  //       viewName = cal.getViewName();
 
-        target.querySelector('input').checked = options.month.startDayOfWeek;
-        break;
-      case 'toggle-workweek':
-        options.month.workweek = !options.month.workweek;
-        options.week.workweek = !options.week.workweek;
-        viewName = cal.getViewName();
+  //       target.querySelector('input').checked = options.month.startDayOfWeek;
+  //       break;
+  //     case 'toggle-workweek':
+  //       options.month.workweek = !options.month.workweek;
+  //       options.week.workweek = !options.week.workweek;
+  //       viewName = cal.getViewName();
 
-        target.querySelector('input').checked = !options.month.workweek;
-        break;
-      default:
-        break;
-    }
-    cal.setOptions(options, true);
-    cal.changeView(viewName, true);
+  //       target.querySelector('input').checked = !options.month.workweek;
+  //       break;
+  //     default:
+  //       break;
+  //   }
+  //   cal.setOptions(options, true);
+  //   cal.changeView(viewName, true);
 
-    setDropdownCalendarType();
-    setRenderRangeText();
-    setSchedules();
-  }
+  //   setDropdownCalendarType();
+  //   setRenderRangeText();
+  //   setSchedules();
+  // }
 
   // on click of next and previous button view change
-  function onClickNavi(e) {
-    var action = getDataAction(e.target);
-    switch (action) {
-      case 'move-prev':
-        cal.prev();
-        break;
-      case 'move-next':
-        cal.next();
-        break;
-      case 'move-today':
-        cal.today();
-        break;
-      default:
-        return;
-    }
-    setRenderRangeText();
-    setSchedules();
-  }
+  // function onClickNavi(e) {
+  //   var action = getDataAction(e.target);
+  //   switch (action) {
+  //     case 'move-prev':
+  //       cal.prev();
+  //       break;
+  //     case 'move-next':
+  //       cal.next();
+  //       break;
+  //     case 'move-today':
+  //       cal.today();
+  //       break;
+  //     default:
+  //       return;
+  //   }
+  //   setRenderRangeText();
+  //   setSchedules();
+  // }
 
   // Click of new schedule button's open schedule create popup
   function createNewSchedule(event) {

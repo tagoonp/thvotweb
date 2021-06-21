@@ -343,6 +343,8 @@ $photo = mysqli_real_escape_string($conn, $_GET['photo']);
                                     snap.data.forEach(i => {
                                         $('#txtObserver').append('<option value="' + i.uid + '">' + i.fname + ' ' +  i.lname  + '</option>')
                                     });
+                                }else{
+                                    $('#txtObserver').html('<option value="">-- เลือกพี่เลี้ยง --</option>')
                                 }
                             })
                 }else{

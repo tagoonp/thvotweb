@@ -77,6 +77,7 @@ if(!$resu){
         .redEvent {
             background-color:#FF0000;
             opacity: 0.6;
+            border: none;
         }
     </style>
 

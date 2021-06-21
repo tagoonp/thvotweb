@@ -83,7 +83,7 @@ if($stage == 'numofpatientstaff'){
     $res = $db->fetch($strSQL, true, true);
     if(($res) && ($res['status'])){
         $return['status'] = 'Success';
-        $return['data'] = $res['count'];
+        $return['count'] = $res['count'];
     }else{
         $return['status'] = 'Fail (x102)'.$strSQL;
     }

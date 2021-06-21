@@ -11,7 +11,7 @@ if(!isset($_GET['stage'])){ $db->close(); header('Location: ../404?stage=001'); 
 $stage = mysqli_real_escape_string($conn, $_GET['stage']);
 $return = array();
 
-if($stage == 'listofstaff'){
+if($stage == 'listofpatientstaff'){
     if(
         (!isset($_GET['uid'])) ||
         (!isset($_GET['hcode']))
@@ -45,6 +45,45 @@ if($stage == 'listofstaff'){
     if(($res) && ($res['status'])){
         $return['status'] = 'Success';
         $return['data'] = $res['data'];
+    }else{
+        $return['status'] = 'Fail (x102)'.$strSQL;
+    }
+    
+    echo json_encode($return);
+    $db->close(); 
+    die();
+}
+
+if($stage == 'numofpatientstaff'){
+    if(
+        (!isset($_GET['uid'])) ||
+        (!isset($_GET['hcode']))
+    ){
+        $return['status'] = 'Fail (x101)';
+        echo json_encode($return);
+        $db->close(); 
+        die();
+    }
+
+    $uid = mysqli_real_escape_string($conn, $_GET['uid']);
+    $hcode = mysqli_real_escape_string($conn, $_GET['hcode']);
+
+
+    $strSQL = "SELECT COUNT(a.uid) acn
+                FROM vot2_account a INNER JOIN vot2_userinfo b ON a.uid = b.info_uid 
+                INNER JOIN vot2_chospital c ON a.hcode = c.hoscode 
+                WHERE 
+                a.obs_hcode = '$hcode' 
+                AND b.info_use = '1' 
+                AND a.delete_status = '0' 
+                AND a.role = 'patient'
+                AND a.active_status = '1'
+                AND a.verify_status = '1'
+                AND a.obs_uid = '$uid'";
+    $res = $db->fetch($strSQL, true, true);
+    if(($res) && ($res['status'])){
+        $return['status'] = 'Success';
+        $return['data'] = $res['count'];
     }else{
         $return['status'] = 'Fail (x102)'.$strSQL;
     }

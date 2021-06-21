@@ -53,7 +53,7 @@ if($stage == 'getobserver'){
         die();
     }
 
-    $hcod = mysqli_real_escape_string($conn, $_GET['hcod']);
+    $hcod = mysqli_real_escape_string($conn, $_POST['hcod']);
 
     $strSQL = "SELECT * FROM vot2_account INNER JOIN vot2_userinfo ON vot2_account.uid = vot2_userinfo.info_uid
                 WHERE hcode = '$hcod' AND info_use = '1' ORDER BY fname";

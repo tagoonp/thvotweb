@@ -337,6 +337,7 @@ $photo = mysqli_real_escape_string($conn, $_GET['photo']);
                 if(data.id !=  ''){
                     var jxt = $.post('./api/core-api?stage=getobserver', {hcod : data.id}, function(){}, 'json')
                             .always(function(snap){
+                                console.log(snap);
                                 if(snap.status == 'Success'){
                                     $('#txtObserver').html('<option value="">-- เลือกพี่เลี้ยง --</option>')
                                     snap.data.forEach(i => {

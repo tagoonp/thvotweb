@@ -335,7 +335,7 @@ $photo = mysqli_real_escape_string($conn, $_GET['photo']);
 
             $('#txtHcode2').on('select2:select', function (e) {
                 var data = e.params.data;
-                console.log(data);
+                console.log(data.id);
             });
         })
     </script>

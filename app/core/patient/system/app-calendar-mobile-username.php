@@ -128,6 +128,8 @@ if(!$resu){
         </div>
     </div>
     <!-- END: Content-->
+    <input type="hidden" id="txtStartMon" value="<?php echo $resu['start_obsdate']; ?>">
+    <input type="hidden" id="txtEndMon" value="<?php echo $resu['end_obsdate']; ?>">
 
     <!-- BEGIN: Vendor JS-->
     <script src="../../../app-assets/vendors/js/vendors.min.js"></script>
@@ -155,8 +157,8 @@ if(!$resu){
     <!-- END: Theme JS-->
 
     <!-- BEGIN: Page JS-->
-    <script src="../../../app-assets/js/scripts/extensions/calendar/calendars-data.js"></script>
-    <script src="../../../app-assets/js/scripts/extensions/calendar/schedules.js"></script>
+    <script src="../../../app-assets/js/scripts/extensions/calendar/calendars-data-thvot.js"></script>
+    <!-- <script src="../../../app-assets/js/scripts/extensions/calendar/schedules.js"></script> -->
     <script src="../../../app-assets/js/scripts/extensions/calendar/app-calendar.js"></script>
     <!-- END: Page JS-->
 

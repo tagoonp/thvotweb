@@ -28,27 +28,25 @@
     'week.timegridSchedule.borderRadius': '4px',
   }
 
-  var calendar = new Calendar('#calendar', {
+  // calendar initialize here
+  cal = new Calendar('#calendar', {
     defaultView: 'month',
-    taskView: true,
+    useCreationPopup: useCreationPopup,
+    useDetailPopup: useDetailPopup,
+    calendars: CalendarList,
+    theme: themeConfig,
     template: {
-      monthDayname: function(dayname) {
-        return '<span class="calendar-week-dayname-name">' + dayname.label + '</span>';
+      milestone: function (model) {
+        return '<span class="bx bx-flag align-middle"></span> <span style="background-color: ' + model.bgColor + '">' + model.title + '</span>';
+      },
+      allday: function (schedule) {
+        return getTimeTemplate(schedule, true);
+      },
+      time: function (schedule) {
+        return getTimeTemplate(schedule, false);
       }
     }
   });
-
-  calendar.createSchedules([
-      {
-          id: '1',
-          calendarId: '1',
-          title: 'my schedule',
-          category: 'time',
-          dueDateClass: '',
-          start: $('#txtStartMon').val() + 'T00:01:00+07:00',
-          end: $('#txtEndMon').val() + 'T23:59:00+07:00'
-      }
-  ]);
 
   // calendar default on click event
   // cal.on({

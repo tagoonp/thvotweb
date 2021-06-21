@@ -172,24 +172,24 @@
   // }
 
   // on click of next and previous button view change
-  // function onClickNavi(e) {
-  //   var action = getDataAction(e.target);
-  //   switch (action) {
-  //     case 'move-prev':
-  //       cal.prev();
-  //       break;
-  //     case 'move-next':
-  //       cal.next();
-  //       break;
-  //     case 'move-today':
-  //       cal.today();
-  //       break;
-  //     default:
-  //       return;
-  //   }
-  //   setRenderRangeText();
-  //   setSchedules();
-  // }
+  function onClickNavi(e) {
+    var action = getDataAction(e.target);
+    switch (action) {
+      case 'move-prev':
+        cal.prev();
+        break;
+      case 'move-next':
+        cal.next();
+        break;
+      case 'move-today':
+        cal.today();
+        break;
+      default:
+        return;
+    }
+    setRenderRangeText();
+    setSchedules();
+  }
 
   // Click of new schedule button's open schedule create popup
   function createNewSchedule(event) {

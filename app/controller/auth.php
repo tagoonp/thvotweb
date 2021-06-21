@@ -328,7 +328,9 @@ if($stage == 'signup_vot'){
         (!isset($_REQUEST['txtPhone'])) ||
         (!isset($_REQUEST['txtDist'])) ||
         (!isset($_REQUEST['txtSubdist'])) ||
-        (!isset($_REQUEST['txtPhoto']))
+        (!isset($_REQUEST['txtPhoto'])) ||
+        (!isset($_REQUEST['txtPatientType'])) ||
+        (!isset($_REQUEST['txtHcode2']))
     ){
         $db->close(); header('Location: ../404?error=x103'); die();
     }
@@ -349,11 +351,15 @@ if($stage == 'signup_vot'){
     $password = mysqli_real_escape_string($conn, $_POST['txtPassword1']);
     $photo = mysqli_real_escape_string($conn, $_POST['txtPhoto']);
 
+    $patienttype = mysqli_real_escape_string($conn, $_POST['txtPatientType']);
+    $obs_hcode = mysqli_real_escape_string($conn, $_POST['txtHcode2']);
+    $obs_uid = mysqli_real_escape_string($conn, $_POST['txtObserver']);
+
     $strSQL = "SELECT * FROM vot2_account WHERE uid = '$uid' AND role = 'patient' AND delete_status = '0'";
     $res = $db->fetch($strSQL, true, true);
     if(($res) && ($res['status']) && ($res['count'] > 0)){
         mysqli_close($conn);
-        header('Location: ../vot_info?uid=' . $uid . '&referal=webapp');
+        header('Location: ../patient_info?uid=' . $uid . '&referal=webapp');
         die();
     }
 
@@ -365,11 +371,13 @@ if($stage == 'signup_vot'){
     $strSQL = "INSERT INTO vot2_account 
               (`uid`, `username`, `hn`, `password`, `password_len`, `email`, 
               `phone`, `relative_phone`, `role`, `patient_type`, `hcode`,  `profile_img`, 
-              `verify_status`, `active_status`, `line_token`, `u_datetime`, `p_udatetime`, `start_obsdate`, `end_obsdate`)
+              `verify_status`, `active_status`, `line_token`, `u_datetime`, `p_udatetime`, `start_obsdate`, `end_obsdate`, 
+              `obs_hcode`, `obs_uid`)
               VALUES (
                   '$uid', '$username', '$hn', '$password', '$passwordlen', '', 
-                  '$phone', '$phone2', 'patient', 'VOT', '$hcode', '$photo',
-                  '1', '1', '$uid', '$datetime', '$datetime', '$date', '$endmondate'
+                  '$phone', '$phone2', 'patient', '$patienttype', '$hcode', '$photo',
+                  '1', '1', '$uid', '$datetime', '$datetime', '$date', '$endmondate',
+                  '$obs_hcode', '$obs_uid'
               )
               ";
     $res = $db->insert($strSQL, false);

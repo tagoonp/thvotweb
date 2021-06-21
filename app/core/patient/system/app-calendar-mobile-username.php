@@ -160,6 +160,9 @@ if(!$resu){
                 center: 'title',
                 right: 'next'
             },
+            eventRender: function(info) {
+            info.el.querySelector('.fc-title').innerHTML = "<i>" + info.event.title + "</i>";
+            },
             editable: false,
             allDaySlot: false,
             minTime : "08:00:00",

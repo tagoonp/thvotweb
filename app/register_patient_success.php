@@ -94,7 +94,7 @@ if($res){
                                         
                                         <div class="card-body">
                                             <h3 class="text-center mb-1">THVOT</h3>
-                                                <h4 class="text-center mb-1">ลงทะเบียนผู้ป่วย <?php echo $res['patient_type']; ?></h4>
+                                                <h4 class="text-center mb-1">ลงทะเบียนผู้ป่วย <?php echo $res['patient_type']; ?> สำเร็จ</h4>
                                             <div class="text-center pt-3">
                                             ลงทะเบียนผู้ป่วย <?php echo $res['patient_type']; ?> เรียบร้อยแล้ว<br>ท่านสามารถใช้ TB No และรหัสผ่านเข้าสู่ระบบผ่านแอพพลิเคชั่นได้ทันที
                                             <div>

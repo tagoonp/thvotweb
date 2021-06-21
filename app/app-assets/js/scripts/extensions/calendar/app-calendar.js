@@ -332,34 +332,34 @@
   //   renderRange.innerHTML = html.join('');
   // }
 
-  // Randome Generated schedule
-//   function setSchedules() {
-//     cal.clear();
-//     generateSchedule(cal.getViewName(), cal.getDateRangeStart(), cal.getDateRangeEnd());
-//     cal.createSchedules(ScheduleList);
-//     refreshScheduleVisibility();
-//   }
-//   // Events initialize
-//   function setEventListener() {
-//     $('.menu-navigation').on('click', onClickNavi);
-//     $('.dropdown-menu [role="menuitem"]').on('click', onClickMenu);
-//     $('.sidebar-calendars').on('change', onChangeCalendars);
-//     // $('.sidebar-new-schedule-btn').on('click', createNewSchedule);
-//     window.addEventListener('resize', resizeThrottled);
-//   }
-//   // get data-action atrribute's value
-//   function getDataAction(target) {
-//     return target.dataset ? target.dataset.action : target.getAttribute('data-action');
-//   }
-//   resizeThrottled = tui.util.throttle(function () {
-//     cal.render();
-//   }, 50);
-//   window.cal = cal;
-//   setDropdownCalendarType();
-//   setRenderRangeText();
-//   setSchedules();
-//   setEventListener();
-// })(window, tui.Calendar);
+  // // Randome Generated schedule
+  // function setSchedules() {
+  //   cal.clear();
+  //   generateSchedule(cal.getViewName(), cal.getDateRangeStart(), cal.getDateRangeEnd());
+  //   cal.createSchedules(ScheduleList);
+  //   refreshScheduleVisibility();
+  // }
+  // // Events initialize
+  // function setEventListener() {
+  //   $('.menu-navigation').on('click', onClickNavi);
+  //   $('.dropdown-menu [role="menuitem"]').on('click', onClickMenu);
+  //   $('.sidebar-calendars').on('change', onChangeCalendars);
+  //   // $('.sidebar-new-schedule-btn').on('click', createNewSchedule);
+  //   window.addEventListener('resize', resizeThrottled);
+  // }
+  // // get data-action atrribute's value
+  // function getDataAction(target) {
+  //   return target.dataset ? target.dataset.action : target.getAttribute('data-action');
+  // }
+  // resizeThrottled = tui.util.throttle(function () {
+  //   cal.render();
+  // }, 50);
+  // window.cal = cal;
+  // setDropdownCalendarType();
+  // setRenderRangeText();
+  // setSchedules();
+  // setEventListener();
+})(window, tui.Calendar);
 
 // set sidebar calendar list
 (function () {

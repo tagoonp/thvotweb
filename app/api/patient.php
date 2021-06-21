@@ -31,7 +31,7 @@ if($stage == 'listofstaff'){
                 FROM vot2_account a INNER JOIN vot2_userinfo b ON a.uid = b.info_uid 
                 INNER JOIN vot2_chospital c ON a.hcode = c.hoscode 
                 WHERE 
-                a.hcode = '$hcode' 
+                a.obs_hcode = '$hcode' 
                 AND b.info_use = '1' 
                 AND a.delete_status = '0' 
                 AND a.role = 'patient'

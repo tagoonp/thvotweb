@@ -187,7 +187,7 @@
       default:
         return;
     }
-    // setRenderRangeText();
+    setRenderRangeText();
     // setSchedules();
   }
 
@@ -314,23 +314,23 @@
   //   calendarTypeIcon.className = iconClassName;
   // }
 
-  // function setRenderRangeText() {
-  //   var renderRange = document.getElementById('renderRange');
-  //   var options = cal.getOptions();
-  //   var viewName = cal.getViewName();
-  //   var html = [];
-  //   if (viewName === 'day') {
-  //     html.push(moment(cal.getDate().getTime()).format('YYYY-MM-DD'));
-  //   } else if (viewName === 'month' &&
-  //     (!options.month.visibleWeeksCount || options.month.visibleWeeksCount > 4)) {
-  //     html.push(moment(cal.getDate().getTime()).format('YYYY-MM'));
-  //   } else {
-  //     html.push(moment(cal.getDateRangeStart().getTime()).format('YYYY-MM-DD'));
-  //     html.push('-');
-  //     html.push(moment(cal.getDateRangeEnd().getTime()).format(' MM.DD'));
-  //   }
-  //   renderRange.innerHTML = html.join('');
-  // }
+  function setRenderRangeText() {
+    var renderRange = document.getElementById('renderRange');
+    var options = cal.getOptions();
+    var viewName = cal.getViewName();
+    var html = [];
+    if (viewName === 'day') {
+      html.push(moment(cal.getDate().getTime()).format('YYYY-MM-DD'));
+    } else if (viewName === 'month' &&
+      (!options.month.visibleWeeksCount || options.month.visibleWeeksCount > 4)) {
+      html.push(moment(cal.getDate().getTime()).format('YYYY-MM'));
+    } else {
+      html.push(moment(cal.getDateRangeStart().getTime()).format('YYYY-MM-DD'));
+      html.push('-');
+      html.push(moment(cal.getDateRangeEnd().getTime()).format(' MM.DD'));
+    }
+    renderRange.innerHTML = html.join('');
+  }
 
   // // Randome Generated schedule
   function setSchedules() {

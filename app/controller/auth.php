@@ -235,25 +235,23 @@ if($stage == 'signup_staff'){
     $fname = mysqli_real_escape_string($conn, $_POST['txtFname']);
     $lname = mysqli_real_escape_string($conn, $_POST['txtLname']);
     $hcode = mysqli_real_escape_string($conn, $_POST['txtHcode']);
-    $hn = mysqli_real_escape_string($conn, $_POST['txtHn']);
     $uid = mysqli_real_escape_string($conn, $_POST['txtUid']);
     
     $phone = mysqli_real_escape_string($conn, $_POST['txtPhone']);
-    $phone2 = mysqli_real_escape_string($conn, $_POST['txtPhone2']);
-    $dist = mysqli_real_escape_string($conn, $_POST['txtDist']);
-    $subdist = mysqli_real_escape_string($conn, $_POST['txtSubdist']);
-    $tprovince = mysqli_real_escape_string($conn, $_POST['txtProvince']);
 
     $username = mysqli_real_escape_string($conn, $_POST['txtUsername']);
-    $password = mysqli_real_escape_string($conn, $_POST['txtPassword1']);
+    $password = mysqli_real_escape_string($conn, $_POST['txtPassword']);
     $photo = mysqli_real_escape_string($conn, $_POST['txtPhoto']);
+    $role = mysqli_real_escape_string($conn, $_POST['txtRole']);
 
-    $strSQL = "SELECT * FROM vot2_account WHERE uid = '$uid' AND role = 'patient' AND delete_status = '0'";
+    $strSQL = "SELECT * FROM vot2_account WHERE uid = '$uid' AND role IN ('staff', 'admin', 'manager', 'moderator') AND delete_status = '0'";
     $res = $db->fetch($strSQL, true, true);
     if(($res) && ($res['status']) && ($res['count'] > 0)){
+
         mysqli_close($conn);
-        header('Location: ../vot_info?uid=' . $uid . '&referal=webapp');
+        header('Location: ../staff_info?uid=' . $uid . '&referal=webapp');
         die();
+       
     }
 
     $passwordlen = strlen($password);
@@ -262,12 +260,12 @@ if($stage == 'signup_staff'){
     $endmondate = Date("Y-m-d", strtotime("$date +4 Month"));  
 
     $strSQL = "INSERT INTO vot2_account 
-              (`uid`, `username`, `hn`, `password`, `password_len`, `email`, 
-              `phone`, `relative_phone`, `role`, `patient_type`, `hcode`,  `profile_img`, 
+              (`uid`, `username`, `password`, `password_len`, `email`, 
+              `phone`, `relative_phone`, `role`, `hcode`,  `profile_img`, 
               `verify_status`, `active_status`, `line_token`, `u_datetime`, `p_udatetime`, `start_obsdate`, `end_obsdate`)
               VALUES (
-                  '$uid', '$username', '$hn', '$password', '$passwordlen', '', 
-                  '$phone', '$phone2', 'patient', 'VOT', '$hcode', '$photo',
+                  '$uid', '$username', '$password', '$passwordlen', '', 
+                  '$phone', '$phone2', '$role', '$hcode', '$photo',
                   '1', '1', '$uid', '$datetime', '$datetime', '$date', '$endmondate'
               )
               ";
@@ -278,15 +276,15 @@ if($stage == 'signup_staff'){
         $db->execute($strSQL);
 
         $strSQL = "INSERT INTO vot2_log (`log_datetime`, `log_info`, `log_message`, `log_ip`, `log_uid`)
-                    VALUES ('$datetime', 'ลงทะเบียนบัญชีผู้ใช้งาน VOT', '$fname $lname', '$remote_ip', '$uid')
+                    VALUES ('$datetime', 'ลงทะเบียนบัญชีผู้ใช้งาน', '$fname $lname', '$remote_ip', '$uid')
                     ";
         $db->insert($strSQL, false);
 
-        $strSQL = "INSERT INTO vot2_userinfo (`fname`, `lname`, `phone`, `info_udatetime`, `info_use`, `info_prov`, `info_district`, `info_subdistrict`, `info_uid`) 
-                   VALUES ('$fname', '$lname', '$phone', '$datetime', '1', '$tprovince', '$dist', '$subdist', '$uid')";
+        $strSQL = "INSERT INTO vot2_userinfo (`fname`, `lname`, `phone`, `info_udatetime`, `info_use`, `info_uid`) 
+                   VALUES ('$fname', '$lname', '$phone', '$datetime', '1', '$uid')";
         $res = $db->insert($strSQL, false);
         mysqli_close($conn);
-        header('Location: ../vot_info?uid=' . $uid . '&referal=webapp');
+        header('Location: ../staff_info?uid=' . $uid . '&referal=webapp');
         die();
     }else{
         die();

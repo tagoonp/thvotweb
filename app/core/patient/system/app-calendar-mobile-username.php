@@ -8,12 +8,12 @@ $db = new Database();
 $conn = $db->conn();
 
 $stage = '1';
-if(!isset($_GET['uid'])){ 
+if((!isset($_GET['uid'])) || (!isset($_GET['patient_username']))){ 
     $db->close();
     header('Location: ../../../404.php');
     die();
 }
-// This uid is username
+
 $uid = mysqli_real_escape_string($conn, $_GET['uid']);
 $menu = 0;
 
@@ -28,7 +28,7 @@ $menu = 0;
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0">
     <meta name="description" content="THVOT ระบบการติดตามยาผู้ป่วยวัณโรค">
     <meta name="author" content="Wisnior, Co, Ltd.">
-    <title>THVOT Report</title>
+    <title>THVOT Patient calendar</title>
     <link rel="apple-touch-icon" href="../../../app-assets/images/ico/apple-icon-120.png">
     <link rel="shortcut icon" type="image/x-icon" href="../../../app-assets/images/ico/favicon.ico">
     <link href="https://fonts.googleapis.com/css?family=Rubik:300,400,500,600%7CIBM+Plex+Sans:300,400,500,600,700" rel="stylesheet">

@@ -262,6 +262,8 @@ $photo = mysqli_real_escape_string($conn, $_GET['photo']);
                                                     </div>
                                                 </div>
 
+                                                <hr>
+
                                                 <h6 class="text-bold-600">ตั้งรหัสผ่านของแอพ</h6>
 
                                                 <div class="form-group mb-50">
@@ -329,13 +331,23 @@ $photo = mysqli_real_escape_string($conn, $_GET['photo']);
         })
 
         $(function(){
-            // $('#txtHcode2').change(function(){
-            //     console.log($('#txtHcode2').select2('data'););
-            // })
 
             $('#txtHcode2').on('select2:select', function (e) {
                 var data = e.params.data;
-                console.log(data.id);
+                if(data.id !=  ''){
+                    var jxt = $.post('./api/core-api?stage=getobserver', {hcod : data.id}, function(){}, 'json')
+                            .always(function(snap){
+                                if(snap.status == 'Success'){
+                                    $('#txtObserver').html('<option value="">-- เลือกพี่เลี้ยง --</option>')
+                                    snap.data.forEach(i => {
+                                        $('#txtObserver').append('<option value="' + i.uid + '">' + i.fnamee + ' '  + '</option>')
+                                    });
+                                }
+                            })
+                }else{
+                    $('#txtObserver').html('<option value="">-- เลือกพี่เลี้ยง --</option>')
+                }
+                
             });
         })
     </script>

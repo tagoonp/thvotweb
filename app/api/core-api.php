@@ -43,6 +43,33 @@ if($stage == 'save_problem'){
     die();
 }
 
+if($stage == 'getobserver'){
+    if(
+        (!isset($_GET['hcod']))
+    ){
+        $return['status'] = 'Fail (x101)';
+        echo json_encode($return);
+        $db->close(); 
+        die();
+    }
+
+    $hcod = mysqli_real_escape_string($conn, $_GET['hcod']);
+
+    $strSQL = "SELECT * FROM vot2_account INNER JOIN vot2_userinfo ON vot2_account
+                WHERE hcode = '$hcod' ORDER BY fname";
+    $res = $db->fetch($strSQL, true, false);
+
+    if(($res) && ($res['status'])){
+        $return['status'] = 'Success';
+        $return['data'] = $res['data'];
+    }else{
+        $return['status'] = 'Fail (x102)'.$strSQL;
+    }
+    echo json_encode($return);
+    $db->close(); 
+    die();
+}
+
 if($stage == 'activity_list'){
     if(
         (!isset($_GET['uid']))

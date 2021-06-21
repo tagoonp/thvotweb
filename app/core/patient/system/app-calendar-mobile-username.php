@@ -15,7 +15,21 @@ if((!isset($_GET['uid'])) || (!isset($_GET['patient_username']))){
 }
 
 $uid = mysqli_real_escape_string($conn, $_GET['uid']);
+$patient_username = mysqli_real_escape_string($conn, $_GET['patient_username']);
 $menu = 0;
+
+$strSQL = "SELECT * FROM vot2_account a INNER JOIN vot2_userinfo b ON a.uid = b.info_uid 
+           WHERE 
+           a.username = '$patient_username' 
+           AND a.delete_status = '0' 
+           AND b.info_use = '1'
+           ";
+$resu = $db->fetch($strSQL,false,true);
+if(!$resu){
+    $db->close();
+    header('Location: ../../../404.php');
+    die();
+}
 
 ?>
 <!DOCTYPE html>
@@ -73,6 +87,10 @@ $menu = 0;
             <div class="content-header row">
             </div>
             <div class="content-body">
+                <div class="row">
+                    <div class="col-3"></div>
+                    <div class="col-9"><h4><?php echo $resu['fname']." ".$resu['lname']; ?></h4></div>
+                </div>
                 <!-- calendar Wrapper  -->
                 <div class="calendar-wrapper position-relative">
                     <!-- calendar app overlay -->
@@ -82,64 +100,10 @@ $menu = 0;
                         <div class="calendar-action d-flex align-items-center flex-wrap">
                             <!-- dropdown button to change calendar-view -->
                             <div class="dropdown d-inline mr-75">
-                                <button id="dropdownMenu-calendarType" class="btn btn-action dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                                <button id="dropdownMenu-calendarType" style="display: none;" class="btn btn-action dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
                                     <i id="calendarTypeIcon" class="bx bx-calendar-alt"></i>
                                     <span id="calendarTypeName">Dropdown</span>
                                 </button>
-                                <ul class="dropdown-menu dropdown-menu-right" role="menu" aria-labelledby="dropdownMenu-calendarType">
-                                    <li role="presentation">
-                                        <a class="dropdown-menu-title dropdown-item" role="menuitem" data-action="toggle-daily">
-                                            <i class="bx bx-calendar-alt mr-50"></i>
-                                            <span>Daily</span>
-                                        </a>
-                                    </li>
-                                    <li role="presentation">
-                                        <a class="dropdown-menu-title dropdown-item" role="menuitem" data-action="toggle-weekly">
-                                            <i class='bx bx-calendar-event mr-50'></i>
-                                            <span>Weekly</span>
-                                        </a>
-                                    </li>
-                                    <li role="presentation">
-                                        <a class="dropdown-menu-title dropdown-item" role="menuitem" data-action="toggle-monthly">
-                                            <i class="bx bx-calendar mr-50"></i>
-                                            <span>Month</span>
-                                        </a>
-                                    </li>
-                                    <li role="presentation">
-                                        <a class="dropdown-menu-title dropdown-item" role="menuitem" data-action="toggle-weeks2">
-                                            <i class='bx bx-calendar-check mr-50'></i>
-                                            <span>2 weeks</span>
-                                        </a>
-                                    </li>
-                                    <li role="presentation">
-                                        <a class="dropdown-menu-title dropdown-item" role="menuitem" data-action="toggle-weeks3">
-                                            <i class='bx bx-calendar-check mr-50'></i>
-                                            <span>3 weeks</span>
-                                        </a>
-                                    </li>
-                                    <li role="presentation" class="dropdown-divider"></li>
-                                    <li role="presentation">
-                                        <div role="menuitem" data-action="toggle-workweek" class="dropdown-item">
-                                            <input type="checkbox" class="tui-full-calendar-checkbox-square" value="toggle-workweek" checked>
-                                            <span class="checkbox-title bg-primary"></span>
-                                            <span>Show weekends</span>
-                                        </div>
-                                    </li>
-                                    <li role="presentation">
-                                        <div role="menuitem" data-action="toggle-start-day-1" class="dropdown-item">
-                                            <input type="checkbox" class="tui-full-calendar-checkbox-square" value="toggle-start-day-1">
-                                            <span class="checkbox-title"></span>
-                                            <span>Start Week on Monday</span>
-                                        </div>
-                                    </li>
-                                    <li role="presentation">
-                                        <div role="menuitem" data-action="toggle-narrow-weekend" class="dropdown-item">
-                                            <input type="checkbox" class="tui-full-calendar-checkbox-square" value="toggle-narrow-weekend">
-                                            <span class="checkbox-title"></span>
-                                            <span>Narrower than weekdays</span>
-                                        </div>
-                                    </li>
-                                </ul>
                             </div>
                             <!-- calenadar next and previous navigate button -->
                             <span id="menu-navi" class="menu-navigation">

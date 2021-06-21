@@ -45,7 +45,7 @@ if($stage == 'save_problem'){
 
 if($stage == 'getobserver'){
     if(
-        (!isset($_GET['hcod']))
+        (!isset($_POST['hcod']))
     ){
         $return['status'] = 'Fail (x101)';
         echo json_encode($return);

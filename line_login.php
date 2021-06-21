@@ -37,7 +37,7 @@ try {
 
     
 
-    header('Location: ./app/controller/auth?stage=line_login&t='.$_SESSION['reg_type'].'&token='.$ukey.'&photo='.$uphoto);
+    header('Location: ./app/controller/auth?stage=line_login&token='.$ukey.'&photo='.$uphoto);
     $adapter->disconnect();
 }
 catch (\Exception $e) {

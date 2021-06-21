@@ -336,10 +336,6 @@ if($stage == 'line_login_staff'){
                     ";
         $db->insert($strSQL, false);
 
-        $return['status'] = 'Success';
-        $return['thvot_uid'] = $result['uid'];
-        $return['thvot_role'] = $result['role'];
-
         echo json_encode($return);
         $db->close();
         die();

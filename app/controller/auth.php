@@ -45,25 +45,26 @@ if($stage == 'line_login'){
     if(($result) && (mysqli_num_rows($result) > 0)){
         // Already registered
         mysqli_close($conn);
-        if($t == 'dot')
-        {
-            header('Location: ../dot_info?uid=' . $token . '&referal=webapp&photo='.$photo);
-        }else if($t = 'vot'){
-            header('Location: ../vot_info?uid=' . $token . '&referal=webapp&photo='.$photo);
-        }else{
-            header('Location: ../staff_info?uid=' . $token . '&referal=webapp&photo='.$photo);
-        }
+        // if($t == 'dot')
+        // {
+        //     header('Location: ../dot_info?uid=' . $token . '&referal=webapp&photo='.$photo);
+        // }else if($t = 'vot'){
+        //     header('Location: ../vot_info?uid=' . $token . '&referal=webapp&photo='.$photo);
+        // }else{
+        //     header('Location: ../staff_info?uid=' . $token . '&referal=webapp&photo='.$photo);
+        // }
+        header('Location: ../register_patient_success?uid=' . $token . '&referal=webapp&photo='.$photo);
         die();
     }else{
         mysqli_close($conn);
-
-        if($t == 'dot'){
-            header('Location: ../register_dot?uid=' . $token . '&referal=webapp&photo='.$photo);
-        }else if($t = 'vot'){
-            header('Location: ../register_vot?uid=' . $token . '&referal=webapp&photo='.$photo);
-        }else{
-            header('Location: ../register_staff?uid=' . $token . '&referal=webapp&photo='.$photo);
-        }
+        header('Location: ../register_patient?uid=' . $token . '&referal=webapp&photo='.$photo);
+        // if($t == 'dot'){
+        //     header('Location: ../register_dot?uid=' . $token . '&referal=webapp&photo='.$photo);
+        // }else if($t = 'vot'){
+        //     header('Location: ../register_vot?uid=' . $token . '&referal=webapp&photo='.$photo);
+        // }else{
+        //     header('Location: ../register_staff?uid=' . $token . '&referal=webapp&photo='.$photo);
+        // }
 
         die();
     }

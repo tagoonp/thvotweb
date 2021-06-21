@@ -228,12 +228,14 @@ $photo = mysqli_real_escape_string($conn, $_GET['photo']);
                                                     </div>
                                                 </div>
 
+                                                <hr>
+
                                                 <h6 class="text-bold-600">สถานบริการสุขภาพที่ติดตามการกินยา</h6>
                                                 <div class="form-group mb-50">
                                                     <label class="" for="exampleInputPassword1">สถานบริการสุขภาพของพี่เลี้ยง : <span class="text-danger">*</span></label>
                                                     <div class="select-error">
                                                         <select name="txtHcode2" id="txtHcode2" data-required class="form-control select2">
-                                                            <option value="">-- สถานบริการสุขภาพ --</option>
+                                                            <option value="">-- สถานบริการสุขภาพพี่เลี้ยง --</option>
                                                             <?php 
                                                             $strSQL = "SELECT vot2_projecthospital.* FROM vot2_projecthospital 
                                                             WHERE phosstatus = 'Y' ORDER BY hserv";
@@ -324,6 +326,12 @@ $photo = mysqli_real_escape_string($conn, $_GET['photo']);
             dropdownAutoWidth: true,
             width: '100%'
             });
+        })
+
+        $(function(){
+            $('#txtHcode2').change(function(){
+                console.log($('#txtHcode2').select2('data'););
+            })
         })
     </script>
 

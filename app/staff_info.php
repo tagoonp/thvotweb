@@ -25,7 +25,7 @@ if(($res['status']) && ($res['count'] > 0)){
     
 }else{
     mysqli_close($conn);
-    header('Location: ./register_dot?uid=' . $uid . '&referal=webapp');
+    header('Location: ./register_staff?uid=' . $uid . '&referal=webapp');
     die();
 }
 

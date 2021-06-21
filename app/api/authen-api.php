@@ -512,7 +512,7 @@ if($stage == 'user'){
     $uid = mysqli_real_escape_string($conn, $array['uid']);
     $role = mysqli_real_escape_string($conn, $array['role']);
 
-    $strSQL = "SELECT a.*, b.hoscod, b.hosname, c.*, d.* , e.hserve mhname,  f.hserve  ohname
+    $strSQL = "SELECT a.*, b.hoscode, b.hosname, c.*, d.* , e.hserv mhname,  f.hserv  ohname
                FROM vot2_account  a INNER JOIN vot2_chospital b ON a.hcode = b.hoscode 
                INNER JOIN vot2_userinfo c   ON a.uid = c.info_uid
                LEFT JOIN vot2_patient_location d  ON a.uid = d.loc_patient_uid

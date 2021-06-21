@@ -167,13 +167,20 @@ if(!$resu){
             height: 650,
             events: [
                 {
+                    title: '<i class="bx bxs-bell"></i>',
+                    start: '2021-06-22',
+                    // end: $('#txtEndMon').val(),
+                    // backgroundColor: '#06c'
+                    // className: ["redEvent"]
+                },
+                {
                     title: '',
                     start: $('#txtStartMon').val(),
                     end: $('#txtEndMon').val(),
                     // backgroundColor: '#06c'
                     className: ["redEvent"]
                 }
-                ]
+            ]
             });
             calendar.fullCalendar('render');
         })

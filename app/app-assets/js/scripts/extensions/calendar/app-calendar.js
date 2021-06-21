@@ -287,32 +287,32 @@
     });
   }
   // calendar type set on dropdown button
-  function setDropdownCalendarType() {
-    var calendarTypeName = document.getElementById('calendarTypeName');
-    var calendarTypeIcon = document.getElementById('calendarTypeIcon');
-    var options = cal.getOptions();
-    var type = cal.getViewName();
-    var iconClassName;
+  // function setDropdownCalendarType() {
+  //   var calendarTypeName = document.getElementById('calendarTypeName');
+  //   var calendarTypeIcon = document.getElementById('calendarTypeIcon');
+  //   var options = cal.getOptions();
+  //   var type = cal.getViewName();
+  //   var iconClassName;
 
-    if (type === 'day') {
-      type = 'Daily';
-      iconClassName = 'bx bx-calendar-alt mr-25';
-    } else if (type === 'week') {
-      type = 'Weekly';
-      iconClassName = 'bx bx-calendar-event mr-25';
-    } else if (options.month.visibleWeeksCount === 2) {
-      type = '2 weeks';
-      iconClassName = 'bx bx-calendar-check mr-25';
-    } else if (options.month.visibleWeeksCount === 3) {
-      type = '3 weeks';
-      iconClassName = 'bx bx-calendar-check mr-25';
-    } else {
-      type = 'Monthly';
-      iconClassName = 'bx bx-calendar mr-25';
-    }
-    calendarTypeName.innerHTML = type;
-    calendarTypeIcon.className = iconClassName;
-  }
+  //   if (type === 'day') {
+  //     type = 'Daily';
+  //     iconClassName = 'bx bx-calendar-alt mr-25';
+  //   } else if (type === 'week') {
+  //     type = 'Weekly';
+  //     iconClassName = 'bx bx-calendar-event mr-25';
+  //   } else if (options.month.visibleWeeksCount === 2) {
+  //     type = '2 weeks';
+  //     iconClassName = 'bx bx-calendar-check mr-25';
+  //   } else if (options.month.visibleWeeksCount === 3) {
+  //     type = '3 weeks';
+  //     iconClassName = 'bx bx-calendar-check mr-25';
+  //   } else {
+  //     type = 'Monthly';
+  //     iconClassName = 'bx bx-calendar mr-25';
+  //   }
+  //   calendarTypeName.innerHTML = type;
+  //   calendarTypeIcon.className = iconClassName;
+  // }
 
   function setRenderRangeText() {
     var renderRange = document.getElementById('renderRange');

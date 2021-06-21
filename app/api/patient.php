@@ -69,7 +69,7 @@ if($stage == 'numofpatientstaff'){
     $hcode = mysqli_real_escape_string($conn, $_GET['hcode']);
 
 
-    $strSQL = "SELECT COUNT(a.uid) acn
+    $strSQL = "SELECT a.uid
                 FROM vot2_account a INNER JOIN vot2_userinfo b ON a.uid = b.info_uid 
                 INNER JOIN vot2_chospital c ON a.hcode = c.hoscode 
                 WHERE 

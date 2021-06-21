@@ -94,9 +94,9 @@ if(($res['status']) && ($res['count'] > 0)){
                                         
                                         <div class="card-body">
                                             <h3 class="text-center mb-1">THVOT</h3>
-                                                <h4 class="text-center mb-1">ลงทะเบียนผู้ป่วย VOT</h4>
+                                                <h4 class="text-center mb-1">ลงทะเบียนผู้ป่วยสำเร็จ</h4>
                                             <div class="text-center pt-3">
-                                            ลงทะเบียนผู้ป่วย VOT เรียบร้อยแล้ว<br>ท่านสามารถใช้ TB No และรหัสผ่านเข้าสู่ระบบผ่านแอพพลิเคชั่นได้ทันที
+                                            ลงทะเบียนผู้ป่วย <?php echo $res['patient_type']; ?> เรียบร้อยแล้ว<br>ท่านสามารถใช้ TB No และรหัสผ่านเข้าสู่ระบบผ่านแอพพลิเคชั่นได้ทันที
                                             <div>
                                                 <?php echo "Patient ID : ".$res['data'][0]['username']; ?>
                                             </div>

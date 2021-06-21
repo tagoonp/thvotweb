@@ -87,9 +87,11 @@ if(!$resu){
             <div class="content-header row">
             </div>
             <div class="content-body">
-                <div class="row">
-                    <div class="col-3"></div>
-                    <div class="col-9"><h4><?php echo $resu['fname']." ".$resu['lname']; ?></h4></div>
+                <div class="pt-2">
+                    <div class="row">
+                        <div class="col-3"><img src="<?php echo $resu['profile_img'];?>" width="60" style="border-dadius: 50%;"  alt=""></div>
+                        <div class="col-9"><h4><?php echo $resu['fname']." ".$resu['lname']; ?></h4></div>
+                    </div>
                 </div>
                 <!-- calendar Wrapper  -->
                 <div class="calendar-wrapper position-relative">

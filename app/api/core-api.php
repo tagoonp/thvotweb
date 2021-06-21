@@ -56,7 +56,7 @@ if($stage == 'getobserver'){
     $hcod = mysqli_real_escape_string($conn, $_POST['hcod']);
 
     $strSQL = "SELECT * FROM vot2_account INNER JOIN vot2_userinfo ON vot2_account.uid = vot2_userinfo.info_uid
-                WHERE hcode = '$hcod' AND info_use = '1' ORDER BY fname";
+                WHERE hcode = '$hcod' AND info_use = '1' AND role  = 'staff'  AND  delete_status = '0' ORDER BY fname";
     $res = $db->fetch($strSQL, true, false);
 
     if(($res) && ($res['status'])){

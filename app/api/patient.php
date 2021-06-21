@@ -37,7 +37,7 @@ if($stage == 'listofstaff'){
                 AND a.role = 'patient'
                 AND a.active_status = '1'
                 AND a.verify_status = '1'
-                AND a.obs_uid = '$ui'
+                AND a.obs_uid = '$uid'
                 LIMIT $page, $limit";
     $res = $db->fetch($strSQL,true,false);
     if(($res) && ($res['status'])){

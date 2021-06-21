@@ -224,13 +224,9 @@ if($stage == 'signup_staff'){
         (!isset($_REQUEST['txtLname'])) ||
         (!isset($_REQUEST['txtHcode'])) ||
         (!isset($_REQUEST['txtUid'])) ||
-        (!isset($_REQUEST['txtHn'])) ||
         (!isset($_REQUEST['txtUsername'])) ||
-        (!isset($_REQUEST['txtPassword1'])) ||
-        (!isset($_REQUEST['txtProvince'])) ||
+        (!isset($_REQUEST['txtPassword'])) ||
         (!isset($_REQUEST['txtPhone'])) ||
-        (!isset($_REQUEST['txtDist'])) ||
-        (!isset($_REQUEST['txtSubdist'])) ||
         (!isset($_REQUEST['txtPhoto']))
     ){
         $db->close(); header('Location: ../404?error=x103'); die();

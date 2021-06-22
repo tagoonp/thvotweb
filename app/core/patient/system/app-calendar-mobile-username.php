@@ -160,8 +160,8 @@ if(!$resu){
                 center: 'title',
                 right: 'next'
             },
-            eventRender: function(info) {
-            // info.el.querySelector('.fc-title').innerHTML = "<i>" + info.event.title + "</i>";
+            eventRender: function( event, element, view ) {
+                    element.find('.fc-title').prepend('<span class="glyphicon">asd</span> '); 
             },
             editable: false,
             allDaySlot: false,

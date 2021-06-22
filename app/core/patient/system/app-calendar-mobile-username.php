@@ -161,7 +161,7 @@ if(!$resu){
                 right: 'next'
             },
             eventRender: function(info) {
-            info.el.querySelector('.fc-title').innerHTML = "<i>" + info.event.title + "</i>";
+            // info.el.querySelector('.fc-title').innerHTML = "<i>" + info.event.title + "</i>";
             },
             editable: false,
             allDaySlot: false,

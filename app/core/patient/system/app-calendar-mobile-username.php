@@ -160,9 +160,6 @@ if(!$resu){
                 center: 'title',
                 right: 'next'
             },
-            eventRender: function( event, element, view ) {
-                    element.find('.fc-title').prepend('<i class="bx bxs-bell"></i> '); 
-            },
             editable: false,
             allDaySlot: false,
             minTime : "08:00:00",
@@ -175,6 +172,10 @@ if(!$resu){
                     // end: $('#txtEndMon').val(),
                     // backgroundColor: '#06c'
                     // className: ["redEvent"]
+                    ,
+                    eventRender: function( event, element, view ) {
+                            element.find('.fc-title').prepend('<i class="bx bxs-star"></i> '); 
+                    }
                 },
                 {
                     title: '',

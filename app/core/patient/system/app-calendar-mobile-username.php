@@ -161,7 +161,7 @@ if(!$resu){
                 right: 'next'
             },
             eventRender: function( event, element, view ) {
-                    element.find('.fc-title').prepend('<span class="glyphicon">asd</span> '); 
+                    element.find('.fc-title').prepend('<i class="bx bxs-bell"></i> '); 
             },
             editable: false,
             allDaySlot: false,
@@ -170,7 +170,7 @@ if(!$resu){
             height: 650,
             events: [
                 {
-                    title: '<i class="bx bxs-bell"></i>',
+                    // title: '<i class="bx bxs-bell"></i>',
                     start: '2021-06-22',
                     // end: $('#txtEndMon').val(),
                     // backgroundColor: '#06c'

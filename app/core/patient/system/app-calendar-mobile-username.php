@@ -172,7 +172,7 @@ if(!$resu){
                     // end: $('#txtEndMon').val(),
                     // backgroundColor: '#06c'
                     // className: ["redEvent"]
-                    ,
+                    
                     eventRender: function( event, element, view ) {
                             element.find('.fc-title').prepend('<i class="bx bxs-star"></i> '); 
                     }

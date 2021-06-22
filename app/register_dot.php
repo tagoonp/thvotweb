@@ -20,6 +20,8 @@ if(!isset($_GET['uid'])){
 $uid = mysqli_real_escape_string($conn, $_GET['uid']);
 $photo = mysqli_real_escape_string($conn, $_GET['photo']);
 
+header('Location: ./register_patient?uid=' . $token . '&referal=webapp&photo='.$photo);
+
 // $strSQL = "SELECT * FROM vot2_account WHERE uid = '$uid' AND role = 'patient'";
 // $res = $db->fetch($strSQL, true, true);
 

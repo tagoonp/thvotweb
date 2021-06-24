@@ -191,7 +191,7 @@ if($stage == 'set_notitime'){
     $db->insert($strSQL, false);
 
     $strSQL = "INSERT INTO vot2_log (`log_datetime`, `log_info`, `log_message`, `log_ip`, `log_uid`) 
-               VALUES ('$datetime', 'เพิ่มเวลาแจ้งเตือน', '$msg', '$remote_ip', '$uid')";
+               VALUES ('$datetime', 'เพิ่มเวลาแจ้งเตือน', 'เวลา $altTime', '$remote_ip', '$uid')";
     $db->insert($strSQL, false);
 
     $return['status'] = 'Success';

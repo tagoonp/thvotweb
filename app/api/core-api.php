@@ -187,6 +187,14 @@ if($stage == 'set_notitime'){
 
     $altTime = $h.':'.$m;
 
+    $strSQL = "SELECT * FROM vot2_alerttime WHERE alt_uid = '$uid' AND alt_time = '$altTime'";
+    $r = $db->fetch($strSQL, false);
+    if($r){
+        $return['status'] = 'Success';
+        echo json_encode($return);
+        $db->close(); 
+    }
+
     $strSQL = "INSERT INTO vot2_alerttime (`alt_uid`, `alt_time`) VALUES ('$uid', '$altTime') ";
     $db->insert($strSQL, false);
 

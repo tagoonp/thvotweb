@@ -1,5 +1,4 @@
 <?php 
-session_start();
 require('../../../database_config/thvot/config.inc.php');
 require('../config/configuration.php');
 require('../config/database.php'); 
@@ -188,8 +187,8 @@ if($stage == 'set_notitime'){
     $altTime = $h.':'.$m;
 
     $strSQL = "SELECT * FROM vot2_alerttime WHERE alt_uid = '$uid' AND alt_time = '$altTime'";
-    $r = $db->fetch($strSQL, false);
-    if($r){
+    $r = $db->fetch($strSQL, true, false);
+    if(($r) && ($r['status'])){
         $return['status'] = 'Success';
         echo json_encode($return);
         $db->close(); 

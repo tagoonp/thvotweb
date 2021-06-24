@@ -158,3 +158,44 @@ if($stage == 'subdistrict'){
     $db->close();
     die();
 }
+
+if($stage == 'set_notitime'){
+    $json = file_get_contents('php://input');
+    $array = json_decode($json, true);
+    if(
+        (!isset($array['h'])) ||
+        (!isset($array['m'])) ||
+        (!isset($array['uid']))
+    ){
+        $return['status'] = 'Fail';
+        echo json_encode($return);
+        $db->close(); 
+        die();
+    }
+
+    $uid = mysqli_real_escape_string($conn, $array['uid']);
+    $h = mysqli_real_escape_string($conn, $array['h']);
+    $m = mysqli_real_escape_string($conn, $array['m']);
+
+    if($h < 10){
+        $h = '0'.$h;
+    }
+
+    if($m < 10){
+        $m = '0'.$m;
+    }
+
+    $altTime = $h.':'.$m;
+
+    $strSQL = "INSERT INTO vot2_alerttime (`alt_uid`, `alt_time`) VALUES ('$uid', '$altTime') ";
+    $db->insert($strSQL, false);
+
+    $strSQL = "INSERT INTO vot2_log (`log_datetime`, `log_info`, `log_message`, `log_ip`, `log_uid`) 
+               VALUES ('$datetime', 'เพิ่มเวลาแจ้งเตือน', '$msg', '$remote_ip', '$uid')";
+    $db->insert($strSQL, false);
+
+    $return['status'] = 'Success';
+    echo json_encode($return);
+    $db->close(); 
+    die();
+}

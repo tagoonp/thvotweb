@@ -163,8 +163,8 @@ if($stage == 'set_notitime'){
     $json = file_get_contents('php://input');
     $array = json_decode($json, true);
     if(
-        (!isset($array['h'])) ||
-        (!isset($array['m'])) ||
+        (!isset($array['hh'])) ||
+        (!isset($array['mm'])) ||
         (!isset($array['uid']))
     ){
         $return['status'] = 'Fail';
@@ -174,8 +174,8 @@ if($stage == 'set_notitime'){
     }
 
     $uid = mysqli_real_escape_string($conn, $array['uid']);
-    $h = mysqli_real_escape_string($conn, $array['h']);
-    $m = mysqli_real_escape_string($conn, $array['m']);
+    $h = mysqli_real_escape_string($conn, $array['hh']);
+    $m = mysqli_real_escape_string($conn, $array['mm']);
 
     if($h < 10){
         $h = '0'.$h;

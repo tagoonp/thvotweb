@@ -38,3 +38,29 @@ if($stage == 'getlist'){
     die();
 
 }
+
+if($stage == 'deletelist'){
+    if(
+        (!isset($_GET['uid'])) ||
+        (!isset($_GET['alert_id']))
+    ){
+        $return['status'] = 'Fail';
+        $return['stage_fail'] = '0';
+        echo json_encode($return);
+        $db->close(); 
+        die();
+    }
+
+    $uid = mysqli_real_escape_string($conn, $_GET['uid']);
+    $alert_id = mysqli_real_escape_string($conn, $_GET['alert_id']);
+    $return['status'] = 'Fail';
+    
+    $strSQL = "DELETE FROM vot2_alerttime WHERE alt_uid = '$uid' AND ID = '$alert_id' ";
+    $res1 = $db->execute($strSQL);
+    $return['status'] = 'Success';
+    
+    echo json_encode($return);
+    $db->close(); 
+    die();
+
+}

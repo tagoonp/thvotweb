@@ -16,19 +16,21 @@ if($stage == 'getlist'){
         (!isset($_GET['uid']))
     ){
         $return['status'] = 'Fail';
+        $return['stage_fail'] = '0';
         echo json_encode($return);
         $db->close(); 
         die();
     }
 
     $uid = mysqli_real_escape_string($conn, $_GET['uid']);
-
     $return['status'] = 'Fail';
     $strSQL = "SELECT * FROM vot2_alerttime WHERE alt_uid = '$uid'";
     $res1 = $db->fetch($strSQL, true, false);
     if(($res1) && ($res1['status'])){
         $return['status'] = 'Success';
         $return['data'] = $res1['data'];
+    }else{
+        $return['stage_fail'] = '1';
     }
     
     echo json_encode($return);

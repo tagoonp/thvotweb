@@ -195,7 +195,7 @@ if($stage == 'set_notitime'){
         die();
     }
 
-    $strSQL = "INSERT INTO vot2_alerttime (`alt_uid`, `alt_time`) VALUES ('$uid', '$altTime') ";
+    $strSQL = "INSERT INTO vot2_alerttime (`alt_uid`, `alt_time`, `alt_recordtime`) VALUES ('$uid', '$altTime', '$altTime:00.000000') ";
     $db->insert($strSQL, false);
 
     $strSQL = "INSERT INTO vot2_log (`log_datetime`, `log_info`, `log_message`, `log_ip`, `log_uid`) 

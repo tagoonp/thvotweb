@@ -24,7 +24,7 @@ if($stage == 'getlist'){
 
     $uid = mysqli_real_escape_string($conn, $_GET['uid']);
     $return['status'] = 'Fail';
-    $strSQL = "SELECT * FROM vot2_alerttime WHERE alt_uid = '$uid'";
+    $strSQL = "SELECT * FROM vot2_alerttime WHERE alt_uid = '$uid' ORDER BY alt_recordtime";
     $res1 = $db->fetch($strSQL, true, false);
     if(($res1) && ($res1['status'])){
         $return['status'] = 'Success';

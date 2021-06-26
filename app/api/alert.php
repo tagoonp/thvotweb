@@ -30,7 +30,7 @@ if($stage == 'getlist'){
         $return['status'] = 'Success';
         $return['data'] = $res1['data'];
     }else{
-        $return['stage_fail'] = '1';
+        $return['stage_fail'] = '1'.$strSQL;
     }
     
     echo json_encode($return);

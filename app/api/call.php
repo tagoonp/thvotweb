@@ -49,6 +49,8 @@ if($stage == 'getlist'){
                     $return['obs_hosname'] = $res3['hosname'];
                 }
             }
+        }else{
+            $return['obs_info'] = 'Fail';
         }
 
         $strSQL = "SELECT phone, fname, lname FROM vot2_account a INNER JOIN vot2_userinfo b ON a.uid = b.info_uid 
@@ -65,10 +67,12 @@ if($stage == 'getlist'){
                 $return['care_hoscode'] = $hcode;
                 $return['care_hosname'] = $res5['hosname'];
             }
+        }else{
+            $return['care_info'] = 'Fail';
         }
         $return['status'] = 'Success';
     }else{
-        $return['stage_fail'] = '1'.$strSQL;
+        $return['stage_fail'] = $strSQL;
     }
     
     echo json_encode($return);

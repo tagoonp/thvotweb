@@ -62,7 +62,7 @@ if($stage == 'getlist'){
         $res4 = $db->fetch($strSQL, false);
         if($res4){
             $return['care_title'] = "พยาบาลคลินิก";
-            $return['care_name'] = $res4['fname']." ".$res2['lname'];
+            $return['care_name'] = $res4['fname']." ".$res4['lname'];
             $return['care_call'] = $res4['phone'];
 
             $strSQL = "SELECT hosname FROM vot2_chospital WHERE hoscode = '$hcode'";

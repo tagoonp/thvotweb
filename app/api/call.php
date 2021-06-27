@@ -44,6 +44,10 @@ if($stage == 'getlist'){
                 $return['obs_call'] = $res2['phone'];
                 $return['obs_profile'] = $res2['profile_img'];
 
+                if(($res2['profile_img'] == null) || ($res2['profile_img'] == '')){
+                    $return['care_profile'] = 'https://gravatar.com/avatar/dba6bae8c566f9d4041fb9cd9ada7741?d=identicon&f=y';
+                }
+
                 $strSQL = "SELECT hosname FROM vot2_chospital WHERE hoscode = '$obs_hcode'";
                 $res3 = $db->fetch($strSQL, false);
                 if($res3){
@@ -66,6 +70,10 @@ if($stage == 'getlist'){
             $return['care_name'] = $res4['fname']." ".$res4['lname'];
             $return['care_call'] = $res4['phone'];
             $return['care_profile'] = $res4['profile_img'];
+
+            if(($res4['profile_img'] == null) || ($res4['profile_img'] == '')){
+                $return['care_profile'] = 'https://gravatar.com/avatar/dba6bae8c566f9d4041fb9cd9ada7741?d=identicon&f=y';
+            }
 
             $strSQL = "SELECT hosname FROM vot2_chospital WHERE hoscode = '$hcode'";
             $res5 = $db->fetch($strSQL, false);

@@ -36,7 +36,7 @@ if($stage == 'getlist'){
         if($obs_uid != null){
             $strSQL = "SELECT phone, fname, lname FROM vot2_account a INNER JOIN vot2_userinfo b ON a.uid = b.info_uid 
                        WHERE 
-                       a.uid = '$obs_uid' AND a.delete_status = '0' AND b.info_uid = '1'";
+                       a.uid = '$obs_uid' AND a.delete_status = '0' AND b.info_use = '1'";
             $res2 = $db->fetch($strSQL, false);
             if($res2){
                 $return['obs_name'] = $res2['fname']." ".$res2['lname'];

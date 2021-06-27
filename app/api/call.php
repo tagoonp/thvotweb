@@ -48,6 +48,8 @@ if($stage == 'getlist'){
                     $return['obs_hoscode'] = $obs_hcode;
                     $return['obs_hosname'] = $res3['hosname'];
                 }
+            }else{
+                $return['obs_info'] = $strSQL;
             }
         }else{
             $return['obs_info'] = 'Fail';

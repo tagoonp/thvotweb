@@ -39,6 +39,7 @@ if($stage == 'getlist'){
                        a.uid = '$obs_uid' AND a.delete_status = '0' AND b.info_use = '1'";
             $res2 = $db->fetch($strSQL, false);
             if($res2){
+                $return['obs_title'] = "พี่เลี้ยง";
                 $return['obs_name'] = $res2['fname']." ".$res2['lname'];
                 $return['obs_call'] = $res2['phone'];
 
@@ -55,11 +56,12 @@ if($stage == 'getlist'){
             $return['obs_info'] = 'Fail';
         }
 
-        $strSQL = "SELECT phone, fname, lname FROM vot2_account a INNER JOIN vot2_userinfo b ON a.uid = b.info_uid 
+        $strSQL = "SELECT a.phone, b.fname, b.lname FROM vot2_account a INNER JOIN vot2_userinfo b ON a.uid = b.info_uid 
                     WHERE 
-                    hcode = '$hcode' AND a.delete_status = '0' AND b.info_uid = '1' AND a.role = 'manage' ORDER BY ID DESC LIMIT 1";
+                    hcode = '$hcode' AND a.delete_status = '0' AND b.info_use = '1' AND a.role = 'manage' ORDER BY ID DESC LIMIT 1";
         $res4 = $db->fetch($strSQL, false);
         if($res4){
+            $return['care_title'] = "พยาบาลคลินิก";
             $return['care_name'] = $res4['fname']." ".$res2['lname'];
             $return['care_call'] = $res4['phone'];
 

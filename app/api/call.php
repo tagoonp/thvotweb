@@ -34,7 +34,7 @@ if($stage == 'getlist'){
         $hcode = $res1['hcode'];
 
         if($obs_uid != null){
-            $strSQL = "SELECT a.phone, b.fname, b.lname FROM vot2_account a INNER JOIN vot2_userinfo b ON a.uid = b.info_uid 
+            $strSQL = "SELECT a.phone, b.fname, b.lname, a.profile_img FROM vot2_account a INNER JOIN vot2_userinfo b ON a.uid = b.info_uid 
                        WHERE 
                        a.uid = '$obs_uid' AND a.delete_status = '0' AND b.info_use = '1'";
             $res2 = $db->fetch($strSQL, false);
@@ -42,6 +42,7 @@ if($stage == 'getlist'){
                 $return['obs_title'] = "พี่เลี้ยง";
                 $return['obs_name'] = $res2['fname']." ".$res2['lname'];
                 $return['obs_call'] = $res2['phone'];
+                $return['obs_profile'] = $res2['profile_img'];
 
                 $strSQL = "SELECT hosname FROM vot2_chospital WHERE hoscode = '$obs_hcode'";
                 $res3 = $db->fetch($strSQL, false);
@@ -56,7 +57,7 @@ if($stage == 'getlist'){
             $return['obs_info'] = 'Fail';
         }
 
-        $strSQL = "SELECT a.phone, b.fname, b.lname FROM vot2_account a INNER JOIN vot2_userinfo b ON a.uid = b.info_uid 
+        $strSQL = "SELECT a.phone, b.fname, b.lname, a.profile_img FROM vot2_account a INNER JOIN vot2_userinfo b ON a.uid = b.info_uid 
                     WHERE 
                     hcode = '$hcode' AND a.delete_status = '0' AND b.info_use = '1' AND a.role = 'manager' ORDER BY a.ID DESC LIMIT 1";
         $res4 = $db->fetch($strSQL, false);
@@ -64,6 +65,7 @@ if($stage == 'getlist'){
             $return['care_title'] = "พยาบาลคลินิก";
             $return['care_name'] = $res4['fname']." ".$res4['lname'];
             $return['care_call'] = $res4['phone'];
+            $return['care_profile'] = $res4['profile_img'];
 
             $strSQL = "SELECT hosname FROM vot2_chospital WHERE hoscode = '$hcode'";
             $res5 = $db->fetch($strSQL, false);

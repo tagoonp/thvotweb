@@ -135,6 +135,53 @@ if($stage == 'savelocation'){
     die();
 }
 
+if($stage == 'savelocation2'){
+
+    if(
+        (!isset($_GET['lat'])) ||
+        (!isset($_GET['lng'])) ||
+        (!isset($_GET['uid']))
+    ){
+        $return['status'] = 'Fail (x101)';
+        echo json_encode($return);
+        $db->close(); 
+        die();
+    }
+
+    $lat = mysqli_real_escape_string($conn, $_GET['lat']);
+    $lng = mysqli_real_escape_string($conn, $_GET['lng']);
+    $uid = mysqli_real_escape_string($conn, $_GET['uid']);
+
+    $strSQL = "DELETE FROM vot2_patient_location WHERE loc_patient_uid = '$uid'";
+    $db->execute($strSQL);
+
+    $strSQL = "SELECT * FROM vot2_account WHERE uid = '$uid'";
+    $resp = $db->fetch($strSQL, false);
+    if($resp){
+        $username = $resp['username'];
+        $strSQL = "INSERT INTO vot2_patient_location 
+                (`loc_patient_uid`, `loc_patient_username`, `loc_lat`, `loc_lng`, `loc_udatetime`, `loc_status`)
+                   VALUES (
+                    '$uid', '$username', '$lat', '$lng', '$datetime', '1'
+                   )
+                  ";
+        $db->insert($strSQL, false);
+
+        $strSQL = "INSERT INTO vot2_log (`log_datetime`, `log_info`, `log_message`, `log_ip`, `log_uid`)
+                       VALUES ('$datetime', 'ปรับปรุงพิกัดที่อยู่ผู้ป่วย', '', '$remote_ip', '$uid')
+                      ";
+        $db->insert($strSQL, false);
+
+        $strSQL = "UPDATE vot2_account SET location_status = '0' WHERE uid = '$uid'";
+        $db->execute($strSQL);
+    }
+
+    $return['status'] = 'Success';
+    echo json_encode($return);
+    $db->close(); 
+    die();
+}
+
 if($stage == 'login_staff'){
     $json = file_get_contents('php://input');
     $array = json_decode($json, true);

@@ -631,6 +631,47 @@ if($stage == 'user'){
     die();
 }
 
+if($stage == 'user2'){
+
+    if(
+        (!isset($_GET['uid'])) ||
+        (!isset($_GET['role']))
+    ){
+        $return['status'] = 'Fail (x101)';
+        echo json_encode($return);
+        $db->close(); 
+        die();
+    }
+
+    $uid = mysqli_real_escape_string($conn, $_GET['uid']);
+    $role = mysqli_real_escape_string($conn, $_GET['role']);
+
+    $strSQL = "SELECT a.*, b.hoscode, b.hosname, c.*, d.* , e.hserv mhname,  f.hserv  ohname
+               FROM vot2_account  a INNER JOIN vot2_chospital b ON a.hcode = b.hoscode 
+               INNER JOIN vot2_userinfo c   ON a.uid = c.info_uid
+               LEFT JOIN vot2_patient_location d  ON a.uid = d.loc_patient_uid
+               LEFT JOIN vot2_projecthospital e ON a.hcode = e.phoscode
+               LEFT JOIN vot2_projecthospital f ON a.obs_hcode = f.phoscode
+               WHERE 
+               a.UID = '$uid' 
+               AND a.role = '$role'
+               AND c.info_use = '1'
+               AND (d.loc_status = '1' OR d.loc_status IS NULL)
+               AND a.delete_status = '0'
+               LIMIT 1
+          ";
+    $user = $db->fetch($strSQL, false);
+    if($user){
+        $return['status'] = 'Success';
+        $return['data'] = $user;
+    }else{
+        $return['status'] = 'Fail (x102)';
+    }
+    echo json_encode($return);
+    $db->close(); 
+    die();
+}
+
 // Selected user information
 if($stage == 'select_user'){
     if(

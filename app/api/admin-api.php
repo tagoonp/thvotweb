@@ -1,5 +1,5 @@
 <?php 
-session_start();
+// session_start();
 require('../../../database_config/thvot/config.inc.php');
 require('../config/configuration.php');
 require('../config/database.php'); 

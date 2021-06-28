@@ -208,3 +208,51 @@ if($stage == 'set_notitime'){
     die();
 }
 
+if($stage == 'set_notitime2'){
+    if(
+        (!isset($_GET['hh'])) ||
+        (!isset($_GET['mm'])) ||
+        (!isset($_GET['uid']))
+    ){
+        $return['status'] = 'Fail';
+        echo json_encode($return);
+        $db->close(); 
+        die();
+    }
+
+    $uid = mysqli_real_escape_string($conn, $_GET['uid']);
+    $h = mysqli_real_escape_string($conn, $_GET['hh']);
+    $m = mysqli_real_escape_string($conn, $_GET['mm']);
+
+    if($h < 10){
+        $h = '0'.$h;
+    }
+
+    if($m < 10){
+        $m = '0'.$m;
+    }
+
+    $altTime = $h.':'.$m;
+
+    $strSQL = "SELECT * FROM vot2_alerttime WHERE alt_uid = '$uid' AND alt_time = '$altTime'";
+    $r = $db->fetch($strSQL, true);
+    if($r){
+        $return['status'] = 'Success';
+        echo json_encode($return);
+        $db->close(); 
+        die();
+    }
+
+    $strSQL = "INSERT INTO vot2_alerttime (`alt_uid`, `alt_time`, `alt_recordtime`) VALUES ('$uid', '$altTime', '$altTime:00.000000') ";
+    $db->insert($strSQL, false);
+
+    $strSQL = "INSERT INTO vot2_log (`log_datetime`, `log_info`, `log_message`, `log_ip`, `log_uid`) 
+               VALUES ('$datetime', 'เพิ่มเวลาแจ้งเตือน', 'เวลา $altTime', '$remote_ip', '$uid')";
+    $db->insert($strSQL, false);
+
+    $return['status'] = 'Success';
+    echo json_encode($return);
+    $db->close(); 
+    die();
+}
+

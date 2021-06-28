@@ -1,5 +1,5 @@
 <?php 
-session_start();
+// session_start();
 require('../../../database_config/thvot/config.inc.php');
 require('../config/configuration.php');
 require('../config/database.php'); 
@@ -54,7 +54,7 @@ if($stage == 'deletelist'){
     $uid = mysqli_real_escape_string($conn, $_GET['uid']);
     $alert_id = mysqli_real_escape_string($conn, $_GET['alert_id']);
     $return['status'] = 'Fail';
-    
+
     $strSQL = "DELETE FROM vot2_alerttime WHERE alt_uid = '$uid' AND ID = '$alert_id' ";
     $res1 = $db->execute($strSQL);
     $return['status'] = 'Success';

@@ -17,6 +17,7 @@ if(
 }
 
 $uid = mysqli_real_escape_string($conn, $_GET['uid']);
+$record_id = mysqli_real_escape_string($conn, $_GET['sid']);
 
 if (!empty($_FILES)) {
     $path = '../uploads/video/';

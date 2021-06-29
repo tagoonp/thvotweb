@@ -61,6 +61,35 @@ if($stage == 'cancelvideo'){
     echo json_encode($return);
     $db->close(); 
     die();
+}
+
+if($stage == 'listUpload'){
+    if(
+        (!isset($_GET['uid']))
+    ){
+        $return['status'] = 'Fail (x101)';
+        echo json_encode($return);
+        $db->close(); 
+        die();
+    }
+
+    $uid = mysqli_real_escape_string($conn, $_GET['uid']);
+    $page = mysqli_real_escape_string($conn, $_GET['page']);
+    $limit = mysqli_real_escape_string($conn, $_GET['limit']);
+    $page = ($page * $limit) - $limit;
+
+    $strSQL = "SELECT * FROM vot2_videosession WHERE vs_uid = '$uid' AND vs_upload in ('done' , 'fail') ORDER BY vs_create DESC LIMIT $page, $limit";
+    $res = $db->fetch($strSQL,true,false);
+    if(($res) && ($res['status'])){
+        $return['status'] = 'Success';
+        $return['data'] = $res['data'];
+    }else{
+        $return['status'] = 'Fail (x102)'.$strSQL;
+    }
+    
+    echo json_encode($return);
+    $db->close(); 
+    die();
 
 }
 

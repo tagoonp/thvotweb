@@ -25,7 +25,7 @@ if($stage == 'checkversion'){
     $return['status'] = 'Fail';
     
     $strSQL = "SELECT * FROM vot2_version WHERE version_id = '$version' AND version_allow = '1' AND version_app = 'vot'";
-    $res1 = $db->fetch($strSQL, false); 
+    $res1 = $db->fetch($strSQL, true, false); 
     if(($res1) && ($res1['status'])){
         $return['status'] = 'Success';
     }else{

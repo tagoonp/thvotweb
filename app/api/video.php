@@ -96,8 +96,10 @@ if($stage == 'listUpload'){
 
             if($row['vs_upload'] == 'done'){
                 $a['vs_img'] = 'https://thvot.com/img/check.png';
+                $a['vs_color'] = 'success';
             }else{
                 $a['vs_img'] = 'https://thvot.com/img/cancel.png';
+                $a['vs_color'] = 'danger';
             }
             $return['data'][] = $a;
         }

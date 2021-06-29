@@ -84,14 +84,25 @@ if($stage == 'listUpload'){
         $return['status'] = 'Success';
         // $return['data'] = $res['data'];
         foreach ($res['data'] as $row){
+            $a = array();
+            $a['vs_create'] = $row['vs_create'];
+            $a['vs_id'] = $row['vs_create'];
+            $a['vs_session'] = $row['vs_create'];
+            $a['vs_upload'] = $row['vs_create'];
+            $a['vs_uid'] = $row['vs_create'];
+            $a['vs_upload'] = $row['vs_create'];
+            $a['vs_upload_datetime'] = $row['vs_upload_datetime'];
+            $a['vs_vid'] = $row['vs_vid'];
+
             if($row['vs_upload'] == 'done'){
-                $row['vs_img'] = 'https://thvot.com/img/check.png';
+                $a['vs_img'] = 'https://thvot.com/img/check.png';
             }else{
-                $row['vs_img'] = 'https://thvot.com/img/cancel.png';
+                $a['vs_img'] = 'https://thvot.com/img/cancel.png';
             }
+            $return['data'][] = $a;
         }
 
-        $return['data'] = $res['data'];
+        // $return['data'] = $res['data'];
     }else{
         $return['status'] = 'Fail (x102)'.$strSQL;
     }

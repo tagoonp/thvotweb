@@ -82,7 +82,14 @@ if($stage == 'listUpload'){
     $res = $db->fetch($strSQL,true,false);
     if(($res) && ($res['status'])){
         $return['status'] = 'Success';
-        $return['data'] = $res['data'];
+        // $return['data'] = $res['data'];
+        foreach ($res['data'] as $row){
+            if($row['vs_upload'] == 'done'){
+                $row['vs_img'] = 'https://thvot.com/img/check.png';
+            }else{
+                $row['vs_img'] = 'https://thvot.com/img/cancel.png';
+            }
+        }
     }else{
         $return['status'] = 'Fail (x102)'.$strSQL;
     }

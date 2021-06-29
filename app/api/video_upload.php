@@ -17,7 +17,7 @@ if(
 }
 
 $uid = mysqli_real_escape_string($conn, $_GET['uid']);
-$record_id = mysqli_real_escape_string($conn, $_GET['sid']);
+$vid = mysqli_real_escape_string($conn, $_GET['vid']);
 
 if (!empty($_FILES)) {
     $path = '../uploads/video/';
@@ -78,12 +78,20 @@ if (!empty($_FILES)) {
                   )
                   ";
         $res01 = $db->insert($strSQL, false);
+
+        $strSQL = "UPDATE vot2_videosession SET vs_upload = 'cancel' WHERE vs_session = '$vid' AND vs_uid = '$uid'";
+        $res1 = $db->execute($strSQL); 
+
         $return['status'] = 'Success';
         echo json_encode($return);
         $db->close(); 
         die();
     }
 }else{
+
+    $strSQL = "UPDATE vot2_videosession SET vs_upload = 'fail' WHERE vs_session = '$vid' AND vs_uid = '$uid'";
+    $res1 = $db->execute($strSQL); 
+
     $return['status'] = 'Fail (x102)';
     echo json_encode($return);
     $db->close(); 

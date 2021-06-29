@@ -90,6 +90,8 @@ if($stage == 'listUpload'){
                 $row['vs_img'] = 'https://thvot.com/img/cancel.png';
             }
         }
+
+        $return['data'] = $res['data'];
     }else{
         $return['status'] = 'Fail (x102)'.$strSQL;
     }

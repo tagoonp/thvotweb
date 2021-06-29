@@ -50,7 +50,8 @@ class Database{
     $result = mysqli_query($this->conn, $sql);
     if($result){
       if($insert_id){
-        return mysqli_insert_id($this->conn);
+        $arr['return_id'] = mysqli_insert_id($this->conn);
+        return $arr;
       }else{
         return true;
       }

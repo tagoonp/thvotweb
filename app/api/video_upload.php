@@ -79,7 +79,7 @@ if (!empty($_FILES)) {
                   ";
         $res01 = $db->insert($strSQL, true);
 
-        $strSQL = "UPDATE vot2_videosession SET vs_upload = 'done', vs_upload_datetime = '$datetime', vs_vid = '$res01' WHERE vs_session = '$vid' AND vs_uid = '$uid'";
+        $strSQL = "UPDATE vot2_videosession SET vs_upload = 'done', vs_upload_datetime = '$datetime', vs_vid = '".$res01['return_id']."' WHERE vs_session = '$vid' AND vs_uid = '$uid'";
         $res1 = $db->execute($strSQL); 
 
         $return['status'] = 'Success';

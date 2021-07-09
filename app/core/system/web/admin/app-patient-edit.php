@@ -650,7 +650,7 @@ $selected_location = $db->fetch($strSQL, false);
         <div class="modal-dialog modal-dialog-scrollable modal-lg">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h3 class="modal-title" id="myModalLabel1">Basic Modal</h3>
+                    <h3 class="modal-title" id="myModalLabel1">ระบบชี้แจงเหตุผล</h3>
                     <button type="button" class="close rounded-pill" data-dismiss="modal" aria-label="Close">
                         <i class="bx bx-x"></i>
                     </button>
@@ -669,10 +669,6 @@ $selected_location = $db->fetch($strSQL, false);
                                     <label for="">คำชี้แจง : <span class="text-danger">*</span></label>
                                     <textarea name="" class="form-control" id="" cols="30" rows="10"></textarea>
                                 </div>
-
-                                <div class="form-group text-right">
-                                    <button class="btn btn-primary">บันทึก</button>
-                                </div>
                             </form>
                         </div>
                         <div class="col-12 col-sm-6">
@@ -686,7 +682,10 @@ $selected_location = $db->fetch($strSQL, false);
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <tr colspan="4">ยังไม่มีคำชี้แจง</tr>
+                                        <tr>
+                                            <td colspan="4">ยังไม่มีคำชี้แจง</td>
+                                        </tr>
+                                        
                                     </tbody>
                             </table>
                         </div>
@@ -695,11 +694,11 @@ $selected_location = $db->fetch($strSQL, false);
                 <div class="modal-footer">
                     <button type="button" class="btn btn-light-secondary" data-dismiss="modal">
                         <i class="bx bx-x d-block d-sm-none"></i>
-                        <span class="d-none d-sm-block">Close</span>
+                        <span class="d-none d-sm-block">ยกเลิก</span>
                     </button>
                     <button type="button" class="btn btn-primary ml-1" data-dismiss="modal">
                         <i class="bx bx-check d-block d-sm-none"></i>
-                        <span class="d-none d-sm-block">Accept</span>
+                        <span class="d-none d-sm-block">บันทึก</span>
                     </button>
                 </div>
             </div>

@@ -647,7 +647,7 @@ $selected_location = $db->fetch($strSQL, false);
     <!-- END: Content-->
 
     <div class="modal fade text-left" id="modalComment" tabindex="-1" role="dialog" aria-labelledby="myModalLabel1" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-scrollable">
+        <div class="modal-dialog modal-dialog-scrollable modal-lg">
             <div class="modal-content">
                 <div class="modal-header">
                     <h3 class="modal-title" id="myModalLabel1">Basic Modal</h3>
@@ -656,14 +656,41 @@ $selected_location = $db->fetch($strSQL, false);
                     </button>
                 </div>
                 <div class="modal-body">
-                    <form action="">
-                        <div class="form-group">
-                                <input type="text" id="txtCommentDate">
+                    <div class="row">
+                        <div class="col-12 col-sm-6">
+                            <form action="">
+                                <div class="form-group dn">
+                                        <input type="text" id="txtCommentDate">
+                                </div>
+                                <div class="form-group dn">
+                                        <input type="text" id="txtCommentPatient" value="<?php echo $id; ?>">
+                                </div>
+                                <div class="form-group">
+                                    <label for="">คำชี้แจง : <span class="text-danger">*</span></label>
+                                    <textarea name="" class="form-control" id="" cols="30" rows="10"></textarea>
+                                </div>
+
+                                <div class="form-group text-right">
+                                    <button class="btn btn-primary">บันทึก</button>
+                                </div>
+                            </form>
                         </div>
-                        <div class="form-group">
-                                <input type="text" id="txtCommentPatient" value="<?php echo $id; ?>">
+                        <div class="col-12 col-sm-6">
+                            <table class="table table-striped">
+                                    <thead>
+                                        <tr>
+                                            <th>ลำดับที่</th>
+                                            <th>คำชี้แจง</th>
+                                            <th>วัน - เวลา</th>
+                                            <th>โดย</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr colspan="4">ยังไม่มีคำชี้แจง</tr>
+                                    </tbody>
+                            </table>
                         </div>
-                    </form>
+                    </div>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-light-secondary" data-dismiss="modal">

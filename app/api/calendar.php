@@ -55,19 +55,27 @@ if($stage == 'getpatient_calendar'){
                 $buf['start'] = $start;
                 $buf['status'] = $res2['fud_status'];
 
-                if(($res2['fud_status'] == 'in-complete') && ($res2['fud_comment'] == null)){
-                    $buf['color'] = '#ff6246'; // ไม่ส่ง ไม่ชี้แจง 
-                }else if(($res2['fud_status'] == 'in-complete') && ($res2['fud_comment'] != null) && ($res2['fud_comment'] != '')){
-                    $buf['color'] = '#ff6246'; // ไม่ส่ง ชี้แจง 
-                }else if(($res2['fud_status'] == 'sended') && ($res2['fud_dateview'] == '1')){
-                    $buf['color'] = '#ff6246'; // ส่ง ได้ดู 
-                }else if(($res2['fud_status'] == 'sended') && ($res2['fud_dateview'] == '0') && ($res2['fud_comment'] != '') && ($res2['fud_comment'] != null)){
-                    $buf['color'] = '#ff6246'; // ส่ง ชี้แจง 
-                }else if($res2['fud_status'] == 'complete'){
-                    $buf['color'] = '#000';
-                    // $buf['title'] = 
+                if($res2['fud_status'] == 'in-complete'){ // ไม่ส่ง 
+                    if($res2['fud_comment'] == null){ // ไม่ชี้แจง 
+                        $buf['color'] = '#0077ff'; 
+                    }else{ // ชี้แจง
+                        $buf['color'] = '#0077ff'; 
+                    }
+                }else if($res2['fud_status'] == 'sended'){
+
+                    if($res2['fud_dateview'] == '1'){ // ได้ดู
+                        $buf['color'] = '#ff6246'; // ส่ง ได้ดู 
+                    }else{ // ไม่ได้ดู
+                        if($res2['fud_comment'] == null){ // ไม่ชี้แจง 
+                            $buf['color'] = '#0077ff'; 
+                        }else{ // ชี้แจง
+                            $buf['color'] = '#0077ff'; 
+                        }
+                    }
+                    
                 }else{
-                    // $buf['status'] = '';
+                    $buf['color'] = $buf['status'];
+
                 }
 
                 $return['data'][] = $buf;

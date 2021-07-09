@@ -77,7 +77,7 @@ if($stage == 'getpatient_calendar'){
 
                 }
 
-                $return['data'][] = $buf;
+                $return[] = $buf;
             }else{
                 // $buf['err'] = $strSQL;
             }

@@ -73,7 +73,7 @@ if($stage == 'getpatient_calendar'){
                     }
                     
                 }else{
-                    $buf['color'] = $buf['status'];
+                    $buf['color'] = '#0077ff';
 
                 }
 

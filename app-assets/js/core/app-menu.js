@@ -518,6 +518,7 @@
     },
 
     collapse: function (defMenu) {
+      console.log('asd');
       if (this.collapsed === false) {
         if ($body.data("menu") == "vertical-menu-modern") {
           $(".modern-nav-toggle")

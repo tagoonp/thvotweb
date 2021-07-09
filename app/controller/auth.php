@@ -105,7 +105,8 @@ if($stage == 'login'){
                       ";
             $db->insert($strSQL, false);
 
-            header('Location: ../core/'.$result['role'].'/system/');
+            // header('Location: ../core/'.$result['role'].'/system/');
+            header('Location: ../core/system/web/'.$result['role'].'/');
             $db->close();
             die();
         } else {
@@ -119,10 +120,9 @@ if($stage == 'login'){
             die();
         }
     }else{
-        // $return['status'] = 'Fail (x103)';
-        // echo json_encode($return);
-        // $db->close(); 
-        // die();
+
+        echo $strSQL;
+        die();
 
         ?>
         <script>
@@ -366,7 +366,7 @@ if($stage == 'signup_vot'){
     $passwordlen = strlen($password);
     $password = password_hash($password, PASSWORD_DEFAULT);
 
-    $endmondate = Date("Y-m-d", strtotime("$date +4 Month"));  
+    $endmondate = Date("Y-m-d", strtotime("$date +2 Month"));  
 
     $strSQL = "INSERT INTO vot2_account 
               (`uid`, `username`, `hn`, `password`, `password_len`, `email`, 

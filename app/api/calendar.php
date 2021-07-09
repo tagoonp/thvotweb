@@ -23,7 +23,7 @@ if($stage == 'getpatient_calendar'){
 
     $strSQL = "SELECT start_obsdate, end_obsdate FROM vot2_account WHERE uid = '$patient_id' AND role = 'patient' AND delete_status = '0' LIMIT 1";
     $res = $db->fetch($strSQL, false);
-    
+
     if($res){
         $start = $res['start_obsdate'];
         $end = $res['end_obsdate'];
@@ -33,7 +33,15 @@ if($stage == 'getpatient_calendar'){
 
         $date_diff = ($end_date - $start_date)/60/60/24;
 
-        echo $date_diff;
+        for ($i=0; $i < $date_diff; $i++) { 
+            $buf = array();
+            $start = Date("Y-m-d", strtotime("$start +1 days"));  
+
+            $buf['allDay'] = false;
+            $buf['start'] = $start;
+
+            $return['data'] = $buf;
+        }
 
         
 

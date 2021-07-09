@@ -47,7 +47,7 @@ if($stage == 'getpatient_calendar'){
 
             $return['data'][] = $buf;
 
-            // $start = Date("Y-m-d", strtotime("$start +1 days"));  
+            $start = Date("Y-m-d", strtotime("$start +1 days"));  
         }
 
         

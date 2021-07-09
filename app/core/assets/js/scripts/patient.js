@@ -49,7 +49,7 @@ function getPatientCalendar(){
         minTime : "08:00:00",
         maxTime : "17:00:00",
         height: 650,
-        events: {
+        events: [{
             url: caneldar_url,
             error: function(err) {
               console.log(err);
@@ -70,12 +70,10 @@ function getPatientCalendar(){
                 },
                 events: reply
               });
-            //   setTimeout(function(){
-            //     preload.hide()
-            //   }, 2000)
-            },eventRender: function (event, element) {
-                info.el.querySelector('.fc-title').innerHTML = event.title;
             }
+        }],
+        eventRender: function (event, element) {
+            info.el.querySelector('.fc-title').innerHTML = event.title;
         }
     });
 

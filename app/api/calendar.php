@@ -66,11 +66,13 @@ if($stage == 'getpatient_calendar'){
                 }else{
                     // $buf['status'] = '';
                 }
+
+                $return['data'][] = $buf;
             }else{
                 // $buf['err'] = $strSQL;
             }
 
-            $return['data'][] = $buf;
+            
 
             $start = Date("Y-m-d", strtotime("$start +1 days"));  
         }

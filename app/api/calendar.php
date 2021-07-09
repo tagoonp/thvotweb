@@ -70,6 +70,7 @@ if($stage == 'getpatient_calendar'){
                 }else if($res2['fud_status'] == 'sended'){
                     if($res2['fud_dateview'] == '1'){ // ได้ดู
                         //$buf['color'] = '#b10000'; // ส่ง ได้ดู 
+                        $buf['color'] = '#fff';
                     }else{ // ไม่ได้ดู
                         if($res2['fud_comment'] == null){ // ไม่ชี้แจง 
                             $buf['color'] = '#b10000'; 
@@ -80,7 +81,6 @@ if($stage == 'getpatient_calendar'){
                     }
                 }else{
                     $buf['color'] = '#ff8400';
-
                 }
 
                 $buf['url'] = "Javascript:viewCommentDialog('".$res2['fud_date']."')";

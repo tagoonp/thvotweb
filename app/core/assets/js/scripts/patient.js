@@ -70,8 +70,8 @@ function getPatientCalendar(){
                 },
                 events: reply,
                 eventRender: function (event, element) {
-                    console.log(event.title);
-                    element.find('.fc-title').html(event.title);/*For Month,Day and Week Views*/
+                    console.log(event);
+                    // element.find('.fc-title').html(event.title);/*For Month,Day and Week Views*/
                     // element.find('.fc-list-item-title').html(event.title);/*For List view*/
                 }
               });

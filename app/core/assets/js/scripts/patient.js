@@ -81,3 +81,8 @@ function getPatientCalendar(){
 
     calendar.fullCalendar('render');
 }
+
+function viewCommentDialog(com_date){
+    $('#modalComment').modal()
+    $('#txtCommentDate').val(com_date)
+}

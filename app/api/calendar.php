@@ -47,7 +47,7 @@ if($stage == 'getpatient_calendar'){
             
 
 
-            $strSQL = "SELECT fud_status, fud_comment, fud_dateview FROM vot2_followup_dummy WHERE fud_date = '$start' AND fud_uid = '$patient_id'";
+            $strSQL = "SELECT fud_status, fud_comment, fud_dateview, fud_date FROM vot2_followup_dummy WHERE fud_date = '$start' AND fud_uid = '$patient_id'";
             $res2 = $db->fetch($strSQL, false);
 
             if($res2){
@@ -78,11 +78,12 @@ if($stage == 'getpatient_calendar'){
                             $buf['borderColor'] = '#b10000';
                         }
                     }
-                    
                 }else{
                     $buf['color'] = '#ff8400';
 
                 }
+
+                $buf['url'] = "Javascript:viewCommentDialog('".$res2['fud_date']."')";
 
                 $return[] = $buf;
             }else{

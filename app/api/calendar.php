@@ -10,6 +10,8 @@ error_reporting(E_ALL);
 $db = new Database();
 $conn = $db->conn();
 
+header('Content-Type: application/json');
+
 if(!isset($_GET['stage'])){ $db->close(); header('Location: ../404?stage=001'); die(); }
 $stage = mysqli_real_escape_string($conn, $_GET['stage']);
 $return = array();

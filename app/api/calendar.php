@@ -56,7 +56,7 @@ if($stage == 'getpatient_calendar'){
                 $buf['status'] = $res2['fud_status'];
 
                 if($i == 0){
-                    $buf['title'] = '®';
+                    $buf['title'] = '<i class="bx bxs-star"></i>';
                 }else{
                     $buf['title'] = '';
                 }

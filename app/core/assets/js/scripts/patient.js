@@ -70,9 +70,9 @@ function getPatientCalendar(){
                 },
                 events: reply,
                 eventRender: function(info) {
-                    console.log(info.event.title);
-                    info.event.title = "<strong>test</strong>";
-                    console.log(info.event.title);
+                    console.log(info.event);
+                    // info.event.title = "<strong>test</strong>";
+                    // console.log(info.event.title);
                 }
               });
             }

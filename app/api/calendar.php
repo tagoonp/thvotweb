@@ -45,6 +45,24 @@ if($stage == 'getpatient_calendar'){
             $buf['allDay'] = false;
             $buf['start'] = $start;
 
+
+            $strSQL = "SELECT fud_status, fud_comment, fud_dateview FROM vot2_followup_dummy WHERE fud_date = '$start' AND fud_uid = '$patient_id'";
+            $res2 = $db->fetch($strSQL, false);
+
+            if($res2){
+                if(($res2['fud_status'] == 'in-complete') && ($res2['fud_comment'] == null)){
+                    $buf['color'] = '#ff6246'; // ไม่ส่ง ไม่ชี้แจง 
+                }else if(($res2['fud_status'] == 'in-complete') && ($res2['fud_comment'] != null) && ($res2['fud_comment'] != '')){
+                    $buf['color'] = '#ff6246'; // ไม่ส่ง ชี้แจง 
+                }else if(($res2['fud_status'] == 'complete') && ($res2['fud_dateview'] == '1')){
+                    $buf['color'] = '#ff6246'; // ส่ง ได้ดู 
+                }else if(($res2['fud_status'] == 'complete') && ($res2['fud_dateview'] == '0') && ($res2['fud_comment'] != '') && ($res2['fud_comment'] != null)){
+                    $buf['color'] = '#ff6246'; // ส่ง ชี้แจง 
+                }else if($res2['fud_status'] == 'complete'){
+                    $buf['color'] = '#000';
+                }
+            }
+
             $return['data'][] = $buf;
 
             $start = Date("Y-m-d", strtotime("$start +1 days"));  

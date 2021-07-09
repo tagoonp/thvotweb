@@ -63,24 +63,24 @@ if($stage == 'getpatient_calendar'){
 
                 if($res2['fud_status'] == 'in-complete'){ // ไม่ส่ง 
                     if($res2['fud_comment'] == null){ // ไม่ชี้แจง 
-                        $buf['color'] = '#0077ff'; 
+                        $buf['color'] = '#ff8400'; 
                     }else{ // ชี้แจง
-                        $buf['color'] = '#0077ff'; 
+                        $buf['color'] = '#ff8400'; 
                     }
                 }else if($res2['fud_status'] == 'sended'){
                     if($res2['fud_dateview'] == '1'){ // ได้ดู
-                        $buf['color'] = '#ff6246'; // ส่ง ได้ดู 
+                        $buf['color'] = '#b10000'; // ส่ง ได้ดู 
                     }else{ // ไม่ได้ดู
                         if($res2['fud_comment'] == null){ // ไม่ชี้แจง 
-                            $buf['color'] = '#ff6246'; 
+                            $buf['color'] = '#b10000'; 
                         }else{ // ชี้แจง
                             $buf['color'] = '#fff'; 
-                            $buf['borderColor'] = '#ff6246';
+                            $buf['borderColor'] = '#b10000';
                         }
                     }
                     
                 }else{
-                    $buf['color'] = '#0077ff';
+                    $buf['color'] = '#ff8400';
 
                 }
 

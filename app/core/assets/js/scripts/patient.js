@@ -69,10 +69,9 @@ function getPatientCalendar(){
                   right: 'month'
                 },
                 events: reply,
-                eventRender: function(reply) {
-                    console.log(reply.events);
-                    // info.event.title = "<strong>test</strong>";
-                    // console.log(info.event.title);
+                eventRender: function (event, element) {
+                    element.find('.fc-title').html(event.title);/*For Month,Day and Week Views*/
+                    element.find('.fc-list-item-title').html(event.title);/*For List view*/
                 }
               });
             }

@@ -41,15 +41,15 @@ if($stage == 'getpatient_calendar'){
 
         for ($i=0; $i < $date_diff; $i++) { 
             $buf = array();
-            $start = Date("Y-m-d", strtotime("$start +1 days"));  
+            
+
+            if($start_date > $curr_date){
+                $start = Date("Y-m-d", strtotime("$start +1 days"));  
 
             $buf['allDay'] = false;
             $buf['start'] = $start;
 
             $return['data'][] = $buf;
-
-            if($start_date > $curr_date){
-                break;
             }
         }
 

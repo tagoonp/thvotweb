@@ -558,10 +558,10 @@ $selected_location = $db->fetch($strSQL, false);
                                                 a.delete_status = '0' 
                                                 AND b.info_use = '1'
                                                 AND a.uid = '$id'
-                                                ORDER BY log_datetime DESC
+                                                ORDER BY log_datetime DESC LIMIT 200
                                             ";
                                     $result_list = $db->fetch($strSQL, true, false);
-                                    if($result_list['status']){
+                                    if(($result_list) && ($result_list['status'])){
                                         $c = 1;
                                         foreach($result_list['data'] as $row){
                                             ?>
@@ -574,6 +574,8 @@ $selected_location = $db->fetch($strSQL, false);
                                             <?php
                                             $c++;
                                         }
+                                    }else{
+                                        echo $strSQL;
                                     }
                                     ?>
                                 </tbody>

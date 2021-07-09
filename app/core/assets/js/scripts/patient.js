@@ -76,7 +76,7 @@ function getPatientCalendar(){
             }
         },
         eventRender: function(info) {
-            info.el.querySelector('.fc-title').innerHTML = "<i>" + info.event.title + "</i>";
+            info.el.querySelector('.fc-title').innerHTML = '<i class="' + info.event.title + '"></i>';
         }
     });
 

@@ -69,8 +69,8 @@ function getPatientCalendar(){
                   right: 'month'
                 },
                 events: reply,
-                eventRender: function(info) {
-                    console.log(info.event);
+                eventRender: function(reply) {
+                    console.log(reply);
                     // info.event.title = "<strong>test</strong>";
                     // console.log(info.event.title);
                 }

@@ -3,6 +3,10 @@ require('../../../database_config/thvot/config.inc.php');
 require('../config/configuration.php');
 require('../config/database.php'); 
 
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
+
 $db = new Database();
 $conn = $db->conn();
 
@@ -31,6 +35,8 @@ if($stage == 'getpatient_calendar'){
         $start_date = strtotime($start);
         $end_date = strtotime($end);
 
+        $curr_date = strtotime($date);
+
         $date_diff = ($end_date - $start_date)/60/60/24;
 
         for ($i=0; $i < $date_diff; $i++) { 
@@ -41,6 +47,10 @@ if($stage == 'getpatient_calendar'){
             $buf['start'] = $start;
 
             $return['data'][] = $buf;
+
+            if($curr_date == $start_date){
+                break;
+            }
         }
 
         

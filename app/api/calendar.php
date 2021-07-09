@@ -57,12 +57,13 @@ if($stage == 'getpatient_calendar'){
                     $buf['color'] = '#ff6246'; // ไม่ส่ง ไม่ชี้แจง 
                 }else if(($res2['fud_status'] == 'in-complete') && ($res2['fud_comment'] != null) && ($res2['fud_comment'] != '')){
                     $buf['color'] = '#ff6246'; // ไม่ส่ง ชี้แจง 
-                }else if(($res2['fud_status'] == 'complete') && ($res2['fud_dateview'] == '1')){
+                }else if(($res2['fud_status'] == 'sended') && ($res2['fud_dateview'] == '1')){
                     $buf['color'] = '#ff6246'; // ส่ง ได้ดู 
-                }else if(($res2['fud_status'] == 'complete') && ($res2['fud_dateview'] == '0') && ($res2['fud_comment'] != '') && ($res2['fud_comment'] != null)){
+                }else if(($res2['fud_status'] == 'sended') && ($res2['fud_dateview'] == '0') && ($res2['fud_comment'] != '') && ($res2['fud_comment'] != null)){
                     $buf['color'] = '#ff6246'; // ส่ง ชี้แจง 
                 }else if($res2['fud_status'] == 'complete'){
                     $buf['color'] = '#000';
+                    // $buf['title'] = 
                 }else{
                     // $buf['status'] = '';
                 }

@@ -51,7 +51,7 @@ if($stage == 'getpatient_calendar'){
             $res2 = $db->fetch($strSQL, false);
 
             if($res2){
-                $buf['allDay'] = false;
+                $buf['allDay'] = true;
                 $buf['start'] = $start;
                 $buf['status'] = $res2['fud_status'];
 

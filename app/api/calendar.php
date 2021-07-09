@@ -62,14 +62,13 @@ if($stage == 'getpatient_calendar'){
                         $buf['color'] = '#0077ff'; 
                     }
                 }else if($res2['fud_status'] == 'sended'){
-
                     if($res2['fud_dateview'] == '1'){ // ได้ดู
                         $buf['color'] = '#ff6246'; // ส่ง ได้ดู 
                     }else{ // ไม่ได้ดู
                         if($res2['fud_comment'] == null){ // ไม่ชี้แจง 
-                            $buf['color'] = '#0077ff'; 
+                            $buf['color'] = '#ff6246'; 
                         }else{ // ชี้แจง
-                            $buf['color'] = '#0077ff'; 
+                            $buf['color'] = '#ff6246'; 
                         }
                     }
                     

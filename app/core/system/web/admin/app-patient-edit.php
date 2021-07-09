@@ -453,7 +453,8 @@ $selected_location = $db->fetch($strSQL, false);
 
                                     <div class="row">
                                         <div class="col-12">
-                                          <button class="btn" style="widht: 20px; height:20px; background-color: #000;"></button> asdasd
+                                          <button class="btn" style="widht: 20px; height:20px; background-color: #ff8400;"></button> asdasd <br>
+                                          <button class="btn" style="widht: 20px; height:20px; background-color: #fff; border-color: ff8400;"></button> asdasd
                                         </div>
                                     </div>
                                 </div>

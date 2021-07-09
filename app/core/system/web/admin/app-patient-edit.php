@@ -665,9 +665,18 @@ $selected_location = $db->fetch($strSQL, false);
                                 <div class="form-group dn">
                                         <input type="text" id="txtCommentPatient" value="<?php echo $id; ?>">
                                 </div>
+
                                 <div class="form-group">
                                     <label for="">คำชี้แจง : <span class="text-danger">*</span></label>
                                     <textarea name="" class="form-control" id="" cols="30" rows="10" style="height: 100px;"></textarea>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="">สั่งหยุดยา : <span class="text-danger">*</span></label>
+                                    <select name="" id="" class="form-control">
+                                        <option value="">ให้ทานต่อ</option>
+                                        <option value="">สั่งหยุดยาชั่วคราว</option>
+                                    </select>
                                 </div>
                             </form>
                         </div>

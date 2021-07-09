@@ -84,6 +84,11 @@ if($stage == 'getpatient_calendar'){
                 }
 
                 $buf['url'] = "Javascript:viewCommentDialog('".$res2['fud_date']."')";
+                if($start == $date){
+                    $buf['url'] = "Javascript:viewCommentDialog('".$res2['fud_date']."', '1')";
+                }
+
+                
 
                 $return[] = $buf;
             }else{

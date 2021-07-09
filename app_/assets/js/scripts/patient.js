@@ -1,5 +1,7 @@
 function getPatientCalendar(){
-    console.log('asd');
+
+    var caneldar_url = conf.api + 'calendar?stage=getall&role=' + current_role + '&author=' + $('#txtFilterAuthor').val() + '&uid=' + current_user
+
     calendar = $("#calendar").fullCalendar({
         // defaultView: 'agendaMonth',
         height: 'auto',

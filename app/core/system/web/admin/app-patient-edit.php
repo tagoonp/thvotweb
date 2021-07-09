@@ -671,7 +671,7 @@ $selected_location = $db->fetch($strSQL, false);
                                     <textarea name="" class="form-control" id="" cols="30" rows="10" style="height: 100px;"></textarea>
                                 </div>
 
-                                <div class="form-group">
+                                <div class="form-group dn" id="stopDrug">
                                     <label for="">สั่งหยุดยา : <span class="text-danger">*</span></label>
                                     <select name="" id="" class="form-control">
                                         <option value="">ให้ทานต่อ</option>

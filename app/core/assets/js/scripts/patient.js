@@ -82,7 +82,13 @@ function getPatientCalendar(){
     calendar.fullCalendar('render');
 }
 
-function viewCommentDialog(com_date){
+function viewCommentDialog(com_date, stopdrug){
     $('#modalComment').modal()
     $('#txtCommentDate').val(com_date)
+
+    if(stopdrug == '1'){
+        $('#stopDrug').removeClass('dn')
+    }else{
+        $('#stopDrug').addClass('dn')
+    }
 }

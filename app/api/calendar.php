@@ -42,15 +42,15 @@ if($stage == 'getpatient_calendar'){
         for ($i=0; $i < $date_diff; $i++) { 
             $buf = array();
             
-            $buf['allDay'] = false;
-            $buf['start'] = $start;
+            
 
 
             $strSQL = "SELECT fud_status, fud_comment, fud_dateview FROM vot2_followup_dummy WHERE fud_date = '$start' AND fud_uid = '$patient_id'";
             $res2 = $db->fetch($strSQL, false);
 
             if($res2){
-
+                $buf['allDay'] = false;
+                $buf['start'] = $start;
                 $buf['status'] = $res2['fud_status'];
 
                 if(($res2['fud_status'] == 'in-complete') && ($res2['fud_comment'] == null)){

@@ -70,9 +70,9 @@ function getPatientCalendar(){
                 },
                 events: reply
               });
-              setTimeout(function(){
-                preload.hide()
-              }, 2000)
+            //   setTimeout(function(){
+            //     preload.hide()
+            //   }, 2000)
             }
         }
     });

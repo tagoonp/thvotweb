@@ -21,7 +21,7 @@ if($stage == 'getpatient_calendar'){
 
     $patient_id = mysqli_real_escape_string($conn, $_GET['patient_id']);
 
-    $strSQL = "SELECT start_obsdate, end_obsdate, fud_dateview FROM vot2_account WHERE uid = '$patient_id' AND role = 'patient' AND delete_status = '0' LIMIT 1";
+    $strSQL = "SELECT start_obsdate, end_obsdate FROM vot2_account WHERE uid = '$patient_id' AND role = 'patient' AND delete_status = '0' LIMIT 1";
     $res = $db->fetch($strSQL, false);
     if($res){
         $start = $res['start_obsdate'];
@@ -34,7 +34,7 @@ if($stage == 'getpatient_calendar'){
             do {
                 $buf = array();
 
-                $strSQL = "SELECT fud_status, fud_comment FROM vot2_followup_dummy WHERE fud_date = '$start' AND fud_uid = '$patient_id'";
+                $strSQL = "SELECT fud_status, fud_comment, fud_dateview FROM vot2_followup_dummy WHERE fud_date = '$start' AND fud_uid = '$patient_id'";
                 $res2 = $db->fetch($strSQL, false);
                 if($res2){
                     if(($res2['fud_status'] == 'in-complete') && ($res2['fud_comment'] == null)){
@@ -59,8 +59,10 @@ if($stage == 'getpatient_calendar'){
                 $return['data'] = 
 
                 $start = date($start, strtotime('+1 days'));
-            }while ($start != $end);
+            }while (($start != $end) && ($start <= $date));
         }
+    }else{
+        echo $strSQL;
     }
 
     echo json_encode($return);

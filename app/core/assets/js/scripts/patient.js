@@ -49,7 +49,7 @@ function getPatientCalendar(){
         minTime : "08:00:00",
         maxTime : "17:00:00",
         height: 650,
-        events: [{
+        events: {
             url: caneldar_url,
             error: function(err) {
               console.log(err);
@@ -68,10 +68,14 @@ function getPatientCalendar(){
                   center: 'title',
                   right: 'month'
                 },
-                events: reply
+                events: [
+                    {
+                        reply
+                    }
+                ]
               });
             }
-        }]
+        }
     });
 
     calendar.fullCalendar('render');

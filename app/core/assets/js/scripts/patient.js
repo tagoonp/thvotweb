@@ -74,7 +74,7 @@ function getPatientCalendar(){
             //     preload.hide()
             //   }, 2000)
             },eventRender: function (event, element) {
-                element.find('.fc-title').html(event.title);
+                info.el.querySelector('.fc-title').innerHTML = event.title;
             }
         }
     });

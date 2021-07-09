@@ -48,7 +48,7 @@ if($stage == 'getpatient_calendar'){
 
             $return['data'][] = $buf;
 
-            if($curr_date == $start_date){
+            if($start_date > $curr_date){
                 break;
             }
         }

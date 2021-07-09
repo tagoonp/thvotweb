@@ -667,7 +667,7 @@ $selected_location = $db->fetch($strSQL, false);
                                 </div>
                                 <div class="form-group">
                                     <label for="">คำชี้แจง : <span class="text-danger">*</span></label>
-                                    <textarea name="" class="form-control" id="" cols="30" rows="10"></textarea>
+                                    <textarea name="" class="form-control" id="" cols="30" rows="10" style="height: 100px;"></textarea>
                                 </div>
                             </form>
                         </div>

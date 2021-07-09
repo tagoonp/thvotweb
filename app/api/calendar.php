@@ -61,6 +61,8 @@ if($stage == 'getpatient_calendar'){
                 }else if($res2['fud_status'] == 'complete'){
                     $buf['color'] = '#000';
                 }
+            }else{
+                $buf['err'] = $strSQL;
             }
 
             $return['data'][] = $buf;

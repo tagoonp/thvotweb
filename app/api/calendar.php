@@ -40,7 +40,7 @@ if($stage == 'getpatient_calendar'){
             $buf['allDay'] = false;
             $buf['start'] = $start;
 
-            $return['data'] = $buf;
+            $return['data'][] = $buf;
         }
 
         

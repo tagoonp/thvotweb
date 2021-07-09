@@ -71,10 +71,7 @@ function getPatientCalendar(){
                 events: reply
               });
             }
-        }],
-        eventRender: function (event, element) {
-            info.el.querySelector('.fc-title').innerHTML = event.title;
-        }
+        }]
     });
 
     calendar.fullCalendar('render');

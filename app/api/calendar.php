@@ -55,6 +55,12 @@ if($stage == 'getpatient_calendar'){
                 $buf['start'] = $start;
                 $buf['status'] = $res2['fud_status'];
 
+                if($i == 0){
+                    $buf['title'] = '<i class="bx bxs-star"></i>';
+                }else{
+                    $buf['title'] = '';
+                }
+
                 if($res2['fud_status'] == 'in-complete'){ // ไม่ส่ง 
                     if($res2['fud_comment'] == null){ // ไม่ชี้แจง 
                         $buf['color'] = '#0077ff'; 

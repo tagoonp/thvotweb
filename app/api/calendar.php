@@ -58,7 +58,7 @@ if($stage == 'getpatient_calendar'){
                 if($i == 0){
                     $buf['title'] = '<i class="bx bxs-star"></i>';
                 }else{
-                    $buf['title'] = '';
+                    $buf['title'] = '&nbsp;';
                 }
 
                 if($res2['fud_status'] == 'in-complete'){ // ไม่ส่ง 

@@ -68,7 +68,8 @@ if($stage == 'getpatient_calendar'){
                         if($res2['fud_comment'] == null){ // ไม่ชี้แจง 
                             $buf['color'] = '#ff6246'; 
                         }else{ // ชี้แจง
-                            $buf['color'] = '#ff6246'; 
+                            $buf['color'] = '#fff'; 
+                            $buf['borderColor'] = '#ff6246';
                         }
                     }
                     

@@ -450,6 +450,12 @@ $selected_location = $db->fetch($strSQL, false);
 
                                 <div class="tab-pane fade show" id="calendar" aria-labelledby="calendar-tab" role="tabpanel">
                                     <div id="calendar" class="calendar-content"></div>
+
+                                    <div class="row">
+                                        <div class="col-12">
+                                          <button class="btn" style="widht: 20px; height:20px; background-color: #000;"></button> asdasd
+                                        </div>
+                                    </div>
                                 </div>
 
                                 <div class="tab-pane fade show" id="location" aria-labelledby="information-tab" role="tabpanel">

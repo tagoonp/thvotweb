@@ -69,9 +69,7 @@ function getPatientCalendar(){
                   right: 'month'
                 },
                 events: [
-                    {
-                        reply
-                    }
+                    reply
                 ]
               });
             }

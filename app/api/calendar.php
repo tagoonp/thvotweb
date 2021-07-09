@@ -50,6 +50,9 @@ if($stage == 'getpatient_calendar'){
             $res2 = $db->fetch($strSQL, false);
 
             if($res2){
+
+                $buf['status'] = $res2['fud_status'];
+
                 if(($res2['fud_status'] == 'in-complete') && ($res2['fud_comment'] == null)){
                     $buf['color'] = '#ff6246'; // ไม่ส่ง ไม่ชี้แจง 
                 }else if(($res2['fud_status'] == 'in-complete') && ($res2['fud_comment'] != null) && ($res2['fud_comment'] != '')){
@@ -60,6 +63,8 @@ if($stage == 'getpatient_calendar'){
                     $buf['color'] = '#ff6246'; // ส่ง ชี้แจง 
                 }else if($res2['fud_status'] == 'complete'){
                     $buf['color'] = '#000';
+                }else{
+                    $buf['status'] = '#000';
                 }
             }else{
                 $buf['err'] = $strSQL;
@@ -108,7 +113,7 @@ if($stage == 'getpatient_calendar'){
         echo $strSQL;
     }
 
-    echo json_encode($return);
+    echo json_encode($return, JSON_PRETTY_PRINT);
     $db->close(); 
     die();
 }

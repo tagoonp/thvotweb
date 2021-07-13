@@ -79,7 +79,7 @@ if($stage == 'getpatient_calendar'){
                     }
                 }else if($res2['fud_status'] == 'sended'){
                     if($res2['fud_dateview'] == '1'){ // ได้ดู
-                        $buf['color'] = '#02b869';
+                        $buf['color'] = '#2ef39e';
                     }else{ // ไม่ได้ดู
                         if($res2['fud_comment'] == null){ // ไม่ชี้แจง 
                             $buf['color'] = '#b10000'; 

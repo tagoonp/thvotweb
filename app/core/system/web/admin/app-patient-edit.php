@@ -61,7 +61,7 @@ $selected_location = $db->fetch($strSQL, false);
     <link rel="stylesheet" type="text/css" href="../../../app-assets/vendors/css/forms/select/select2.min.css">
     <link rel="stylesheet" type="text/css" href="../../../app-assets/vendors/css/pickers/pickadate/pickadate.css">
     <link rel="stylesheet" type="text/css" href="../../../app-assets/vendors/css/pickers/daterange/daterangepicker.css">
-    <link rel="stylesheet" type="text/css" href="../../../node_modules/preload.js/dist/css/preload.css">
+    <link rel="stylesheet" type="text/css" href="../../../tools/preload.js/dist/css/preload.css">
     
 
     <link rel="stylesheet" type="text/css" href="../../../assets/fullcalendar/fullcalendar.min.css">
@@ -748,7 +748,7 @@ $selected_location = $db->fetch($strSQL, false);
     <script src="../../../app-assets/vendors/js/pickers/pickadate/legacy.js"></script>
     <script src="../../../app-assets/vendors/js/extensions/moment.min.js"></script>
     <script src="../../../app-assets/vendors/js/pickers/daterange/daterangepicker.js"></script>
-    <script src="../../../node_modules/preload.js/dist/js/preload.js"></script>
+    <script src="../../../tools/preload.js/dist/js/preload.js"></script>
 
     <script src="../../../assets/fullcalendar/fullcalendar.min.js"></script>
     <!-- END: Page Vendor JS-->

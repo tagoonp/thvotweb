@@ -104,7 +104,7 @@ if($stage == 'getpatient_calendar'){
 
                 if($res2['fud_followstage'] == 0){
                     $buf['color'] = '#000'; 
-                    $buf['title'] .= ' <i class="bx bxs-error"></i>';
+                    $buf['title'] .= '&nbsp;';
                     $buf['textColor'] = '#fff';
                     $buf['borderColor'] = '#000';
                 }

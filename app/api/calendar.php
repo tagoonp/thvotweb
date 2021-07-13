@@ -41,7 +41,7 @@ if($stage == 'getpatient_calendar'){
 
         $date_diff = (($end_date - $start_date)/60/60/24) + 1;
 
-        for ($i=0; $i < $date_diff; $i++) { 
+        for ($i=0; $i <= $date_diff; $i++) { 
             $buf = array();
             $strSQL = "SELECT fud_status, fud_comment, fud_dateview, fud_date, fud_anycall, fud_followstage FROM vot2_followup_dummy WHERE fud_date = '$start' AND fud_uid = '$patient_id'";
             $res2 = $db->fetch($strSQL, false);

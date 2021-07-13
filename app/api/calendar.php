@@ -106,6 +106,7 @@ if($stage == 'getpatient_calendar'){
                     $buf['color'] = '#000'; 
                     $buf['title'] .= ' <i class="bx bxs-error"></i>';
                     $buf['textColor'] = '#fff';
+                    $buf['borderColor'] = '#000';
                 }
 
 

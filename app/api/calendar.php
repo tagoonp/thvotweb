@@ -39,15 +39,11 @@ if($stage == 'getpatient_calendar'){
 
         $curr_date = strtotime($date);
 
-        $date_diff = ($end_date - $start_date)/60/60/24;
+        $date_diff = (($end_date - $start_date)/60/60/24) + 1;
 
         for ($i=0; $i < $date_diff; $i++) { 
             $buf = array();
-            
-            
-
-
-            $strSQL = "SELECT fud_status, fud_comment, fud_dateview, fud_date FROM vot2_followup_dummy WHERE fud_date = '$start' AND fud_uid = '$patient_id'";
+            $strSQL = "SELECT fud_status, fud_comment, fud_dateview, fud_date, fud_anycall, fud_followstage FROM vot2_followup_dummy WHERE fud_date = '$start' AND fud_uid = '$patient_id'";
             $res2 = $db->fetch($strSQL, false);
 
             if($res2){
@@ -56,16 +52,30 @@ if($stage == 'getpatient_calendar'){
                 $buf['status'] = $res2['fud_status'];
 
                 if($i == 0){
-                    $buf['title'] = '<i class="bx bxs-star"></i>';
+                    if($res2['fud_anycall'] == 1){
+                        $buf['title'] = '<i class="bx bxs-star"></i> <i class="bx bxs-phone-call"></i>';
+                    }else{
+                        $buf['title'] = '<i class="bx bxs-star"></i>';
+                    }
                 }else{
                     $buf['title'] = '&nbsp;';
+                    if($res2['fud_anycall'] == 1){
+                        $buf['title'] = '<i class="bx bxs-phone-call"></i>';
+                    }
                 }
 
-                if($res2['fud_status'] == 'in-complete'){ // ไม่ส่ง 
+                $buf['textColor'] = '#fff';
+
+                if($res2['fud_status'] == 'non-response'){ // ไม่ส่ง 
                     if($res2['fud_comment'] == null){ // ไม่ชี้แจง 
                         $buf['color'] = '#ff8400'; 
+                        $buf['borderColor'] = '#ff8400';
                     }else{ // ชี้แจง
-                        $buf['color'] = '#ff8400'; 
+                        $buf['color'] = '#fff'; 
+                        $buf['borderColor'] = '#ff8400';
+                        if($res2['fud_anycall'] == 1){
+                            $buf['textColor'] = '#ff8400';
+                        }
                     }
                 }else if($res2['fud_status'] == 'sended'){
                     if($res2['fud_dateview'] == '1'){ // ได้ดู
@@ -73,9 +83,13 @@ if($stage == 'getpatient_calendar'){
                     }else{ // ไม่ได้ดู
                         if($res2['fud_comment'] == null){ // ไม่ชี้แจง 
                             $buf['color'] = '#b10000'; 
+                            $buf['borderColor'] = '#b10000';
                         }else{ // ชี้แจง
                             $buf['color'] = '#fff'; 
                             $buf['borderColor'] = '#b10000';
+                            if($res2['fud_anycall'] == 1){
+                                $buf['textColor'] = '#b10000';
+                            }
                         }
                     }
                 }else{
@@ -86,6 +100,15 @@ if($stage == 'getpatient_calendar'){
                 if($start == $date){
                     $buf['url'] = "Javascript:viewCommentDialog('".$res2['fud_date']."', '1')";
                 }
+
+
+                if($res2['fud_followstage'] == 0){
+                    $buf['color'] = '#000'; 
+                    $buf['title'] .= ' <i class="bx bxs-error"></i>';
+                    $buf['textColor'] = '#fff';
+                }
+
+
 
                 
 
@@ -98,41 +121,6 @@ if($stage == 'getpatient_calendar'){
 
             $start = Date("Y-m-d", strtotime("$start +1 days"));  
         }
-
-        
-
-        // if(($start != null) && ($end != null)){
-            
-        //     do {
-        //         $buf = array();
-
-        //         $strSQL = "SELECT fud_status, fud_comment, fud_dateview FROM vot2_followup_dummy WHERE fud_date = '$start' AND fud_uid = '$patient_id'";
-        //         $res2 = $db->fetch($strSQL, false);
-        //         if($res2){
-        //             if(($res2['fud_status'] == 'in-complete') && ($res2['fud_comment'] == null)){
-        //                 $buf['color'] = '#ff6246'; // ไม่ส่ง ไม่ชี้แจง 
-        //             }else if(($res2['fud_status'] == 'in-complete') && ($res2['fud_comment'] != null) && ($res2['fud_comment'] != '')){
-        //                 $buf['color'] = '#ff6246'; // ไม่ส่ง ชี้แจง 
-        //             }else if(($res2['fud_status'] == 'complete') && ($res2['fud_dateview'] == '1')){
-        //                 $buf['color'] = '#ff6246'; // ส่ง ได้ดู 
-        //             }else if(($res2['fud_status'] == 'complete') && ($res2['fud_dateview'] == '0') && ($res2['fud_comment'] != '') && ($res2['fud_comment'] != null)){
-        //                 $buf['color'] = '#ff6246'; // ส่ง ชี้แจง 
-        //             }else if($res2['fud_status'] == 'complete'){
-        //                 $buf['color'] = '#000';
-        //             }
-        //         }else{
-        //             $buf['color'] = '#000';
-        //         }
-
-        //         $buf['allDay'] = false;
-        //         $buf['start'] = $start;
-
-        //         $return['status'] = 'Success';
-        //         $return['data'] = 
-
-        //         $start = date($start, strtotime('+1 days'));
-        //     }while (($start != $end) && ($start <= $date));
-        // }
     }else{
         echo $strSQL;
     }

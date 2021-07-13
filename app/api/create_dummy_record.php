@@ -17,11 +17,12 @@ $strSQL = "SELECT * FROM vot2_account
 $res = $db->fetch($strSQL, true, false);
 if(($res) && ($res['status'])){
     foreach($res['data'] as $row) {
-        $strSQL = "INSERT INTO vot2_followup_dummy 
-                    (`fud_uid`, `fud_username`, `fud_status`, `fud_date`)
-                   VALUES
-                   ('".$row['uid']."', '".$row['username']."', 'non-response', '$date')
-                  ";
+        $strSQL = "INSERT INTO vot2_followup_dummy (`fud_uid`, `fud_username`, `fud_status`, `fud_date`, `fud_followstage`)
+                   VALUES ('".$row['uid']."', '".$row['username']."', 'non-response', '$date', '1')";
+        if($row['end_obsdate'] != $row['cal_end_obsdate']){
+            $strSQL = "INSERT INTO vot2_followup_dummy (`fud_uid`, `fud_username`, `fud_status`, `fud_date`, `fud_followstage`)
+                       VALUES ('".$row['uid']."', '".$row['username']."', 'non-response', '$date', '0') ";
+        }
         $res2 = $db->insert($strSQL, false);
         if($res2){
             echo "Success<br>";

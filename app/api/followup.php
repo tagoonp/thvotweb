@@ -12,6 +12,97 @@ $stage = mysqli_real_escape_string($conn, $_GET['stage']);
 $return = array();
 
 
+if($stage == 'setpatient_dailyprogress'){
+    if(
+        (!isset($_REQUEST['uid'])) ||
+        (!isset($_REQUEST['patient_id'])) ||
+        (!isset($_REQUEST['progress_date'])) ||
+        (!isset($_REQUEST['progress_stopdrug']))
+    ){
+        $return['status'] = 'Fail';
+        $return['error_stage'] = '1';
+        echo json_encode($return);
+        $db->close(); 
+        die();
+    }
+
+    $uid = mysqli_real_escape_string($conn, $_REQUEST['uid']);
+    $patient_id = mysqli_real_escape_string($conn, $_REQUEST['patient_id']);
+    $progress_date = mysqli_real_escape_string($conn, $_REQUEST['progress_date']);
+    $progress_stopdrug = mysqli_real_escape_string($conn, $_REQUEST['progress_stopdrug']);
+    $progress_mgs = mysqli_real_escape_string($conn, $_REQUEST['progress_msg']);
+
+    if($date == $progress_date){
+        $strSQL = "INSERT INTO vot2_followup_note (fn_note, fn_datetime, fn_date, fn_uid, fn_patient_uid) 
+                   VALUES ('$progress_mgs', '$datetime', '$progress_date', '$uid', '$patient_id')
+                  ";
+        $res = $db->insert($strSQL, false);
+        if($res){
+            $strSQL = "UPDATE vot2_followup_dummy SET fud_comment = '$progress_mgs' WHERE fud_date = '$progress_date' AND fud_uid = '$patient_id'";
+            $res2 = $db->execute($strSQL);
+
+            if($progress_stopdrug == '0'){ // สั่งหยุดยาชั่วคราว
+                $strSQL = "UPDATE vot2_account SET end_obsdate = '$date' WHERE uid = '$patient_id'";
+                $res2 = $db->execute($strSQL);
+            }
+
+            $return['status'] = 'Success';
+
+        }else{
+            $return['status'] = 'Fail';
+            $return['error_stage'] = '2';
+        }
+    }else{
+        $strSQL = "INSERT INTO vot2_followup_note (fn_note, fn_datetime, fn_date, fn_uid, fn_patient_uid) 
+                   VALUES ('$progress_mgs', '$datetime', '$progress_date', '$uid', '$patient_id')
+                  ";
+        $res = $db->insert($strSQL, false);
+        if($res){
+            $strSQL = "UPDATE vot2_followup_dummy SET fud_comment = '$progress_mgs' WHERE fud_date = '$progress_date' AND fud_uid = '$patient_id'";
+            $res2 = $db->execute($strSQL);
+            $return['status'] = 'Success';
+        }else{
+            $return['status'] = 'Fail';
+            $return['error_stage'] = '3';
+        }
+    }
+
+    
+    echo json_encode($return);
+    $db->close(); 
+    die();
+}
+
+if($stage == 'getpatient_dailyprogress'){
+    if(
+        (!isset($_REQUEST['patient_id'])) ||
+        (!isset($_REQUEST['sdate']))
+    ){
+        $return['status'] = 'Fail';
+        $return['error_stage'] = '1';
+        echo json_encode($return);
+        $db->close(); 
+        die();
+    }
+
+    $sdate = mysqli_real_escape_string($conn, $_REQUEST['sdate']);
+    $patient_id = mysqli_real_escape_string($conn, $_REQUEST['patient_id']);
+
+    $strSQL = "SELECT * FROM vot2_followup_note a INNER JOIN vot2_userinfo b ON a.fn_uid = b.info_uid
+              WHERE a.fn_patient_uid = '$patient_id' AND a.fn_date = '$sdate' AND b.info_use = '1'";
+    $res = $db->fetch($strSQL, true, false);
+    if(($res) && ($res['status'])){
+        $return['status'] = 'Success';
+        $return['data'] = $res['data'];
+    }else{
+        $return['status'] = 'Fail';
+        $return['error_stage'] = '2';
+    }
+    echo json_encode($return);
+    $db->close(); 
+    die();
+}
+
 if($stage == 'followup_list'){
     if(
         (!isset($_GET['uid'])) ||

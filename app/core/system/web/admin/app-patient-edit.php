@@ -40,6 +40,7 @@ $selected_location = $db->fetch($strSQL, false);
 
 
 <input type="hidden" id="txtPatient_id" value="<?php echo $id; ?>">
+<input type="hidden" id="txtCurrentUid" value="<?php echo $_SESSION['thvot_uid']; ?>">
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -60,6 +61,8 @@ $selected_location = $db->fetch($strSQL, false);
     <link rel="stylesheet" type="text/css" href="../../../app-assets/vendors/css/forms/select/select2.min.css">
     <link rel="stylesheet" type="text/css" href="../../../app-assets/vendors/css/pickers/pickadate/pickadate.css">
     <link rel="stylesheet" type="text/css" href="../../../app-assets/vendors/css/pickers/daterange/daterangepicker.css">
+    <link rel="stylesheet" type="text/css" href="../../../node_modules/preload.js/dist/css/preload.css">
+    
 
     <link rel="stylesheet" type="text/css" href="../../../assets/fullcalendar/fullcalendar.min.css">
     <!-- END: Vendor CSS-->
@@ -452,9 +455,15 @@ $selected_location = $db->fetch($strSQL, false);
                                     <div id="calendar" class="calendar-content"></div>
 
                                     <div class="row">
-                                        <div class="col-12">
-                                          <button class="btn" style="widht: 20px; height:20px; background-color: #ff8400; border: solid; border-width: 3px 3px 3px 3px; border-color: #ff8400;"></button> asdasd <br>
-                                          <button class="btn" style="widht: 20px; height:20px; background-color: #fff; border: solid; border-width: 3px 3px 3px 3px; border-color: #ff8400;"></button> asdasd
+                                        <div class="col-12 pt-2">
+                                          <button class="btn mr-2" style="widht: 20px; height:20px; background-color: #ff8400; border: solid; border-width: 2px 2px 2px 2px; border-color: #ff8400;"></button> ผู้ป่วยไม่ส่งวิดีโอและไม่มีการติดตาม <br>
+                                          <button class="btn mr-2" style="widht: 20px; height:20px; background-color: #fff; border: solid; border-width: 2px 2px 2px 2px; border-color: #ff8400;"></button> ผู้ป่วยไม่ส่งวิดีโอและไม่สามารถติดตามได้ <br>
+                                          <button class="btn mr-2" style="widht: 20px; height:20px; background-color: #b10000; border: solid; border-width: 2px 2px 2px 2px; border-color: #b10000;"></button> ผู้ป่วยส่งวิดีโอแล้วแต่ไม่มีการติดตามการกินยา<br>
+                                          <button class="btn mr-2" style="widht: 20px; height:20px; background-color: #fff; border: solid; border-width: 2px 2px 2px 2px; border-color: #b10000;"></button> ผู้ป่วยส่งวิดีโอแล้วแต่ไม่สามารดำเนินการกำกับการกินยาได้ <br>
+                                          <button class="btn mr-2" style="widht: 20px; height:20px; background-color: #02b869; border: solid; border-width: 2px 2px 2px 2px; border-color: #02b869;"></button> ผู้ป่วยส่งวิดีโอและกำกับการกินยาเรียบร้อย<br>
+
+                                          <button class="btn mr-2" style="widht: 20px; height:20px; background-color: #000; border: solid; border-width: 2px 2px 2px 2px; border-color: #000;"></button> ช่วงที่ผู้ป่วยหยุดยาเนื่องจากมีข้อบ่งชี้<br>
+                                          <button class="btn pl-0 mr-2" style="widht: 20px; height:20px; background-color: #fff; border: solid; border-width: 0px; border-color: #fff;"><i class="bx bxs-phone-call"></i></button> มีการติดต่อกับผู้ป่วย<br>
                                         </div>
                                     </div>
                                 </div>
@@ -649,52 +658,48 @@ $selected_location = $db->fetch($strSQL, false);
     <div class="modal fade text-left" id="modalComment" tabindex="-1" role="dialog" aria-labelledby="myModalLabel1" aria-hidden="true">
         <div class="modal-dialog modal-dialog-scrollable modal-lg">
             <div class="modal-content">
-                <div class="modal-header">
-                    <h3 class="modal-title" id="myModalLabel1">ระบบชี้แจงเหตุผล</h3>
+                <div class="modal-header bg-primary">
+                    <h3 class="modal-title th text-white" id="myModalLabel1">ระบบชี้แจงเหตุผล</h3>
                     <button type="button" class="close rounded-pill" data-dismiss="modal" aria-label="Close">
                         <i class="bx bx-x"></i>
                     </button>
                 </div>
                 <div class="modal-body">
                     <div class="row">
-                        <div class="col-12 col-sm-6">
+                        <div class="col-12">
                             <form action="">
                                 <div class="form-group dn">
                                         <input type="text" id="txtCommentDate">
                                 </div>
                                 <div class="form-group dn">
-                                        <input type="text" id="txtCommentPatient" value="<?php echo $id; ?>">
+                                        <input type="text" id="txtCommentPatientId" value="<?php echo $id; ?>">
                                 </div>
 
                                 <div class="form-group">
                                     <label for="">คำชี้แจง : <span class="text-danger">*</span></label>
-                                    <textarea name="" class="form-control" id="" cols="30" rows="10" style="height: 100px;"></textarea>
+                                    <textarea name="txtCommentPatientMsg" id="txtCommentPatientMsg" class="form-control" id="" cols="30" rows="10" style="height: 100px;"></textarea>
                                 </div>
 
                                 <div class="form-group dn" id="stopDrug">
                                     <label for="">สั่งหยุดยา : <span class="text-danger">*</span></label>
-                                    <select name="" id="" class="form-control">
-                                        <option value="">ให้ทานต่อ</option>
-                                        <option value="">สั่งหยุดยาชั่วคราว</option>
+                                    <select name="txtCommentPatientStopdrug" id="txtCommentPatientStopdrug" class="form-control">
+                                        <option value="1">ให้ทานต่อ</option>
+                                        <option value="0">สั่งหยุดยาชั่วคราว</option>
                                     </select>
                                 </div>
                             </form>
                         </div>
-                        <div class="col-12 col-sm-6">
-                            <table class="table table-striped">
+                        <div class="col-12">
+                            <table class="table table-striped th">
                                     <thead>
                                         <tr>
-                                            <th>ลำดับที่</th>
-                                            <th>คำชี้แจง</th>
-                                            <th>วัน - เวลา</th>
-                                            <th>โดย</th>
+                                            <th class="th" style="width: 150px;">วัน - เวลา</th>
+                                            <th class="th">คำชี้แจง</th>
+                                            <th class="th" style="width: 150px;">โดย</th>
                                         </tr>
                                     </thead>
-                                    <tbody>
-                                        <tr>
-                                            <td colspan="4">ยังไม่มีคำชี้แจง</td>
-                                        </tr>
-                                        
+                                    <tbody id="dailyNote">
+                                        <tr><td colspan="3" class="th text-center">ยังไม่มีคำชี้แจง</td></tr>
                                     </tbody>
                             </table>
                         </div>
@@ -703,9 +708,9 @@ $selected_location = $db->fetch($strSQL, false);
                 <div class="modal-footer">
                     <button type="button" class="btn btn-light-secondary" data-dismiss="modal">
                         <i class="bx bx-x d-block d-sm-none"></i>
-                        <span class="d-none d-sm-block">ยกเลิก</span>
+                        <span class="d-none d-sm-block">ปิด</span>
                     </button>
-                    <button type="button" class="btn btn-primary ml-1" data-dismiss="modal">
+                    <button type="button" class="btn btn-primary ml-1" onclick="addDailyProgressNote()">
                         <i class="bx bx-check d-block d-sm-none"></i>
                         <span class="d-none d-sm-block">บันทึก</span>
                     </button>
@@ -743,6 +748,7 @@ $selected_location = $db->fetch($strSQL, false);
     <script src="../../../app-assets/vendors/js/pickers/pickadate/legacy.js"></script>
     <script src="../../../app-assets/vendors/js/extensions/moment.min.js"></script>
     <script src="../../../app-assets/vendors/js/pickers/daterange/daterangepicker.js"></script>
+    <script src="../../../node_modules/preload.js/dist/js/preload.js"></script>
 
     <script src="../../../assets/fullcalendar/fullcalendar.min.js"></script>
     <!-- END: Page Vendor JS-->
@@ -767,6 +773,7 @@ $selected_location = $db->fetch($strSQL, false);
             var calendar = ''
 
             $(document).ready(function(){
+                preload.hide()
                 getPatientCalendar()
             })
 

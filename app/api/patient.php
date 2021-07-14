@@ -216,6 +216,7 @@ if($stage == 'patient_info'){
     $strSQL = "SELECT a.*, b.*, a.ID user_id, c.hosname
                FROM vot2_account a INNER JOIN vot2_userinfo b ON a.uid = b.info_uid 
                INNER JOIN vot2_chospital c ON a.hcode = c.hoscode
+               LEFT JOIN vot2_patient_location d ON a.uid = d.loc_patient_uid
                WHERE a.username = '$patient_id' 
                AND a.delete_status = '0' 
                AND b.info_use = '1'

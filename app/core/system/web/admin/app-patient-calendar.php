@@ -2,7 +2,7 @@
 require('../../../../../../database_config/thvot/config.inc.php');
 require('../../../../config/configuration.php');
 require('../../../../config/database.php'); 
-require('../../../../config/admin.role.php'); 
+// require('../../../../config/admin.role.php'); 
 
 $db = new Database();
 $conn = $db->conn();
@@ -14,7 +14,6 @@ if(isset($_GET['stage'])){
 
 $menu = 7;
 
-require('../../../../config/user.inc.php'); 
 
 if(!(isset($_GET['id']))){
     $db->close();

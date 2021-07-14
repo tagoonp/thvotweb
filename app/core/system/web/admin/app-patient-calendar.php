@@ -13,15 +13,29 @@ if(isset($_GET['stage'])){
     $stage = mysqli_real_escape_string($conn, $_GET['stage']);
 }
 
+if(isset($_GET['uid'])){ 
+    $uid = mysqli_real_escape_string($conn, $_GET['uid']);
+}else{
+    $_SESSION['thvot_uid'] = $uid;
+}
 
-$uid = mysqli_real_escape_string($conn, $_GET['uid']);
-$role = mysqli_real_escape_string($conn, $_GET['role']);
-$hcode = mysqli_real_escape_string($conn, $_GET['hcode']);
+if(isset($_GET['role'])){ 
+    $role = mysqli_real_escape_string($conn, $_GET['role']);
+}else{
+    $_SESSION['thvot_role'] = $role;
+}
+
+if(isset($_GET['hcode'])){ 
+    $hcode = mysqli_real_escape_string($conn, $_GET['hcode']);
+}else{
+    $_SESSION['thvot_hcode'] = $hcode;
+}
+
 
 $_SESSION['thvot_session'] = session_id();
-$_SESSION['thvot_uid'] = $uid;
-$_SESSION['thvot_role'] = $role;
-$_SESSION['thvot_hcode'] = $hcode;
+
+
+
 
 $menu = 7;
 

@@ -1,9 +1,12 @@
 function addDailyProgressNote(){
-    preload.show()
+    
     if($('#txtCommentPatientMsg').val() == ''){
         $('#txtCommentPatientMsg').addClass('is-invalid')
         return ;
     }
+
+    preload.show()
+    
     var param = {
         patient_id: $('#txtCommentPatientId').val(),
         progress_date: $('#txtCommentDate').val(),

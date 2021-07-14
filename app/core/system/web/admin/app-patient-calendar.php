@@ -90,7 +90,7 @@ $selected_location = $db->fetch($strSQL, false);
 
 <!-- BEGIN: Body-->
 
-<body class="vertical-layout vertical-menu-modern 2-columns  navbar-sticky footer-static  " data-open="click" data-menu="vertical-menu-modern" data-col="2-columns">
+<body class="vertical-layout vertical-menu-modern 2-columns  navbar-sticky footer-static  bg-white" data-open="click" data-menu="vertical-menu-modern" data-col="2-columns">
 
 
 
@@ -141,7 +141,7 @@ $selected_location = $db->fetch($strSQL, false);
     <!-- END: Main Menu-->
 
     <!-- BEGIN: Content-->
-    <div class="app-content content">
+    <div class="app-content content bg-white">
         <div class="content-overlay"></div>
         <div class="content-wrapper mt-0 p-0">
             <div class="content-header row">
@@ -149,7 +149,7 @@ $selected_location = $db->fetch($strSQL, false);
             <div class="content-body">
                 <!-- users edit start -->
                 <section class="users-edit">
-                    <div class="card">
+                    <div class="card" style="box-shadow: none;">
                         <div class="card-body">
                             <ul class="nav nav-tabs mb-2" role="tablist">
                                 <li class="nav-item">
@@ -173,7 +173,7 @@ $selected_location = $db->fetch($strSQL, false);
                                     </a>
                                 </li>
                             </ul>
-                            <div class="tab-content">
+                            <div class="tab-content pl-0">
                                 <div class="tab-pane active fade show" id="account" aria-labelledby="account-tab" role="tabpanel">
                                     <!-- users edit media object start -->
                                     <div class="media mb-2">
@@ -426,14 +426,14 @@ $selected_location = $db->fetch($strSQL, false);
 
                                     <div class="row">
                                         <div class="col-12 pt-2">
-                                          <button class="btn mr-2" style="widht: 20px; height:20px; background-color: #ff8400; border: solid; border-width: 2px 2px 2px 2px; border-color: #ff8400;"></button> ผู้ป่วยไม่ส่งวิดีโอและไม่มีการติดตาม <br>
-                                          <button class="btn mr-2" style="widht: 20px; height:20px; background-color: #fff; border: solid; border-width: 2px 2px 2px 2px; border-color: #ff8400;"></button> ผู้ป่วยไม่ส่งวิดีโอและไม่สามารถติดตามได้ <br>
-                                          <button class="btn mr-2" style="widht: 20px; height:20px; background-color: #b10000; border: solid; border-width: 2px 2px 2px 2px; border-color: #b10000;"></button> ผู้ป่วยส่งวิดีโอแล้วแต่ไม่มีการติดตามการกินยา<br>
-                                          <button class="btn mr-2" style="widht: 20px; height:20px; background-color: #fff; border: solid; border-width: 2px 2px 2px 2px; border-color: #b10000;"></button> ผู้ป่วยส่งวิดีโอแล้วแต่ไม่สามารดำเนินการกำกับการกินยาได้ <br>
-                                          <button class="btn mr-2" style="widht: 20px; height:20px; background-color: #02b869; border: solid; border-width: 2px 2px 2px 2px; border-color: #02b869;"></button> ผู้ป่วยส่งวิดีโอและกำกับการกินยาเรียบร้อย<br>
+                                          <button class="btn mr-1" style="widht: 20px; height:20px; background-color: #ff8400; border: solid; border-width: 2px 2px 2px 2px; border-color: #ff8400;"></button> ผู้ป่วยไม่ส่งวิดีโอและไม่มีการติดตาม <br>
+                                          <button class="btn mr-1" style="widht: 20px; height:20px; background-color: #fff; border: solid; border-width: 2px 2px 2px 2px; border-color: #ff8400;"></button> ผู้ป่วยไม่ส่งวิดีโอและไม่สามารถติดตามได้ <br>
+                                          <button class="btn mr-1" style="widht: 20px; height:20px; background-color: #b10000; border: solid; border-width: 2px 2px 2px 2px; border-color: #b10000;"></button> ผู้ป่วยส่งวิดีโอแล้วแต่ไม่มีการติดตามการกินยา<br>
+                                          <button class="btn mr-1" style="widht: 20px; height:20px; background-color: #fff; border: solid; border-width: 2px 2px 2px 2px; border-color: #b10000;"></button> ผู้ป่วยส่งวิดีโอแล้วแต่ไม่สามารดำเนินการกำกับการกินยาได้ <br>
+                                          <button class="btn mr-1" style="widht: 20px; height:20px; background-color: #02b869; border: solid; border-width: 2px 2px 2px 2px; border-color: #02b869;"></button> ผู้ป่วยส่งวิดีโอและกำกับการกินยาเรียบร้อย<br>
 
-                                          <button class="btn mr-2" style="widht: 20px; height:20px; background-color: #000; border: solid; border-width: 2px 2px 2px 2px; border-color: #000;"></button> ช่วงที่ผู้ป่วยหยุดยาเนื่องจากมีข้อบ่งชี้<br>
-                                          <button class="btn pl-0 mr-2" style="widht: 20px; height:20px; background-color: #fff; border: solid; border-width: 0px; border-color: #fff;"><i class="bx bxs-phone-call"></i></button> มีการติดต่อกับผู้ป่วย<br>
+                                          <button class="btn mr-1" style="widht: 20px; height:20px; background-color: #000; border: solid; border-width: 2px 2px 2px 2px; border-color: #000;"></button> ช่วงที่ผู้ป่วยหยุดยาเนื่องจากมีข้อบ่งชี้<br>
+                                          <button class="btn pl-0 mr-1" style="widht: 20px; height:20px; background-color: #fff; border: solid; border-width: 0px; border-color: #fff;"><i class="bx bxs-phone-call"></i></button> มีการติดต่อกับผู้ป่วย<br>
                                         </div>
                                     </div>
                                 </div>
@@ -593,10 +593,6 @@ $selected_location = $db->fetch($strSQL, false);
             </div>
         </div>
     </div>
-
-    <?php 
-    require("./control/footer.php");
-    ?>
 
 
     <!-- BEGIN: Vendor JS-->

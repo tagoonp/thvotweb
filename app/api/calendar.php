@@ -32,7 +32,7 @@ if($stage == 'getpatient_calendar'){
 
     if($res){
         $start = $res['start_obsdate'];
-        $end = $res['end_obsdate'];
+        $end = $res['cal_end_obsdate'];
 
         $start_date = strtotime($start);
         $end_date = strtotime($end);

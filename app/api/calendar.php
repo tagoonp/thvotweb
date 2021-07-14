@@ -27,7 +27,7 @@ if($stage == 'getpatient_calendar'){
 
     $patient_id = mysqli_real_escape_string($conn, $_GET['patient_id']);
 
-    $strSQL = "SELECT start_obsdate, end_obsdate FROM vot2_account WHERE uid = '$patient_id' AND role = 'patient' AND delete_status = '0' LIMIT 1";
+    $strSQL = "SELECT start_obsdate, end_obsdate, cal_end_obsdate FROM vot2_account WHERE uid = '$patient_id' AND role = 'patient' AND delete_status = '0' LIMIT 1";
     $res = $db->fetch($strSQL, false);
 
     if($res){

@@ -220,6 +220,7 @@ if($stage == 'patient_info'){
                WHERE a.username = '$patient_id' 
                AND a.delete_status = '0' 
                AND b.info_use = '1'
+               AND (d.loc_status = '1' OR d.loc_status IS NULL)
                LIMIT 1";
     $selected_user = $db->fetch($strSQL, false);
     if(!$selected_user){

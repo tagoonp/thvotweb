@@ -182,11 +182,11 @@ if($stage == 'signup_dot'){
     $strSQL = "INSERT INTO vot2_account 
               (`uid`, `username`, `password`, `password_len`, `email`, 
               `phone`, `role`, `patient_type`, `hcode`, `profile_img`, 
-              `verify_status`, `active_status`, `line_token`, `u_datetime`, `p_udatetime`, `start_obsdate`, `end_obsdate`)
+              `verify_status`, `active_status`, `line_token`, `u_datetime`, `p_udatetime`, `start_obsdate`, `end_obsdate`, `cal_end_obsdate`)
               VALUES (
                   '$uid', '$hn', '$password', '$passwordlen', '', 
                   '$phone', 'patient', 'DOT', '$hcode', '$photo',
-                  '1', '0', '$uid', '$datetime', '$datetime', '$date', '$endmondate'
+                  '1', '0', '$uid', '$datetime', '$datetime', '$date', '$endmondate', '$endmondate'
               )
               ";
     $res = $db->insert($strSQL, false);
@@ -263,11 +263,11 @@ if($stage == 'signup_staff'){
     $strSQL = "INSERT INTO vot2_account 
               (`uid`, `username`, `password`, `password_len`, `email`, 
               `phone`, `relative_phone`, `role`, `hcode`,  `profile_img`, 
-              `verify_status`, `active_status`, `line_token`, `u_datetime`, `p_udatetime`, `start_obsdate`, `end_obsdate`)
+              `verify_status`, `active_status`, `line_token`, `u_datetime`, `p_udatetime`, `start_obsdate`, `end_obsdate`, `cal_end_obsdate`)
               VALUES (
                   '$uid', '$username', '$password', '$passwordlen', '', 
                   '$phone', '$phone2', '$role', '$hcode', '$photo',
-                  '0', '0', '$uid', '$datetime', '$datetime', '$date', '$endmondate'
+                  '0', '0', '$uid', '$datetime', '$datetime', '$date', '$endmondate', '$endmondate'
               )
               ";
     $res = $db->insert($strSQL, false);
@@ -371,12 +371,12 @@ if($stage == 'signup_vot'){
     $strSQL = "INSERT INTO vot2_account 
               (`uid`, `username`, `hn`, `password`, `password_len`, `email`, 
               `phone`, `relative_phone`, `role`, `patient_type`, `hcode`,  `profile_img`, 
-              `verify_status`, `active_status`, `line_token`, `u_datetime`, `p_udatetime`, `start_obsdate`, `end_obsdate`, 
+              `verify_status`, `active_status`, `line_token`, `u_datetime`, `p_udatetime`, `start_obsdate`, `end_obsdate`, `cal_end_obsdate`
               `obs_hcode`, `obs_uid`)
               VALUES (
                   '$uid', '$username', '$hn', '$password', '$passwordlen', '', 
                   '$phone', '$phone2', 'patient', '$patienttype', '$hcode', '$photo',
-                  '1', '1', '$uid', '$datetime', '$datetime', '$date', '$endmondate',
+                  '1', '1', '$uid', '$datetime', '$datetime', '$date', '$endmondate', '$endmondate',
                   '$obs_hcode', '$obs_uid'
               )
               ";

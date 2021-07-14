@@ -227,6 +227,7 @@ if($stage == 'followup_list'){
             // $return['data'] = $res['data'];
         }else{
             $return['status'] = 'No record';
+            $return['return_message'] = $strSQL;
         }
         echo json_encode($return);
         $db->close(); 

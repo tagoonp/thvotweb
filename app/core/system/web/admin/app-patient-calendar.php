@@ -2,7 +2,8 @@
 require('../../../../../../database_config/thvot/config.inc.php');
 require('../../../../config/configuration.php');
 require('../../../../config/database.php'); 
-// require('../../../../config/admin.role.php'); 
+
+
 
 $db = new Database();
 $conn = $db->conn();
@@ -11,6 +12,16 @@ $stage = '';
 if(isset($_GET['stage'])){ 
     $stage = mysqli_real_escape_string($conn, $_GET['stage']);
 }
+
+
+$uid = mysqli_real_escape_string($conn, $_GET['uid']);
+$role = mysqli_real_escape_string($conn, $_GET['role']);
+$hcode = mysqli_real_escape_string($conn, $_GET['hcode']);
+
+$_SESSION['thvot_session'] = session_id();
+$_SESSION['thvot_uid'] = $uid;
+$_SESSION['thvot_role'] = $role;
+$_SESSION['thvot_hcode'] = $hcode;
 
 $menu = 7;
 

@@ -184,7 +184,7 @@ $selected_location = $db->fetch($strSQL, false);
                                 </li>
                             </ul>
                             <div class="tab-content pl-0">
-                                <div class="tab-pane active fade show" id="account" aria-labelledby="account-tab" role="tabpanel">
+                                <div class="tab-pane fade show" id="account" aria-labelledby="account-tab" role="tabpanel">
                                     <!-- users edit media object start -->
                                     <div class="media mb-2">
                                         <a class="mr-2" href="javascript:void(0);">
@@ -431,7 +431,7 @@ $selected_location = $db->fetch($strSQL, false);
                                     <!-- users edit Info form ends -->
                                 </div>
 
-                                <div class="tab-pane fade show" id="calendar" aria-labelledby="calendar-tab" role="tabpanel">
+                                <div class="tab-pane active fade show" id="calendar" aria-labelledby="calendar-tab" role="tabpanel">
                                     <div id="calendar" class="calendar-content"></div>
 
                                     <div class="row">

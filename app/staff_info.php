@@ -67,7 +67,7 @@ if(($res['status']) && ($res['count'] > 0)){
     <!-- END: Page CSS-->
 
     <!-- BEGIN: Custom CSS-->
-    <link rel="stylesheet" type="text/css" href="./assets/css/style.css">
+    <link rel="stylesheet" type="text/css" href="../assets/css/style.css">
     <!-- END: Custom CSS-->
 
 </head>
@@ -139,7 +139,7 @@ if(($res['status']) && ($res['count'] > 0)){
     <!-- END: Theme JS-->
 
     <!-- BEGIN: Page JS-->
-    <script src="./assets/js/scripts/authen.js?v=<?php echo filemtime('./assets/js/scripts/authen.js'); ?>"></script>
+    <script src="../assets/js/scripts/authen.js?v=<?php echo filemtime('./assets/js/scripts/authen.js'); ?>"></script>
     <!-- END: Page JS-->
 
     <script>

@@ -178,7 +178,7 @@ $selected_location = $db->fetch($strSQL, false);
                 <section class="users-edit">
                     <div class="card" style="box-shadow: none;">
                         <div class="card-body">
-                            <ul class="nav nav-tabs mb-2" role="tablist">
+                            <ul class="nav nav-tabs mb-2" role="tablist" style="display: none;">
                                 <li class="nav-item">
                                     <a class="nav-link d-flex align-items-center active" id="account-tab" data-toggle="tab" href="#account" aria-controls="account" role="tab" aria-selected="true">
                                         <i class="bx bx-calendar mr-25"></i><span class="d-none d-sm-block">ปฏิทินการรับประทานยา</span>

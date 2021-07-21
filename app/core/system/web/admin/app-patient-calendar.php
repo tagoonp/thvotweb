@@ -37,9 +37,6 @@ if(isset($_GET['hcode'])){
 
 $_SESSION['thvot_session'] = session_id();
 
-
-
-
 $menu = 7;
 
 

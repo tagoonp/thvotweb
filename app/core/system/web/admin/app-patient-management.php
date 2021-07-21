@@ -458,6 +458,19 @@ $selected_location = $db->fetch($strSQL, false);
                                                         <label>อำเภอ : <span class="text-danger">*</span></label>
                                                         <select id="txtDist" name="txtDist" class="form-control">
                                                             <option value="">-- เลือกอำเภอ --</option>
+                                                            <?php 
+                                                            $strSQL = "SELECT * FROM vot2_ampur 
+                                                            WHERE Changwat = '".$selected_user['info_prov']."' ORDER BY Name ASC";
+                                                            $result_list = $db->fetch($strSQL, true, false);
+                                                            if($result_list['status']){
+                                                                $c = 1;
+                                                                foreach($result_list['data'] as $row){
+                                                                    ?>
+                                                                    <option value="<?php echo $row['Ampur'];?>" <?php if($selected_user['info_dist'] == $row['Ampur']){ echo "selected";} ?>>[<?php echo $row['Ampur'];?>] <?php echo $row['Name'];?></option>
+                                                                    <?php
+                                                                }
+                                                            }
+                                                            ?>
                                                         </select>
                                                     </div>
 

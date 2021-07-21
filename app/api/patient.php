@@ -425,23 +425,23 @@ if($stage == 'patient_update_info'){
                u_datetime = '$datetime',
                hcode = '$manage_hcode',
                reg_hcode = '$reg_hcode',
-               obs_hcode = '$obs_hcode',
-               obs_hcode = '$obs_hcode',
+               hcode = '$manage_hcode',
+               obs_hcode = '$obs_hcode'
                WHERE 
                uid = '$puid'
                ";
 
     $res = $db->execute($strSQL);
     if($res){
-        $strSQL = "UPDATE vot2_userinfo SET info_use = '0' WHERE info_uid = '$uid'";
+        $strSQL = "UPDATE vot2_userinfo SET info_use = '0' WHERE info_uid = '$puid'";
         $db->execute($strSQL);
 
         $strSQL = "INSERT INTO vot2_userinfo (`fname`, `lname`, `phone`, `info_udatetime`, `info_use`, `info_uid`) 
-                   VALUES ('$fname', '$lname', '$phone', '$datetime', '1', '$uid')";
+                   VALUES ('$fname', '$lname', '$phone', '$datetime', '1', '$puid')";
         $res = $db->insert($strSQL, false);
 
         $strSQL = "INSERT INTO vot2_log (`log_datetime`, `log_info`, `log_message`, `log_ip`, `log_uid`)
-                    VALUES ('$datetime', 'ปรับปรุงข้อมูลผู้ป่วย', '$fname $lname ($uid)', '$remote_ip', '".$_SESSION['thvot_uid']."')
+                    VALUES ('$datetime', 'ปรับปรุงข้อมูลผู้ป่วย', '$fname $lname ($puid)', '$remote_ip', '$uid')
                     ";
         $db->insert($strSQL, false);
         $return['status'] = 'Success';

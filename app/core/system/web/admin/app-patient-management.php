@@ -258,7 +258,7 @@ $selected_location = $db->fetch($strSQL, false);
                                     </div>
                                     <!-- users edit media object ends -->
                                     <!-- users edit account form start -->
-                                    <form class="patientupdateform" onsubmit="return admin_user.check_patientupdate_form()" method="post" action="../../../controller/user?stage=update_patient">
+                                    <form class="patientupdateform" onsubmit="return admin_user.check_patientupdate_form()" method="post" action="https://thvot.com/thvotweb/app/controller/user?stage=update_patient">
                                         <div class="row">
                                             <div class="col-12">
                                                 <?php 
@@ -432,7 +432,7 @@ $selected_location = $db->fetch($strSQL, false);
                                 </div>
                                 <div class="tab-pane fade show" id="information" aria-labelledby="information-tab" role="tabpanel">
                                     <!-- users edit Info form start -->
-                                    <form class="passwordform" method="post" action="../../../controller/user?stage=updatemonitor" onsubmit="return admin_user.check_date_form();">
+                                    <form class="passwordform" method="post" action="https://thvot.com/thvotweb/app/controller/user?stage=updatemonitor" onsubmit="return admin_user.check_date_form();">
                                         <div class="row">
 
                                             <div class="col-12 col-sm-6" style="display: none;">

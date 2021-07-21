@@ -922,6 +922,10 @@ $selected_location = $db->fetch($strSQL, false);
                 //             })
                 // })
             })
+
+            $(document).ready(function(){
+                $('#txtDist').trigger('change')
+            })
     </script>
 
 </body>

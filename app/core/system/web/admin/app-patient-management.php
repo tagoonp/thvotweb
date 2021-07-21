@@ -925,6 +925,9 @@ $selected_location = $db->fetch($strSQL, false);
 
             $(document).ready(function(){
                 $('#txtDist').trigger('change')
+                setTimeout(() => {
+                    $('#txtSubdist').val('<?php echo $selected_user['info_subdistrict'];?>')
+                }, 1000);
             })
     </script>
 

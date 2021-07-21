@@ -830,37 +830,37 @@ $selected_location = $db->fetch($strSQL, false);
             });
 
             $(function(){
-                $('#txtProvince').change(function(){
-                    $('#txtDist').empty()
-                    $('#txtSubdist').empty()
+                // $('#txtProvince').change(function(){
+                //     $('#txtDist').empty()
+                //     $('#txtSubdist').empty()
 
-                    $('#txtDist').append('<option value="">-- เลือกอำเภอ --</option>')
-                    $('#txtSubdist').append('<option value="">-- เลือกตำบล --</option>')
+                //     $('#txtDist').append('<option value="">-- เลือกอำเภอ --</option>')
+                //     $('#txtSubdist').append('<option value="">-- เลือกตำบล --</option>')
 
-                    var jxt = $.post('https://thvot.com/thvotweb/app/api/core-api?stage=district', {province : $('#txtProvince').val()}, function(){}, 'json')
-                            .always(function(snap){
-                                if(snap.status == 'Success'){
-                                snap.data.forEach(i => {
-                                    $('#txtDist').append('<option value="' + i.Ampur + '">' + i.Name + '</option>')
-                                });
-                                }
-                            })
-                    })
+                //     var jxt = $.post('https://thvot.com/thvotweb/app/api/core-api?stage=district', {province : $('#txtProvince').val()}, function(){}, 'json')
+                //             .always(function(snap){
+                //                 if(snap.status == 'Success'){
+                //                 snap.data.forEach(i => {
+                //                     $('#txtDist').append('<option value="' + i.Ampur + '">' + i.Name + '</option>')
+                //                 });
+                //                 }
+                //             })
+                //     })
 
-                $('#txtDist').change(function(){
-                    $('#txtSubdist').empty()
-                    $('#txtSubdist').append('<option value="">-- เลือกตำบล --</option>')
+                // $('#txtDist').change(function(){
+                //     $('#txtSubdist').empty()
+                //     $('#txtSubdist').append('<option value="">-- เลือกตำบล --</option>')
 
-                    var jxt = $.post('https://thvot.com/thvotweb/app/api/core-api?stage=subdistrict', {province : $('#txtProvince').val(), dist: $('#txtDist').val() }, function(){}, 'json')
-                            .always(function(snap){
-                                console.log(snap);
-                                if(snap.status == 'Success'){
-                                snap.data.forEach(i => {
-                                    $('#txtSubdist').append('<option value="' + i.Tumbon + '">' + i.Name + '</option>')
-                                });
-                                }
-                            })
-                })
+                //     var jxt = $.post('https://thvot.com/thvotweb/app/api/core-api?stage=subdistrict', {province : $('#txtProvince').val(), dist: $('#txtDist').val() }, function(){}, 'json')
+                //             .always(function(snap){
+                //                 console.log(snap);
+                //                 if(snap.status == 'Success'){
+                //                 snap.data.forEach(i => {
+                //                     $('#txtSubdist').append('<option value="' + i.Tumbon + '">' + i.Name + '</option>')
+                //                 });
+                //                 }
+                //             })
+                // })
             })
     </script>
 

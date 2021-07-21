@@ -388,7 +388,11 @@ if($stage == 'patient_update_info'){
     $phone = mysqli_real_escape_string($conn, $_POST['phone']);
     $status = mysqli_real_escape_string($conn, $_POST['status']);
     $verify = mysqli_real_escape_string($conn, $_POST['verify']);
-    $hn = mysqli_real_escape_string($conn, $_POST['hn']);
+    $reg_hcode = mysqli_real_escape_string($conn, $_POST['reg_hcode']);
+    $manage_hcode = mysqli_real_escape_string($conn, $_POST['hcode']);
+    $obs_hcode = mysqli_real_escape_string($conn, $_POST['obs_hcode']);
+    $ptype = mysqli_real_escape_string($conn, $_POST['ptype']);
+
     $province = mysqli_real_escape_string($conn, $_POST['province']);
     $district = mysqli_real_escape_string($conn, $_POST['district']);
     $subdistrict = mysqli_real_escape_string($conn, $_POST['subdistrict']);
@@ -416,11 +420,14 @@ if($stage == 'patient_update_info'){
     $strSQL = "UPDATE vot2_account 
                SET 
                phone = '$phone', 
-               patient_type = '$role', 
+               patient_type = '$ptype', 
                verify_status = '$verify', 
                active_status = '$status', 
                u_datetime = '$datetime',
-               hcode = '$hcode'
+               hcode = '$manage_hcode',
+               reg_hcode = '$reg_hcode',
+               obs_hcode = '$obs_hcode',
+               obs_hcode = '$obs_hcode',
                WHERE 
                uid = '$puid'
                ";
@@ -438,30 +445,15 @@ if($stage == 'patient_update_info'){
                     VALUES ('$datetime', 'ปรับปรุงข้อมูลผู้ป่วย', '$fname $lname ($uid)', '$remote_ip', '".$_SESSION['thvot_uid']."')
                     ";
         $db->insert($strSQL, false);
-
-        // header('Location: ../core/'.$_SESSION['thvot_role'].'/system/app-patient-edit?id='.$uid);
-        $db->close();
-
-        ?>
-        <script>
-            alert('Update patient info success');
-            window.history.back()
-        </script>
-        <?php
-        $db->close();
-        die();
-
+        $return['status'] = 'Success';
+        echo json_encode($return);
+        $db->close(); 
         die();
     }else{
-        echo $strSQL;
-        die();
-        ?>
-        <script>
-            alert('Can not update patient information');
-            window.history.back()
-        </script>
-        <?php
-        $db->close();
+        $return['status'] = 'Fail';
+        $return['error_stage'] = '4';
+        echo json_encode($return);
+        $db->close(); 
         die();
     }
 }

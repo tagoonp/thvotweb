@@ -320,6 +320,15 @@ $selected_location = $db->fetch($strSQL, false);
                                                         </div>
                                                     </div>
                                                 </div>
+
+                                                <div class="form-group">
+                                                    <label>ประเภทการติดตาม : <span class="text-danger">*</span></label>
+                                                    <select class="form-control" id="txtRole" name="txtRole">
+                                                        <option value="">-- เลือกประเภท --</option>
+                                                        <option value="VOT" <?php if($selected_user['patient_type'] == 'VOT'){ echo "selected"; } ?>>ผู้ป่วย (VOT)</option>
+                                                        <option value="DOT" <?php if($selected_user['patient_type'] == 'DOT'){ echo "selected"; } ?>>ผู้ป่วย (DOT)</option>
+                                                    </select>
+                                                </div>
                                                 
                                                 <div class="form-group">
                                                     <div class="controls">
@@ -334,7 +343,7 @@ $selected_location = $db->fetch($strSQL, false);
                                                 <div class="form-group">
                                                     <label>หน่วย/สถานบริการที่ขึ้นทะเบียนผู้ป่วย : <span class="text-danger">*</span></label>
                                                     <div class="select-error">
-                                                        <select name="txtHcodeฑำ" id="txtHcode" data-required class="form-control select2">
+                                                        <select name="txtHcodeReg" id="txtHcodeReg" data-required class="form-control select2">
                                                             <option value="">-- เลือกหน่วยบริการที่ขึ้นทะเบียนผู้ป่วย --</option>
                                                             <?php 
                                                             $strSQL = "SELECT vot2_projecthospital.* FROM vot2_projecthospital 
@@ -356,7 +365,7 @@ $selected_location = $db->fetch($strSQL, false);
                                                 <div class="form-group">
                                                     <label>หน่วย/สถานบริการสุขภาพที่ตรวจติดตาม : <span class="text-danger">*</span></label>
                                                     <div class="select-error">
-                                                        <select name="txtHcode" id="txtHcode" data-required class="form-control select2">
+                                                        <select name="txtHcodeManage" id="txtHcodeManage" data-required class="form-control select2">
                                                             <option value="">-- เลือกหน่วยบริการที่ตรวจติดตาม --</option>
                                                             <?php 
                                                             $strSQL = "SELECT vot2_projecthospital.* FROM vot2_projecthospital 
@@ -378,7 +387,7 @@ $selected_location = $db->fetch($strSQL, false);
                                                 <div class="form-group">
                                                     <label>หน่วย/สถานบริการสุขภาพของพี่เลี้ยง : <span class="text-danger">*</span></label>
                                                     <div class="select-error">
-                                                        <select name="txtHcode" id="txtHcode" data-required class="form-control select2">
+                                                        <select name="txtHcodeObs" id="txtHcodeObs" data-required class="form-control select2">
                                                             <option value="">-- เลือกหน่วยบริการของพี่เลี้ยง --</option>
                                                             <?php 
                                                             $strSQL = "SELECT vot2_projecthospital.* FROM vot2_projecthospital 
@@ -397,14 +406,7 @@ $selected_location = $db->fetch($strSQL, false);
                                                     </div>
                                                 </div>
 
-                                                <div class="form-group">
-                                                    <label>ประเภทการติดตาม : <span class="text-danger">*</span></label>
-                                                    <select class="form-control" id="txtRole" name="txtRole">
-                                                        <option value="">-- เลือกประเภท --</option>
-                                                        <option value="VOT" <?php if($selected_user['patient_type'] == 'VOT'){ echo "selected"; } ?>>ผู้ป่วย (VOT)</option>
-                                                        <option value="DOT" <?php if($selected_user['patient_type'] == 'DOT'){ echo "selected"; } ?>>ผู้ป่วย (DOT)</option>
-                                                    </select>
-                                                </div>
+                                               
                                                 
                                                 <div class="row">
                                                     <div class="form-group col-12 col-sm-6">

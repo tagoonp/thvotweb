@@ -241,6 +241,7 @@ var admin_user = {
 
         var jxr = $.post('https://thvot.com/thvotweb/app/api/patient?stage=patient_update_info', param, function(){}, 'json')
                    .always(function(snap){
+                       console.log(snap);
                        preload.hide()
                        if(snap.status == 'Success'){
                         Swal.fire({

@@ -334,7 +334,7 @@ $selected_location = $db->fetch($strSQL, false);
                                                 <div class="form-group">
                                                     <label>หน่วย/สถานบริการที่ขึ้นทะเบียนผู้ป่วย : <span class="text-danger">*</span></label>
                                                     <div class="select-error">
-                                                        <select name="txtHcode" id="txtHcode" data-required class="form-control select2">
+                                                        <select name="txtHcodeฑำ" id="txtHcode" data-required class="form-control select2">
                                                             <option value="">-- เลือกหน่วยบริการที่ขึ้นทะเบียนผู้ป่วย --</option>
                                                             <?php 
                                                             $strSQL = "SELECT vot2_projecthospital.* FROM vot2_projecthospital 
@@ -344,7 +344,7 @@ $selected_location = $db->fetch($strSQL, false);
                                                                 $c = 1;
                                                                 foreach($result_list['data'] as $row){
                                                                     ?>
-                                                                    <option value="<?php echo $row['phoscode'];?>" <?php if($row['phoscode'] == $selected_user['hcode']){ echo "selected"; } ?>>[<?php echo $row['phoscode'];?>] <?php echo $row['hserv'];?></option>
+                                                                    <option value="<?php echo $row['phoscode'];?>" <?php if($row['phoscode'] == $selected_user['reg_hcode']){ echo "selected"; } ?>>[<?php echo $row['phoscode'];?>] <?php echo $row['hserv'];?></option>
                                                                     <?php
                                                                 }
                                                             }
@@ -388,7 +388,7 @@ $selected_location = $db->fetch($strSQL, false);
                                                                 $c = 1;
                                                                 foreach($result_list['data'] as $row){
                                                                     ?>
-                                                                    <option value="<?php echo $row['phoscode'];?>" <?php if($row['phoscode'] == $selected_user['hcode']){ echo "selected"; } ?>>[<?php echo $row['phoscode'];?>] <?php echo $row['hserv'];?></option>
+                                                                    <option value="<?php echo $row['phoscode'];?>" <?php if($row['phoscode'] == $selected_user['obs_hcode']){ echo "selected"; } ?>>[<?php echo $row['phoscode'];?>] <?php echo $row['hserv'];?></option>
                                                                     <?php
                                                                 }
                                                             }

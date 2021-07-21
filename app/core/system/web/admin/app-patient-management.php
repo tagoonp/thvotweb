@@ -259,7 +259,7 @@ $selected_location = $db->fetch($strSQL, false);
                                     </div>
                                     <!-- users edit media object ends -->
                                     <!-- users edit account form start -->
-                                    <form class="patientupdateform" onsubmit="return admin_user.check_patientupdate_form()" method="post" action="https://thvot.com/thvotweb/app/controller/user?stage=update_patient">
+                                    <form class="patientupdateform" onsubmit="admin_user.check_patientupdate_form(); return false;" method="post">
                                         <div class="row">
                                             <div class="col-12">
                                                 <?php 

@@ -358,6 +358,114 @@ if($stage == 'patient_stage'){
     
 }
 
+if($stage == 'patient_update_info'){
+    if(
+        (!(isset($_POST['puid']))) ||
+        (!(isset($_POST['pusername']))) ||
+        (!(isset($_POST['fname']))) ||
+        (!(isset($_POST['lname']))) ||
+        (!(isset($_POST['phone']))) ||
+        (!(isset($_POST['status']))) ||
+        (!(isset($_POST['verify']))) || 
+        (!(isset($_POST['hn']))) ||
+        (!(isset($_POST['province']))) ||
+        (!(isset($_POST['district']))) ||
+        (!(isset($_POST['subdistrict']))) ||
+        (!(isset($_POST['uid'])))
+    ){
+        $return['status'] = 'Fail';
+        $return['error_stage'] = '1';
+        echo json_encode($return);
+        $db->close(); 
+        die();
+    }
+
+    $uid = mysqli_real_escape_string($conn, $_POST['uid']);
+    $puid = mysqli_real_escape_string($conn, $_POST['puid']);
+    $username = mysqli_real_escape_string($conn, $_POST['pusername']);
+    $fname = mysqli_real_escape_string($conn, $_POST['fname']);
+    $lname = mysqli_real_escape_string($conn, $_POST['lname']);
+    $phone = mysqli_real_escape_string($conn, $_POST['phone']);
+    $status = mysqli_real_escape_string($conn, $_POST['status']);
+    $verify = mysqli_real_escape_string($conn, $_POST['verify']);
+    $hn = mysqli_real_escape_string($conn, $_POST['hn']);
+    $province = mysqli_real_escape_string($conn, $_POST['province']);
+    $district = mysqli_real_escape_string($conn, $_POST['district']);
+    $subdistrict = mysqli_real_escape_string($conn, $_POST['subdistrict']);
+
+    $strSQL = "SELECT * FROM vot2_account WHERE uid = '$uid' AND delete_status = '0' LIMIT 1";
+    $res1 = $db->fetch($strSQL, true, true);
+    if(!$res1['status']){
+        $return['status'] = 'Fail';
+        $return['error_stage'] = '2';
+        echo json_encode($return);
+        $db->close(); 
+        die();
+    }
+
+    $strSQL = "SELECT * FROM vot2_account WHERE uid = '$puid' AND delete_status = '0' LIMIT 1";
+    $res1 = $db->fetch($strSQL, true, true);
+    if(!$res1['status']){
+        $return['status'] = 'Fail';
+        $return['error_stage'] = '3';
+        echo json_encode($return);
+        $db->close(); 
+        die();
+    }
+
+    $strSQL = "UPDATE vot2_account 
+               SET 
+               phone = '$phone', 
+               patient_type = '$role', 
+               verify_status = '$verify', 
+               active_status = '$status', 
+               u_datetime = '$datetime',
+               hcode = '$hcode'
+               WHERE 
+               uid = '$puid'
+               ";
+
+    $res = $db->execute($strSQL);
+    if($res){
+        $strSQL = "UPDATE vot2_userinfo SET info_use = '0' WHERE info_uid = '$uid'";
+        $db->execute($strSQL);
+
+        $strSQL = "INSERT INTO vot2_userinfo (`fname`, `lname`, `phone`, `info_udatetime`, `info_use`, `info_uid`) 
+                   VALUES ('$fname', '$lname', '$phone', '$datetime', '1', '$uid')";
+        $res = $db->insert($strSQL, false);
+
+        $strSQL = "INSERT INTO vot2_log (`log_datetime`, `log_info`, `log_message`, `log_ip`, `log_uid`)
+                    VALUES ('$datetime', 'ปรับปรุงข้อมูลผู้ป่วย', '$fname $lname ($uid)', '$remote_ip', '".$_SESSION['thvot_uid']."')
+                    ";
+        $db->insert($strSQL, false);
+
+        // header('Location: ../core/'.$_SESSION['thvot_role'].'/system/app-patient-edit?id='.$uid);
+        $db->close();
+
+        ?>
+        <script>
+            alert('Update patient info success');
+            window.history.back()
+        </script>
+        <?php
+        $db->close();
+        die();
+
+        die();
+    }else{
+        echo $strSQL;
+        die();
+        ?>
+        <script>
+            alert('Can not update patient information');
+            window.history.back()
+        </script>
+        <?php
+        $db->close();
+        die();
+    }
+}
+
 if($stage == 'patient_delete'){
     if(
         (!isset($_GET['uid'])) ||

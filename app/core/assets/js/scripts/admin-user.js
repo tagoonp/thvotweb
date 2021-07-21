@@ -218,6 +218,54 @@ var admin_user = {
               )
               return false;
         }
+
+        preload.show()
+
+        var param = {
+            puid: $('#txtUid').val(),
+            pusername: $('#txtUsername').val(),
+            fname: $('#txtFname').val(),
+            lname: $('#txtLname').val(),
+            phone: $('#txtPhone').val(),
+            status: $('#txtStatus').val(),
+            verify: $('#txtVerify').val(),
+            hn: $('#txtHn').val(),
+            province: $('#txtProvince').val(),
+            district: $('#txtDist').val(),
+            subdistrict: $('#txtSubdist').val(),
+            uid: $('#txtCurrentUid').val()
+        }
+
+        var jxr = $.post('https://thvot.com/thvotweb/app/api/patient?stage=patient_update_info', param, function(){}, 'json')
+                   .always(function(snap){
+                       preload.hide()
+                       if(snap.status == 'Success'){
+                        Swal.fire({
+                            title: 'ปรับปรุงข้อมูลสำเร็จ',
+                            text: 'ข้อมูลของผู้ป่วย ID ' + $('#txtUsername').val() + ' ถูกปรับปรุงเรียบร้อยแล้ว',
+                            icon: 'success',
+                            showCancelButton: false,
+                            confirmButtonColor: '#3085d6',
+                            confirmButtonText: 'รีโหลดข้อมูล',
+                            confirmButtonClass: 'btn btn-primary',
+                            buttonsStyling: false,
+                          }).then(function (result) {
+                            if (result.value) {
+                              window.location.reload()
+                            }
+                          })
+                       }else{
+                        Swal.fire(
+                            {
+                              icon: "error",
+                              title: 'เกิดข้อผิดพลาด',
+                              text: 'ไม่สามารถปรับปรุงข้อมูลผู้ป่วยได้',
+                              confirmButtonClass: 'btn btn-danger',
+                            }
+                          )
+                       }
+                   })
+        return ;
     },
     check_date_form(){
         $check = 0

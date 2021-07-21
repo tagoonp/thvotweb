@@ -69,6 +69,7 @@ $selected_location = $db->fetch($strSQL, false);
 
 <input type="hidden" id="txtPatient_id" value="<?php echo $id; ?>">
 <input type="hidden" id="txtCurrentUid" value="<?php echo $_SESSION['thvot_uid']; ?>">
+
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -329,11 +330,12 @@ $selected_location = $db->fetch($strSQL, false);
 
                                             </div>
                                             <div class="col-12 col-sm-6">
+
                                                 <div class="form-group">
-                                                    <label>หน่วย/สถานบริการ : <span class="text-danger">*</span></label>
+                                                    <label>หน่วย/สถานบริการที่ขึ้นทะเบียนผู้ป่วย : <span class="text-danger">*</span></label>
                                                     <div class="select-error">
                                                         <select name="txtHcode" id="txtHcode" data-required class="form-control select2">
-                                                            <option value="">-- เลือกหน่วยบริการ --</option>
+                                                            <option value="">-- เลือกหน่วยบริการที่ขึ้นทะเบียนผู้ป่วย --</option>
                                                             <?php 
                                                             $strSQL = "SELECT vot2_projecthospital.* FROM vot2_projecthospital 
                                                             WHERE phosstatus = 'Y' ORDER BY hserv";
@@ -349,8 +351,52 @@ $selected_location = $db->fetch($strSQL, false);
                                                             ?>
                                                         </select>
                                                     </div>
-                                                    
                                                 </div>
+
+                                                <div class="form-group">
+                                                    <label>หน่วย/สถานบริการสุขภาพที่ตรวจติดตาม : <span class="text-danger">*</span></label>
+                                                    <div class="select-error">
+                                                        <select name="txtHcode" id="txtHcode" data-required class="form-control select2">
+                                                            <option value="">-- เลือกหน่วยบริการที่ตรวจติดตาม --</option>
+                                                            <?php 
+                                                            $strSQL = "SELECT vot2_projecthospital.* FROM vot2_projecthospital 
+                                                            WHERE phosstatus = 'Y' ORDER BY hserv";
+                                                            $result_list = $db->fetch($strSQL, true, false);
+                                                            if($result_list['status']){
+                                                                $c = 1;
+                                                                foreach($result_list['data'] as $row){
+                                                                    ?>
+                                                                    <option value="<?php echo $row['phoscode'];?>" <?php if($row['phoscode'] == $selected_user['hcode']){ echo "selected"; } ?>>[<?php echo $row['phoscode'];?>] <?php echo $row['hserv'];?></option>
+                                                                    <?php
+                                                                }
+                                                            }
+                                                            ?>
+                                                        </select>
+                                                    </div>
+                                                </div>
+
+                                                <div class="form-group">
+                                                    <label>หน่วย/สถานบริการสุขภาพของพี่เลี้ยง : <span class="text-danger">*</span></label>
+                                                    <div class="select-error">
+                                                        <select name="txtHcode" id="txtHcode" data-required class="form-control select2">
+                                                            <option value="">-- เลือกหน่วยบริการของพี่เลี้ยง --</option>
+                                                            <?php 
+                                                            $strSQL = "SELECT vot2_projecthospital.* FROM vot2_projecthospital 
+                                                            WHERE phosstatus = 'Y' ORDER BY hserv";
+                                                            $result_list = $db->fetch($strSQL, true, false);
+                                                            if($result_list['status']){
+                                                                $c = 1;
+                                                                foreach($result_list['data'] as $row){
+                                                                    ?>
+                                                                    <option value="<?php echo $row['phoscode'];?>" <?php if($row['phoscode'] == $selected_user['hcode']){ echo "selected"; } ?>>[<?php echo $row['phoscode'];?>] <?php echo $row['hserv'];?></option>
+                                                                    <?php
+                                                                }
+                                                            }
+                                                            ?>
+                                                        </select>
+                                                    </div>
+                                                </div>
+
                                                 <div class="form-group">
                                                     <label>ประเภทการติดตาม : <span class="text-danger">*</span></label>
                                                     <select class="form-control" id="txtRole" name="txtRole">
@@ -489,7 +535,6 @@ $selected_location = $db->fetch($strSQL, false);
                                           <button class="btn mr-2" style="widht: 20px; height:20px; background-color: #b10000; border: solid; border-width: 2px 2px 2px 2px; border-color: #b10000;"></button> ผู้ป่วยส่งวิดีโอแล้วแต่ไม่มีการติดตามการกินยา<br>
                                           <button class="btn mr-2" style="widht: 20px; height:20px; background-color: #fff; border: solid; border-width: 2px 2px 2px 2px; border-color: #b10000;"></button> ผู้ป่วยส่งวิดีโอแล้วแต่ไม่สามารดำเนินการกำกับการกินยาได้ <br>
                                           <button class="btn mr-2" style="widht: 20px; height:20px; background-color: #02b869; border: solid; border-width: 2px 2px 2px 2px; border-color: #02b869;"></button> ผู้ป่วยส่งวิดีโอและกำกับการกินยาเรียบร้อย<br>
-
                                           <button class="btn mr-2" style="widht: 20px; height:20px; background-color: #000; border: solid; border-width: 2px 2px 2px 2px; border-color: #000;"></button> ช่วงที่ผู้ป่วยหยุดยาเนื่องจากมีข้อบ่งชี้<br>
                                           <button class="btn pl-0 mr-2" style="widht: 20px; height:20px; background-color: #fff; border: solid; border-width: 0px; border-color: #fff;"><i class="bx bxs-phone-call"></i></button> มีการติดต่อกับผู้ป่วย<br>
                                         </div>
@@ -545,7 +590,7 @@ $selected_location = $db->fetch($strSQL, false);
                                 </div>
                                 <div class="tab-pane fade show" id="password" aria-labelledby="information-tab" role="tabpanel">
                                     <!-- users edit Info form start -->
-                                    <form class="passwordform" method="post" action="../../../controller/user?stage=updatepassword" onsubmit="return admin_user.check_password_form();">
+                                    <form class="passwordform"  onsubmit="return admin_user.check_password_form(); return false;">
                                         <div class="row">
 
                                             <div class="col-12 col-sm-6" style="display: none;">

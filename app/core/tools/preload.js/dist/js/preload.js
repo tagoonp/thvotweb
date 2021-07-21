@@ -7,7 +7,7 @@ var preload = {
                             '&nbsp;' +
                           '</div>' +
                           '<div class="loadelement_2">' +
-                            '<img src="../../../node_modules/preload.js/img/oval.svg" width="100%" />' +
+                            '<img src="https://thvot.com/thvotweb/app/core/tools/preload.js/img/oval.svg" width="100%" />' +
                           '</div>' +
                         '</div>'
     document.write(load_element)

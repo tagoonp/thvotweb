@@ -7,6 +7,7 @@ require('../../../../config/admin.role.php');
 $db = new Database();
 $conn = $db->conn();
 
+
 $stage = '';
 if(isset($_GET['stage'])){ 
     $stage = mysqli_real_escape_string($conn, $_GET['stage']);
@@ -37,6 +38,10 @@ if(isset($_GET['hcode'])){
 $_SESSION['thvot_session'] = session_id();
 
 $menu = 7;
+
+$menu = 7;
+
+require('../../../../config/user.inc.php'); 
 
 
 if(!(isset($_GET['id']))){

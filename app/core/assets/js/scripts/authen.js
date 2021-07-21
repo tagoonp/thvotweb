@@ -238,7 +238,7 @@ $(function () {
       $('#txtSubdist').empty()
       $('#txtSubdist').append('<option value="">-- เลือกตำบล --</option>')
 
-      var jxt = $.post('https://thvot.com/thvotweb/app/api/core-api?stage=district', {province : $('#txtProvince').val(), dist: $('#txtDist').val() }, function(){}, 'json')
+      var jxt = $.post('https://thvot.com/thvotweb/app/api/core-api?stage=subdistrict', {province : $('#txtProvince').val(), dist: $('#txtDist').val() }, function(){}, 'json')
               .always(function(snap){
                 console.log(snap);
                 if(snap.status == 'Success'){

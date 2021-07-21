@@ -367,7 +367,6 @@ if($stage == 'patient_update_info'){
         (!(isset($_POST['phone']))) ||
         (!(isset($_POST['status']))) ||
         (!(isset($_POST['verify']))) || 
-        (!(isset($_POST['hn']))) ||
         (!(isset($_POST['province']))) ||
         (!(isset($_POST['district']))) ||
         (!(isset($_POST['subdistrict']))) ||

@@ -466,7 +466,7 @@ $selected_location = $db->fetch($strSQL, false);
                                                                 $c = 1;
                                                                 foreach($result_list['data'] as $row){
                                                                     ?>
-                                                                    <option value="<?php echo $row['Ampur'];?>" <?php if($selected_user['info_dist'] == $row['Ampur']){ echo "selected";} ?>>[<?php echo $row['Ampur'];?>] <?php echo $row['Name'];?></option>
+                                                                    <option value="<?php echo $row['Ampur'];?>" <?php if($selected_user['info_district'] == $row['Ampur']){ echo "selected";} ?>>[<?php echo $row['Ampur'];?>] <?php echo $row['Name'];?></option>
                                                                     <?php
                                                                 }
                                                             }

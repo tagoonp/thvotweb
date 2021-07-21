@@ -837,7 +837,7 @@ $selected_location = $db->fetch($strSQL, false);
                     $('#txtDist').append('<option value="">-- เลือกอำเภอ --</option>')
                     $('#txtSubdist').append('<option value="">-- เลือกตำบล --</option>')
 
-                    var jxt = $.post('../../../api/core-api?stage=district', {province : $('#txtProvince').val()}, function(){}, 'json')
+                    var jxt = $.post('../../../../api/core-api?stage=district', {province : $('#txtProvince').val()}, function(){}, 'json')
                             .always(function(snap){
                                 if(snap.status == 'Success'){
                                 snap.data.forEach(i => {
@@ -851,7 +851,7 @@ $selected_location = $db->fetch($strSQL, false);
                     $('#txtSubdist').empty()
                     $('#txtSubdist').append('<option value="">-- เลือกตำบล --</option>')
 
-                    var jxt = $.post('../../../api/core-api?stage=subdistrict', {province : $('#txtProvince').val(), dist: $('#txtDist').val() }, function(){}, 'json')
+                    var jxt = $.post('../../../../api/core-api?stage=subdistrict', {province : $('#txtProvince').val(), dist: $('#txtDist').val() }, function(){}, 'json')
                             .always(function(snap){
                                 console.log(snap);
                                 if(snap.status == 'Success'){

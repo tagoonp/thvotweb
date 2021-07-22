@@ -14,7 +14,7 @@ var admin_user = {
             buttonsStyling: false,
         }).then(function (result) {
             if (result.value) {
-            var jxr = $.post("../../../api/admin-api?stage=admin_reset_patient_location", {target_uid: uid}, function(){})
+            var jxr = $.post("https://thvot.com/thvotweb/app/api/admin-api?stage=admin_reset_patient_location", {target_uid: uid}, function(){})
                         .always(function(resp){
                         console.log(resp);
                         if(resp == 'Success'){
@@ -137,6 +137,46 @@ var admin_user = {
               )
               return false;
         }
+
+        preload.show()
+
+        var param = {
+            uid: $('#txtCurrentUid').val(),
+            puid: $('#txtPasswordUid').val(),
+            password: $('#txtPassword1').val(),
+        }
+
+        var jxr = $.post('https://thvot.com/thvotweb/app/api/patient?stage=updatepassword', param, function(){}, 'json')
+                   .always(function(snap){
+                       console.log(snap);
+                       preload.hide()
+                       if(snap.status == 'Success'){
+                        Swal.fire({
+                            title: 'ปรับปรุงข้อมูลสำเร็จ',
+                            text: 'ข้อมูลของผู้ป่วย ID ' + $('#txtUsername').val() + ' ถูกปรับปรุงเรียบร้อยแล้ว',
+                            icon: 'success',
+                            showCancelButton: false,
+                            confirmButtonColor: '#3085d6',
+                            confirmButtonText: 'รีโหลดข้อมูล',
+                            confirmButtonClass: 'btn btn-primary',
+                            buttonsStyling: false,
+                          }).then(function (result) {
+                            if (result.value) {
+                              window.location.reload()
+                            }
+                          })
+                       }else{
+                        Swal.fire(
+                            {
+                              icon: "error",
+                              title: 'เกิดข้อผิดพลาด',
+                              text: 'ไม่สามารถปรับปรุงข้อมูลผู้ป่วยได้',
+                              confirmButtonClass: 'btn btn-danger',
+                            }
+                          )
+                       }
+                   })
+        return ;
     },
     check_patientadd_form(){
         $check = 0

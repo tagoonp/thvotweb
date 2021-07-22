@@ -604,9 +604,9 @@ $selected_location = $db->fetch($strSQL, false);
                                 </div>
                                 <div class="tab-pane fade show" id="password" aria-labelledby="information-tab" role="tabpanel">
                                     <!-- users edit Info form start -->
+                                    <!-- <form class="passwordform"  onsubmit="return admin_user.check_password_form(); return false;"> -->
                                     <form class="passwordform"  onsubmit="return admin_user.check_password_form(); return false;">
                                         <div class="row">
-
                                             <div class="col-12 col-sm-6" style="display: none;">
                                                 <div class="form-group">
                                                     <label>UID : <span class="text-danger">*</span></label>

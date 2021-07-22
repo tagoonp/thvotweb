@@ -457,6 +457,47 @@ if($stage == 'patient_update_info'){
     }
 }
 
+if($stage == 'updatepassword'){
+    if(
+        (!(isset($_REQUEST['uid']))) ||
+        (!(isset($_REQUEST['puid']))) ||
+        (!(isset($_REQUEST['password'])))
+    ){
+        $db->close();
+        die();
+        ?>
+        <script>
+            alert('Can not create new account');
+            window.history.back()
+        </script>
+        <?php
+       
+    }
+    $uid = mysqli_real_escape_string($conn, $_REQUEST['uid']);
+    $puid = mysqli_real_escape_string($conn, $_POST['puid']);
+    $password = mysqli_real_escape_string($conn, $_POST['password']);
+
+    $passwordlen = strlen($password);
+    $password = password_hash($password, PASSWORD_DEFAULT);
+
+    $strSQL = "UPDATE vot2_account SET password = '$password', password_len = '$passwordlen' WHERE uid = '$puid'";
+    $db->execute($strSQL);
+
+    $strSQL = "INSERT INTO vot2_log (`log_datetime`, `log_info`, `log_message`, `log_ip`, `log_uid`)
+                    VALUES ('$datetime', 'ปรับปรุงรหัสผ่าน', 'Target UID > $puid', '$remote_ip', '$uid')
+                    ";
+    $db->insert($strSQL, false);
+
+    ?>
+    <script>
+        alert('ปรับปรุงรหัสผ่านสำเร็จ');
+        window.history.back()
+    </script>
+    <?php
+    $db->close();
+    die();
+}
+
 if($stage == 'updatemonitor'){
     if(
         (!(isset($_POST['puid']))) ||

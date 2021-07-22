@@ -211,6 +211,7 @@ $menu = 7;
                                                         <td><?php echo $row['end_obsdate']; ?></td>
                                                         <td class="text-right">
                                                             <a href="app-patient-edit?id=<?php echo $row['uid'];?>" class="mr-1"><i class="bx bx-edit-alt"></i></a>
+                                                            <a href="app-patient-drug?id=<?php echo $row['uid'];?>" class="mr-1"><i class="bx bxs-capsule"></i></a>
                                                             <?php 
                                                             if($row['role'] != 'admin'){
                                                                 ?>

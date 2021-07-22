@@ -41,7 +41,6 @@ $selected_location = $db->fetch($strSQL, false);
 
 <input type="hidden" id="txtPatient_id" value="<?php echo $id; ?>">
 <input type="hidden" id="txtCurrentUid" value="<?php echo $_SESSION['thvot_uid']; ?>">
-
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -108,7 +107,7 @@ $selected_location = $db->fetch($strSQL, false);
      
                         <li class="nav-item d-none d-lg-block"><a class="nav-link nav-link-expand"><i class="ficon bx bx-fullscreen"></i></a></li>
                         <?php 
-                        // require("./control/notification.php");
+                        require("./control/notification.php");
                         require("./control/profile_menu.php");
                         ?>
                         
@@ -231,7 +230,7 @@ $selected_location = $db->fetch($strSQL, false);
                                     </div>
                                     <!-- users edit media object ends -->
                                     <!-- users edit account form start -->
-                                    <form class="patientupdateform" onsubmit="admin_user.check_patientupdate_form(); return false;" method="post">
+                                    <form class="patientupdateform" onsubmit="return admin_user.check_patientupdate_form()" method="post" action="../../../controller/user?stage=update_patient">
                                         <div class="row">
                                             <div class="col-12">
                                                 <?php 
@@ -292,15 +291,6 @@ $selected_location = $db->fetch($strSQL, false);
                                                         </div>
                                                     </div>
                                                 </div>
-
-                                                <div class="form-group">
-                                                    <label>ประเภทการติดตาม : <span class="text-danger">*</span></label>
-                                                    <select class="form-control" id="txtRole" name="txtRole">
-                                                        <option value="">-- เลือกประเภท --</option>
-                                                        <option value="VOT" <?php if($selected_user['patient_type'] == 'VOT'){ echo "selected"; } ?>>ผู้ป่วย (VOT)</option>
-                                                        <option value="DOT" <?php if($selected_user['patient_type'] == 'DOT'){ echo "selected"; } ?>>ผู้ป่วย (DOT)</option>
-                                                    </select>
-                                                </div>
                                                 
                                                 <div class="form-group">
                                                     <div class="controls">
@@ -311,34 +301,11 @@ $selected_location = $db->fetch($strSQL, false);
 
                                             </div>
                                             <div class="col-12 col-sm-6">
-
                                                 <div class="form-group">
-                                                    <label>หน่วย/สถานบริการที่ขึ้นทะเบียนผู้ป่วย : <span class="text-danger">*</span></label>
+                                                    <label>หน่วย/สถานบริการ : <span class="text-danger">*</span></label>
                                                     <div class="select-error">
-                                                        <select name="txtHcodeReg" id="txtHcodeReg" data-required class="form-control select2">
-                                                            <option value="">-- เลือกหน่วยบริการที่ขึ้นทะเบียนผู้ป่วย --</option>
-                                                            <?php 
-                                                            $strSQL = "SELECT vot2_projecthospital.* FROM vot2_projecthospital 
-                                                            WHERE phosstatus = 'Y' ORDER BY hserv";
-                                                            $result_list = $db->fetch($strSQL, true, false);
-                                                            if($result_list['status']){
-                                                                $c = 1;
-                                                                foreach($result_list['data'] as $row){
-                                                                    ?>
-                                                                    <option value="<?php echo $row['phoscode'];?>" <?php if($row['phoscode'] == $selected_user['reg_hcode']){ echo "selected"; } ?>>[<?php echo $row['phoscode'];?>] <?php echo $row['hserv'];?></option>
-                                                                    <?php
-                                                                }
-                                                            }
-                                                            ?>
-                                                        </select>
-                                                    </div>
-                                                </div>
-
-                                                <div class="form-group">
-                                                    <label>หน่วย/สถานบริการสุขภาพที่ตรวจติดตาม : <span class="text-danger">*</span></label>
-                                                    <div class="select-error">
-                                                        <select name="txtHcodeManage" id="txtHcodeManage" data-required class="form-control select2">
-                                                            <option value="">-- เลือกหน่วยบริการที่ตรวจติดตาม --</option>
+                                                        <select name="txtHcode" id="txtHcode" data-required class="form-control select2">
+                                                            <option value="">-- เลือกหน่วยบริการ --</option>
                                                             <?php 
                                                             $strSQL = "SELECT vot2_projecthospital.* FROM vot2_projecthospital 
                                                             WHERE phosstatus = 'Y' ORDER BY hserv";
@@ -354,31 +321,16 @@ $selected_location = $db->fetch($strSQL, false);
                                                             ?>
                                                         </select>
                                                     </div>
+                                                    
                                                 </div>
-
                                                 <div class="form-group">
-                                                    <label>หน่วย/สถานบริการสุขภาพของพี่เลี้ยง : <span class="text-danger">*</span></label>
-                                                    <div class="select-error">
-                                                        <select name="txtHcodeObs" id="txtHcodeObs" data-required class="form-control select2">
-                                                            <option value="">-- เลือกหน่วยบริการของพี่เลี้ยง --</option>
-                                                            <?php 
-                                                            $strSQL = "SELECT vot2_projecthospital.* FROM vot2_projecthospital 
-                                                            WHERE phosstatus = 'Y' ORDER BY hserv";
-                                                            $result_list = $db->fetch($strSQL, true, false);
-                                                            if($result_list['status']){
-                                                                $c = 1;
-                                                                foreach($result_list['data'] as $row){
-                                                                    ?>
-                                                                    <option value="<?php echo $row['phoscode'];?>" <?php if($row['phoscode'] == $selected_user['obs_hcode']){ echo "selected"; } ?>>[<?php echo $row['phoscode'];?>] <?php echo $row['hserv'];?></option>
-                                                                    <?php
-                                                                }
-                                                            }
-                                                            ?>
-                                                        </select>
-                                                    </div>
+                                                    <label>ประเภทการติดตาม : <span class="text-danger">*</span></label>
+                                                    <select class="form-control" id="txtRole" name="txtRole">
+                                                        <option value="">-- เลือกประเภท --</option>
+                                                        <option value="VOT" <?php if($selected_user['patient_type'] == 'VOT'){ echo "selected"; } ?>>ผู้ป่วย (VOT)</option>
+                                                        <option value="DOT" <?php if($selected_user['patient_type'] == 'DOT'){ echo "selected"; } ?>>ผู้ป่วย (DOT)</option>
+                                                    </select>
                                                 </div>
-
-                                               
                                                 
                                                 <div class="row">
                                                     <div class="form-group col-12 col-sm-6">
@@ -430,19 +382,6 @@ $selected_location = $db->fetch($strSQL, false);
                                                         <label>อำเภอ : <span class="text-danger">*</span></label>
                                                         <select id="txtDist" name="txtDist" class="form-control">
                                                             <option value="">-- เลือกอำเภอ --</option>
-                                                            <?php 
-                                                            $strSQL = "SELECT * FROM vot2_ampur 
-                                                            WHERE Changwat = '".$selected_user['info_prov']."' ORDER BY Name ASC";
-                                                            $result_list = $db->fetch($strSQL, true, false);
-                                                            if($result_list['status']){
-                                                                $c = 1;
-                                                                foreach($result_list['data'] as $row){
-                                                                    ?>
-                                                                    <option value="<?php echo $row['Ampur'];?>" <?php if($selected_user['info_district'] == $row['Ampur']){ echo "selected";} ?>>[<?php echo $row['Ampur'];?>] <?php echo $row['Name'];?></option>
-                                                                    <?php
-                                                                }
-                                                            }
-                                                            ?>
                                                         </select>
                                                     </div>
 
@@ -465,8 +404,7 @@ $selected_location = $db->fetch($strSQL, false);
                                 </div>
                                 <div class="tab-pane fade show" id="information" aria-labelledby="information-tab" role="tabpanel">
                                     <!-- users edit Info form start -->
-                                    <!-- <form class="passwordform" method="post" action="https://thvot.com/thvotweb/app/controller/user?stage=updatemonitor" onsubmit="return admin_user.check_date_form();"> -->
-                                    <form class="passwordform" onsubmit="admin_user.check_date_form(); return false;">
+                                    <form class="passwordform" method="post" action="../../../controller/user?stage=updatemonitor" onsubmit="return admin_user.check_date_form();">
                                         <div class="row">
 
                                             <div class="col-12 col-sm-6" style="display: none;">
@@ -477,6 +415,7 @@ $selected_location = $db->fetch($strSQL, false);
                                             </div>
 
                                             <div class="col-12 col-sm-6">
+
                                                 <div class="mb-1">
                                                     <h6>วันที่เริ่มติดตาม : <span class="text-danger">*</span> </h6>
                                                     <fieldset class="form-group position-relative has-icon-left">
@@ -490,10 +429,11 @@ $selected_location = $db->fetch($strSQL, false);
                                             </div>
 
                                             <div class="col-12 col-sm-6">
+
                                                 <div class="mb-1">
                                                     <h6>วันสิ้นสุดการของติดตาม : <span class="text-danger">*</span> </h6>
                                                     <fieldset class="form-group position-relative has-icon-left">
-                                                        <input type="text" class="form-control pickadate" placeholder="Select Date" id="txtEndmonitor" name="txtEndmonitor" value="<?php echo $selected_user['cal_end_obsdate'];?>">
+                                                        <input type="text" class="form-control pickadate" placeholder="Select Date" id="txtEndmonitor" name="txtEndmonitor" value="<?php echo $selected_user['end_obsdate'];?>">
                                                         <div class="form-control-position">
                                                             <i class='bx bx-calendar'></i>
                                                         </div>
@@ -521,6 +461,7 @@ $selected_location = $db->fetch($strSQL, false);
                                           <button class="btn mr-2" style="widht: 20px; height:20px; background-color: #b10000; border: solid; border-width: 2px 2px 2px 2px; border-color: #b10000;"></button> ผู้ป่วยส่งวิดีโอแล้วแต่ไม่มีการติดตามการกินยา<br>
                                           <button class="btn mr-2" style="widht: 20px; height:20px; background-color: #fff; border: solid; border-width: 2px 2px 2px 2px; border-color: #b10000;"></button> ผู้ป่วยส่งวิดีโอแล้วแต่ไม่สามารดำเนินการกำกับการกินยาได้ <br>
                                           <button class="btn mr-2" style="widht: 20px; height:20px; background-color: #02b869; border: solid; border-width: 2px 2px 2px 2px; border-color: #02b869;"></button> ผู้ป่วยส่งวิดีโอและกำกับการกินยาเรียบร้อย<br>
+
                                           <button class="btn mr-2" style="widht: 20px; height:20px; background-color: #000; border: solid; border-width: 2px 2px 2px 2px; border-color: #000;"></button> ช่วงที่ผู้ป่วยหยุดยาเนื่องจากมีข้อบ่งชี้<br>
                                           <button class="btn pl-0 mr-2" style="widht: 20px; height:20px; background-color: #fff; border: solid; border-width: 0px; border-color: #fff;"><i class="bx bxs-phone-call"></i></button> มีการติดต่อกับผู้ป่วย<br>
                                         </div>
@@ -576,9 +517,9 @@ $selected_location = $db->fetch($strSQL, false);
                                 </div>
                                 <div class="tab-pane fade show" id="password" aria-labelledby="information-tab" role="tabpanel">
                                     <!-- users edit Info form start -->
-                                    <!-- <form class="passwordform"  onsubmit="return admin_user.check_password_form(); return false;"> -->
-                                    <form class="passwordform"  onsubmit="admin_user.check_password_form(); return false;">
+                                    <form class="passwordform" method="post" action="../../../controller/user?stage=updatepassword" onsubmit="return admin_user.check_password_form();">
                                         <div class="row">
+
                                             <div class="col-12 col-sm-6" style="display: none;">
                                                 <div class="form-group">
                                                     <label>UID : <span class="text-danger">*</span></label>
@@ -861,14 +802,37 @@ $selected_location = $db->fetch($strSQL, false);
             });
 
             $(function(){
-                
-            })
+                $('#txtProvince').change(function(){
+                    $('#txtDist').empty()
+                    $('#txtSubdist').empty()
 
-            $(document).ready(function(){
-                $('#txtDist').trigger('change')
-                setTimeout(() => {
-                    $('#txtSubdist').val('<?php echo $selected_user['info_subdistrict'];?>')
-                }, 1000);
+                    $('#txtDist').append('<option value="">-- เลือกอำเภอ --</option>')
+                    $('#txtSubdist').append('<option value="">-- เลือกตำบล --</option>')
+
+                    var jxt = $.post('../../../api/core-api?stage=district', {province : $('#txtProvince').val()}, function(){}, 'json')
+                            .always(function(snap){
+                                if(snap.status == 'Success'){
+                                snap.data.forEach(i => {
+                                    $('#txtDist').append('<option value="' + i.Ampur + '">' + i.Name + '</option>')
+                                });
+                                }
+                            })
+                    })
+
+                $('#txtDist').change(function(){
+                    $('#txtSubdist').empty()
+                    $('#txtSubdist').append('<option value="">-- เลือกตำบล --</option>')
+
+                    var jxt = $.post('../../../api/core-api?stage=subdistrict', {province : $('#txtProvince').val(), dist: $('#txtDist').val() }, function(){}, 'json')
+                            .always(function(snap){
+                                console.log(snap);
+                                if(snap.status == 'Success'){
+                                snap.data.forEach(i => {
+                                    $('#txtSubdist').append('<option value="' + i.Tumbon + '">' + i.Name + '</option>')
+                                });
+                                }
+                            })
+                })
             })
     </script>
 

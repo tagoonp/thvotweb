@@ -463,15 +463,11 @@ if($stage == 'updatepassword'){
         (!(isset($_REQUEST['puid']))) ||
         (!(isset($_REQUEST['password'])))
     ){
-        $db->close();
+        $return['status'] = 'Fail';
+        $return['error_stage'] = '1';
+        echo json_encode($return);
+        $db->close(); 
         die();
-        ?>
-        <script>
-            alert('Can not create new account');
-            window.history.back()
-        </script>
-        <?php
-       
     }
     $uid = mysqli_real_escape_string($conn, $_REQUEST['uid']);
     $puid = mysqli_real_escape_string($conn, $_POST['puid']);
@@ -488,13 +484,9 @@ if($stage == 'updatepassword'){
                     ";
     $db->insert($strSQL, false);
 
-    ?>
-    <script>
-        alert('ปรับปรุงรหัสผ่านสำเร็จ');
-        window.history.back()
-    </script>
-    <?php
-    $db->close();
+    $return['status'] = 'Success';
+    echo json_encode($return);
+    $db->close(); 
     die();
 }
 

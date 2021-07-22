@@ -476,12 +476,10 @@ if($stage == 'updatemonitor'){
     $start = mysqli_real_escape_string($conn, $_POST['start_mon']);
     $end = mysqli_real_escape_string($conn, $_POST['end_mon']);
 
-    $strSQL = "UPDATE vot2_account SET start_obsdate = '$start', end_obsdate = '$end', cal_end_obsdate = '$end' WHERE uid = '$uid'";
+    $strSQL = "UPDATE vot2_account SET start_obsdate = '$start', end_obsdate = '$end', cal_end_obsdate = '$end' WHERE uid = '$puid'";
     $db->execute($strSQL);
 
-    $strSQL = "INSERT INTO vot2_log (`log_datetime`, `log_info`, `log_message`, `log_ip`, `log_uid`)
-                    VALUES ('$datetime', 'ปรับปรุงวันที่เริ่มและสิ้นสุดการติดตาม', 'Target UID > $uid', '$remote_ip', '".$_SESSION['thvot_uid']."')
-                    ";
+    $strSQL = "INSERT INTO vot2_log (`log_datetime`, `log_info`, `log_message`, `log_ip`, `log_uid`) VALUES ('$datetime', 'ปรับปรุงวันที่เริ่มและสิ้นสุดการติดตาม', 'Target UID > $puid', '$remote_ip', '$uid')";
     $db->insert($strSQL, false);
     $return['status'] = 'Success';
     echo json_encode($return);

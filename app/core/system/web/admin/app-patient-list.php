@@ -165,7 +165,7 @@ $menu = 7;
                                                 <th>เปิด/ปิดการใช้งาน</th>
                                                 <th>วันที่เริ่มติดตาม</th>
                                                 <th>วันสิ้นสุดการติดตาม</th>
-                                                <th style="width: 90px;"></th>
+                                                <th style="width: 120px;"></th>
                                             </tr>
                                         </thead>
                                         <tbody>

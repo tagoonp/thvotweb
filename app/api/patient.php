@@ -476,7 +476,7 @@ if($stage == 'updatemonitor'){
     $start = mysqli_real_escape_string($conn, $_POST['start_mon']);
     $end = mysqli_real_escape_string($conn, $_POST['end_mon']);
 
-    $strSQL = "UPDATE vot2_account SET start_obsdate = '$start', end_obsdate = '$end' WHERE uid = '$uid'";
+    $strSQL = "UPDATE vot2_account SET start_obsdate = '$start', end_obsdate = '$end', cal_end_obsdate = '$end' WHERE uid = '$uid'";
     $db->execute($strSQL);
 
     $strSQL = "INSERT INTO vot2_log (`log_datetime`, `log_info`, `log_message`, `log_ip`, `log_uid`)

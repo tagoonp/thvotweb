@@ -415,7 +415,7 @@ var admin_user = {
         var param = {
             csdate: $('#txtStartmonitor').val()
         }
-        var jxr = $.post('https://thvot.com/thvotweb/app/api/core-api?stage=check4month', param, function(){})
+        var jxr = $.post('https://thvot.com/thvotweb/app/api/core-api?stage=check2month', param, function(){})
                    .always(function(resp){
                        $('#txtEndmonitor').val(resp)
                    })

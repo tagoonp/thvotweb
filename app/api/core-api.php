@@ -96,7 +96,7 @@ if($stage == 'activity_list'){
 
 }
 
-if($stage == 'check4month'){
+if($stage == 'check2month'){
 
     if(
         (!isset($_REQUEST['csdate']))

@@ -457,6 +457,38 @@ if($stage == 'patient_update_info'){
     }
 }
 
+if($stage == 'updatemonitor'){
+    if(
+        (!(isset($_POST['puid']))) ||
+        (!(isset($_POST['uid']))) ||
+        (!(isset($_POST['start_mon']))) ||
+        (!(isset($_POST['end_mon'])))
+    ){
+        $return['status'] = 'Fail';
+        $return['error_stage'] = '1';
+        echo json_encode($return);
+        $db->close(); 
+        die();
+    }
+
+    $puid = mysqli_real_escape_string($conn, $_POST['puid']);
+    $uid = mysqli_real_escape_string($conn, $_POST['uid']);
+    $start = mysqli_real_escape_string($conn, $_POST['start_mon']);
+    $end = mysqli_real_escape_string($conn, $_POST['end_mon']);
+
+    $strSQL = "UPDATE vot2_account SET start_obsdate = '$start', end_obsdate = '$end' WHERE uid = '$uid'";
+    $db->execute($strSQL);
+
+    $strSQL = "INSERT INTO vot2_log (`log_datetime`, `log_info`, `log_message`, `log_ip`, `log_uid`)
+                    VALUES ('$datetime', 'ปรับปรุงวันที่เริ่มและสิ้นสุดการติดตาม', 'Target UID > $uid', '$remote_ip', '".$_SESSION['thvot_uid']."')
+                    ";
+    $db->insert($strSQL, false);
+    $return['status'] = 'Success';
+    echo json_encode($return);
+    $db->close(); 
+    die();
+}
+
 if($stage == 'patient_delete'){
     if(
         (!isset($_GET['uid'])) ||

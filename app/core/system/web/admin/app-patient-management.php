@@ -493,7 +493,8 @@ $selected_location = $db->fetch($strSQL, false);
                                 </div>
                                 <div class="tab-pane fade show" id="information" aria-labelledby="information-tab" role="tabpanel">
                                     <!-- users edit Info form start -->
-                                    <form class="passwordform" method="post" action="https://thvot.com/thvotweb/app/controller/user?stage=updatemonitor" onsubmit="return admin_user.check_date_form();">
+                                    <!-- <form class="passwordform" method="post" action="https://thvot.com/thvotweb/app/controller/user?stage=updatemonitor" onsubmit="return admin_user.check_date_form();"> -->
+                                    <form class="passwordform" onsubmit="admin_user.check_date_form(); return false;">
                                         <div class="row">
 
                                             <div class="col-12 col-sm-6" style="display: none;">
@@ -504,7 +505,6 @@ $selected_location = $db->fetch($strSQL, false);
                                             </div>
 
                                             <div class="col-12 col-sm-6">
-
                                                 <div class="mb-1">
                                                     <h6>วันที่เริ่มติดตาม : <span class="text-danger">*</span> </h6>
                                                     <fieldset class="form-group position-relative has-icon-left">
@@ -518,11 +518,10 @@ $selected_location = $db->fetch($strSQL, false);
                                             </div>
 
                                             <div class="col-12 col-sm-6">
-
                                                 <div class="mb-1">
                                                     <h6>วันสิ้นสุดการของติดตาม : <span class="text-danger">*</span> </h6>
                                                     <fieldset class="form-group position-relative has-icon-left">
-                                                        <input type="text" class="form-control pickadate" placeholder="Select Date" id="txtEndmonitor" name="txtEndmonitor" value="<?php echo $selected_user['end_obsdate'];?>">
+                                                        <input type="text" class="form-control pickadate" placeholder="Select Date" id="txtEndmonitor" name="txtEndmonitor" value="<?php echo $selected_user['cal_end_obsdate'];?>">
                                                         <div class="form-control-position">
                                                             <i class='bx bx-calendar'></i>
                                                         </div>
@@ -890,37 +889,7 @@ $selected_location = $db->fetch($strSQL, false);
             });
 
             $(function(){
-                // $('#txtProvince').change(function(){
-                //     $('#txtDist').empty()
-                //     $('#txtSubdist').empty()
-
-                //     $('#txtDist').append('<option value="">-- เลือกอำเภอ --</option>')
-                //     $('#txtSubdist').append('<option value="">-- เลือกตำบล --</option>')
-
-                //     var jxt = $.post('https://thvot.com/thvotweb/app/api/core-api?stage=district', {province : $('#txtProvince').val()}, function(){}, 'json')
-                //             .always(function(snap){
-                //                 if(snap.status == 'Success'){
-                //                 snap.data.forEach(i => {
-                //                     $('#txtDist').append('<option value="' + i.Ampur + '">' + i.Name + '</option>')
-                //                 });
-                //                 }
-                //             })
-                //     })
-
-                // $('#txtDist').change(function(){
-                //     $('#txtSubdist').empty()
-                //     $('#txtSubdist').append('<option value="">-- เลือกตำบล --</option>')
-
-                //     var jxt = $.post('https://thvot.com/thvotweb/app/api/core-api?stage=subdistrict', {province : $('#txtProvince').val(), dist: $('#txtDist').val() }, function(){}, 'json')
-                //             .always(function(snap){
-                //                 console.log(snap);
-                //                 if(snap.status == 'Success'){
-                //                 snap.data.forEach(i => {
-                //                     $('#txtSubdist').append('<option value="' + i.Tumbon + '">' + i.Name + '</option>')
-                //                 });
-                //                 }
-                //             })
-                // })
+                
             })
 
             $(document).ready(function(){

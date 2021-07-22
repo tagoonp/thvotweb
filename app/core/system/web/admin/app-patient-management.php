@@ -136,7 +136,7 @@ $selected_location = $db->fetch($strSQL, false);
      
                         <li class="nav-item d-none d-lg-block"><a class="nav-link nav-link-expand"><i class="ficon bx bx-fullscreen"></i></a></li>
                         <?php 
-                        require("./control/notification.php");
+                        // require("./control/notification.php");
                         require("./control/profile_menu.php");
                         ?>
                         

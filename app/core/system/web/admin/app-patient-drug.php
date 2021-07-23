@@ -39,8 +39,6 @@ $_SESSION['thvot_session'] = session_id();
 
 $menu = 7;
 
-$menu = 7;
-
 require('../../../../config/user.inc.php'); 
 
 
@@ -205,436 +203,138 @@ $selected_location = $db->fetch($strSQL, false);
                 <section class="users-edit">
                     <div class="card">
                         <div class="card-body">
-                            <ul class="nav nav-tabs mb-2" role="tablist">
-                                <li class="nav-item">
-                                    <a class="nav-link d-flex align-items-center active" id="account-tab" data-toggle="tab" href="#account" aria-controls="account" role="tab" aria-selected="true">
-                                        <i class="bx bx-user mr-25"></i><span class="d-none d-sm-block">บัญชีผู้ใช้งาน</span>
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link d-flex align-items-center" id="information-tab" data-toggle="tab" href="#information" aria-controls="information" role="tab" aria-selected="false">
-                                        <i class="bx bx-navigation mr-25"></i><span class="d-none d-sm-block">การติดตาม</span>
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link d-flex align-items-center" id="information-tab" data-toggle="tab" href="#calendar" aria-controls="information" role="tab" aria-selected="false">
-                                        <i class="bx bx-calendar mr-25"></i><span class="d-none d-sm-block">ปฏิทินการรับประทานยา</span>
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link d-flex align-items-center" id="information-tab" data-toggle="tab" href="#location" aria-controls="information" role="tab" aria-selected="false">
-                                        <i class="bx bxs-map mr-25"></i><span class="d-none d-sm-block">พิกัดตำแหน่ง</span>
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link d-flex align-items-center" id="information-tab" data-toggle="tab" href="#password" aria-controls="information" role="tab" aria-selected="false">
-                                        <i class="bx bx-key mr-25"></i><span class="d-none d-sm-block">ตั้งรหัสผ่าน</span>
-                                    </a>
-                                </li>
-                            </ul>
-                            <div class="tab-content">
-                                <div class="tab-pane active fade show" id="account" aria-labelledby="account-tab" role="tabpanel">
-                                    <!-- users edit media object start -->
-                                    <div class="media mb-2">
-                                        <a class="mr-2" href="javascript:void(0);">
-                                            <?php 
-                                            if(($selected_user['profile_img'] != NULL) && ($selected_user['profile_img'] != '')){
-                                                ?>
-                                                <img src="<?php echo $selected_user['profile_img']; ?>" alt="users avatar" class="users-avatar-shadow rounded-circle" height="64" width="64">
-                                                <?php
-                                            }else{
-                                                ?>
-                                                <img src="../../../app-assets/images/portrait/small/avatar-s-26.jpg" alt="users avatar" class="users-avatar-shadow rounded-circle" height="64" width="64">
-                                                <?php
-                                            }
-                                            ?>
-                                            
-                                        </a>
-                                        <div class="media-body">
-                                            <h4 class="media-heading"><?php echo $selected_user['fname']." ".$selected_user['lname'];?></h4>
-                                            <div class="col-12 px-0 d-flex">
-                                                <a href="javascript:void(0);" class="btn btn-sm btn-light-secondary">Reset</a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <!-- users edit media object ends -->
-                                    <!-- users edit account form start -->
-                                    <form class="patientupdateform" onsubmit="admin_user.check_patientupdate_form(); return false;" method="post">
-                                        <div class="row">
-                                            <div class="col-12">
+                            
+                            <div class="">
+                                <div class="row">
+                                    <div class="col-9">
+                                        <div class="media mb-2">
+                                            <a class="mr-2" href="javascript:void(0);">
                                                 <?php 
-                                                if($selected_user['start_obsdate'] == null){
+                                                if(($selected_user['profile_img'] != NULL) && ($selected_user['profile_img'] != '')){
                                                     ?>
-                                                    <div class="alert alert-danger alert-dismissible mb-2" role="alert">
-                                                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                                                            <span aria-hidden="true">&times;</span>
-                                                        </button>
-                                                        <div class="d-flex align-items-center">
-                                                            <i class="bx bx-error"></i>
-                                                            <span>
-                                                                ผู้ป่วยยังไม่มีการตั้งค่าวันที่เริ่มและสิ้นสุดการติดตาม
-                                                            </span>
-                                                        </div>
-                                                    </div>
+                                                    <img src="<?php echo $selected_user['profile_img']; ?>" alt="users avatar" class="users-avatar-shadow rounded-circle" height="64" width="64">
+                                                    <?php
+                                                }else{
+                                                    ?>
+                                                    <img src="../../../app-assets/images/portrait/small/avatar-s-26.jpg" alt="users avatar" class="users-avatar-shadow rounded-circle" height="64" width="64">
                                                     <?php
                                                 }
                                                 ?>
+                                            </a>
+                                            <div class="media-body">
+                                                <h4 class="media-heading"><?php echo $selected_user['fname']." ".$selected_user['lname'];?></h4>
                                             </div>
-                                            <div class="col-12 col-sm-6">
+                                        </div>
+                                    </div>
+                                    <div class="col-3 text-right">
+                                        <button class="btn btn-primary"  data-toggle="modal" data-target="#addDrugModal"><i class="bx bx-plus"></i> เพิ่มรายการยา</button>
+                                    </div>
+                                </div>
+                            </div>
 
-                                                <div class="row" style="display: none;">
-                                                    <div class="col-12 col-sm-12">
-                                                        <div class="form-group">
-                                                            <div class="controls">
-                                                                <label>UID : <span class="text-danger">*</span></label>
-                                                                <input type="text" class="form-control" placeholder="" id="txtUid" name="txtUid" readonly value="<?php echo $selected_user['uid'];?>">
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                
-                                                <div class="row">
-                                                    <div class="col-12 col-sm-12">
-                                                        <div class="form-group">
-                                                            <div class="controls">
-                                                                <label>Username : <span class="text-danger">*</span></label>
-                                                                <input type="text" class="form-control" placeholder="" id="txtUsername" name="txtUsername" readonly value="<?php echo $selected_user['username'];?>">
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-
+                            <div class="row">
+                                <!-- Vertically Centered modal Modal -->
+                                <div class="modal fade" id="addDrugModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                                    <div class="modal-dialog modal-dialog-centered modal-dialog-centered modal-dialog-scrollable">
+                                        <div class="modal-content">
+                                            <div class="modal-header bg-dark">
+                                                <h5 class="modal-title text-white th" id="exampleModalCenterTitle"><i class="bx bx-plus"></i> เพิ่มรายการยา</h5>
+                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                    <i class="bx bx-x"></i>
+                                                </button>
+                                            </div>
+                                            <div class="modal-body">
                                                 <div class="form-group">
-                                                    <div class="row">
-                                                        <div class="col-12 col-sm-6">
-                                                            <div class="controls">
-                                                                <label>ชื่อ :</label>
-                                                                <input type="text" class="form-control" placeholder="Name" value="<?php echo $selected_user['fname'];?>" name="txtFname" id="txtFname">
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-12 col-sm-6">
-                                                            <div class="controls">
-                                                                <label>นามสกุล :</label>
-                                                                <input type="text" class="form-control" placeholder="Name" value="<?php echo $selected_user['lname'];?>" name="txtLname" id="txtLname">
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-
-                                                <div class="form-group">
-                                                    <label>ประเภทการติดตาม : <span class="text-danger">*</span></label>
-                                                    <select class="form-control" id="txtRole" name="txtRole">
-                                                        <option value="">-- เลือกประเภท --</option>
-                                                        <option value="VOT" <?php if($selected_user['patient_type'] == 'VOT'){ echo "selected"; } ?>>ผู้ป่วย (VOT)</option>
-                                                        <option value="DOT" <?php if($selected_user['patient_type'] == 'DOT'){ echo "selected"; } ?>>ผู้ป่วย (DOT)</option>
+                                                    <label for="">ชื่อยา : <span class="text-danger">*</span></label>
+                                                    <select name="txtDrug" id="txtDrug" class="form-control">
+                                                        <option value="">-- เลือกยา --</option>
+                                                        <?php 
+                                                        $strSQL = "SELECT * FROM vot2_drug WHERE drug_status = 'Y'";
+                                                        $resDrug = $db->fetch($strSQL, true, false);
+                                                        if(($resDrug) && ($resDrug['status'])){
+                                                            foreach ($resDrug['data'] as $row) {
+                                                                ?>
+                                                                <option value="<?php echo $row['drug_id']; ?>"><?php echo $row['drug_name']; ?></option>
+                                                                <?php
+                                                            }
+                                                        }
+                                                        ?>
                                                     </select>
                                                 </div>
-                                                
-                                                <div class="form-group">
-                                                    <div class="controls">
-                                                        <label>หมายเลขโทรศัพท์ : <span class="text-danger">*</span></label>
-                                                        <input type="text" class="form-control" placeholder="Phone number" name="txtPhone" id="txtPhone" value="<?php echo $selected_user['phone'];?>">
-                                                    </div>
-                                                </div>
-
-                                            </div>
-                                            <div class="col-12 col-sm-6">
 
                                                 <div class="form-group">
-                                                    <label>หน่วย/สถานบริการที่ขึ้นทะเบียนผู้ป่วย : <span class="text-danger">*</span></label>
-                                                    <div class="select-error">
-                                                        <select name="txtHcodeReg" id="txtHcodeReg" data-required class="form-control select2">
-                                                            <option value="">-- เลือกหน่วยบริการที่ขึ้นทะเบียนผู้ป่วย --</option>
-                                                            <?php 
-                                                            $strSQL = "SELECT vot2_projecthospital.* FROM vot2_projecthospital 
-                                                            WHERE phosstatus = 'Y' ORDER BY hserv";
-                                                            $result_list = $db->fetch($strSQL, true, false);
-                                                            if($result_list['status']){
-                                                                $c = 1;
-                                                                foreach($result_list['data'] as $row){
-                                                                    ?>
-                                                                    <option value="<?php echo $row['phoscode'];?>" <?php if($row['phoscode'] == $selected_user['reg_hcode']){ echo "selected"; } ?>>[<?php echo $row['phoscode'];?>] <?php echo $row['hserv'];?></option>
-                                                                    <?php
-                                                                }
-                                                            }
-                                                            ?>
-                                                        </select>
-                                                    </div>
+                                                    <label for="">จำนวนเม็ดต่อวัน : <span class="text-danger">*</span></label>
+                                                    <input type="float" class="form-control" step="0.5" id="txtDrugQ" name="txtDrugQ" min="0">
                                                 </div>
 
                                                 <div class="form-group">
-                                                    <label>หน่วย/สถานบริการสุขภาพที่ตรวจติดตาม : <span class="text-danger">*</span></label>
-                                                    <div class="select-error">
-                                                        <select name="txtHcodeManage" id="txtHcodeManage" data-required class="form-control select2">
-                                                            <option value="">-- เลือกหน่วยบริการที่ตรวจติดตาม --</option>
-                                                            <?php 
-                                                            $strSQL = "SELECT vot2_projecthospital.* FROM vot2_projecthospital 
-                                                            WHERE phosstatus = 'Y' ORDER BY hserv";
-                                                            $result_list = $db->fetch($strSQL, true, false);
-                                                            if($result_list['status']){
-                                                                $c = 1;
-                                                                foreach($result_list['data'] as $row){
-                                                                    ?>
-                                                                    <option value="<?php echo $row['phoscode'];?>" <?php if($row['phoscode'] == $selected_user['hcode']){ echo "selected"; } ?>>[<?php echo $row['phoscode'];?>] <?php echo $row['hserv'];?></option>
-                                                                    <?php
-                                                                }
-                                                            }
-                                                            ?>
-                                                        </select>
-                                                    </div>
-                                                </div>
-
-                                                <div class="form-group">
-                                                    <label>หน่วย/สถานบริการสุขภาพของพี่เลี้ยง : <span class="text-danger">*</span></label>
-                                                    <div class="select-error">
-                                                        <select name="txtHcodeObs" id="txtHcodeObs" data-required class="form-control select2">
-                                                            <option value="">-- เลือกหน่วยบริการของพี่เลี้ยง --</option>
-                                                            <?php 
-                                                            $strSQL = "SELECT vot2_projecthospital.* FROM vot2_projecthospital 
-                                                            WHERE phosstatus = 'Y' ORDER BY hserv";
-                                                            $result_list = $db->fetch($strSQL, true, false);
-                                                            if($result_list['status']){
-                                                                $c = 1;
-                                                                foreach($result_list['data'] as $row){
-                                                                    ?>
-                                                                    <option value="<?php echo $row['phoscode'];?>" <?php if($row['phoscode'] == $selected_user['obs_hcode']){ echo "selected"; } ?>>[<?php echo $row['phoscode'];?>] <?php echo $row['hserv'];?></option>
-                                                                    <?php
-                                                                }
-                                                            }
-                                                            ?>
-                                                        </select>
-                                                    </div>
-                                                </div>
-
-                                               
-                                                
-                                                <div class="row">
-                                                    <div class="form-group col-12 col-sm-6">
-                                                        <label>สถานะการใช้งาน : <span class="text-danger">*</span></label>
-                                                        <select class="form-control" id="txtStatus" name="txtStatus">
-                                                            <option value="" selected>-- เลือกสถานะ --</option>
-                                                            <option value="1" <?php if($selected_user['active_status'] == '1'){ echo "selected"; } ?>>เปิดใช้งาน</option>
-                                                            <option value="0" <?php if($selected_user['active_status'] == '0'){ echo "selected"; } ?>>ปิดใช้งาน</option>
-                                                        </select>
-                                                    </div>
-                                                    <div class="form-group col-12 col-sm-6">
-                                                        <label>สถานะการตรวจสอบบัญชีผู้ใช้ : <span class="text-danger">*</span></label>
-                                                        <select class="form-control" id="txtVerify" name="txtVerify">
-                                                            <option value="" selected>-- เลือกสถานะ --</option>
-                                                            <option value="1" <?php if($selected_user['verify_status'] == '1'){ echo "selected"; } ?>>ยืนยันแล้ว</option>
-                                                            <option value="0" <?php if($selected_user['verify_status'] == '0'){ echo "selected"; } ?>>รอการยืนยัน</option>
-                                                        </select>
-                                                    </div>
-                                                </div>
-                                                
-                                                
-                                            </div>
-
-                                            <div class="col-12">
-                                                <hr>
-                                                <h5 class="text-bold-600">ที่อยู่ของผู้ป่วย</h5>
-                                                <div class="row">
-                                                    <div class="form-group col-12 col-sm-4">
-                                                        <label>จังหวัด : <span class="text-danger">*</span></label>
-                                                        <select id="txtProvince" name="txtProvince" class="form-control">
-                                                            <option value="">-- เลือกจังหวัด --</option>
-                                                            <?php 
-                                                            $strSQL = "SELECT * FROM vot2_changwat 
-                                                            WHERE Changwat in (SELECT ap_code FROM vot2_active_province WHERE 1) ORDER BY Name ASC";
-                                                            $result_list = $db->fetch($strSQL, true, false);
-                                                            if($result_list['status']){
-                                                                $c = 1;
-                                                                foreach($result_list['data'] as $row){
-                                                                    ?>
-                                                                    <option value="<?php echo $row['Changwat'];?>" <?php if($selected_user['info_prov'] == $row['Changwat']){ echo "selected";} ?>>[<?php echo $row['Changwat'];?>] <?php echo $row['Name'];?></option>
-                                                                    <?php
-                                                                }
-                                                            }
-                                                            ?>
-                                                        </select>
-                                                    </div>
-
-                                                    <div class="form-group col-12 col-sm-4">
-                                                        <label>อำเภอ : <span class="text-danger">*</span></label>
-                                                        <select id="txtDist" name="txtDist" class="form-control">
-                                                            <option value="">-- เลือกอำเภอ --</option>
-                                                            <?php 
-                                                            $strSQL = "SELECT * FROM vot2_ampur 
-                                                            WHERE Changwat = '".$selected_user['info_prov']."' ORDER BY Name ASC";
-                                                            $result_list = $db->fetch($strSQL, true, false);
-                                                            if($result_list['status']){
-                                                                $c = 1;
-                                                                foreach($result_list['data'] as $row){
-                                                                    ?>
-                                                                    <option value="<?php echo $row['Ampur'];?>" <?php if($selected_user['info_district'] == $row['Ampur']){ echo "selected";} ?>>[<?php echo $row['Ampur'];?>] <?php echo $row['Name'];?></option>
-                                                                    <?php
-                                                                }
-                                                            }
-                                                            ?>
-                                                        </select>
-                                                    </div>
-
-                                                    <div class="form-group col-12 col-sm-4">
-                                                        <label>ตำบล : <span class="text-danger">*</span></label>
-                                                        <select id="txtSubdist" name="txtSubdist" class="form-control">
-                                                            <option value="">-- เลือกตำบล --</option>
-                                                        </select>
-                                                    </div>
-                                                </div>
-                                            </div>
-
-
-                                            <div class="col-12 d-flex flex-sm-row flex-column justify-content-end mt-1">
-                                                <button type="submit" class="btn btn-primary glow mb-1 mb-sm-0 mr-0 mr-sm-1">บันทึก</button>
-                                            </div>
-                                        </div>
-                                    </form>
-                                    <!-- users edit account form ends -->
-                                </div>
-                                <div class="tab-pane fade show" id="information" aria-labelledby="information-tab" role="tabpanel">
-                                    <!-- users edit Info form start -->
-                                    <!-- <form class="passwordform" method="post" action="https://thvot.com/thvotweb/app/controller/user?stage=updatemonitor" onsubmit="return admin_user.check_date_form();"> -->
-                                    <form class="passwordform" onsubmit="admin_user.check_date_form(); return false;">
-                                        <div class="row">
-
-                                            <div class="col-12 col-sm-6" style="display: none;">
-                                                <div class="form-group">
-                                                    <label>UID : <span class="text-danger">*</span></label>
-                                                    <input class="form-control" type="text" id="txtMonitorUid" name="txtMonitorUid" value="<?php echo $selected_user['uid'];?>">
-                                                </div>
-                                            </div>
-
-                                            <div class="col-12 col-sm-6">
-                                                <div class="mb-1">
-                                                    <h6>วันที่เริ่มติดตาม : <span class="text-danger">*</span> </h6>
-                                                    <fieldset class="form-group position-relative has-icon-left">
-                                                        <input type="text" class="form-control pickadate" placeholder="Select Date" id="txtStartmonitor" name="txtStartmonitor" value="<?php echo $selected_user['start_obsdate'];?>">
-                                                        <div class="form-control-position">
-                                                            <i class='bx bx-calendar'></i>
-                                                        </div>
-                                                    </fieldset>
-                                                </div>
-                                                
-                                            </div>
-
-                                            <div class="col-12 col-sm-6">
-                                                <div class="mb-1">
-                                                    <h6>วันสิ้นสุดการของติดตาม : <span class="text-danger">*</span> </h6>
-                                                    <fieldset class="form-group position-relative has-icon-left">
-                                                        <input type="text" class="form-control pickadate" placeholder="Select Date" id="txtEndmonitor" name="txtEndmonitor" value="<?php echo $selected_user['cal_end_obsdate'];?>">
-                                                        <div class="form-control-position">
-                                                            <i class='bx bx-calendar'></i>
-                                                        </div>
-                                                    </fieldset>
-                                                    <p><a href="Javascript:admin_user.calculate_findate()">คลิกที่นี่</a> เพื่อให้ระบบคำนวณอัตโนมัติจากวันเริ่มต้น</p>
+                                                    <label for="">คำชี้แจง/หมายเหตุ : </label>
+                                                    <textarea name="txtDrugInfo" id="txtDrugInfo" cols="30" rows="10" class="form-control" style="height: 100px;"></textarea>
                                                 </div>
 
                                             </div>
-                                            
-                                            <div class="col-12 d-flex flex-sm-row flex-column justify-content-end mt-1">
-                                                <button type="submit" class="btn btn-primary glow mb-1 mb-sm-0 mr-0 mr-sm-1">บันทึก</button>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-light-secondary" data-dismiss="modal" onclick="resetDrugForm()">
+                                                    <i class="bx bx-x d-block d-sm-none"></i>
+                                                    <span class="d-none d-sm-block">ปิด</span>
+                                                </button>
+                                                <button type="button" class="btn btn-primary ml-1" onclick="saveDrugForm()">
+                                                    <i class="bx bx-check d-block d-sm-none"></i>
+                                                    <span class="d-none d-sm-block">บันทึก</span>
+                                                </button>
                                             </div>
-                                        </div>
-                                    </form>
-                                    <!-- users edit Info form ends -->
-                                </div>
-
-                                <div class="tab-pane fade show" id="calendar" aria-labelledby="calendar-tab" role="tabpanel">
-                                    <div id="calendar" class="calendar-content"></div>
-
-                                    <div class="row">
-                                        <div class="col-12 pt-2">
-                                          <button class="btn mr-2" style="widht: 20px; height:20px; background-color: #ff8400; border: solid; border-width: 2px 2px 2px 2px; border-color: #ff8400;"></button> ผู้ป่วยไม่ส่งวิดีโอและไม่มีการติดตาม <br>
-                                          <button class="btn mr-2" style="widht: 20px; height:20px; background-color: #fff; border: solid; border-width: 2px 2px 2px 2px; border-color: #ff8400;"></button> ผู้ป่วยไม่ส่งวิดีโอและไม่สามารถติดตามได้ <br>
-                                          <button class="btn mr-2" style="widht: 20px; height:20px; background-color: #b10000; border: solid; border-width: 2px 2px 2px 2px; border-color: #b10000;"></button> ผู้ป่วยส่งวิดีโอแล้วแต่ไม่มีการติดตามการกินยา<br>
-                                          <button class="btn mr-2" style="widht: 20px; height:20px; background-color: #fff; border: solid; border-width: 2px 2px 2px 2px; border-color: #b10000;"></button> ผู้ป่วยส่งวิดีโอแล้วแต่ไม่สามารดำเนินการกำกับการกินยาได้ <br>
-                                          <button class="btn mr-2" style="widht: 20px; height:20px; background-color: #02b869; border: solid; border-width: 2px 2px 2px 2px; border-color: #02b869;"></button> ผู้ป่วยส่งวิดีโอและกำกับการกินยาเรียบร้อย<br>
-                                          <button class="btn mr-2" style="widht: 20px; height:20px; background-color: #000; border: solid; border-width: 2px 2px 2px 2px; border-color: #000;"></button> ช่วงที่ผู้ป่วยหยุดยาเนื่องจากมีข้อบ่งชี้<br>
-                                          <button class="btn pl-0 mr-2" style="widht: 20px; height:20px; background-color: #fff; border: solid; border-width: 0px; border-color: #fff;"><i class="bx bxs-phone-call"></i></button> มีการติดต่อกับผู้ป่วย<br>
                                         </div>
                                     </div>
                                 </div>
 
-                                <div class="tab-pane fade show" id="location" aria-labelledby="information-tab" role="tabpanel">
-                                    <!-- users edit Info form start -->
-                                    <form class="locationform" method="post" action="#">
-                                        <div class="row">
-
-                                            <div class="col-12 col-sm-6" style="display: none;">
-                                                <div class="form-group">
-                                                    <label>UID : <span class="text-danger">*</span></label>
-                                                    <input class="form-control" type="text" id="txtLocationUid" name="txtLocationUid" value="<?php echo $selected_user['uid'];?>">
-                                                </div>
-                                            </div>
-
-                                            <div class="col-12">
-                                                <div class="alert bg-rgba-danger alert-dismissible mb-2" role="alert">
-                                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                                                        <span aria-hidden="true">&times;</span>
-                                                    </button>
-                                                    <div class="d-flex align-items-center">
-                                                        <i class="bx bx-error"></i>
-                                                        <span>
-                                                        ใช้ Application เพื่อทำการบันทึกพิกัด
-                                                        </span>
-                                                    </div>
-                                                </div>
-                                            </div>
-
-                                            <div class="col-12 col-sm-6">
-                                                <div class="form-group">
-                                                    <label>ละติจูด : <span class="text-danger">*</span></label>
-                                                    <input class="form-control" type="text" readonly id="txtLat" name="txtLat" value="<?php if($selected_location){ echo $selected_location['loc_lat']; }?>">
-                                                </div>
-                                            </div>
-
-                                            <div class="col-12 col-sm-6">
-                                                <div class="form-group">
-                                                    <label>ลองติจูด : <span class="text-danger">*</span></label>
-                                                    <input class="form-control" type="text" readonly id="txtLng" name="txtLng" value="<?php if($selected_location){ echo $selected_location['loc_lng']; }?>">
-                                                </div>
-                                            </div>
-
-                                            <div class="col-12">
-                                                <p><a href="Javascript:admin_user.resetLocation('<?php echo $selected_user['uid'];?>')" class="text-danger">- คลิกที่นี่ -</a> เพื่อทำการรีเซ็ตการบันทึกพิกัดของผู้ป่วย</p>
-                                            </div>
-                                        </div>
-                                    </form>
-                                    <!-- users edit Info form ends -->
-                                </div>
-                                <div class="tab-pane fade show" id="password" aria-labelledby="information-tab" role="tabpanel">
-                                    <!-- users edit Info form start -->
-                                    <!-- <form class="passwordform"  onsubmit="return admin_user.check_password_form(); return false;"> -->
-                                    <form class="passwordform"  onsubmit="admin_user.check_password_form(); return false;">
-                                        <div class="row">
-                                            <div class="col-12 col-sm-6" style="display: none;">
-                                                <div class="form-group">
-                                                    <label>UID : <span class="text-danger">*</span></label>
-                                                    <input class="form-control" type="password" id="txtPasswordUid" name="txtPasswordUid" value="<?php echo $selected_user['uid'];?>">
-                                                </div>
-                                            </div>
-
-                                            <div class="col-12 col-sm-6">
-                                                <div class="form-group">
-                                                    <h6>ตั้งรหัสผ่านใหม่ : <span class="text-danger">*</span></h6>
-                                                    <input class="form-control" type="password" id="txtPassword1" name="txtPassword1">
-                                                </div>
-                                            </div>
-
-                                            <div class="col-12 col-sm-6">
-                                                <div class="form-group">
-                                                    <h6>ยืนยันรหัสผ่านใหม่ : <span class="text-danger">*</span></h6>
-                                                    <input class="form-control" type="password" id="txtPassword2" name="txtPassword2">
-                                                </div>
-                                            </div>
-                                            
-                                            <div class="col-12 d-flex flex-sm-row flex-column justify-content-end mt-1">
-                                                <button type="submit" class="btn btn-primary glow mb-1 mb-sm-0 mr-0 mr-sm-1">บันทึก</button>
-                                                <button type="reset" class="btn btn-light">รีเซ็ต</button>
-                                            </div>
-                                        </div>
-                                    </form>
-                                    <!-- users edit Info form ends -->
+                                <div class="col-12">
+                                    <div class="table-responsive">
+                                        <table class="table table-striped th">
+                                            <thead>
+                                                <tr>
+                                                    <th style="width: 100px;" class="th">ลำดับที่</th>
+                                                    <th class="th">ชื่อยา</th>
+                                                    <th style="width: 200px;"  class="th">จำนวนเม็ดต่อวัน</th>
+                                                    <th class="th"></th>
+                                                </tr>
+                                            </thead>
+                                            <tbody id="drugList">
+                                                <?php 
+                                                $strSQL = "SELECT * FROM vot2_patient_med WHERE med_pid = '$id'";
+                                                $resDruglist = $db->fetch($strSQL, true, false);
+                                                if(($resDruglist) && ($resDruglist['status'])){
+                                                    $c = 1;
+                                                    foreach ($resDruglist['data'] as $row) {
+                                                        ?>
+                                                        <tr>
+                                                            <td><?php echo $c; ?></td>
+                                                            <td>
+                                                            <?php echo $row['med_name']; ?>
+                                                            <?php 
+                                                            if($row['med_desc'] != ''){
+                                                                ?>
+                                                                <div style="font-size: 0.9em;">หมายเหตุ/รายละอียด : <?php echo $row['med_desc']; ?></div>
+                                                                <?php
+                                                            } 
+                                                            ?>
+                                                            </td>
+                                                            <td><?php echo $row['med_amount']; ?></td>
+                                                            <td>
+                                                                
+                                                            </td>
+                                                        </tr>
+                                                        <?php
+                                                        $c++;
+                                                    }
+                                                }else{
+                                                    ?>
+                                                    <tr><td colspan="4" class="text-center th">ยังไม่มีรายการยาของผู้ป่วย</td></tr>
+                                                    <?php
+                                                }
+                                                ?>
+                                            </tbody>
+                                        </table>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -681,53 +381,6 @@ $selected_location = $db->fetch($strSQL, false);
                                         }
                                     }else{
                                         echo $strSQL;
-                                    }
-                                    ?>
-                                </tbody>
-                            </table>
-                        </div>
-                        <!-- datatable ends -->
-                    </div>
-                </div>
-
-                <h3><i class="bx bx-list-ul mr-25"></i>บันทึกการใช้งาน</h3>
-                <div class="card">
-                    <div class="card-body">
-                        <!-- datatable start -->
-                        <div class="table-responsive">
-                            <table id="log-list-datatable" class="table">
-                                <thead>
-                                    <tr>
-                                        <th>Log datetime</th>
-                                        <th>กิจกรรม</th>
-                                        <th>รายละเอียด</th>
-                                        <th>IP</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <?php 
-                                    $strSQL =  "SELECT * FROM vot2_log l INNER JOIN vot2_account a ON l.log_uid = a.uid 
-                                                INNER JOIN vot2_userinfo b ON a.uid = b.info_uid 
-                                                WHERE 
-                                                a.delete_status = '0' 
-                                                AND b.info_use = '1'
-                                                AND a.uid = '$id'
-                                                ORDER BY log_datetime DESC
-                                            ";
-                                    $result_list = $db->fetch($strSQL, true, false);
-                                    if($result_list['status']){
-                                        $c = 1;
-                                        foreach($result_list['data'] as $row){
-                                            ?>
-                                            <tr>
-                                                <td><?php echo $row['log_datetime']; ?></td>
-                                                <td><?php echo $row['log_info']; ?></td>
-                                                <td><?php echo $row['log_message']; ?></td>
-                                                <td><?php echo $row['log_ip']; ?></td>
-                                            </tr>
-                                            <?php
-                                            $c++;
-                                        }
                                     }
                                     ?>
                                 </tbody>
@@ -854,6 +507,7 @@ $selected_location = $db->fetch($strSQL, false);
     <script src="../../../app-assets/js/scripts/pages/app-users.js?v=<?php echo filemtime('../../../app-assets/js/scripts/pages/app-users.js'); ?>"></script>
     <script src="../../../assets/js/scripts/admin-user.js?v=<?php echo filemtime('../../../assets/js/scripts/admin-user.js'); ?>"></script>
     <script src="../../../assets/js/scripts/patient.js?v=<?php echo filemtime('../../../assets/js/scripts/patient.js'); ?>"></script>
+    <script src="../../../assets/js/scripts/app-drug.js?v=<?php echo filemtime('../../../assets/js/scripts/app-drug.js'); ?>"></script>
     <!-- END: Page JS-->
 
     <script>
@@ -898,6 +552,8 @@ $selected_location = $db->fetch($strSQL, false);
                     $('#txtSubdist').val('<?php echo $selected_user['info_subdistrict'];?>')
                 }, 1000);
             })
+
+            
     </script>
 
 </body>

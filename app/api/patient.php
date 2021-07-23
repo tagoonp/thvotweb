@@ -490,6 +490,102 @@ if($stage == 'updatepassword'){
     die();
 }
 
+if($stage == 'add_drug'){
+    if(
+        (!(isset($_REQUEST['puid']))) ||
+        (!(isset($_REQUEST['uid']))) ||
+        (!(isset($_REQUEST['drug_id']))) ||
+        (!(isset($_REQUEST['drug_q'])))
+    ){
+        $return['status'] = 'Fail';
+        $return['error_stage'] = '1';
+        echo json_encode($return);
+        $db->close(); 
+        die();
+    }
+
+    $puid = mysqli_real_escape_string($conn, $_REQUEST['puid']);
+    $uid = mysqli_real_escape_string($conn, $_REQUEST['uid']);
+    $drug_id = mysqli_real_escape_string($conn, $_REQUEST['drug_id']);
+    $drug_q = mysqli_real_escape_string($conn, $_REQUEST['drug_q']);
+    $drug_info = mysqli_real_escape_string($conn, $_REQUEST['drug_info']);
+
+    $strSQL = "SELECT * FROM vot2_patient_med WHERE med_pid = '$puid' AND med_id = '$drug_id' AND med_status = 'Y'";
+    $res = $db->fetch($strSQL, true, true);
+    if(($res) && ($res['count'] > 0)){
+        $return['status'] = 'Fail';
+        $return['error_stage'] = '2';
+        echo json_encode($return);
+        $db->close(); 
+        die();
+    }
+
+    $strSQL = "SELECT * FROM vot2_drug WHERE drug_id = '$drug_id' LIMIT 1";
+    $res = $db->fetch($strSQL, false);
+    if($res){
+
+        $strSQL = "SELECT username FROM vot2_account WHERE uid = '$puid' LIMIT 1";
+        $resU = $db->fetch($strSQL, false);
+
+        $pusername = $resU['username'];
+
+        $dname = $res['drug_name'];
+        $strSQL = "INSERT INTO vot2_patient_med (`med_pid`, `med_username`, `med_id`, `med_name`, `med_amount`, `med_mg`, `med_desc`, `med_status`, `med_udatetime`)
+                  VALUES ('$puid ', '$pusername', '$drug_id', '$dname', '$drug_q', '', '$drug_info', 'Y', '$datetime')";
+        $resInsert = $db->insert($strSQL, false);
+        if($resInsert){
+            $return['status'] = 'Success';
+            echo json_encode($return);
+            $db->close(); 
+            die();
+        }else{
+            $return['status'] = 'Fail';
+            $return['error_stage'] = '4';
+            echo json_encode($return);
+            $db->close(); 
+            die();
+        }
+    }else{
+        $return['status'] = 'Fail';
+        $return['error_stage'] = '3';
+        echo json_encode($return);
+        $db->close(); 
+        die();
+    }
+}
+
+if($stage == 'list_patient_drug'){
+    if(
+        (!(isset($_REQUEST['puid']))) ||
+        (!(isset($_REQUEST['uid'])))
+    ){
+        $return['status'] = 'Fail';
+        $return['error_stage'] = '1';
+        echo json_encode($return);
+        $db->close(); 
+        die();
+    }
+
+    $puid = mysqli_real_escape_string($conn, $_REQUEST['puid']);
+    $uid = mysqli_real_escape_string($conn, $_REQUEST['uid']);
+
+    $strSQL = "SELECT * FROM vot2_patient_med WHERE med_pid = '$puid' AND med_status = 'Y'";
+    $res = $db->fetch($strSQL, true, true);
+    if(($res) && ($res['count'] > 0)){
+        $return['status'] = 'Success';
+        $return['data'] = $res['data'];
+        echo json_encode($return);
+        $db->close(); 
+        die();
+    }else{
+        $return['status'] = 'Fail';
+        $return['error_stage'] = '2';
+        echo json_encode($return);
+        $db->close(); 
+        die();
+    }
+}
+
 if($stage == 'updatemonitor'){
     if(
         (!(isset($_POST['puid']))) ||

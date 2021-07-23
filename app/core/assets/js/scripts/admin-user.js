@@ -62,7 +62,7 @@ var admin_user = {
             buttonsStyling: false,
         }).then(function (result) {
             if (result.value) {
-            var jxr = $.post("../../../api/admin-api?stage=admin_delete_user", {target_uid: uid}, function(){})
+            var jxr = $.post(api_url + "admin-api?stage=admin_delete_user", {target_uid: uid}, function(){})
                         .always(function(resp){
                         console.log(resp);
                         if(resp == 'Success'){
@@ -100,7 +100,7 @@ var admin_user = {
         if ($('#sw_active_' + input).is(':checked')) {
             $toggle_to = '1'
         }
-        var jxr = $.post("../../../api/admin-api?stage=toggle_active", {target_id: input, toggle_to: $toggle_to}, function(){})
+        var jxr = $.post(api_url + "admin-api?stage=toggle_active", {target_id: input, toggle_to: $toggle_to}, function(){})
                    .always(function(resp){ console.log(resp); })
     },
     toggle_status(input){
@@ -108,7 +108,7 @@ var admin_user = {
         if ($('#sw_status_' + input).is(':checked')) {
             $toggle_to = '1'
         }
-        var jxr = $.post("../../../api/admin-api?stage=toggle_status", {target_id: input, toggle_to: $toggle_to}, function(){})
+        var jxr = $.post(api_url + "admin-api?stage=toggle_status", {target_id: input, toggle_to: $toggle_to}, function(){})
                    .always(function(resp){ console.log(resp); })
     },
     toggle_access(input, lv){
@@ -116,7 +116,7 @@ var admin_user = {
         if ($('#' + lv + input).is(':checked')) {
             $toggle_to = '1'
         }
-        var jxr = $.post("../../../api/admin-api?stage=toggle_access", {target_id: input, toggle_to: $toggle_to, level: lv}, function(){})
+        var jxr = $.post(api_url + "admin-api?stage=toggle_access", {target_id: input, toggle_to: $toggle_to, level: lv}, function(){})
                    .always(function(resp){ console.log(resp); })
     },
     check_password_form(){
@@ -146,7 +146,7 @@ var admin_user = {
             password: $('#txtPassword1').val(),
         }
 
-        var jxr = $.post('https://thvot.com/thvotweb/app/api/patient?stage=updatepassword', param, function(){}, 'json')
+        var jxr = $.post(api_url + 'patient?stage=updatepassword', param, function(){}, 'json')
                    .always(function(snap){
                        console.log(snap);
                        preload.hide()
@@ -279,7 +279,7 @@ var admin_user = {
             uid: $('#txtCurrentUid').val()
         }
 
-        var jxr = $.post('https://thvot.com/thvotweb/app/api/patient?stage=patient_update_info', param, function(){}, 'json')
+        var jxr = $.post(api_url + 'patient?stage=patient_update_info', param, function(){}, 'json')
                    .always(function(snap){
                        console.log(snap);
                        preload.hide()
@@ -299,14 +299,12 @@ var admin_user = {
                             }
                           })
                        }else{
-                        Swal.fire(
-                            {
+                          Swal.fire({
                               icon: "error",
                               title: 'เกิดข้อผิดพลาด',
                               text: 'ไม่สามารถปรับปรุงข้อมูลผู้ป่วยได้',
                               confirmButtonClass: 'btn btn-danger',
-                            }
-                          )
+                          })
                        }
                    })
         return ;
@@ -339,7 +337,7 @@ var admin_user = {
 
         preload.show()
 
-        var jxr = $.post('https://thvot.com/thvotweb/app/api/patient?stage=updatemonitor', param, function(){}, 'json')
+        var jxr = $.post(api_url + 'patient?stage=updatemonitor', param, function(){}, 'json')
                    .always(function(snap){
                        console.log(snap);
                        preload.hide()
@@ -455,7 +453,7 @@ var admin_user = {
         var param = {
             csdate: $('#txtStartmonitor').val()
         }
-        var jxr = $.post('https://thvot.com/thvotweb/app/api/core-api?stage=check2month', param, function(){})
+        var jxr = $.post(api_url + 'core-api?stage=check2month', param, function(){})
                    .always(function(resp){
                        $('#txtEndmonitor').val(resp)
                    })

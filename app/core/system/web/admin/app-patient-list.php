@@ -147,7 +147,7 @@ $menu = 7;
 
             </div>
             <div class="content-body">
-                <h2 class="mb-2">รายชื่อผู้ใช้งานระบบ</h2>
+                <h2 class="mb-2">รายชื่อผู้ป่วยทั้งหมด</h2>
                 <!-- users list start -->
                 <section class="users-list-wrapper">
                     <div class="users-list-table">
@@ -155,26 +155,30 @@ $menu = 7;
                             <div class="card-body">
                                 <!-- datatable start -->
                                 <div class="table-responsive">
-                                    <table id="users-list-datatable" class="table">
+                                    <table id="users-list-datatable-patient" class="table">
                                         <thead>
                                             <tr>
-                                                <th>บัญชีผู้ใช้งาน</th>
-                                                <th>รหัสสถานบริการ</th>
-                                                <th>ชื่อ - นามสกุล</th>
-                                                <th>กลุ่ม</th>
-                                                <th>เปิด/ปิดการใช้งาน</th>
-                                                <th>วันที่เริ่มติดตาม</th>
-                                                <th>วันสิ้นสุดการติดตาม</th>
-                                                <th style="width: 120px;"></th>
+                                                <th style="width: 100px;" class="th"></th>
+                                                <th class="th">บัญชีผู้ใช้งาน</th>
+                                                <th class="th">ชื่อ - นามสกุล</th>
+                                                <th class="th">เปิด/ปิดการใช้งาน</th>
+                                                <th class="th">การติดตาม</th>
+                                                <th class="th">วันที่เริ่มติดตาม</th>
+                                                <th class="th">วันสิ้นสุดการติดตาม</th>
+                                                
                                             </tr>
                                         </thead>
                                         <tbody>
                                             <?php 
-                                            $strSQL = "SELECT a.*, a.ID user_id, b.* FROM vot2_account a INNER JOIN vot2_userinfo b ON a.uid = b.info_uid 
-                                            WHERE 
-                                            a.delete_status = '0' 
-                                            AND b.info_use = '1'
-                                            AND a.role = 'patient'
+                                            $strSQL = "SELECT a.*, a.ID user_id, b.* , regh.hserv rhserve, obsh.hserv hhserve, menh.hserv mhserve
+                                                       FROM vot2_account a INNER JOIN vot2_userinfo b ON a.uid = b.info_uid 
+                                                       LEFT JOIN vot2_projecthospital regh ON a.reg_hcode = regh.phoscode
+                                                       LEFT JOIN vot2_projecthospital obsh ON a.reg_hcode = obsh.phoscode
+                                                       LEFT JOIN vot2_projecthospital menh ON a.reg_hcode = menh.phoscode
+                                                       WHERE 
+                                                       a.delete_status = '0' 
+                                                       AND b.info_use = '1'
+                                                       AND a.role = 'patient'
                                             ";
                                             $result_list = $db->fetch($strSQL, true, false);
                                             if($result_list['status']){
@@ -182,11 +186,29 @@ $menu = 7;
                                                 foreach($result_list['data'] as $row){
                                                     ?>
                                                     <tr>
-                                                        <td><?php echo $row['username']; ?></td>
-                                                        <td><a href="../../../html/ltr/vertical-menu-template/app-users-view.html"><?php echo $row['hcode']; ?></a>
+                                                        <td class="text-left" style="vertical-align:top;">
+                                                            <a href="app-patient-edit?id=<?php echo $row['uid'];?>" class="mr-1"><i class="bx bx-edit-alt"></i></a>
+                                                            <a href="app-patient-drug?uid=<?php echo $user['uid']; ?>&role=<?php echo $user['role']; ?>&hcode=<?php echo $user['hcode']; ?>&id=<?php echo $row['uid'];?>" class="mr-1"><i class="bx bxs-capsule"></i></a>
+                                                            <?php 
+                                                            if($row['role'] != 'admin'){
+                                                                ?>
+                                                                <a href="Javascript:admin_user.delete_user('<?php echo $row['uid'];?>')" clsas=""><i class="bx bx-trash-alt text-danger"></i></a>
+                                                                <?php
+                                                            }else{
+                                                                ?>
+                                                                <a href="#" clsas="" disabled><i class="bx bx-trash-alt text-muted"></i></a>
+                                                                <?php
+                                                            }
+                                                            ?>
                                                         </td>
-                                                        <td><?php echo $row['fname']." ".$row['lname']; ?></td>
-                                                        <td>
+                                                        <td class="th" style="vertical-align:top;"><?php echo $row['username']; ?></td>
+                                                        <td class="th" style="vertical-align:top;"><span class="text-dark"><?php echo $row['fname']." ".$row['lname']; ?></span>
+                                                            <div  style="padding-top: 4px; font-size: 0.8em; ">
+                                                                ลงทะเบียน : <a href="Javascript:void(0);"><?php if($row['rhserve'] != null){ echo $row['rhserve'];} else { echo "-"; }; ?></a><br>
+                                                                ติดตามรักษา : <a href="Javascript:void(0);"><?php if($row['rhserve'] != null){ echo $row['mhserve'];} else { echo "-"; }; ?></a><br>
+                                                                พี่เลี้ยง : <a href="Javascript:void(0);"><?php if($row['rhserve'] != null){ echo $row['hhserve'];} else { echo "-"; }; ?></a>
+                                                            </div>
+                                                            <div class="" style="padding-top: 4px;">
                                                             <?php 
                                                             $ptt = $row['patient_type'];
                                                             if($row['patient_type'] == 'DOT'){
@@ -200,30 +222,37 @@ $menu = 7;
                                                             }
                                                             
                                                             ?>
+                                                            </div>
                                                         </td>
-                                                        <td>
-                                                            <div class="custom-control mt-1 custom-switch custom-switch-success mr-2 mb-1">
+                                                        <td class="th" style="vertical-align:top;">
+                                                            <div class="custom-control mt-0 custom-switch custom-switch-success mr-2 mb-1">
                                                                 <input type="checkbox" onclick="admin_user.toggle_status('<?php echo $row['user_id'];?>')" class="custom-control-input"  id="sw_status_<?php echo $row['user_id'];?>" <?php if($row['active_status'] == '1'){ echo "checked"; } ?>>
                                                                 <label class="custom-control-label" for="sw_status_<?php echo $row['user_id'];?>"></label>
                                                             </div>
                                                         </td>
-                                                        <td><?php echo $row['start_obsdate']; ?></td>
-                                                        <td><?php echo $row['end_obsdate']; ?></td>
-                                                        <td class="text-right">
-                                                            <a href="app-patient-edit?id=<?php echo $row['uid'];?>" class="mr-1"><i class="bx bx-edit-alt"></i></a>
-                                                            <a href="app-patient-drug?id=<?php echo $row['uid'];?>" class="mr-1"><i class="bx bxs-capsule"></i></a>
+                                                        <td class="th" style="vertical-align:top;">
                                                             <?php 
-                                                            if($row['role'] != 'admin'){
-                                                                ?>
-                                                                <a href="Javascript:admin_user.delete_user('<?php echo $row['uid'];?>')" clsas=""><i class="bx bx-trash-alt text-danger"></i></a>
-                                                                <?php
+                                                            $strSQL = "SELECT fud_followstage FROM vot2_followup_dummy WHERE fud_uid = '".$row['uid']."' ORDER BY fud_id DESC LIMIT 1";
+                                                            $resCheckFollow = $db->fetch($strSQL,false);
+                                                            if($resCheckFollow){
+                                                                if($resCheckFollow['fud_followstage'] == '0'){
+                                                                    ?>
+                                                                    <i class="bx bxs-circle text-danger"></i> อยู่ระหว่างหยุดยา
+                                                                    <?php
+                                                                }else{
+                                                                    ?>
+                                                                    <i class="bx bxs-circle text-success"></i> อยู่ระหว่างการติดตาม
+                                                                    <?php
+                                                                }
                                                             }else{
                                                                 ?>
-                                                                <a href="#" clsas="" disabled><i class="bx bx-trash-alt text-muted"></i></a>
+                                                                ไม่ติดตาม
                                                                 <?php
                                                             }
                                                             ?>
                                                         </td>
+                                                        <td class="th" style="vertical-align:top;"><?php echo $row['start_obsdate']; ?></td>
+                                                        <td class="th" style="vertical-align:top;"><?php echo $row['end_obsdate']; ?></td>
                                                     </tr>
                                                     <?php
                                                     $c++;
@@ -284,7 +313,20 @@ $menu = 7;
     <script src="../../../app-assets/js/scripts/pages/app-users.js?v=<?php echo filemtime('../../../app-assets/js/scripts/pages/app-users.js'); ?>"></script>
     <script src="../../../assets/js/scripts/admin-user.js?v=<?php echo filemtime('../../../assets/js/scripts/admin-user.js'); ?>"></script>
     <!-- END: Page JS-->
-
+    <script>
+        $(document).ready(function(){
+            if ($("#users-list-datatable-patient").length > 0) {
+                usersTable = $("#users-list-datatable-patient").DataTable({
+                    responsive: true,
+                    'columnDefs': [
+                        {
+                            "orderable": false,
+                            "targets": [0, 3]
+                        }]
+                });
+            };
+        })
+    </script>
 </body>
 <!-- END: Body-->
 

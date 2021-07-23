@@ -188,7 +188,7 @@ function addHcode(hcode){
   //   buttonsStyling: false,
   // }).then(function (result) {
   //   if (result.value) {
-  //     var jxr = $.post("../../../api/admin-api?stage=add_hcode", {target_hcode: hcode}, function(){})
+  //     var jxr = $.post(api_url + "admin-api?stage=add_hcode", {target_hcode: hcode}, function(){})
   //                .always(function(resp){
   //                  console.log(resp);
   //                 if(resp == 'Success'){
@@ -237,7 +237,7 @@ function removeHcode(hcode){
     buttonsStyling: false,
   }).then(function (result) {
     if (result.value) {
-      var jxr = $.post("../../../api/admin-api?stage=remove_hcode", {target_hcode: hcode}, function(){})
+      var jxr = $.post(api_url + "admin-api?stage=remove_hcode", {target_hcode: hcode}, function(){})
                  .always(function(resp){
                    console.log(resp);
                   if(resp == 'Success'){

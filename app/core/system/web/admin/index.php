@@ -123,8 +123,8 @@ $menu = 0;
                         <!-- Greetings Content Starts -->
                         <div class="col-xl-4 col-md-6 col-12 dashboard-greetings">
                             <div class="card">
-                                <div class="card-body pt-0">
-                                <div><h3 class="greeting-text">Compliance</h3></div>
+                                <div class="card-body pt-2">
+                                <div><h3 class="greeting-text">Compliance2</h3></div>
                                     <div><p class="mb-0">โดยเฉลี่ยของผู้ป่วย</p></div>
                                     <div class="d-flex justify-content-between align-items-end">
                                         <div class="dashboard-content-left pt-4">

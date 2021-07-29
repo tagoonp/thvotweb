@@ -112,15 +112,18 @@ if($stage == 'getpatient_calendar'){
                 }
                 $return[] = $buf;
             }else{
-                $buf['allDay'] = true;
-                $buf['start'] = $start;
-                $buf['status'] = "NA";
-                // $buf['err'] = $strSQL;
-                $buf['color'] = '#000'; 
-                $buf['title'] = '&nbsp;';
-                $buf['textColor'] = '#fff';
-                $buf['borderColor'] = '#000';
-                $return[] = $buf;
+                if($start <= $date){
+                    $buf['allDay'] = true;
+                    $buf['start'] = $start;
+                    $buf['status'] = "NA";
+                    // $buf['err'] = $strSQL;
+                    $buf['color'] = '#000'; 
+                    $buf['title'] = '&nbsp;';
+                    $buf['textColor'] = '#fff';
+                    $buf['borderColor'] = '#000';
+                    $return[] = $buf;
+                }
+                
             }
 
             // if($res['cal_end_obsdate'] != $res['end_obsdate']){

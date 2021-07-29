@@ -101,7 +101,7 @@ $menu = 7;
     <div class="main-menu menu-fixed menu-light menu-accordion menu-shadow" data-scroll-to-active="true">
         <div class="navbar-header">
             <ul class="nav navbar-nav flex-row">
-                <li class="nav-item mr-auto"><a class="navbar-brand" href="../../../html/ltr/vertical-menu-template/index">
+                <li class="nav-item mr-auto"><a class="navbar-brand" href="./">
                         <div class="brand-logo">
                             <svg class="logo" width="26px" height="26px" viewbox="0 0 26 26" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
                                 <title>icon</title>
@@ -130,7 +130,7 @@ $menu = 7;
                                 </g>
                             </svg>
                         </div>
-                        <h2 class="brand-text mb-0">Frest</h2>
+                        <h2 class="brand-text mb-0">THVOT</h2>
                     </a></li>
                 <li class="nav-item nav-toggle"><a class="nav-link modern-nav-toggle pr-0" data-toggle="collapse"><i class="bx bx-x d-block d-xl-none font-medium-4 primary"></i><i class="toggle-icon bx bx-disc font-medium-4 d-none d-xl-block primary" data-ticon="bx-disc"></i></a></li>
             </ul>

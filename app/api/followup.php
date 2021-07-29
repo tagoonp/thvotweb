@@ -42,7 +42,7 @@ if($stage == 'setpatient_dailyprogress'){
             $res2 = $db->execute($strSQL);
 
             if($progress_stopdrug == '0'){ // สั่งหยุดยาชั่วคราว
-                $strSQL = "UPDATE vot2_account SET end_obsdate = '$date' WHERE uid = '$patient_id'";
+                $strSQL = "UPDATE vot2_account SET end_obsdate = '$date', stop_drug = '1' WHERE uid = '$patient_id'";
                 $res2 = $db->execute($strSQL);
             }
 

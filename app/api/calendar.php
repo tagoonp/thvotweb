@@ -92,6 +92,11 @@ if($stage == 'getpatient_calendar'){
                             if($res2['fud_anycall'] == 1){
                                 $buf['textColor'] = '#b10000';
                             }
+
+                            if($res2['fud_followstage'] == 0){ // สั่งหยุดยา
+                                $buf['color'] = '#000'; 
+                                $buf['borderColor'] = '#000';
+                            }
                         }
                     }
                 }else{

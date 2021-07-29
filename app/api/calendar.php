@@ -45,15 +45,7 @@ if($stage == 'getpatient_calendar'){
         for ($i=0; $i < $date_diff; $i++) { 
 
             $buf = array();
-
-            if($res['cal_end_obsdate'] != $res['end_obsdate']){
-                $buf['color'] = '#000'; 
-                $buf['title'] = '&nbsp;';
-                $buf['textColor'] = '#fff';
-                $buf['borderColor'] = '#000';
-                $return[] = $buf;
-            }else{
-                $strSQL = "SELECT fud_status, fud_comment, fud_dateview, fud_date, fud_anycall, fud_followstage FROM vot2_followup_dummy WHERE fud_date = '$start' AND fud_uid = '$patient_id'";
+            $strSQL = "SELECT fud_status, fud_comment, fud_dateview, fud_date, fud_anycall, fud_followstage FROM vot2_followup_dummy WHERE fud_date = '$start' AND fud_uid = '$patient_id'";
                 $res2 = $db->fetch($strSQL, false);
 
                 if($res2){
@@ -127,7 +119,16 @@ if($stage == 'getpatient_calendar'){
                 }else{
                     // $buf['err'] = $strSQL;
                 }
-            }
+
+            // if($res['cal_end_obsdate'] != $res['end_obsdate']){
+            //     $buf['color'] = '#000'; 
+            //     $buf['title'] = '&nbsp;';
+            //     $buf['textColor'] = '#fff';
+            //     $buf['borderColor'] = '#000';
+            //     $return[] = $buf;
+            // }else{
+                
+            // }
             $start = Date("Y-m-d", strtotime("$start +1 days"));  
         }
     }else{

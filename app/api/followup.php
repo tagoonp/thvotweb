@@ -44,6 +44,41 @@ if($stage == 'setpatient_dailyprogress'){
             if($progress_stopdrug == '0'){ // สั่งหยุดยาชั่วคราว
                 $strSQL = "UPDATE vot2_account SET end_obsdate = '$date', stop_drug = '1' WHERE uid = '$patient_id' AND delete_status = '0'";
                 $res2 = $db->execute($strSQL);
+            }else{
+
+
+                $strSQL = "SELECT * FROM vot2_account WHERE uid = '$patient_id' AND delete_status = '0' LIMIT 1";
+                $resu = $db->fetch($strSQL, false);
+
+                if($resu['end_obsdate'] != $resu['cal_end_obsdate']){
+                    $caldate = $resu['cal_end_obsdate'];
+                    $stopdate = $resu['end_obsdate'];
+                    // Check จำนวนวัน จากวันที่หยุดล่าสุด ถึงวันที่ควรหยุด (Calculated date)
+
+                    $contractDateBegin = new DateTime($stopdate);
+                    $contractDateEnd  = new DateTime($caldate);
+
+                    $interval = $contractDateBegin->diff($contractDateEnd);
+                    $numday = $interval->format('%a');
+
+                    $newCalculateDay = date('Y-m-d', strtotime('+'.$numday.' days') );
+
+                    $strSQL = "UPDATE vot2_account 
+                            SET 
+                            end_obsdate = '$newCalculateDay', 
+                            cal_end_obsdate = '$newCalculateDay', 
+                            stop_drug = '0' 
+                            WHERE 
+                            uid = '$puid'
+                            AND delete_status = '0'
+                            AND active_status = '1'
+                            ";
+                    $resU = $db->execute($strSQL);
+                }
+
+
+                // $strSQL = "UPDATE vot2_account SET end_obsdate = '$date', stop_drug = '0' WHERE uid = '$patient_id' AND delete_status = '0'";
+                // $res2 = $db->execute($strSQL);
             }
 
             $return['status'] = 'Success';

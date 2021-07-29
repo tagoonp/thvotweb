@@ -28,6 +28,7 @@ function addDailyProgressNote(){
                         });
                    }else{
                     $('#txtCommentPatientMsg').val('')
+                    $('#modalComment').modal('hide')
                    }
                    getDailyProgressNote($('#txtCommentDate').val())
                    calendar.fullCalendar('destroy');

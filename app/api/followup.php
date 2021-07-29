@@ -73,7 +73,7 @@ if($stage == 'setpatient_dailyprogress'){
                             cal_end_obsdate = '$newCalculateDay', 
                             stop_drug = '0' 
                             WHERE 
-                            uid = '$puid'
+                            uid = '$patient_id''
                             AND delete_status = '0'
                             AND active_status = '1'
                             ";

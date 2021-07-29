@@ -17,6 +17,7 @@ function addDailyProgressNote(){
 
     var jxr = $.post(api_url + 'followup.php?stage=setpatient_dailyprogress', param, function(){}, 'json')
                .always(function(snap){
+                   console.log(snap);
                    if(snap.status != 'Success'){
                         Swal.fire({
                             title: "เกิดข้อผิดพลาด",

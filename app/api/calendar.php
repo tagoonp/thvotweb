@@ -31,6 +31,7 @@ if($stage == 'getpatient_calendar'){
     $res = $db->fetch($strSQL, false);
 
     if($res){
+        
         $start = $res['start_obsdate'];
         $end = $res['cal_end_obsdate'];
 

@@ -262,6 +262,14 @@ $selected_location = $db->fetch($strSQL, false);
                                                     </select>
                                                 </div>
 
+                                                <div class="form-group dn" id="divOther">
+                                                    <label for="">ชื่อยาอื่น ๆ : <span class="text-danger">*</span></label>
+                                                    <input type="text" class="form-control" id="txtDrugName" name="txtDrugName">
+                                                    <div class="text-danger">
+                                                        ตัวอย่าง : Ethionamide 250 mg
+                                                    </div>
+                                                </div>
+
                                                 <div class="form-group">
                                                     <label for="">จำนวนเม็ดต่อวัน : <span class="text-danger">*</span></label>
                                                     <input type="float" class="form-control" step="0.5" id="txtDrugQ" name="txtDrugQ" min="0">
@@ -287,6 +295,59 @@ $selected_location = $db->fetch($strSQL, false);
                                     </div>
                                 </div>
 
+                                <div class="modal fade" id="modalUpdateDrug" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                                    <div class="modal-dialog modal-dialog-centered modal-dialog-centered modal-dialog-scrollable">
+                                        <div class="modal-content">
+                                            <div class="modal-header bg-dark">
+                                                <h5 class="modal-title text-white th" id="exampleModalCenterTitle"><i class="bx bx-plus"></i> แก้ไขข้อมูลยา</h5>
+                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                    <i class="bx bx-x"></i>
+                                                </button>
+                                            </div>
+                                            <div class="modal-body">
+
+                                                <div class="form-group dn">
+                                                    <label for="">ID : <span class="text-danger">*</span></label>
+                                                    <input type="text" class="form-control" id="txtDrugIdu" name="txtDrugIdu" readonly>
+                                                </div>
+
+                                                <div class="form-group dn">
+                                                    <label for="">DRUG_ID : <span class="text-danger">*</span></label>
+                                                    <input type="text" class="form-control" id="txtDrugDidu" name="txtDrugDidu" readonly>
+                                                </div>
+
+                                                <div class="form-group">
+                                                    <label for="">ชื่อยา : <span class="text-danger">*</span></label>
+                                                    <input type="text" class="form-control" id="txtDrugu" name="txtDrugu" readonly>
+                                                </div>
+
+                                                <div class="form-group">
+                                                    <label for="">จำนวนเม็ดต่อวัน : <span class="text-danger">*</span></label>
+                                                    <input type="float" class="form-control" step="0.5" id="txtDrugQu" name="txtDrugQu" min="0">
+                                                </div>
+
+                                                <div class="form-group">
+                                                    <label for="">คำชี้แจง/หมายเหตุ : </label>
+                                                    <textarea name="txtDrugInfou" id="txtDrugInfou" cols="30" rows="10" class="form-control" style="height: 100px;"></textarea>
+                                                </div>
+
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-light-secondary" data-dismiss="modal" onclick="resetDrugForm()">
+                                                    <i class="bx bx-x d-block d-sm-none"></i>
+                                                    <span class="d-none d-sm-block">ปิด</span>
+                                                </button>
+                                                <button type="button" class="btn btn-primary ml-1" onclick="updateDrugForm()">
+                                                    <i class="bx bx-check d-block d-sm-none"></i>
+                                                    <span class="d-none d-sm-block">บันทึก</span>
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                
+
                                 <div class="col-12">
                                     <div class="table-responsive">
                                         <table class="table table-striped th">
@@ -300,11 +361,16 @@ $selected_location = $db->fetch($strSQL, false);
                                             </thead>
                                             <tbody id="drugList">
                                                 <?php 
-                                                $strSQL = "SELECT * FROM vot2_patient_med WHERE med_pid = '$id'";
+                                                $cnf = 0;
+                                                $strSQL = "SELECT * FROM vot2_patient_med WHERE med_pid = '$id' AND med_delete = 'N' AND med_status = 'Y' ORDER BY med_name";
                                                 $resDruglist = $db->fetch($strSQL, true, false);
                                                 if(($resDruglist) && ($resDruglist['status'])){
                                                     $c = 1;
                                                     foreach ($resDruglist['data'] as $row) {
+
+                                                        if($row['med_cnf'] == 'N'){
+                                                            $cnf++;
+                                                        }
                                                         ?>
                                                         <tr>
                                                             <td><?php echo $c; ?></td>
@@ -319,8 +385,9 @@ $selected_location = $db->fetch($strSQL, false);
                                                             ?>
                                                             </td>
                                                             <td><?php echo $row['med_amount']; ?></td>
-                                                            <td>
-                                                                
+                                                            <td style="" class="text-right">
+                                                                <a href="Javascript:updateDrug('<?php echo $row['ID'];?>')" class="text-muted mr-1"><i class="bx bx-wrench"></i></a>
+                                                                <a href="Javascript:deleteDrug('<?php echo $row['ID'];?>')" class="text-danger"><i class="bx bx-trash"></i></a>
                                                             </td>
                                                         </tr>
                                                         <?php
@@ -334,6 +401,74 @@ $selected_location = $db->fetch($strSQL, false);
                                                 ?>
                                             </tbody>
                                         </table>
+                                    </div>
+
+                                    <?php 
+                                    if($cnf != 0){
+                                        ?>
+                                        <div class="row" id="btnConfirmDrug">
+                                            <div class="col-12 text-center">
+                                                <button class="btn btn-danger btn-lg th" data-toggle="modal" data-target="#cnfDrugmodal">ยืนยันรายการยา</button>
+                                            </div>
+                                        </div>
+                                        <?php
+                                    }else{
+                                        ?>
+                                        <div class="row dn" id="btnConfirmDrug">
+                                            <div class="col-12 text-center">
+                                                <button class="btn btn-danger btn-lg th" data-toggle="modal" data-target="#cnfDrugmodal">ยืนยันรายการยา</button>
+                                            </div>
+                                        </div>
+                                        <?php
+                                    }
+                                    ?>
+
+
+                                    <div class="modal fade" id="cnfDrugmodal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                                        <div class="modal-dialog modal-dialog-centered modal-dialog-centered modal-dialog-scrollable">
+                                            <div class="modal-content">
+                                                <div class="modal-header bg-dark">
+                                                    <h5 class="modal-title text-white th" id="exampleModalCenterTitle"><i class="bx bx-plus"></i> ยืนยันรายการยา</h5>
+                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                        <i class="bx bx-x"></i>
+                                                    </button>
+                                                </div>
+                                                <div class="modal-body">
+
+                                                    
+
+                                                    <div class="form-group">
+                                                        <label for="">หมายเหตุ : <span class="text-danger">*</span></label>
+                                                        <select name="txtReason" id="txtReason" class="form-control">
+                                                            <option value="">-- เลือก --</option>
+                                                            <option value="start">ลงรายการยาครั้งแรก</option>
+                                                            <option value="switch">ปรับจากระยะเข้มข้นเป็นระยะต่อเนื่อง</option>
+                                                            <option value="edit">แก้ไขข้อมูลยาเนื่องจากกรอกข้อมูลผิดพลาด</option>
+                                                            <option value="dianosis">ปรับรายการยาเนื่องจากมีข้อบ่งชี้ทางการแพทย์</option>
+                                                        </select>
+                                                    </div>
+
+                                                    <div class="form-group dn" id="divReason">
+                                                        <label for="">คำชี้แจง : <span class="text-danger">*</span></label>
+                                                        <textarea name="txtCnfMsg" id="txtCnfMsg" cols="30" rows="10" class="form-control" style="height: 100px;"></textarea>
+                                                        <div class="text-danger" style="font-size: 0.9em; padding-top: 2px;">
+                                                            * ให้ระบุเหตุผลที่ต้องปรับรายการยา / ชื่อแพทย์ผู้รับรอง
+                                                        </div>
+                                                    </div>
+
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-light-secondary" data-dismiss="modal" onclick="resetDrugForm()">
+                                                        <i class="bx bx-x d-block d-sm-none"></i>
+                                                        <span class="d-none d-sm-block">ปิด</span>
+                                                    </button>
+                                                    <button type="button" class="btn btn-primary ml-1" onclick="confirmDruglist()">
+                                                        <i class="bx bx-check d-block d-sm-none"></i>
+                                                        <span class="d-none d-sm-block">บันทึก</span>
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -543,7 +678,14 @@ $selected_location = $db->fetch($strSQL, false);
             });
 
             $(function(){
-                
+                $('#txtDrug').change(function(){
+                    if($('#txtDrug').val() == '99'){
+                        $('#divOther').removeClass('dn')
+                    }else{
+                        $('#divOther').addClass('dn')
+                        $('#txtDrugName').val('')
+                    }
+                })
             })
 
             $(document).ready(function(){

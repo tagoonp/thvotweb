@@ -17,7 +17,6 @@ function addDailyProgressNote(){
 
     var jxr = $.post(api_url + 'followup.php?stage=setpatient_dailyprogress', param, function(){}, 'json')
                .always(function(snap){
-                   
                    if(snap.status != 'Success'){
                         Swal.fire({
                             title: "เกิดข้อผิดพลาด",
@@ -61,6 +60,7 @@ function getDailyProgressNote(selected_date){
 }
 
 function getPatientCalendar(){
+    console.log($('#txtPatient_id').val());
     var caneldar_url = api_url + 'calendar.php?stage=getpatient_calendar&patient_id=' + $('#txtPatient_id').val()
     calendar = $("#calendar").fullCalendar({
         height: 'auto',

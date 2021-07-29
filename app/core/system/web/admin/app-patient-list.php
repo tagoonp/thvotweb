@@ -16,7 +16,9 @@ if(isset($_GET['stage'])){
 require('../../../../config/user.inc.php'); 
 
 $menu = 7;
+
 ?>
+<input type="hidden" id="txtCurrentUid" value="<?php echo $_SESSION['thvot_uid']; ?>">
 <!DOCTYPE html>
 <html class="loading" lang="en" data-textdirection="ltr">
 <!-- BEGIN: Head-->
@@ -39,6 +41,8 @@ $menu = 7;
     <link rel="stylesheet" type="text/css" href="../../../app-assets/vendors/css/tables/datatable/buttons.bootstrap4.min.css">
     <link rel="stylesheet" type="text/css" href="../../../app-assets/vendors/css/extensions/sweetalert2.min.css">
     <link rel="stylesheet" type="text/css" href="../../../app-assets/vendors/css/forms/select/select2.min.css">
+    <link rel="stylesheet" type="text/css" href="../../../tools/preload.js/dist/css/preload.css">
+    <link rel="stylesheet" type="text/css" href="../../../app-assets/vendors/css/extensions/sweetalert2.min.css">
     <!-- END: Vendor CSS-->
 
     <!-- BEGIN: Theme CSS-->
@@ -159,12 +163,13 @@ $menu = 7;
                                         <thead>
                                             <tr>
                                                 <th style="width: 100px;" class="th"></th>
-                                                <th class="th">บัญชีผู้ใช้งาน</th>
+                                                <!-- <th class="th">บัญชีผู้ใช้งาน</th> -->
                                                 <th class="th">ชื่อ - นามสกุล</th>
-                                                <th class="th">เปิด/ปิดการใช้งาน</th>
-                                                <th class="th">การติดตาม</th>
-                                                <th class="th">วันที่เริ่มติดตาม</th>
-                                                <th class="th">วันสิ้นสุดการติดตาม</th>
+                                                <th class="th" style="width: 120px;">เปิด/ปิดการใช้งาน</th>
+                                                <th class="th" style="width: 150px;">การติดตาม</th>
+                                                <th class="th" style="width: 100px;">สถานะยา</th>
+                                                <th class="th" style="width: 100px;">วันที่เริ่มติดตาม</th>
+                                                <th class="th" style="width: 100px;">วันสิ้นสุดการติดตาม</th>
                                                 
                                             </tr>
                                         </thead>
@@ -187,7 +192,7 @@ $menu = 7;
                                                     ?>
                                                     <tr>
                                                         <td class="text-left" style="vertical-align:top;">
-                                                            <a href="app-patient-edit?id=<?php echo $row['uid'];?>" class="mr-1"><i class="bx bx-edit-alt"></i></a>
+                                                            <a href="app-patient-management?uid=<?php echo $user['uid']; ?>&role=<?php echo $user['role']; ?>&hcode=<?php echo $user['hcode']; ?>&id=<?php echo $row['uid'];?>" class="mr-1"><i class="bx bx-edit-alt"></i></a>
                                                             <a href="app-patient-drug?uid=<?php echo $user['uid']; ?>&role=<?php echo $user['role']; ?>&hcode=<?php echo $user['hcode']; ?>&id=<?php echo $row['uid'];?>" class="mr-1"><i class="bx bxs-capsule"></i></a>
                                                             <?php 
                                                             if($row['role'] != 'admin'){
@@ -201,8 +206,9 @@ $menu = 7;
                                                             }
                                                             ?>
                                                         </td>
-                                                        <td class="th" style="vertical-align:top;"><?php echo $row['username']; ?></td>
-                                                        <td class="th" style="vertical-align:top;"><span class="text-dark"><?php echo $row['fname']." ".$row['lname']; ?></span>
+                                                        <td class="th" style="vertical-align:top;">
+                                                            <div>ID : <?php echo $row['username']; ?></div>
+                                                            <span class="text-dark"><?php echo $row['fname']." ".$row['lname']; ?></span>
                                                             <div  style="padding-top: 4px; font-size: 0.8em; ">
                                                                 ลงทะเบียน : <a href="Javascript:void(0);"><?php if($row['rhserve'] != null){ echo $row['rhserve'];} else { echo "-"; }; ?></a><br>
                                                                 ติดตามรักษา : <a href="Javascript:void(0);"><?php if($row['rhserve'] != null){ echo $row['mhserve'];} else { echo "-"; }; ?></a><br>
@@ -232,21 +238,37 @@ $menu = 7;
                                                         </td>
                                                         <td class="th" style="vertical-align:top;">
                                                             <?php 
-                                                            $strSQL = "SELECT fud_followstage FROM vot2_followup_dummy WHERE fud_uid = '".$row['uid']."' ORDER BY fud_id DESC LIMIT 1";
-                                                            $resCheckFollow = $db->fetch($strSQL,false);
-                                                            if($resCheckFollow){
-                                                                if($resCheckFollow['fud_followstage'] == '0'){
-                                                                    ?>
-                                                                    <i class="bx bxs-circle text-danger"></i> อยู่ระหว่างหยุดยา
-                                                                    <?php
-                                                                }else{
-                                                                    ?>
-                                                                    <i class="bx bxs-circle text-success"></i> อยู่ระหว่างการติดตาม
-                                                                    <?php
-                                                                }
+                                                            if($row['stop_drug'] == '1'){
+                                                                ?>
+                                                                <i class="bx bxs-circle text-danger"></i> หยุดยา/หยุดติดตาม
+                                                                <div>
+                                                                    <span class="btn btn-light-warning btn-sm round th" style="cursor: pointer; margin-top: 5px;" onclick="back2Follow('<?php echo $row['uid']; ?>', '<?php echo $row['fname']." ".$row['lname']; ?>')">กลับมาติดตาม</span>
+                                                                </div>
+                                                                <?php
                                                             }else{
                                                                 ?>
-                                                                ไม่ติดตาม
+                                                                <i class="bx bxs-circle text-success"></i> กำลังติดตาม
+                                                                <div>
+                                                                    <span class="btn btn-light-danger btn-sm round th" style="cursor: pointer; margin-top: 5px;" onclick="window.location='app-patient-calendar?uid=<?php echo $_SESSION['thvot_uid']; ?>&role=<?php echo $_SESSION['thvot_role']; ?>&hcode=<?php echo $_SESSION['thvot_hcode']; ?>&id=<?php echo $row['uid']; ?>'">สั่งหยุดยา</span>
+                                                                </div>
+                                                                <?php
+                                                            }
+                                                            ?>
+                                                        </td>
+                                                        <td class="th" style="vertical-align:top; width: 100px;">
+                                                            <?php 
+                                                            $strSQL = "SELECT * FROM vot2_med_transaction WHERE mt_patient_uid = '".$row['uid']."' AND mt_status = 'Y' LIMIT 1";
+                                                            $resCheckDrug = $db->fetch($strSQL, true, true);
+                                                            if(($resCheckDrug) && ($resCheckDrug['count'] > 0)){
+                                                                ?>
+                                                                <i class="bx bxs-circle text-success"></i> ยืนยันแล้ว
+                                                                <?php
+                                                            }else{
+                                                                ?>
+                                                                <i class="bx bxs-circle text-danger"></i> ยังไม่ยืนยัน
+                                                                <div>
+                                                                    <span class="btn btn-light-danger btn-sm round th" style="cursor: pointer; margin-top: 5px;" onclick="window.location='app-patient-drug?uid=<?php echo $_SESSION['thvot_uid']; ?>&role=<?php echo $_SESSION['thvot_role']; ?>&hcode=<?php echo $_SESSION['thvot_hcode']; ?>&id=<?php echo $row['uid']; ?>'">ไปยืนยัน</span>
+                                                                </div>
                                                                 <?php
                                                             }
                                                             ?>
@@ -298,6 +320,7 @@ $menu = 7;
     <script src="../../../app-assets/vendors/js/extensions/sweetalert2.all.min.js"></script>
     <script src="../../../app-assets/vendors/js/extensions/polyfill.min.js"></script>
     <script src="../../../app-assets/vendors/js/forms/select/select2.full.min.js"></script>
+    <script src="../../../tools/preload.js/dist/js/preload.js"></script>
     <!-- END: Page Vendor JS-->
 
     <!-- BEGIN: Theme JS-->
@@ -309,23 +332,62 @@ $menu = 7;
     <!-- END: Theme JS-->
 
     <!-- BEGIN: Page JS-->
+    <script src="../../../assets/js/scripts/core.js?v=<?php echo filemtime('../../../assets/js/scripts/core.js'); ?>"></script>
     <script src="../../../assets/js/scripts/authen.js?v=<?php echo filemtime('../../../assets/js/scripts/authen.js'); ?>"></script>
     <script src="../../../app-assets/js/scripts/pages/app-users.js?v=<?php echo filemtime('../../../app-assets/js/scripts/pages/app-users.js'); ?>"></script>
     <script src="../../../assets/js/scripts/admin-user.js?v=<?php echo filemtime('../../../assets/js/scripts/admin-user.js'); ?>"></script>
+    <script src="../../../assets/js/scripts/patient.js?v=<?php echo filemtime('../../../assets/js/scripts/patient.js'); ?>"></script>
     <!-- END: Page JS-->
     <script>
         $(document).ready(function(){
+            preload.hide();
+
             if ($("#users-list-datatable-patient").length > 0) {
                 usersTable = $("#users-list-datatable-patient").DataTable({
                     responsive: true,
                     'columnDefs': [
                         {
                             "orderable": false,
-                            "targets": [0, 3]
+                            "targets": [0, 2, 3, 4, 5, 6]
                         }]
                 });
             };
         })
+
+        function back2Follow(puid, pname){
+            Swal.fire({
+                title: 'ยืนยันดำเนินการ',
+                text: 'ท่านยืนยันการกลับมาติดตามของคุณ ' + pname + ' หรือไม่',
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                confirmButtonText: 'ยืนยัน',
+                cancelButtonText: 'ยกเลิก',
+                confirmButtonClass: 'btn btn-primary mr-1',
+                cancelButtonClass: 'btn btn-danger',
+                buttonsStyling: false,
+            }).then(function (result) {
+                if (result.value) {
+                    preload.show()
+                    var param = {
+                        puid: puid,
+                        uid: $('#txtCurrentUid').val()
+                    }
+
+                    var jxr = $.post(api_url + 'patient?stage=back2follow', param, function(){}, 'json')
+                               .always(function(snap){
+                                   console.log(snap);
+                                   return ;
+                                    preload.hide()
+                                    if(snap.status == 'Success'){
+
+                                    }else{
+
+                                    }
+                               })
+                }
+            })
+        }
     </script>
 </body>
 <!-- END: Body-->

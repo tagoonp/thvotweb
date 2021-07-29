@@ -219,6 +219,8 @@ var admin_user = {
               )
               return false;
         }
+
+        return ;
     },
     check_patientupdate_form(){
         $check = 0

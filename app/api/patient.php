@@ -495,6 +495,7 @@ if($stage == 'add_drug'){
         (!(isset($_REQUEST['puid']))) ||
         (!(isset($_REQUEST['uid']))) ||
         (!(isset($_REQUEST['drug_id']))) ||
+        (!(isset($_REQUEST['drug_name']))) ||
         (!(isset($_REQUEST['drug_q'])))
     ){
         $return['status'] = 'Fail';
@@ -507,6 +508,7 @@ if($stage == 'add_drug'){
     $puid = mysqli_real_escape_string($conn, $_REQUEST['puid']);
     $uid = mysqli_real_escape_string($conn, $_REQUEST['uid']);
     $drug_id = mysqli_real_escape_string($conn, $_REQUEST['drug_id']);
+    $drug_name_other = mysqli_real_escape_string($conn, $_REQUEST['drug_name']);
     $drug_q = mysqli_real_escape_string($conn, $_REQUEST['drug_q']);
     $drug_info = mysqli_real_escape_string($conn, $_REQUEST['drug_info']);
 
@@ -520,20 +522,20 @@ if($stage == 'add_drug'){
         die();
     }
 
-    $strSQL = "SELECT * FROM vot2_drug WHERE drug_id = '$drug_id' LIMIT 1";
-    $res = $db->fetch($strSQL, false);
-    if($res){
-
+    if($drug_id == '99'){
         $strSQL = "SELECT username FROM vot2_account WHERE uid = '$puid' LIMIT 1";
         $resU = $db->fetch($strSQL, false);
 
         $pusername = $resU['username'];
 
-        $dname = $res['drug_name'];
         $strSQL = "INSERT INTO vot2_patient_med (`med_pid`, `med_username`, `med_id`, `med_name`, `med_amount`, `med_mg`, `med_desc`, `med_status`, `med_udatetime`)
-                  VALUES ('$puid ', '$pusername', '$drug_id', '$dname', '$drug_q', '', '$drug_info', 'Y', '$datetime')";
+                VALUES ('$puid ', '$pusername', '$drug_id', '$drug_name_other', '$drug_q', '', '$drug_info', 'Y', '$datetime')";
         $resInsert = $db->insert($strSQL, false);
         if($resInsert){
+
+            $strSQL = "UPDATE vot2_med_transaction SET mt_status = 'N' WHERE mt_patient_uid = '$puid'";
+            $res2 = $db->execute($strSQL);
+
             $return['status'] = 'Success';
             echo json_encode($return);
             $db->close(); 
@@ -545,13 +547,48 @@ if($stage == 'add_drug'){
             $db->close(); 
             die();
         }
+
     }else{
-        $return['status'] = 'Fail';
-        $return['error_stage'] = '3';
-        echo json_encode($return);
-        $db->close(); 
-        die();
+        $strSQL = "SELECT * FROM vot2_drug WHERE drug_id = '$drug_id' AND drug_status = 'Y' LIMIT 1";
+        $res = $db->fetch($strSQL, false);
+        if($res){
+
+            $strSQL = "SELECT username FROM vot2_account WHERE uid = '$puid' LIMIT 1";
+            $resU = $db->fetch($strSQL, false);
+
+            $pusername = $resU['username'];
+
+            $dname = $res['drug_name'];
+            $strSQL = "INSERT INTO vot2_patient_med (`med_pid`, `med_username`, `med_id`, `med_name`, `med_amount`, `med_mg`, `med_desc`, `med_status`, `med_udatetime`)
+                    VALUES ('$puid ', '$pusername', '$drug_id', '$dname', '$drug_q', '', '$drug_info', 'Y', '$datetime')";
+            $resInsert = $db->insert($strSQL, false);
+            if($resInsert){
+
+                $strSQL = "UPDATE vot2_med_transaction SET mt_status = 'N' WHERE mt_patient_uid = '$puid'";
+                $res2 = $db->execute($strSQL);
+
+                $return['status'] = 'Success';
+                echo json_encode($return);
+                $db->close(); 
+                die();
+            }else{
+                $return['status'] = 'Fail';
+                $return['error_stage'] = '4';
+                echo json_encode($return);
+                $db->close(); 
+                die();
+            }
+
+        }else{
+            $return['status'] = 'Fail';
+            $return['error_stage'] = '3';
+            echo json_encode($return);
+            $db->close(); 
+            die();
+        }
     }
+
+    
 }
 
 if($stage == 'list_patient_drug'){
@@ -569,9 +606,205 @@ if($stage == 'list_patient_drug'){
     $puid = mysqli_real_escape_string($conn, $_REQUEST['puid']);
     $uid = mysqli_real_escape_string($conn, $_REQUEST['uid']);
 
-    $strSQL = "SELECT * FROM vot2_patient_med WHERE med_pid = '$puid' AND med_status = 'Y'";
+    $strSQL = "SELECT * FROM vot2_patient_med WHERE med_pid = '$puid' AND med_delete = 'N' AND med_status = 'Y' ORDER BY med_name";
     $res = $db->fetch($strSQL, true, true);
     if(($res) && ($res['count'] > 0)){
+        $return['status'] = 'Success';
+        $return['data'] = $res['data'];
+        echo json_encode($return);
+        $db->close(); 
+        die();
+    }else{
+        $return['status'] = 'Fail';
+        $return['error_stage'] = '2';
+        echo json_encode($return);
+        $db->close(); 
+        die();
+    }
+}
+
+if($stage == 'get_patient_drug'){
+    if(
+        (!(isset($_REQUEST['did']))) ||
+        (!(isset($_REQUEST['puid']))) ||
+        (!(isset($_REQUEST['uid'])))
+    ){
+        $return['status'] = 'Fail';
+        $return['error_stage'] = '1';
+        echo json_encode($return);
+        $db->close(); 
+        die();
+    }
+
+    $puid = mysqli_real_escape_string($conn, $_REQUEST['puid']);
+    $uid = mysqli_real_escape_string($conn, $_REQUEST['uid']);
+    $did = mysqli_real_escape_string($conn, $_REQUEST['did']);
+
+    $strSQL = "SELECT * FROM vot2_patient_med WHERE ID = '$did'";
+    $res = $db->fetch($strSQL, false);
+    if($res){
+        $return['status'] = 'Success';
+        $return['data'] = $res;
+        echo json_encode($return);
+        $db->close(); 
+        die();
+    }else{
+        $return['status'] = 'Fail';
+        $return['error_stage'] = '2';
+        echo json_encode($return);
+        $db->close(); 
+        die();
+    }
+}
+
+if($stage == 'confirm_patient_drug'){
+    if(
+        (!(isset($_REQUEST['puid']))) ||
+        (!(isset($_REQUEST['uid']))) ||
+        (!(isset($_REQUEST['reason']))) ||
+        (!(isset($_REQUEST['reason_inf'])))
+    ){
+        $return['status'] = 'Fail';
+        $return['error_stage'] = '1';
+        echo json_encode($return);
+        $db->close(); 
+        die();
+    }
+
+    $puid = mysqli_real_escape_string($conn, $_REQUEST['puid']);
+    $uid = mysqli_real_escape_string($conn, $_REQUEST['uid']);
+    $reason = mysqli_real_escape_string($conn, $_REQUEST['reason']);
+    $reason_inf = mysqli_real_escape_string($conn, $_REQUEST['reason_inf']);
+
+    $cnf_session = $dateuniversal;
+
+    // $strSQL = "UPDATE vot2_patient_med SET med_status = 'N', med_cnf = 'N' WHERE med_transaction IS NOT NULL AND med_pid = '$puid' AND med_cnf = 'Y'";
+    // $res = $db->execute($strSQL);
+
+    $strSQL = "SELECT * FROM vot2_patient_med WHERE med_status = 'Y' AND med_delete = 'N' AND med_pid = '$puid' AND med_transaction IS NOT NULL" ;
+    $res = $db->fetch($strSQL, true, false);
+    if(($res) && ($res['status'])){
+        foreach ($res['data'] as $row) {
+            $strSQL = "INSERT INTO vot2_patient_med (`med_pid`, `med_username`, `med_id`, `med_name`, `med_amount`, `med_mg`, `med_desc`, `med_status`, `med_udatetime`)
+                  VALUES ('$puid ', '".$row['med_username']."', '".$row['med_id']."', '".$row['med_name']."', '".$row['med_amount']."', '', '".$row['med_desc']."', 'Y', '$datetime')";
+            $resInsert = $db->insert($strSQL, false);
+        }
+    }
+
+
+    $strSQL = "UPDATE vot2_patient_med SET med_transaction = '$cnf_session', med_cnf = 'Y' WHERE med_transaction IS NULL AND med_pid = '$puid'";
+    $res = $db->execute($strSQL);
+
+    if($res){
+
+        $strSQL = "UPDATE vot2_med_transaction SET mt_status = 'N' WHERE mt_patient_uid = '$puid'";
+        $res2 = $db->execute($strSQL);
+
+        $strSQL = "INSERT INTO vot2_med_transaction (`mt_transaction_id`, `mt_patient_uid`, `mt_uid`, `mt_datetime`, `mt_stage`, `mt_info`)
+                   VALUES ('$cnf_session', '$puid', '$uid', '$datetime', '$reason', '$reason_inf')
+                  ";
+        $res2 = $db->insert($strSQL, false);
+
+        $strSQL = "UPDATE vot2_patient_med SET med_status = 'N', med_cnf = 'N' WHERE med_transaction != '$cnf_session' AND med_pid = '$puid'";
+        $res = $db->execute($strSQL);
+
+        if($res2){
+            $return['status'] = 'Success';
+        }else{
+            $return['status'] = 'Fail';
+            $return['error_stage'] = '2';
+            $return['error_cmd'] = $strSQL;
+        }
+    }else{
+        $return['status'] = 'Fail';
+        $return['error_stage'] = '3';
+    }
+    echo json_encode($return);
+    $db->close(); 
+    die();
+}
+
+if($stage == 'update_drug'){
+    if(
+        (!(isset($_REQUEST['puid']))) ||
+        (!(isset($_REQUEST['uid']))) ||
+        (!(isset($_REQUEST['drug_id']))) ||
+        (!(isset($_REQUEST['drug_med_id']))) ||
+        (!(isset($_REQUEST['drug_q'])))
+    ){
+        $return['status'] = 'Fail';
+        $return['error_stage'] = '1';
+        echo json_encode($return);
+        $db->close(); 
+        die();
+    }
+
+    $puid = mysqli_real_escape_string($conn, $_REQUEST['puid']);
+    $uid = mysqli_real_escape_string($conn, $_REQUEST['uid']);
+    $drug_id = mysqli_real_escape_string($conn, $_REQUEST['drug_id']);
+    $drug_q = mysqli_real_escape_string($conn, $_REQUEST['drug_q']);
+    $drug_info = mysqli_real_escape_string($conn, $_REQUEST['drug_info']);
+    $drug_med_id = mysqli_real_escape_string($conn, $_REQUEST['drug_med_id']);
+    $drug_name = mysqli_real_escape_string($conn, $_REQUEST['drug_name']);
+
+    $strSQL = "UPDATE vot2_patient_med SET med_status = 'N' WHERE med_pid = '$puid' AND ID = '$drug_id'";
+    $res = $db->execute($strSQL);
+
+    if($res){
+        $strSQL = "SELECT username FROM vot2_account WHERE uid = '$puid' LIMIT 1";
+        $resU = $db->fetch($strSQL, false);
+
+        $pusername = $resU['username'];
+
+        $strSQL = "INSERT INTO vot2_patient_med (`med_pid`, `med_username`, `med_id`, `med_name`, `med_amount`, `med_mg`, `med_desc`, `med_status`, `med_udatetime`)
+                    VALUES ('$puid ', '$pusername', '$drug_med_id', '$drug_name', '$drug_q', '', '$drug_info', 'Y', '$datetime')";
+        $resInsert = $db->insert($strSQL, false);
+        if($resInsert){
+
+            $strSQL = "UPDATE vot2_med_transaction SET mt_status = 'N' WHERE mt_patient_uid = '$puid'";
+            $res2 = $db->execute($strSQL);
+
+            $return['status'] = 'Success';
+            echo json_encode($return);
+            $db->close(); 
+            die();
+        }else{
+            $return['status'] = 'Fail';
+            $return['error_stage'] = '4';
+            echo json_encode($return);
+            $db->close(); 
+            die();
+        }
+    }
+}
+
+if($stage == 'delete_patient_drug'){
+    if(
+        (!(isset($_REQUEST['did']))) ||
+        (!(isset($_REQUEST['puid']))) ||
+        (!(isset($_REQUEST['uid'])))
+    ){
+        $return['status'] = 'Fail';
+        $return['error_stage'] = '1';
+        echo json_encode($return);
+        $db->close(); 
+        die();
+    }
+
+    $puid = mysqli_real_escape_string($conn, $_REQUEST['puid']);
+    $uid = mysqli_real_escape_string($conn, $_REQUEST['uid']);
+    $did = mysqli_real_escape_string($conn, $_REQUEST['did']);
+
+    $strSQL = "UPDATE vot2_patient_med SET med_delete = 'Y', med_status = 'N' WHERE med_pid = '$puid' AND ID = '$did'";
+    $res = $db->execute($strSQL);
+    if($res){
+
+        $strSQL = "UPDATE vot2_patient_med SET med_cnf = 'N' WHERE med_pid = '$puid'";
+        $res = $db->execute($strSQL);
+
+        $strSQL = "UPDATE vot2_med_transaction SET mt_status = 'N' WHERE mt_patient_uid = '$puid'";
+        $res2 = $db->execute($strSQL);
+
         $return['status'] = 'Success';
         $return['data'] = $res['data'];
         echo json_encode($return);
@@ -640,6 +873,61 @@ if($stage == 'patient_delete'){
     $db->insert($strSQL, false);
 
     $return['status'] = 'Success';
+    echo json_encode($return);
+    $db->close(); 
+    die();
+}
+
+if($stage == 'back2follow'){
+    if(
+        (!isset($_REQUEST['uid'])) ||
+        (!isset($_REQUEST['puid']))
+    ){
+        $return['status'] = 'Fail (x101)';
+        $return['error_stage'] = '2';
+        echo json_encode($return);
+        $db->close(); 
+        die();
+    }
+
+    $uid = mysqli_real_escape_string($conn, $_REQUEST['uid']);
+    $puid = mysqli_real_escape_string($conn, $_REQUEST['puid']);
+
+    $strSQL = "SELECT * FROM vot2_account WHERE uid = '$puid' LIMIT 1";
+    $res = $db->fetch($strSQL, false);
+
+    if($res){
+        $caldate = $res['cal_end_obsdate'];
+        $stopdate = $res['end_obsdate'];
+        // Check จำนวนวัน จากวันที่หยุดล่าสุด ถึงวันที่ควรหยุด (Calculated date)
+
+        $contractDateBegin = new DateTime($stopdate);
+        $contractDateEnd  = new DateTime($caldate);
+
+        $interval = $contractDateBegin->diff($contractDateEnd);
+        $numday = $interval->format('%a');
+
+        $newCalculateDay = date('Y-m-d', strtotime('+'.$numday.' days') );
+
+        $strSQL = "UPDATE vot2_account 
+                   SET 
+                   end_obsdate = '$newCalculateDay', 
+                   cal_end_obsdate = '$newCalculateDay', 
+                   stop_drug = '0' 
+                   WHERE 
+                   uid = '$puid'
+                   AND delete_status = '0'
+                   AND active_status = '1'
+                   ";
+        $resU = $db->execute($strSQL);
+
+        $return['status'] = 'Success';
+        $return['data'] = number_format($numday);
+    }else{
+        $return['status'] = 'Fail (x101)';
+        $return['error_stage'] = '3';
+    }
+    
     echo json_encode($return);
     $db->close(); 
     die();

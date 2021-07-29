@@ -256,3 +256,112 @@ if($stage == 'set_notitime2'){
     die();
 }
 
+if($stage == 'add_new_drug'){
+    if(
+        (!isset($_REQUEST['uid'])) ||
+        (!isset($_REQUEST['drug_name']))
+    ){
+        $return['status'] = 'Fail';
+        $return['error_stage'] = '1';
+        echo json_encode($return);
+        $db->close(); 
+        die();
+    }
+
+    $uid = mysqli_real_escape_string($conn, $_REQUEST['uid']);
+    $drug_name = mysqli_real_escape_string($conn, $_REQUEST['drug_name']);
+
+    $strSQL = "SELECT * FROM vot2_drug WHERE drug_name = '$uid' AND drug_status = 'Y'";
+    $r = $db->fetch($strSQL, true);
+    if($r){
+        $return['status'] = 'Duplicate';
+        echo json_encode($return);
+        $db->close(); 
+        die();
+    }
+
+    $strSQL = "INSERT INTO vot2_drug (`drug_name`) VALUES ('$drug_name') ";
+    $r = $db->insert($strSQL, false);
+
+    if($r){
+        $return['status'] = 'Success';
+    }else{
+        $return['status'] = 'Fail';
+        $return['error_stage'] = '2';
+    }
+
+    
+    echo json_encode($return);
+    $db->close(); 
+    die();
+}
+
+if($stage == 'delete_new_drug'){
+    if(
+        (!isset($_REQUEST['uid'])) ||
+        (!isset($_REQUEST['drug_id']))
+    ){
+        $return['status'] = 'Fail';
+        $return['error_stage'] = '1';
+        echo json_encode($return);
+        $db->close(); 
+        die();
+    }
+
+    $uid = mysqli_real_escape_string($conn, $_REQUEST['uid']);
+    $drug_id = mysqli_real_escape_string($conn, $_REQUEST['drug_id']);
+
+    $strSQL = "UPDATE vot2_drug SET drug_status = 'N' WHERE drug_id = '$drug_id'";
+    $r = $db->execute($strSQL);
+    if($r){
+        $return['status'] = 'Success';
+    }else{
+        $return['status'] = 'Fail';
+        $return['error_stage'] = '2';
+        // $return['error_msg'] = $strSQL;
+    }
+    echo json_encode($return);
+    $db->close(); 
+    die();
+}
+
+if($stage == 'update_new_drug'){
+    if(
+        (!isset($_REQUEST['uid'])) ||
+        (!isset($_REQUEST['dname'])) ||
+        (!isset($_REQUEST['did']))
+    ){
+        $return['status'] = 'Fail';
+        $return['error_stage'] = '1';
+        echo json_encode($return);
+        $db->close(); 
+        die();
+    }
+
+    $uid = mysqli_real_escape_string($conn, $_REQUEST['uid']);
+    $drug_id = mysqli_real_escape_string($conn, $_REQUEST['did']);
+    $dname = mysqli_real_escape_string($conn, $_REQUEST['dname']);
+
+    $strSQL = "SELECT * FROM vot2_drug WHERE drug_name = '$dname' AND drug_status = 'Y' AND drug_id != '$drug_id'";
+    $res = $db->fetch($strSQL, false);
+    if($res){
+        $return['status'] = 'Duplicate';
+        $return['error_stage'] = '1';
+        echo json_encode($return);
+        $db->close(); 
+        die();
+    }
+
+    $strSQL = "UPDATE vot2_drug SET drug_name = '$dname' WHERE drug_id = '$drug_id'";
+    $r = $db->execute($strSQL);
+    if($r){
+        $return['status'] = 'Success';
+    }else{
+        $return['status'] = 'Fail';
+        $return['error_stage'] = '2';
+    }
+    echo json_encode($return);
+    $db->close(); 
+    die();
+}
+

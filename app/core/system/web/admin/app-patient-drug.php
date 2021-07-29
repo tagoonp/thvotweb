@@ -476,54 +476,6 @@ $selected_location = $db->fetch($strSQL, false);
                     </div>
                 </section>
                 <!-- users edit ends -->
-                <h3><i class="bx bxs-videos mr-25"></i> บันทึกการส่งวีดีโอ</h3>
-                <div class="card">
-                    <div class="card-body">
-                        <!-- datatable start -->
-                        <div class="table-responsive">
-                            <table id="video-list-datatable" class="table">
-                                <thead>
-                                    <tr>
-                                        <th>วัน-เวลาที่ส่ง</th>
-                                        <th>สถานะการอัพโหลด</th>
-                                        <th>วัน - เวลาที่อัพโหลดสำเร็จ</th>
-                                        <th>Ref. video</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <?php 
-                                    $strSQL =  "SELECT * FROM vot2_videosession l INNER JOIN vot2_account a ON l.vs_uid = a.uid 
-                                                INNER JOIN vot2_userinfo b ON a.uid = b.info_uid 
-                                                WHERE 
-                                                a.delete_status = '0' 
-                                                AND b.info_use = '1'
-                                                AND a.uid = '$id'
-                                                ORDER BY vs_create DESC LIMIT 200
-                                            ";
-                                    $result_list = $db->fetch($strSQL, true, false);
-                                    if(($result_list) && ($result_list['status'])){
-                                        $c = 1;
-                                        foreach($result_list['data'] as $row){
-                                            ?>
-                                            <tr>
-                                                <td><?php echo $row['vs_create']; ?></td>
-                                                <td><?php echo $row['vs_upload']; ?></td>
-                                                <td><?php echo $row['vs_upload_datetime']; ?></td>
-                                                <td><?php echo $row['vs_vid']; ?></td>
-                                            </tr>
-                                            <?php
-                                            $c++;
-                                        }
-                                    }else{
-                                        echo $strSQL;
-                                    }
-                                    ?>
-                                </tbody>
-                            </table>
-                        </div>
-                        <!-- datatable ends -->
-                    </div>
-                </div>
 
             </div>
         </div>

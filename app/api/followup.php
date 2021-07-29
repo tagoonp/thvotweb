@@ -83,6 +83,9 @@ if($stage == 'setpatient_dailyprogress'){
 
                 // $strSQL = "UPDATE vot2_account SET end_obsdate = '$date', stop_drug = '0' WHERE uid = '$patient_id' AND delete_status = '0'";
                 // $res2 = $db->execute($strSQL);
+
+                $strSQL = "UPDATE vot2_followup_dummy SET fud_followstage = '1' WHERE fud_date = '$progress_date' AND fud_uid = '$patient_id'";
+                $res2 = $db->execute($strSQL);
             }
 
             $return['status'] = 'Success';

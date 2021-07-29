@@ -48,7 +48,7 @@ if($stage == 'getpatient_calendar'){
 
             if($res['cal_end_obsdate'] != $res['end_obsdate']){
                 $buf['color'] = '#000'; 
-                $buf['title'] .= '&nbsp;';
+                $buf['title'] = '&nbsp;';
                 $buf['textColor'] = '#fff';
                 $buf['borderColor'] = '#000';
                 $return[] = $buf;

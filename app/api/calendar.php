@@ -114,7 +114,7 @@ if($stage == 'getpatient_calendar'){
             }else{
                 $buf['allDay'] = true;
                 $buf['start'] = $start;
-                $buf['status'] = $res2['fud_status'];
+                $buf['status'] = "NA";
                 // $buf['err'] = $strSQL;
                 $buf['color'] = '#000'; 
                 $buf['title'] = '&nbsp;';

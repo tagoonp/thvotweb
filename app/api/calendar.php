@@ -79,6 +79,12 @@ if($stage == 'getpatient_calendar'){
                             $buf['textColor'] = '#ff8400';
                         }
                     }
+
+                    if($res2['fud_followstage'] == 0){ // สั่งหยุดยา
+                        $buf['color'] = '#000'; 
+                        $buf['borderColor'] = '#000';
+                    }
+                    
                 }else if($res2['fud_status'] == 'sended'){
                     if($res2['fud_dateview'] == '1'){ // ได้ดู
                         $buf['color'] = '#2ef39e';

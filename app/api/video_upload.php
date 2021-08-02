@@ -56,8 +56,8 @@ if (!empty($_FILES)) {
             shell_exec('ffmpeg -i /home/thvot/public_html/thvotweb/app/uploads/video/'.$generatedName.' /home/thvot/public_html/thvotweb/app/uploads/video/'.$uploadName);
         }
 
-        $strSQL = "INSERT INTO vot2_followup (`fu_uid`, `fu_username`, `fu_video`, `fu_hoscode`, `fu_date`)
-                   VALUES ('$uid', '$username', '$fileUrl', '$hcode ', '$date' )";
+        $strSQL = "INSERT INTO vot2_followup (`fu_uid`, `fu_username`, `fu_video`, `fu_hoscode`, `fu_date`, `fu_upload_datetime`)
+                   VALUES ('$uid', '$username', '$fileUrl', '$hcode ', '$date', '$datetime')";
         $db->insert($strSQL, false);
 
         $strSQLx = $strSQL;

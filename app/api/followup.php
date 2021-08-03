@@ -50,10 +50,10 @@ if($stage == 'unwatch_number'){
     }
     $res = $db->fetch($strSQL, true, true);
     if(($res) && ($res['status'])){
-        $return['status'] == 'Success';
+        $return['status'] = 'Success';
         $return['data'] = $res['count'];
     }else{
-        $return['status'] == 'Success';
+        $return['status'] = 'Success';
         $return['data'] = 0;
     }
     echo json_encode($return);

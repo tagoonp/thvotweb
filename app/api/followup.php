@@ -49,7 +49,7 @@ if($stage == 'unwatch_number'){
                ";
     }
     $res = $db->fetch($strSQL, false);
-    if(($res) && ($res['status'])){
+    if($res){
         $return['status'] = 'Success';
         $return['data'] = $res['cn'];
     }else{

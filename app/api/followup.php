@@ -566,9 +566,9 @@ if($stage == 'followup_list'){
                     if($resf['cn'] != 0){
                         $item['numdate'] = $resf['cn'];
                         $item['color'] = "primary";
-                        if($resf['cn'] >= 14){
+                        if($resf['cn'] >= 26){
                             $item['color'] = "danger";
-                        }else if(($resf['cn'] >= 7) && ($resf['cn'] < 14)){
+                        }else if(($resf['cn'] >= 7) && ($resf['cn'] < 26)){
                             $item['numdate'] = "0";
                             $item['color'] = "warning";
                         }

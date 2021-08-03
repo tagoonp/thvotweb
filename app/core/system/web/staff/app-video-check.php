@@ -17,6 +17,44 @@ require('../../../../config/user.inc.php');
 
 $menu = 8;
 
+if(
+    (!isset($_GET['id'])) ||
+    (!isset($_GET['vid'])) ||
+    (!isset($_GET['uid'])) ||
+    (!isset($_GET['hcode']))
+){
+    $db->close();
+    header('Location: ./app-video-wait');
+    die();
+}
+
+$patient_id = mysqli_real_escape_string($conn, $_GET['id']);
+$video_id = mysqli_real_escape_string($conn, $_GET['vid']);
+
+$strSQL = "SELECT * FROM vot2_account a INNER JOIN vot2_userinfo b ON a.username = b.info_username
+           WHERE 
+           a.delete_status = '0' 
+           AND a.active_status = '1'
+           AND b.info_use = '1'
+          ";
+$resPatient = $db->fetch($strSQL, false);
+if(!$resPatient){
+    $db->close();
+    header('Location: ./app-video-wait');
+    die();
+}
+
+$strSQL = "SELECT * FROM vot2_followup
+           WHERE 
+           fu_id = '$video_id ' 
+           AND fu_uid = '$patient_id'
+          ";
+$resVideo = $db->fetch($strSQL, false);
+if(!$resVideo){
+    $db->close();
+    header('Location: ./app-video-wait');
+    die();
+}
 ?>
 <input type="hidden" id="txtCurrentUid" value="<?php echo $_SESSION['thvot_uid']; ?>">
 <!DOCTYPE html>
@@ -151,68 +189,40 @@ $menu = 8;
 
             </div>
             <div class="content-body">
-                <h2 class="mb-2">รายการวิดีโอรอตรวจ</h2>
+                <h2 class="mb-2">ตรวจสอบวิดีโอ</h2>
                 <!-- users list start -->
                 <section class="users-list-wrapper">
                     <div class="users-list-table">
                         <div class="card">
-                            <div class="card-body">
-                                <!-- datatable start -->
-                                <div class="table-responsive">
-                                    <table id="users-list-datatable-patient" class="table">
-                                        <thead>
-                                            <tr>
-                                                <!-- <th style="width: 40px;" class="th"></th> -->
-                                                <!-- <th class="th">บัญชีผู้ใช้งาน</th> -->
-                                                <th class="th">วิดีโอ</th>
-                                                <th class="th" style="width: 120px;">สถานะการตรวจ</th>
-                                                <th class="th" style="width: 100px;">วัน-เวลาที่ส่ง</th>
-                                                <th class="th" style="width: 100px;">วัน-เวลาที่ตรวจ</th>
-                                                
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <?php 
-                                            $strSQL = "SELECT *
-                                                       FROM vot2_followup a INNER JOIN vot2_account b ON a.fu_username = b.username
-                                                       INNER JOIN vot2_userinfo c ON b.username = c.info_username
-                                                       WHERE 
-                                                       b.delete_status = '0' 
-                                                       AND b.role = 'patient'
-                                                       AND a.fu_verify_datetime IS NULL
-                                                       AND c.info_use = '1'
-                                                       AND b.obs_hcode = '$hcode'
-                                            ";
-                                            $result_list = $db->fetch($strSQL, true, false);
-                                            if($result_list['status']){
-                                                $c = 1;
-                                                foreach($result_list['data'] as $row){
-                                                    ?>
-                                                    <tr>
-                                                        <!-- <td class="text-left" style="vertical-align:top; width: 50px;">
-                                                            
-                                                        </td> -->
-                                                        <td class="th" style="vertical-align:top;">
-                                                            <span class="badge- badge-dark- round" style="font-size: 0.8em; margin-left: 0px;">Username : <?php echo $row['username']; ?></span>
-                                                            <div><?php echo $row['fname']." ".$row['lname']; ?></div>
-                                                            <div style="padding-top: 5px;">
-                                                                <a class="btn btn-icon btn-success rounded-circle" style="height: 34px; width: 34px; margin-bottom: 2px;" href="app-video-check?uid=<?php echo $user['uid']; ?>&role=<?php echo $user['role']; ?>&hcode=<?php echo $user['hcode']; ?>&id=<?php echo $row['uid'];?>&vid=<?php echo $row['fu_id']; ?>" class="mr-1"><i class="bx bx-search"></i></a>    
-                                                            </div>
-                                                        </td>
-                                                        
-                                                        <td class="th" style="vertical-align:top; width: 100px;">รอการตรวจสอบ</td>
-                                                        <td class="th" style="vertical-align:top;"><?php echo $row['fu_upload_datetime']; ?></td>
-                                                        <td class="th" style="vertical-align:top;"><?php echo $row['fu_verify_datetime']; ?></td>
-                                                    </tr>
-                                                    <?php
-                                                    $c++;
-                                                }
-                                            }
-                                            ?>
-                                        </tbody>
-                                    </table>
+                            <div class="card-body p-0">
+                                <div class="p-2">
+                                    <div class="row">
+                                        <div class="col-12">
+                                            <h4>ข้อมูลผู้ป่วย</h4>
+                                            <hr>
+                                        </div>
+                                        <div class="col-12 col-sm-6">
+                                            <fieldset class="form-group">
+                                                <label for="disabledInput">ชื่อ - นามสกุล</label>
+                                                <p class="form-control-static" id="staticInput">
+                                                    <?php echo $resPatient['fname']." ".$resPatient['lname'] ?>
+                                                </p>
+                                            </fieldset>
+                                        </div>
+                                    </div>
                                 </div>
-                                <!-- datatable ends -->
+
+                                <div class="row">
+                                    <div class="col-12 col-sm-5">
+                                        <video width="100%" height="240" controls>
+                                            <source src="<?php echo $resVideo['fu_video']; ?>" type="video/mp4">
+                                            Your browser does not support the video tag.
+                                        </video>
+                                    </div>
+                                    <div class="col-12 col-sm-7">
+                                    
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>

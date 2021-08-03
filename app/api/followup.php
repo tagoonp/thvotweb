@@ -11,13 +11,11 @@ if(!isset($_GET['stage'])){ $db->close(); header('Location: ../404?stage=001'); 
 $stage = mysqli_real_escape_string($conn, $_GET['stage']);
 $return = array();
 
-if($stage == 'untakendrug_list'){
+if($stage == 'unwatch_number'){
     if(
         (!isset($_GET['uid'])) ||
         (!isset($_GET['role'])) ||
-        (!isset($_GET['hcode'])) ||
-        (!isset($_GET['page'])) ||
-        (!isset($_GET['limit']))
+        (!isset($_GET['hcode']))
     ){
         $return['status'] = 'Fail';
         echo json_encode($return);
@@ -28,9 +26,57 @@ if($stage == 'untakendrug_list'){
     $uid = mysqli_real_escape_string($conn, $_GET['uid']);
     $role = mysqli_real_escape_string($conn, $_GET['role']);
     $hcode = mysqli_real_escape_string($conn, $_GET['hcode']);
-    $page = mysqli_real_escape_string($conn, $_GET['page']);
-    $limit = mysqli_real_escape_string($conn, $_GET['limit']);
-    $page = ($page * $limit) - $limit;
+
+    $strSQL = "SELECT COUNT(a.fu_id) cn FROM vot2_followup a
+               WHERE 
+               a.fu_view = '0' 
+               AND a.fu_delete = '0'
+               AND a.fu_username IN 
+               (SELECT username FROM vot2_account WHERE obs_hcode = '$hcode') 
+              ";
+    if($role == 'admin'){
+        $strSQL = "SELECT COUNT(a.fu_id) cn FROM vot2_followup a
+               WHERE 
+               a.fu_view = '0' 
+               AND a.fu_delete = '0'";
+    }else if($role == 'manager'){
+        $strSQL = "SELECT COUNT(a.fu_id) cn FROM vot2_followup a
+               WHERE 
+               a.fu_view = '0' 
+               AND a.fu_delete = '0'
+               AND a.fu_username IN 
+               (SELECT username FROM vot2_account WHERE obs_hcode = '$hcode' OR reg_hcode = '$hcode' OR hcode = '$hcode') 
+               ";
+    }
+    $res = $db->fetch($strSQL, true, true);
+    if(($res) && ($res['status'])){
+        $return['status'] == 'Success';
+        $return['data'] = $res['count'];
+    }else{
+        $return['status'] == 'Success';
+        $return['data'] = 0;
+    }
+    echo json_encode($return);
+    $db->close(); 
+    die();
+}
+
+if($stage == 'untakendrug_list'){
+    if(
+        (!isset($_GET['uid'])) ||
+        (!isset($_GET['role'])) ||
+        (!isset($_GET['hcode']))
+    ){
+        $return['status'] = 'Fail';
+        echo json_encode($return);
+        $db->close(); 
+        die();
+    }
+
+    $uid = mysqli_real_escape_string($conn, $_GET['uid']);
+    $role = mysqli_real_escape_string($conn, $_GET['role']);
+    $hcode = mysqli_real_escape_string($conn, $_GET['hcode']);
+
     if($role == 'admin'){
         $strSQL = "SELECT *, d.hosname hospital_name FROM vot2_followup_dummy a INNER JOIN vot2_account b ON a.fud_uid = b.uid 
               INNER JOIN vot2_userinfo c ON b.uid = c.info_uid

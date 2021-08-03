@@ -227,7 +227,7 @@ $selected_location = $db->fetch($strSQL, false);
                                         </div>
                                     </div>
                                     <div class="col-3 text-right">
-                                        <button class="btn btn-primary"  data-toggle="modal" data-target="#addDrugModal"><i class="bx bx-plus"></i> เพิ่มรายการยา</button>
+                                        <button class="btn btn-primary"  data-toggle="modal" data-target="#addDrugModal"><i class="bx bx-plus"></i> เพิ่ม/แก้ไข รายการยา</button>
                                     </div>
                                 </div>
                             </div>
@@ -238,7 +238,7 @@ $selected_location = $db->fetch($strSQL, false);
                                     <div class="modal-dialog modal-dialog-centered modal-dialog-centered modal-dialog-scrollable">
                                         <div class="modal-content">
                                             <div class="modal-header bg-dark">
-                                                <h5 class="modal-title text-white th" id="exampleModalCenterTitle"><i class="bx bx-plus"></i> เพิ่มรายการยา</h5>
+                                                <h5 class="modal-title text-white th" id="exampleModalCenterTitle"><i class="bx bx-plus"></i> เพิ่ม/แก้ไข รายการยา</h5>
                                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                                     <i class="bx bx-x"></i>
                                                 </button>

@@ -120,7 +120,9 @@ if($stage == 'untakendrug_list'){
     if(
         (!isset($_GET['uid'])) ||
         (!isset($_GET['role'])) ||
-        (!isset($_GET['hcode']))
+        (!isset($_GET['hcode'])) ||
+        (!isset($_GET['page'])) ||
+        (!isset($_GET['limit']))
     ){
         $return['status'] = 'Fail';
         echo json_encode($return);
@@ -131,10 +133,24 @@ if($stage == 'untakendrug_list'){
     $uid = mysqli_real_escape_string($conn, $_GET['uid']);
     $role = mysqli_real_escape_string($conn, $_GET['role']);
     $hcode = mysqli_real_escape_string($conn, $_GET['hcode']);
+    $limit = mysqli_real_escape_string($conn, $_GET['limit']);
+    $page = mysqli_real_escape_string($conn, $_GET['page']);
+
+    $strSQL = "SELECT *, d.hosname hospital_name FROM vot2_followup_dummy a INNER JOIN vot2_account b ON a.fud_uid = b.uid 
+              INNER JOIN vot2_userinfo c ON b.username = c.info_username
+              INNER JOIN vot2_chospital d ON b.obs_hcode = d.hoscode
+              WHERE 
+              b.delete_status = '0' 
+              AND a.fud_status = 'non-response'
+              AND a.fud_date = '$date'
+              AND c.info_use = '1'
+              AND b.obs_hcode = '$hcode'
+              LIMIT $page, $limit
+              ";
 
     if($role == 'admin'){
         $strSQL = "SELECT *, d.hosname hospital_name FROM vot2_followup_dummy a INNER JOIN vot2_account b ON a.fud_uid = b.uid 
-              INNER JOIN vot2_userinfo c ON b.uid = c.info_uid
+              INNER JOIN vot2_userinfo c ON b.username = c.info_username
               INNER JOIN vot2_chospital d ON b.obs_hcode = d.hoscode
               WHERE 
               b.delete_status = '0' 
@@ -166,8 +182,6 @@ if($stage == 'untakendrug_list'){
                 $a[] = $item;
             }
             $return['data'] = $a;
-
-            // $return['data'] = $res['data'];
         }else{
             $return['status'] = 'No record';
             $return['return_message'] = $strSQL;
@@ -177,7 +191,7 @@ if($stage == 'untakendrug_list'){
         die();
     }else if($role == 'manager'){
         $strSQL = "SELECT *, d.hosname hospital_name FROM vot2_followup_dummy a INNER JOIN vot2_account b ON a.fud_uid = b.uid 
-              INNER JOIN vot2_userinfo c ON b.uid = c.info_uid
+              INNER JOIN vot2_userinfo c ON b.username = c.info_username
               INNER JOIN vot2_chospital d ON b.obs_hcode = d.hoscode
               WHERE 
               b.delete_status = '0' 
@@ -185,50 +199,6 @@ if($stage == 'untakendrug_list'){
               AND a.fud_date = '$date'
               AND c.info_use = '1'
               AND b.obs_hcode = '$hcode' OR b.reg_hcode = '$hcode' OR b.hcode = '$hcode'
-              LIMIT $page, $limit
-              ";
-        $res = $db->fetch($strSQL, true, false);
-        if(($res) && ($res['status'])){
-            $return['status'] = 'Success';
-
-            $a = array();
-            foreach($res['data'] as $row){
-                $item = array();
-                
-                $item['uid'] = $row['uid'];
-                $item['username'] = $row['username'];
-                $item['fname'] = $row['fname'];
-                $item['lname'] = $row['lname'];
-                $item['hospital_name'] = $row['hospital_name'];
-                $item['profile_img'] = $row['profile_img'];
-                
-                $strSQL = "SELECT COUNT(fud_uid) cn FROM vot2_followup_dummy WHERE fud_uid = '".$row['uid']."'";
-                $resp = $db->fetch($strSQL, false);
-                if($resp){
-                    $item['curedate'] = $resp['cn'];
-                }
-                $a[] = $item;
-            }
-            $return['data'] = $a;
-
-            // $return['data'] = $res['data'];
-        }else{
-            $return['status'] = 'No record';
-            $return['return_message'] = $strSQL;
-        }
-        echo json_encode($return);
-        $db->close(); 
-        die();
-    }else if($role == 'staff'){
-        $strSQL = "SELECT *, d.hosname hospital_name FROM vot2_followup_dummy a INNER JOIN vot2_account b ON a.fud_uid = b.uid 
-              INNER JOIN vot2_userinfo c ON b.uid = c.info_uid
-              INNER JOIN vot2_chospital d ON b.obs_hcode = d.hoscode
-              WHERE 
-              b.delete_status = '0' 
-              AND a.fud_status = 'non-response'
-              AND a.fud_date = '$date'
-              AND c.info_use = '1'
-              AND b.obs_hcode = '$hcode'
               LIMIT $page, $limit
               ";
         $res = $db->fetch($strSQL, true, false);

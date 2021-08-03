@@ -162,9 +162,9 @@ $menu = 7;
                                     <table id="users-list-datatable-patient" class="table">
                                         <thead>
                                             <tr>
-                                                <th style="width: 100px;" class="th"></th>
+                                                <th style="width: 40px;" class="th"></th>
                                                 <!-- <th class="th">บัญชีผู้ใช้งาน</th> -->
-                                                <th class="th">ชื่อ - นามสกุล</th>
+                                                <th class="th" style="width: 360px;">ชื่อ - นามสกุล</th>
                                                 <th class="th" style="width: 120px;">เปิด/ปิดการใช้งาน</th>
                                                 <th class="th" style="width: 150px;">การติดตาม</th>
                                                 <th class="th" style="width: 100px;">สถานะยา</th>
@@ -192,16 +192,16 @@ $menu = 7;
                                                     ?>
                                                     <tr>
                                                         <td class="text-left" style="vertical-align:top;">
-                                                            <a href="app-patient-management?uid=<?php echo $user['uid']; ?>&role=<?php echo $user['role']; ?>&hcode=<?php echo $user['hcode']; ?>&id=<?php echo $row['uid'];?>" class="mr-1"><i class="bx bx-edit-alt"></i></a>
-                                                            <a href="app-patient-drug?uid=<?php echo $user['uid']; ?>&role=<?php echo $user['role']; ?>&hcode=<?php echo $user['hcode']; ?>&id=<?php echo $row['uid'];?>" class="mr-1"><i class="bx bxs-capsule"></i></a>
+                                                            <a class="btn btn-icon btn-success rounded-circle" style="height: 36px; width: 36px; margin-bottom: 2px;" href="app-patient-management?uid=<?php echo $user['uid']; ?>&role=<?php echo $user['role']; ?>&hcode=<?php echo $user['hcode']; ?>&id=<?php echo $row['uid'];?>" class="mr-1"><i class="bx bx-edit-alt"></i></a>
+                                                            <a class="btn btn-icon btn-success rounded-circle" style="height: 36px; width: 36px; margin-bottom: 2px;" href="app-patient-drug?uid=<?php echo $user['uid']; ?>&role=<?php echo $user['role']; ?>&hcode=<?php echo $user['hcode']; ?>&id=<?php echo $row['uid'];?>" class="mr-1"><i class="bx bxs-capsule"></i></a>
                                                             <?php 
                                                             if($row['role'] != 'admin'){
                                                                 ?>
-                                                                <a href="Javascript:admin_user.delete_user('<?php echo $row['uid'];?>')" clsas=""><i class="bx bx-trash-alt text-danger"></i></a>
+                                                                <a class="btn btn-icon btn-outline-danger rounded-circle mb-1" style="height: 36px; width: 36px; margin-bottom: 2px;" href="Javascript:admin_user.delete_user('<?php echo $row['uid'];?>')" clsas=""><i class="bx bx-trash-alt text-danger"></i></a>
                                                                 <?php
                                                             }else{
                                                                 ?>
-                                                                <a href="#" clsas="" disabled><i class="bx bx-trash-alt text-muted"></i></a>
+                                                                <a class="btn btn-icon btn-success-danger rounded-circle mb-1" style="height: 36px; width: 36px; margin-bottom: 2px;" href="#" clsas="" disabled><i class="bx bx-trash-alt text-muted"></i></a>
                                                                 <?php
                                                             }
                                                             ?>

@@ -40,8 +40,8 @@
 
                 <li class="nav-item"><a href="#"><i class="bx bxs-videos"></i><span class="menu-title text-truncate" data-i18n="Content">ระบบติดตาม</span></a>
                     <ul class="menu-content">
-                        <li class="<?php if($menu == 8){ echo "active"; } ?>"><a class="d-flex align-items-center" href="app-video-list"><i class="bx bx-right-arrow-alt"></i><span class="menu-item text-truncate" data-i18n="Typography">รายการส่งวีดีโอรอตรวจ</span></a></li>
-                        <li class="<?php if($menu == 13){ echo "active"; } ?>"><a class="d-flex align-items-center" href="app-patient-add"><i class="bx bx-right-arrow-alt"></i><span class="menu-item text-truncate" data-i18n="Typography">วีดีโอทั้งหมด</span></a></li>
+                        <li class="<?php if($menu == 8){ echo "active"; } ?>"><a class="d-flex align-items-center" href="app-video-wait"><i class="bx bx-right-arrow-alt"></i><span class="menu-item text-truncate" data-i18n="Typography">รายการส่งวีดีโอรอตรวจ</span></a></li>
+                        <li class="<?php if($menu == 13){ echo "active"; } ?>"><a class="d-flex align-items-center" href="app-video-list"><i class="bx bx-right-arrow-alt"></i><span class="menu-item text-truncate" data-i18n="Typography">วีดีโอทั้งหมด</span></a></li>
                     </ul>
                 </li>
 

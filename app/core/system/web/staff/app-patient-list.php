@@ -29,7 +29,7 @@ $menu = 7;
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0">
     <meta name="description" content="THVOT ระบบการติดตามยาผู้ป่วยวัณโรค">
     <meta name="author" content="Wisnior, Co, Ltd.">
-    <title>THVOT : Administator</title>
+    <title>THVOT : พี่เลี้ยง</title>
     <link rel="apple-touch-icon" href="../../../app-assets/images/ico/apple-icon-120.png">
     <link rel="shortcut icon" type="image/x-icon" href="../../../app-assets/images/ico/favicon.ico">
     <link href="https://fonts.googleapis.com/css?family=Rubik:300,400,500,600%7CIBM+Plex+Sans:300,400,500,600,700" rel="stylesheet">
@@ -162,10 +162,9 @@ $menu = 7;
                                     <table id="users-list-datatable-patient" class="table">
                                         <thead>
                                             <tr>
-                                                <th style="width: 100px;" class="th"></th>
+                                                <th style="width: 40px;" class="th"></th>
                                                 <!-- <th class="th">บัญชีผู้ใช้งาน</th> -->
-                                                <th class="th">ชื่อ - นามสกุล</th>
-                                                <th class="th" style="width: 120px;">เปิด/ปิดการใช้งาน</th>
+                                                <th class="th" style="width: 360px;">ชื่อ - นามสกุล</th>
                                                 <th class="th" style="width: 150px;">การติดตาม</th>
                                                 <th class="th" style="width: 100px;">สถานะยา</th>
                                                 <th class="th" style="width: 100px;">วันที่เริ่มติดตาม</th>
@@ -192,16 +191,16 @@ $menu = 7;
                                                     ?>
                                                     <tr>
                                                         <td class="text-left" style="vertical-align:top;">
-                                                            <a href="app-patient-management?uid=<?php echo $user['uid']; ?>&role=<?php echo $user['role']; ?>&hcode=<?php echo $user['hcode']; ?>&id=<?php echo $row['uid'];?>" class="mr-1"><i class="bx bx-edit-alt"></i></a>
-                                                            <a href="app-patient-drug?uid=<?php echo $user['uid']; ?>&role=<?php echo $user['role']; ?>&hcode=<?php echo $user['hcode']; ?>&id=<?php echo $row['uid'];?>" class="mr-1"><i class="bx bxs-capsule"></i></a>
+                                                            <a class="btn btn-icon btn-success rounded-circle" style="height: 36px; width: 36px; margin-bottom: 2px;" href="app-patient-management?uid=<?php echo $user['uid']; ?>&role=<?php echo $user['role']; ?>&hcode=<?php echo $user['hcode']; ?>&id=<?php echo $row['uid'];?>" class="mr-1"><i class="bx bx-edit-alt"></i></a>
+                                                            <a class="btn btn-icon btn-success rounded-circle" style="height: 36px; width: 36px; margin-bottom: 2px;" href="app-patient-drug?uid=<?php echo $user['uid']; ?>&role=<?php echo $user['role']; ?>&hcode=<?php echo $user['hcode']; ?>&id=<?php echo $row['uid'];?>" class="mr-1"><i class="bx bxs-capsule"></i></a>
                                                             <?php 
                                                             if($row['role'] != 'admin'){
                                                                 ?>
-                                                                <a href="Javascript:admin_user.delete_user('<?php echo $row['uid'];?>')" clsas=""><i class="bx bx-trash-alt text-danger"></i></a>
+                                                                <a class="btn btn-icon btn-outline-danger rounded-circle mb-1" style="height: 36px; width: 36px; margin-bottom: 2px;" href="Javascript:admin_user.delete_user('<?php echo $row['uid'];?>')" clsas=""><i class="bx bx-trash-alt text-danger"></i></a>
                                                                 <?php
                                                             }else{
                                                                 ?>
-                                                                <a href="#" clsas="" disabled><i class="bx bx-trash-alt text-muted"></i></a>
+                                                                <a class="btn btn-icon btn-success-danger rounded-circle mb-1" style="height: 36px; width: 36px; margin-bottom: 2px;" href="#" clsas="" disabled><i class="bx bx-trash-alt text-muted"></i></a>
                                                                 <?php
                                                             }
                                                             ?>
@@ -228,12 +227,6 @@ $menu = 7;
                                                             }
                                                             
                                                             ?>
-                                                            </div>
-                                                        </td>
-                                                        <td class="th" style="vertical-align:top;">
-                                                            <div class="custom-control mt-0 custom-switch custom-switch-success mr-2 mb-1">
-                                                                <input type="checkbox" onclick="admin_user.toggle_status('<?php echo $row['user_id'];?>')" class="custom-control-input"  id="sw_status_<?php echo $row['user_id'];?>" <?php if($row['active_status'] == '1'){ echo "checked"; } ?>>
-                                                                <label class="custom-control-label" for="sw_status_<?php echo $row['user_id'];?>"></label>
                                                             </div>
                                                         </td>
                                                         <td class="th" style="vertical-align:top;">
@@ -348,7 +341,7 @@ $menu = 7;
                     'columnDefs': [
                         {
                             "orderable": false,
-                            "targets": [0, 2, 3, 4, 5, 6]
+                            "targets": [0, 2, 3, 4]
                         }]
                 });
             };

@@ -3,8 +3,10 @@ require('../../../../../../database_config/thvot/config.inc.php');
 require('../../../../config/configuration.php');
 require('../../../../config/database.php'); 
 require('../../../../config/staff.role.php'); 
+
 $db = new Database();
 $conn = $db->conn();
+
 
 $stage = '';
 if(isset($_GET['stage'])){ 
@@ -13,9 +15,9 @@ if(isset($_GET['stage'])){
 
 require('../../../../config/user.inc.php'); 
 
-$menu = 6;
-?>
+$menu = 8;
 
+?>
 <input type="hidden" id="txtCurrentUid" value="<?php echo $_SESSION['thvot_uid']; ?>">
 <!DOCTYPE html>
 <html class="loading" lang="en" data-textdirection="ltr">
@@ -37,6 +39,8 @@ $menu = 6;
     <link rel="stylesheet" type="text/css" href="../../../app-assets/vendors/css/tables/datatable/dataTables.bootstrap4.min.css">
     <link rel="stylesheet" type="text/css" href="../../../app-assets/vendors/css/tables/datatable/responsive.bootstrap4.min.css">
     <link rel="stylesheet" type="text/css" href="../../../app-assets/vendors/css/tables/datatable/buttons.bootstrap4.min.css">
+    <link rel="stylesheet" type="text/css" href="../../../app-assets/vendors/css/extensions/sweetalert2.min.css">
+    <link rel="stylesheet" type="text/css" href="../../../app-assets/vendors/css/forms/select/select2.min.css">
     <link rel="stylesheet" type="text/css" href="../../../tools/preload.js/dist/css/preload.css">
     <link rel="stylesheet" type="text/css" href="../../../app-assets/vendors/css/extensions/sweetalert2.min.css">
     <!-- END: Vendor CSS-->
@@ -56,7 +60,7 @@ $menu = 6;
     <!-- END: Page CSS-->
 
     <!-- BEGIN: Custom CSS-->
-    <link rel="stylesheet" type="text/css" href="../../../assets/css/style.css">
+    <link rel="stylesheet" type="text/css" href="../../../assets/css/style.css?v=<?php echo filemtime('../../../assets/css/style.css'); ?>">
     <!-- END: Custom CSS-->
 
 </head>
@@ -147,39 +151,73 @@ $menu = 6;
 
             </div>
             <div class="content-body">
-                <h2 class="mb-2">เพิ่มยาใหม่</h2>
-                <!-- users edit start -->
-                <section class="users-edit">
-                    <div class="card">
-                        <div class="card-body">
-                            <div class="tab-content">
-                                <div class="tab-pane active fade show" id="account" aria-labelledby="account-tab" role="tabpanel">
-                                    <!-- users edit media object ends -->
-                                    <!-- users edit account form start -->
-                                    <form class="newDrugform" onsubmit="addNewdrug(); return false;">
-                                        <div class="row">
-                                            <div class="col-12">
-                                                <div class="form-group">
-                                                    <div class="controls">
-                                                        <label>ชื่อยา : <span class="text-danger">*</span></label>
-                                                        <input type="text" class="form-control" placeholder="กรอกชื่อยา" name="txtDrugname" id="txtDrugname">
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="col-12 d-flex flex-sm-row flex-column justify-content-end mt-1">
-                                                <button type="submit" class="btn btn-primary glow mb-1 mb-sm-0 mr-0 mr-sm-1">บันทึก</button>
-                                                <button type="reset" class="btn btn-light">ยกเลิก</button>
-                                            </div>
-                                        </div>
-                                    </form>
-                                    <!-- users edit account form ends -->
+                <h2 class="mb-2">รายการวิดีโอรอตรวจ</h2>
+                <!-- users list start -->
+                <section class="users-list-wrapper">
+                    <div class="users-list-table">
+                        <div class="card">
+                            <div class="card-body">
+                                <!-- datatable start -->
+                                <div class="table-responsive">
+                                    <table id="users-list-datatable-patient" class="table">
+                                        <thead>
+                                            <tr>
+                                                <!-- <th style="width: 40px;" class="th"></th> -->
+                                                <!-- <th class="th">บัญชีผู้ใช้งาน</th> -->
+                                                <th class="th">วิดีโอ</th>
+                                                <th class="th" style="width: 120px;">สถานะการตรวจ</th>
+                                                <th class="th" style="width: 100px;">วัน-เวลาที่ส่ง</th>
+                                                <th class="th" style="width: 100px;">วัน-เวลาที่ตรวจ</th>
+                                                
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <?php 
+                                            $strSQL = "SELECT *
+                                                       FROM vot2_followup a INNER JOIN vot2_account b ON a.fu_username = b.username
+                                                       INNER JOIN vot2_userinfo c ON b.username = c.info_username
+                                                       WHERE 
+                                                       b.delete_status = '0' 
+                                                       AND b.role = 'patient'
+                                                       AND a.fu_verify_datetime IS NULL
+                                                       AND c.info_use = '1'
+                                                       AND b.obs_hcode = '$hcode'
+                                            ";
+                                            $result_list = $db->fetch($strSQL, true, false);
+                                            if($result_list['status']){
+                                                $c = 1;
+                                                foreach($result_list['data'] as $row){
+                                                    ?>
+                                                    <tr>
+                                                        <!-- <td class="text-left" style="vertical-align:top; width: 50px;">
+                                                            
+                                                        </td> -->
+                                                        <td class="th" style="vertical-align:top;">
+                                                            <span class="badge- badge-dark- round" style="font-size: 0.8em; margin-left: 0px;">Username : <?php echo $row['username']; ?></span>
+                                                            <div><?php echo $row['fname']." ".$row['lname']; ?></div>
+                                                            <div style="padding-top: 5px;">
+                                                                <a class="btn btn-icon btn-success rounded-circle" style="height: 34px; width: 34px; margin-bottom: 2px;" href="app-video-check?uid=<?php echo $user['uid']; ?>&role=<?php echo $user['role']; ?>&hcode=<?php echo $user['hcode']; ?>&id=<?php echo $row['uid'];?>&vid=<?php echo $row['fu_id']; ?>" class="mr-1"><i class="bx bx-search"></i></a>    
+                                                            </div>
+                                                        </td>
+                                                        
+                                                        <td class="th" style="vertical-align:top; width: 100px;">รอการตรวจสอบ</td>
+                                                        <td class="th" style="vertical-align:top;"><?php echo $row['fu_upload_datetime']; ?></td>
+                                                        <td class="th" style="vertical-align:top;"><?php echo $row['fu_verify_datetime']; ?></td>
+                                                    </tr>
+                                                    <?php
+                                                    $c++;
+                                                }
+                                            }
+                                            ?>
+                                        </tbody>
+                                    </table>
                                 </div>
+                                <!-- datatable ends -->
                             </div>
-                            
                         </div>
                     </div>
                 </section>
-                <!-- users edit ends -->
+                <!-- users list ends -->
 
             </div>
         </div>
@@ -207,8 +245,10 @@ $menu = 6;
     <script src="../../../app-assets/vendors/js/tables/datatable/buttons.bootstrap4.min.js"></script>
     <script src="../../../app-assets/vendors/js/tables/datatable/dataTables.responsive.min.js"></script>
     <script src="../../../app-assets/vendors/js/tables/datatable/responsive.bootstrap4.min.js"></script>
-    <script src="../../../tools/preload.js/dist/js/preload.js"></script>
     <script src="../../../app-assets/vendors/js/extensions/sweetalert2.all.min.js"></script>
+    <script src="../../../app-assets/vendors/js/extensions/polyfill.min.js"></script>
+    <script src="../../../app-assets/vendors/js/forms/select/select2.full.min.js"></script>
+    <script src="../../../tools/preload.js/dist/js/preload.js"></script>
     <!-- END: Page Vendor JS-->
 
     <!-- BEGIN: Theme JS-->
@@ -225,15 +265,58 @@ $menu = 6;
     <script src="../../../app-assets/js/scripts/pages/app-users.js?v=<?php echo filemtime('../../../app-assets/js/scripts/pages/app-users.js'); ?>"></script>
     <script src="../../../assets/js/scripts/admin-user.js?v=<?php echo filemtime('../../../assets/js/scripts/admin-user.js'); ?>"></script>
     <script src="../../../assets/js/scripts/patient.js?v=<?php echo filemtime('../../../assets/js/scripts/patient.js'); ?>"></script>
-    <script src="../../../assets/js/scripts/app-drug.js?v=<?php echo filemtime('../../../assets/js/scripts/app-drug.js'); ?>"></script>
     <!-- END: Page JS-->
-
     <script>
-    $(document).ready(function(){
-        preload.hide()
-    })
-    </script>
+        $(document).ready(function(){
+            preload.hide();
 
+            if ($("#users-list-datatable-patient").length > 0) {
+                usersTable = $("#users-list-datatable-patient").DataTable({
+                    responsive: true,
+                    'columnDefs': [
+                        {
+                            "orderable": false,
+                            "targets": [0, 2, 3]
+                        }]
+                });
+            };
+        })
+
+        function back2Follow(puid, pname){
+            Swal.fire({
+                title: 'ยืนยันดำเนินการ',
+                text: 'ท่านยืนยันการกลับมาติดตามของคุณ ' + pname + ' หรือไม่',
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                confirmButtonText: 'ยืนยัน',
+                cancelButtonText: 'ยกเลิก',
+                confirmButtonClass: 'btn btn-primary mr-1',
+                cancelButtonClass: 'btn btn-danger',
+                buttonsStyling: false,
+            }).then(function (result) {
+                if (result.value) {
+                    preload.show()
+                    var param = {
+                        puid: puid,
+                        uid: $('#txtCurrentUid').val()
+                    }
+
+                    var jxr = $.post(api_url + 'patient?stage=back2follow', param, function(){}, 'json')
+                               .always(function(snap){
+                                   console.log(snap);
+                                   return ;
+                                    preload.hide()
+                                    if(snap.status == 'Success'){
+
+                                    }else{
+
+                                    }
+                               })
+                }
+            })
+        }
+    </script>
 </body>
 <!-- END: Body-->
 

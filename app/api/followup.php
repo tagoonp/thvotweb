@@ -132,7 +132,7 @@ if($stage == 'undrug_number'){
     $role = mysqli_real_escape_string($conn, $_GET['role']);
     $hcode = mysqli_real_escape_string($conn, $_GET['hcode']);
 
-    $strSQL = "SELECT COUNT(a.fu_id) cn FROM vot2_followup_dummy a
+    $strSQL = "SELECT COUNT(a.fud_id) cn FROM vot2_followup_dummy a
                WHERE 
                a.fud_date = '$date' 
                AND a.fud_status = 'non-response'
@@ -140,12 +140,12 @@ if($stage == 'undrug_number'){
                (SELECT username FROM vot2_account WHERE obs_hcode = '$hcode') 
               ";
     if($role == 'admin'){
-        $strSQL = "SELECT COUNT(a.fu_id) cn FROM vot2_followup a
+        $strSQL = "SELECT COUNT(a.fud_id) cn FROM vot2_followup a
                WHERE 
                a.fud_date = '$date' 
                AND a.fud_status = 'non-response'";
     }else if($role == 'manager'){
-        $strSQL = "SELECT COUNT(a.fu_id) cn FROM vot2_followup a
+        $strSQL = "SELECT COUNT(a.fud_id) cn FROM vot2_followup a
                WHERE 
                a.fud_date = '$date' 
                AND a.fud_status = 'non-response'

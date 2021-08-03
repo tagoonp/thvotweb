@@ -55,9 +55,11 @@ if($stage == 'unwatch_number'){
     if($res){
         $return['status'] = 'Success';
         $return['data'] = $res['cn'];
+        $return['command'] = $strSQL;
     }else{
         $return['status'] = 'Success';
         $return['data'] = 0;
+        $return['command'] = $strSQL;
     }
     echo json_encode($return);
     $db->close(); 

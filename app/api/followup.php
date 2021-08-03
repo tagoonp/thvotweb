@@ -31,8 +31,8 @@ if($stage == 'unwatch_number'){
                WHERE 
                a.fu_view = '0' 
                AND a.fu_delete = '0'
-               AND a.fu_username IN 
                AND a.fu_date = '$date'
+               AND a.fu_username IN 
                (SELECT username FROM vot2_account WHERE obs_hcode = '$hcode') 
               ";
     if($role == 'admin'){

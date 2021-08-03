@@ -116,6 +116,56 @@ if($stage == 'unwatch24_number'){
     die();
 }
 
+if($stage == 'undrug_number'){
+    if(
+        (!isset($_GET['uid'])) ||
+        (!isset($_GET['role'])) ||
+        (!isset($_GET['hcode']))
+    ){
+        $return['status'] = 'Fail';
+        echo json_encode($return);
+        $db->close(); 
+        die();
+    }
+
+    $uid = mysqli_real_escape_string($conn, $_GET['uid']);
+    $role = mysqli_real_escape_string($conn, $_GET['role']);
+    $hcode = mysqli_real_escape_string($conn, $_GET['hcode']);
+
+    $strSQL = "SELECT COUNT(a.fu_id) cn FROM vot2_followup_dummy a
+               WHERE 
+               a.fud_date = '$date' 
+               AND a.fud_status = 'non-response'
+               AND a.fud_username IN 
+               (SELECT username FROM vot2_account WHERE obs_hcode = '$hcode') 
+              ";
+    if($role == 'admin'){
+        $strSQL = "SELECT COUNT(a.fu_id) cn FROM vot2_followup a
+               WHERE 
+               a.fud_date = '$date' 
+               AND a.fud_status = 'non-response'";
+    }else if($role == 'manager'){
+        $strSQL = "SELECT COUNT(a.fu_id) cn FROM vot2_followup a
+               WHERE 
+               a.fud_date = '$date' 
+               AND a.fud_status = 'non-response'
+               AND a.fud_username IN 
+               (SELECT username FROM vot2_account WHERE obs_hcode = '$hcode' OR reg_hcode = '$hcode' OR hcode = '$hcode') 
+               ";
+    }
+    $res = $db->fetch($strSQL, false);
+    if($res){
+        $return['status'] = 'Success';
+        $return['data'] = $res['cn'];
+    }else{
+        $return['status'] = 'Success';
+        $return['data'] = 0;
+    }
+    echo json_encode($return);
+    $db->close(); 
+    die();
+}
+
 if($stage == 'untakendrug_list'){
     if(
         (!isset($_GET['uid'])) ||

@@ -186,7 +186,7 @@ if($stage == 'untakendrug_list'){
     $limit = mysqli_real_escape_string($conn, $_GET['limit']);
     $page = mysqli_real_escape_string($conn, $_GET['page']);
 
-    $strSQL = "SELECT *, d.hosname hospital_name FROM vot2_followup_dummy a INNER JOIN vot2_account b ON a.fud_username = b.fud_username 
+    $strSQL = "SELECT *, d.hosname hospital_name FROM vot2_followup_dummy a INNER JOIN vot2_account b ON a.fud_username = b.username 
               INNER JOIN vot2_userinfo c ON b.username = c.info_username
               INNER JOIN vot2_chospital d ON b.obs_hcode = d.hoscode
               WHERE 
@@ -199,7 +199,7 @@ if($stage == 'untakendrug_list'){
               ";
 
     if($role == 'admin'){
-        $strSQL = "SELECT *, d.hosname hospital_name FROM vot2_followup_dummy a INNER JOIN vot2_account b ON a.fud_username = b.fud_username 
+        $strSQL = "SELECT *, d.hosname hospital_name FROM vot2_followup_dummy a INNER JOIN vot2_account b ON a.fud_username = b.username 
               INNER JOIN vot2_userinfo c ON b.username = c.info_username
               INNER JOIN vot2_chospital d ON b.obs_hcode = d.hoscode
               WHERE 
@@ -240,7 +240,7 @@ if($stage == 'untakendrug_list'){
         $db->close(); 
         die();
     }else if($role == 'manager'){
-        $strSQL = "SELECT *, d.hosname hospital_name FROM vot2_followup_dummy a INNER JOIN vot2_account b ON a.fud_username = b.fud_username 
+        $strSQL = "SELECT *, d.hosname hospital_name FROM vot2_followup_dummy a INNER JOIN vot2_account b ON a.fud_username = b.username 
               INNER JOIN vot2_userinfo c ON b.username = c.info_username
               INNER JOIN vot2_chospital d ON b.obs_hcode = d.hoscode
               WHERE 
@@ -518,7 +518,7 @@ if($stage == 'followup_list'){
               WHERE 
               noti_view = '0' 
               AND noti_type = 'workprocess'
-              AND nti_hcode IN (
+              AND noti_hcode IN (
                   SELECT phoscode FROM vot2_projecthospital WHERE hospcode = '$hcode'
               )
               LIMIT $page, $limit
@@ -566,9 +566,9 @@ if($stage == 'followup_list'){
                     if($resf['cn'] != 0){
                         $item['numdate'] = $resf['cn'];
                         $item['color'] = "primary";
-                        if($resf['cn'] >= 26){
+                        if($resf['cn'] >= 14){
                             $item['color'] = "danger";
-                        }else if(($resf['cn'] >= 7) && ($resf['cn'] < 26)){
+                        }else if(($resf['cn'] >= 7) && ($resf['cn'] < 14)){
                             $item['numdate'] = $resf['cn'];
                             $item['color'] = "warning";
                         }

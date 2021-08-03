@@ -224,6 +224,7 @@ if($stage == 'untakendrug_list'){
                 $item['lname'] = $row['lname'];
                 $item['hospital_name'] = $row['hospital_name'];
                 $item['profile_img'] = $row['profile_img'];
+                $item['phone'] = $row['phone'];
                 
                 $strSQL = "SELECT COUNT(fud_uid) cn FROM vot2_followup_dummy WHERE fud_uid = '".$row['uid']."'";
                 $resp = $db->fetch($strSQL, false);
@@ -266,6 +267,7 @@ if($stage == 'untakendrug_list'){
                 $item['lname'] = $row['lname'];
                 $item['hospital_name'] = $row['hospital_name'];
                 $item['profile_img'] = $row['profile_img'];
+                $item['phone'] = $row['phone'];
 
                 $strSQL = "SELECT COUNT(*) cn FROM vot2_followup_dummy WHERE fud_status = 'non-response' AND fud_username = '".$row['username']."'";
                 $resf = $db->fetch($strSQL, false);
@@ -318,6 +320,7 @@ if($stage == 'untakendrug_list'){
                 $item['lname'] = $row['lname'];
                 $item['hospital_name'] = $row['hospital_name'];
                 $item['profile_img'] = $row['profile_img'];
+                $item['phone'] = $row['phone'];
                 
                 $strSQL = "SELECT COUNT(*) cn FROM vot2_followup_dummy WHERE fud_status = 'non-response' AND fud_username = '".$row['username']."'";
                 $resf = $db->fetch($strSQL, false);

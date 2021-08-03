@@ -231,6 +231,37 @@ if($stage == 'untakendrug_list'){
         echo json_encode($return);
         $db->close(); 
         die();
+    }else{
+        $res = $db->fetch($strSQL, true, false);
+        if(($res) && ($res['status'])){
+            $return['status'] = 'Success';
+
+            $a = array();
+            foreach($res['data'] as $row){
+                $item = array();
+                
+                $item['uid'] = $row['uid'];
+                $item['username'] = $row['username'];
+                $item['fname'] = $row['fname'];
+                $item['lname'] = $row['lname'];
+                $item['hospital_name'] = $row['hospital_name'];
+                $item['profile_img'] = $row['profile_img'];
+                
+                $strSQL = "SELECT COUNT(fud_uid) cn FROM vot2_followup_dummy WHERE fud_uid = '".$row['uid']."'";
+                $resp = $db->fetch($strSQL, false);
+                if($resp){
+                    $item['curedate'] = $resp['cn'];
+                }
+                $a[] = $item;
+            }
+            $return['data'] = $a;
+        }else{
+            $return['status'] = 'No record';
+            $return['return_message'] = $strSQL;
+        }
+        echo json_encode($return);
+        $db->close(); 
+        die();
     }
 }
 

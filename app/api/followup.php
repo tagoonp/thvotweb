@@ -224,8 +224,6 @@ if($stage == 'untakendrug_list'){
                 $a[] = $item;
             }
             $return['data'] = $a;
-
-            // $return['data'] = $res['data'];
         }else{
             $return['status'] = 'No record';
             $return['return_message'] = $strSQL;

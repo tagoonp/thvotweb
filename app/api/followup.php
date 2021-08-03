@@ -136,7 +136,7 @@ if($stage == 'untakendrug_list'){
     $limit = mysqli_real_escape_string($conn, $_GET['limit']);
     $page = mysqli_real_escape_string($conn, $_GET['page']);
 
-    $strSQL = "SELECT *, d.hosname hospital_name FROM vot2_followup_dummy a INNER JOIN vot2_account b ON a.fud_uid = b.uid 
+    $strSQL = "SELECT *, d.hosname hospital_name FROM vot2_followup_dummy a INNER JOIN vot2_account b ON a.fud_username = b.fud_username 
               INNER JOIN vot2_userinfo c ON b.username = c.info_username
               INNER JOIN vot2_chospital d ON b.obs_hcode = d.hoscode
               WHERE 
@@ -149,7 +149,7 @@ if($stage == 'untakendrug_list'){
               ";
 
     if($role == 'admin'){
-        $strSQL = "SELECT *, d.hosname hospital_name FROM vot2_followup_dummy a INNER JOIN vot2_account b ON a.fud_uid = b.uid 
+        $strSQL = "SELECT *, d.hosname hospital_name FROM vot2_followup_dummy a INNER JOIN vot2_account b ON a.fud_username = b.fud_username 
               INNER JOIN vot2_userinfo c ON b.username = c.info_username
               INNER JOIN vot2_chospital d ON b.obs_hcode = d.hoscode
               WHERE 
@@ -190,7 +190,7 @@ if($stage == 'untakendrug_list'){
         $db->close(); 
         die();
     }else if($role == 'manager'){
-        $strSQL = "SELECT *, d.hosname hospital_name FROM vot2_followup_dummy a INNER JOIN vot2_account b ON a.fud_uid = b.uid 
+        $strSQL = "SELECT *, d.hosname hospital_name FROM vot2_followup_dummy a INNER JOIN vot2_account b ON a.fud_username = b.fud_username 
               INNER JOIN vot2_userinfo c ON b.username = c.info_username
               INNER JOIN vot2_chospital d ON b.obs_hcode = d.hoscode
               WHERE 

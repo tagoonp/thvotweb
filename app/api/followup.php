@@ -48,10 +48,10 @@ if($stage == 'unwatch_number'){
                (SELECT username FROM vot2_account WHERE obs_hcode = '$hcode' OR reg_hcode = '$hcode' OR hcode = '$hcode') 
                ";
     }
-    $res = $db->fetch($strSQL, true, true);
+    $res = $db->fetch($strSQL, false);
     if(($res) && ($res['status'])){
         $return['status'] = 'Success';
-        $return['data'] = $res['count'];
+        $return['data'] = $res['cn'];
     }else{
         $return['status'] = 'Success';
         $return['data'] = 0;

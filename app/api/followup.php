@@ -185,6 +185,7 @@ if($stage == 'untakendrug_list'){
     $hcode = mysqli_real_escape_string($conn, $_GET['hcode']);
     $limit = mysqli_real_escape_string($conn, $_GET['limit']);
     $page = mysqli_real_escape_string($conn, $_GET['page']);
+    $page = ($page * $limit) - $limit;
 
     $strSQL = "SELECT *, d.hosname hospital_name FROM vot2_followup_dummy a INNER JOIN vot2_account b ON a.fud_username = b.username 
               INNER JOIN vot2_userinfo c ON b.username = c.info_username

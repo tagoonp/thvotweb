@@ -108,33 +108,6 @@ if(!$resVideo){
 
 <body class="vertical-layout vertical-menu-modern 2-columns  navbar-sticky footer-static  " data-open="click" data-menu="vertical-menu-modern" data-col="2-columns">
 
-    <!-- BEGIN: Header-->
-    <div class="header-navbar-shadow"></div>
-    <nav class="header-navbar main-header-navbar navbar-expand-lg navbar navbar-with-menu fixed-top ">
-        <div class="navbar-wrapper">
-            <div class="navbar-container content">
-                <div class="navbar-collapse" id="navbar-mobile">
-                    <div class="mr-auto float-left bookmark-wrapper d-flex align-items-center">
-                        <ul class="nav navbar-nav">
-                            <li class="nav-item mobile-menu d-xl-none mr-auto"><a class="nav-link nav-menu-main menu-toggle hidden-xs" href="javascript:void(0);"><i class="ficon bx bx-menu"></i></a></li>
-                        </ul>
-                    </div>
-                    <ul class="nav navbar-nav float-right">
-     
-                        <li class="nav-item d-none d-lg-block"><a class="nav-link nav-link-expand"><i class="ficon bx bx-fullscreen"></i></a></li>
-                        <?php 
-                        require("./control/notification.php");
-                        require("./control/profile_menu.php");
-                        ?>
-                        
-                    </ul>
-                </div>
-            </div>
-        </div>
-    </nav>
-    <!-- END: Header-->
-
-
     <!-- BEGIN: Main Menu-->
     <div class="main-menu menu-fixed menu-light menu-accordion menu-shadow" data-scroll-to-active="true">
         <div class="navbar-header">
@@ -181,21 +154,17 @@ if(!$resVideo){
     <!-- END: Main Menu-->
 
     <!-- BEGIN: Content-->
-    <div class="app-content content">
+    <div class="app-content content bg-white">
         <div class="content-overlay"></div>
-        
-        <div class="content-wrapper">
-            <div class="content-header row">
-
-            </div>
+        <div class="content-wrapper mt-0 p-0">
             <div class="content-body">
-                <h2 class="mb-2">ตรวจสอบวิดีโอ</h2>
                 <!-- users list start -->
                 <section class="users-list-wrapper">
                     <div class="users-list-table">
                         <div class="card">
-                            <div class="card-body p-0">
+                            <!-- <div class="card-body p-0">
                                 <div class="p-2">
+                                <h2 class="mb-2">ตรวจสอบวิดีโอ</h2>
                                     <div class="row">
                                         <div class="col-12">
                                             <h4>ข้อมูลผู้ป่วย</h4>
@@ -211,10 +180,11 @@ if(!$resVideo){
                                         </div>
                                     </div>
                                 </div>
+                            </div> -->
 
-                                <div class="row">
+                            <div class="row">
                                     <div class="col-12 col-sm-5">
-                                        <video width="100%" height="240" controls>
+                                        <video width="100%" controls>
                                             <source src="<?php echo $resVideo['fu_video']; ?>" type="video/mp4">
                                             Your browser does not support the video tag.
                                         </video>
@@ -223,7 +193,6 @@ if(!$resVideo){
                                     
                                     </div>
                                 </div>
-                            </div>
                         </div>
                     </div>
                 </section>

@@ -32,7 +32,7 @@ if($stage == 'unwatch_list'){
     $page = mysqli_real_escape_string($conn, $_GET['page']);
     $page = ($page * $limit) - $limit;
 
-    $strSQL = "SELECT * FROM vot2_account b INNER JOIN vot2_userinfo c ON b.username = c.info_username
+    $strSQL = "SELECT *, d.hosname hospital_name FROM vot2_account b INNER JOIN vot2_userinfo c ON b.username = c.info_username
               INNER JOIN vot2_chospital d ON b.obs_hcode = d.hoscode
               WHERE 
               b.delete_status = '0' 
@@ -45,7 +45,7 @@ if($stage == 'unwatch_list'){
               LIMIT $page, $limit
               ";
     if($role == 'admin'){
-        $$strSQL = "SELECT * FROM vot2_account b INNER JOIN vot2_userinfo c ON b.username = c.info_username
+        $$strSQL = "SELECT *, d.hosname hospital_name FROM vot2_account b INNER JOIN vot2_userinfo c ON b.username = c.info_username
                     INNER JOIN vot2_chospital d ON b.obs_hcode = d.hoscode
                     WHERE 
                     b.delete_status = '0' 
@@ -57,7 +57,7 @@ if($stage == 'unwatch_list'){
                     LIMIT $page, $limit
                     ";
     }else if($role == 'manager'){
-        $strSQL = "SELECT * FROM vot2_account b INNER JOIN vot2_userinfo c ON b.username = c.info_username
+        $strSQL = "SELECT *, d.hosname hospital_name FROM vot2_account b INNER JOIN vot2_userinfo c ON b.username = c.info_username
                     INNER JOIN vot2_chospital d ON b.obs_hcode = d.hoscode
                     WHERE 
                     b.delete_status = '0' 

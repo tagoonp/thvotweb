@@ -11,6 +11,122 @@ if(!isset($_GET['stage'])){ $db->close(); header('Location: ../404?stage=001'); 
 $stage = mysqli_real_escape_string($conn, $_GET['stage']);
 $return = array();
 
+if($stage == 'unwatch_list'){
+    if(
+        (!isset($_GET['uid'])) ||
+        (!isset($_GET['role'])) ||
+        (!isset($_GET['hcode'])) ||
+        (!isset($_GET['page'])) ||
+        (!isset($_GET['limit']))
+    ){
+        $return['status'] = 'Fail';
+        echo json_encode($return);
+        $db->close(); 
+        die();
+    }
+
+    $uid = mysqli_real_escape_string($conn, $_GET['uid']);
+    $role = mysqli_real_escape_string($conn, $_GET['role']);
+    $hcode = mysqli_real_escape_string($conn, $_GET['hcode']);
+    $limit = mysqli_real_escape_string($conn, $_GET['limit']);
+    $page = mysqli_real_escape_string($conn, $_GET['page']);
+    $page = ($page * $limit) - $limit;
+
+    $strSQL = "SELECT * vot2_account b INNER JOIN vot2_userinfo c ON b.username = c.info_username
+              INNER JOIN vot2_chospital d ON b.obs_hcode = d.hoscode
+              WHERE 
+              b.delete_status = '0' 
+              AND c.info_use = '1'
+              AND b.obs_hcode = '$hcode'
+              AND b.role = 'patient'
+              AND b.username IN (
+                  SELECT fud_username FROM vot2_followup_dummy WHERE fud_dateview = '0' GROUP BY fud_username
+              )
+              LIMIT $page, $limit
+              ";
+    if($role == 'admin'){
+        $$strSQL = "SELECT * vot2_account b INNER JOIN vot2_userinfo c ON b.username = c.info_username
+                    INNER JOIN vot2_chospital d ON b.obs_hcode = d.hoscode
+                    WHERE 
+                    b.delete_status = '0' 
+                    AND c.info_use = '1'
+                    AND b.role = 'patient'
+                    AND b.username IN (
+                        SELECT fud_username FROM vot2_followup_dummy WHERE fud_dateview = '0' GROUP BY fud_username
+                    )
+                    LIMIT $page, $limit
+                    ";
+    }else if($role == 'manager'){
+        $strSQL = "SELECT * vot2_account b INNER JOIN vot2_userinfo c ON b.username = c.info_username
+                    INNER JOIN vot2_chospital d ON b.obs_hcode = d.hoscode
+                    WHERE 
+                    b.delete_status = '0' 
+                    AND c.info_use = '1'
+                    (b.obs_hcode = '$hcode' OR b.reg_hcode = '$hcode' OR b.hcode = '$hcode')
+                    AND b.role = 'patient'
+                    AND b.username IN (
+                        SELECT fud_username FROM vot2_followup_dummy WHERE fud_dateview = '0' GROUP BY fud_username
+                    )
+                    LIMIT $page, $limit
+                    ";
+    }
+
+    $res = $db->fetch($strSQL, true, false);
+        if(($res) && ($res['status'])){
+            $return['status'] = 'Success';
+
+            $a = array();
+            foreach($res['data'] as $row){
+                $item = array();
+                
+                $item['uid'] = $row['uid'];
+                $item['username'] = $row['username'];
+                $item['fname'] = $row['fname'];
+                $item['lname'] = $row['lname'];
+                $item['hospital_name'] = $row['hospital_name'];
+                $item['profile_img'] = $row['profile_img'];
+                $item['phone'] = $row['phone'];
+                
+                $strSQL = "SELECT COUNT(*) cn FROM vot2_followup_dummy WHERE fud_status = 'non-response' AND fud_username = '".$row['username']."'";
+                $resf = $db->fetch($strSQL, false);
+                if($resf){
+                    if($resf['cn'] != 0){
+                        $item['numdate'] = $resf['cn'];
+                        $item['color'] = "primary";
+                        if($resf['cn'] >= 14){
+                            $item['color'] = "danger";
+                        }else if(($resf['cn'] >= 7) && ($resf['cn'] < 14)){
+                            $item['numdate'] = $resf['cn'];
+                            $item['color'] = "warning";
+                        }
+                    }else{
+                        $item['numdate'] = "0";
+                        $item['color'] = "primary";
+                    }
+                }else{
+                    $item['numdate'] = "0";
+                    $item['color'] = "primary";
+                }
+
+                $strSQL = "SELECT COUNT(fud_uid) cn FROM vot2_followup_dummy WHERE fud_uid = '".$row['uid']."'";
+                $resp = $db->fetch($strSQL, false);
+                if($resp){
+                    $item['curedate'] = $resp['cn'];
+                }
+                $a[] = $item;
+            }
+            $return['data'] = $a;
+        }else{
+            $return['status'] = 'No record';
+            $return['return_message'] = $strSQL;
+        }
+        echo json_encode($return);
+        $db->close(); 
+        die();
+
+
+}
+
 if($stage == 'unwatch_number'){
     if(
         (!isset($_GET['uid'])) ||

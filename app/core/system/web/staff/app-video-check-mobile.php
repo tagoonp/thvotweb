@@ -174,7 +174,7 @@ if(!$resVideo){
                                             <fieldset class="form-group">
                                                 <label for="disabledInput">ชื่อ - นามสกุล</label>
                                                 <p class="form-control-static" id="staticInput">
-                                                    <?php echo $resPatient['fname']." ".$resPatient['lname'] ?>
+                                                    <?php //echo $resPatient['fname']." ".$resPatient['lname'] ?>
                                                 </p>
                                             </fieldset>
                                         </div>
@@ -184,7 +184,7 @@ if(!$resVideo){
 
                             <div class="row">
                                     <div class="col-12 col-sm-5">
-                                        <video width="100%" controls>
+                                        <video width="100%" controls autoplay>
                                             <source src="<?php echo $resVideo['fu_video']; ?>" type="video/mp4">
                                             Your browser does not support the video tag.
                                         </video>

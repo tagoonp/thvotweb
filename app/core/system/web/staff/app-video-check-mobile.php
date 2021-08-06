@@ -360,11 +360,6 @@ if(!$resVideo){
     <!-- END: Content-->
 
 
-    <?php 
-    require("./control/footer.php");
-    ?>
-
-
     <!-- BEGIN: Vendor JS-->
     <script src="../../../app-assets/vendors/js/vendors.min.js"></script>
     <script src="../../../app-assets/fonts/LivIconsEvo/js/LivIconsEvo.tools.js"></script>

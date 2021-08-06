@@ -2,6 +2,7 @@
 require('../../../../../../database_config/thvot/config.inc.php');
 require('../../../../config/configuration.php');
 require('../../../../config/database.php'); 
+require('../../../../config/staff.role.php'); 
 
 $db = new Database();
 $conn = $db->conn();
@@ -47,7 +48,7 @@ $menu = 8;
 
 
 
-require('../../../../config/staff.role.php'); 
+
 
 $patient_id = mysqli_real_escape_string($conn, $_GET['id']);
 $video_id = mysqli_real_escape_string($conn, $_GET['vid']);

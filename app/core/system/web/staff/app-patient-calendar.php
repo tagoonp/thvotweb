@@ -16,22 +16,16 @@ if(isset($_GET['stage'])){
 if(isset($_GET['uid'])){ 
     $uid = mysqli_real_escape_string($conn, $_GET['uid']);
     $_SESSION['thvot_uid'] = $uid;
-}else{
-    
 }
 
 if(isset($_GET['role'])){ 
     $role = mysqli_real_escape_string($conn, $_GET['role']);
     $_SESSION['thvot_role'] = $role;
-}else{
-    
 }
 
 if(isset($_GET['hcode'])){ 
     $hcode = mysqli_real_escape_string($conn, $_GET['hcode']);
     $_SESSION['thvot_hcode'] = $hcode;
-}else{
-    
 }
 
 

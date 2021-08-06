@@ -28,6 +28,24 @@ if(
     die();
 }
 
+if(isset($_GET['uid'])){ 
+    $uid = mysqli_real_escape_string($conn, $_GET['uid']);
+    $_SESSION['thvot_uid'] = $uid;
+}
+
+if(isset($_GET['role'])){ 
+    $role = mysqli_real_escape_string($conn, $_GET['role']);
+    $_SESSION['thvot_role'] = $role;
+}
+
+if(isset($_GET['hcode'])){ 
+    $hcode = mysqli_real_escape_string($conn, $_GET['hcode']);
+    $_SESSION['thvot_hcode'] = $hcode;
+}
+
+
+$_SESSION['thvot_session'] = session_id();
+
 $patient_id = mysqli_real_escape_string($conn, $_GET['id']);
 $video_id = mysqli_real_escape_string($conn, $_GET['vid']);
 

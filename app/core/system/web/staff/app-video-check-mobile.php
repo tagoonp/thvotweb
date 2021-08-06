@@ -212,6 +212,31 @@ if(!$resVideo){
                                         </div>
 
                                         <h4 class="mb-1">ส่วนที่ 1 : <br><small>จำนวนยาที่รับประทาน</small></h4>
+                                        <?php 
+                                        $strSQL = "SELECT * FROM vot2_patient_med WHERE med_uid = '$patient_id' AND med_cnf = 'Y' ORDER BY med_name";
+                                        $resMed = $db->fetch($strSQL, true);
+                                        if(($resMed) && ($resMed['status'])){
+                                            while($rowMed = $resMed['data']){
+                                                ?>
+                                                <div class="row mb-1">
+                                                     <div class="col-10">
+                                                        <?php echo $rowMed['med_name']; ?>
+                                                    </div>
+                                                    <div class="col-2 text-left pr-0" style="padding-top: 3px;">
+                                                        <div class="custom-control custom-switch custom-switch-success mr-1 mb-1">
+                                                            <input type="checkbox" class="custom-control-input" id="checklist1">
+                                                            <label class="custom-control-label" for="checklist1">
+                                                                <span class="switch-icon-left"><i class="bx bx-check"></i></span>
+                                                            </label>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <?php
+                                            }
+                                        }else{
+                                            echo "N";
+                                        }
+                                        ?>
 
                                         <hr>
                                         <h4 class="mb-1">ส่วนที่ 2 : <br><small>ความถูกต้องของวิธีการกินยา</small></h4>
@@ -358,8 +383,16 @@ if(!$resVideo){
                                             </div>
                                         </div>
 
+                                        <div class="row  mb-0">
+                                            <div class="col-12" style="padding-top: 3px;">
+                                                <div class="form-group">
+                                                    <textarea name="txtOthereff" id="txtOthereff" cols="30" rows="10" class="form-control" placeholder="อื่น ๆ (เว้นว่างถ้าไม่มี)" style="height: 80px;"></textarea>
+                                                </div>
+                                            </div>
+                                        </div>
+
                                         <div class="row">
-                                            <div class="col-12 col-sm-3 pt-2">
+                                            <div class="col-12 col-sm-3 pt-1">
                                                 <button class="btn btn-danger round btn-block" onclick="saveCheckVideo()">บันทึกผล</button>
                                             </div>
                                         </div>

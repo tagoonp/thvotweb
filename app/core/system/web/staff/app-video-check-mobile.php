@@ -213,7 +213,7 @@ if(!$resVideo){
 
                                         <h4 class="mb-1">ส่วนที่ 1 : <br><small>จำนวนยาที่รับประทาน</small></h4>
                                         <?php 
-                                        $strSQL = "SELECT * FROM vot2_patient_med WHERE med_uid = '$patient_id' AND med_cnf = 'Y' ORDER BY med_name";
+                                        $strSQL = "SELECT * FROM vot2_patient_med WHERE med_pid = '$patient_id' AND med_cnf = 'Y' ORDER BY med_name";
                                         $resMed = $db->fetch($strSQL, true);
                                         if(($resMed) && ($resMed['status'])){
                                             while($rowMed = $resMed['data']){
@@ -234,7 +234,7 @@ if(!$resVideo){
                                                 <?php
                                             }
                                         }else{
-                                            echo "N";
+                                            echo $strSQL;
                                         }
                                         ?>
 

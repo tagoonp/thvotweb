@@ -161,27 +161,7 @@ if(!$resVideo){
                 <!-- users list start -->
                 <section class="users-list-wrapper">
                     <div class="users-list-table">
-                        <div class="card">
-                            <!-- <div class="card-body p-0">
-                                <div class="p-2">
-                                <h2 class="mb-2">ตรวจสอบวิดีโอ</h2>
-                                    <div class="row">
-                                        <div class="col-12">
-                                            <h4>ข้อมูลผู้ป่วย</h4>
-                                            <hr>
-                                        </div>
-                                        <div class="col-12 col-sm-6">
-                                            <fieldset class="form-group">
-                                                <label for="disabledInput">ชื่อ - นามสกุล</label>
-                                                <p class="form-control-static" id="staticInput">
-                                                    <?php //echo $resPatient['fname']." ".$resPatient['lname'] ?>
-                                                </p>
-                                            </fieldset>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div> -->
-
+                        <div class="card" style="box-shadow: none;">
                             <div class="row">
                                     <div class="col-12 col-sm-5">
                                         <video width="100%" controls autoplay>
@@ -190,7 +170,161 @@ if(!$resVideo){
                                         </video>
                                     </div>
                                     <div class="col-12 col-sm-7">
-                                    
+                                        <div class="p-2">
+                                        <h4 class="mb-1">ส่วนที่ 1 : <br><small>จำนวนยาที่รับประทาน</small></h4>
+
+                                        <hr>
+                                        <h4 class="mb-1">ส่วนที่ 2 : <br><small>ความถูกต้องของวิธีการกินยา</small></h4>
+                                        <div class="row mb-1">
+                                            <div class="col-2 text-left pr-0" style="padding-top: 3px;">
+                                                <div class="custom-control custom-switch custom-switch-danger mr-1 mb-1">
+                                                    <input type="checkbox" class="custom-control-input" id="eff1">
+                                                    <label class="custom-control-label" for="eff1">
+                                                        <span class="switch-icon-left"><i class="bx bx-check"></i></span>
+                                                    </label>
+                                                </div>
+                                            </div>
+                                            <div class="col-10">
+                                            เห็นเม็ดยาตั้งแต่หยิบจากแผ่นแยกแยะยาจนถึงการวางไว้บนลิ้น
+                                            </div>
+                                        </div>
+
+                                        <div class="row mb-0">
+                                            <div class="col-2 text-left pr-0" style="padding-top: 3px;">
+                                                <div class="custom-control custom-switch custom-switch-danger mr-1 mb-1">
+                                                    <input type="checkbox" class="custom-control-input" id="eff2">
+                                                    <label class="custom-control-label" for="eff2">
+                                                        <span class="switch-icon-left"><i class="bx bx-check"></i></span>
+                                                    </label>
+                                                </div>
+                                            </div>
+                                            <div class="col-10">
+                                            อ้าปากเห็นเม็ดยาชัดเจนก่อนกลืนยา
+                                            </div>
+                                        </div>
+
+                                        <div class="row mb-0">
+                                            <div class="col-2 text-left pr-0" style="padding-top: 3px;">
+                                                <div class="custom-control custom-switch custom-switch-danger mr-1 mb-1">
+                                                    <input type="checkbox" class="custom-control-input" id="eff3">
+                                                    <label class="custom-control-label" for="eff3">
+                                                        <span class="switch-icon-left"><i class="bx bx-check"></i></span>
+                                                    </label>
+                                                </div>
+                                            </div>
+                                            <div class="col-10">
+                                            ตอนกลืนยาดื่มน้ำด้วยแก้วน้ำใส
+                                            </div>
+                                        </div>
+
+                                        <div class="row mb-1">
+                                            <div class="col-2 text-left pr-0" style="padding-top: 3px;">
+                                                <div class="custom-control custom-switch custom-switch-danger mr-1 mb-1">
+                                                    <input type="checkbox" class="custom-control-input" id="eff4">
+                                                    <label class="custom-control-label" for="eff4">
+                                                        <span class="switch-icon-left"><i class="bx bx-check"></i></span>
+                                                    </label>
+                                                </div>
+                                            </div>
+                                            <div class="col-10">
+                                            หลังกลืนยาทุกครั้งอ้าปากกระดกลิ้นขึ้น และแลบลิ้นลง
+                                            </div>
+                                        </div>
+                                        <hr>
+
+                                        <h4 class="mb-1">ส่วนที่ 3 : <br><small>ผลข้างเคียง</small></h4>
+
+                                        <div class="row mb-0">
+                                            <div class="col-9">
+                                                ปวดบวม บริเวณใบหน้าหรือตามข้อ
+                                            </div>
+                                            <div class="col-3 text-right pr-0">
+                                                <div class="custom-control custom-switch custom-switch-danger mr-1 mb-1">
+                                                    <input type="checkbox" class="custom-control-input" id="eff1">
+                                                    <label class="custom-control-label" for="eff1">
+                                                        <span class="switch-icon-left"><i class="bx bx-check"></i></span>
+                                                    </label>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="row mb-1">
+                                            <div class="col-9">
+                                                เหน็บชา/ปวดแสบ บริเวณปลายมือปลายเท้า
+                                            </div>
+                                            <div class="col-3 text-right pr-0">
+                                                <div class="custom-control custom-switch custom-switch-danger mr-1 mb-1">
+                                                    <input type="checkbox" class="custom-control-input" id="eff2">
+                                                    <label class="custom-control-label" for="eff2">
+                                                        <span class="switch-icon-left"><i class="bx bx-check"></i></span>
+                                                    </label>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="row mb-0">
+                                            <div class="col-9">
+                                                มีผื่น/ผื่นคันตามตัว
+                                            </div>
+                                            <div class="col-3 text-right pr-0">
+                                                <div class="custom-control custom-switch custom-switch-danger mr-1 mb-1">
+                                                    <input type="checkbox" class="custom-control-input" id="eff3">
+                                                    <label class="custom-control-label" for="eff3">
+                                                        <span class="switch-icon-left"><i class="bx bx-check"></i></span>
+                                                    </label>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="row mb-0">
+                                            <div class="col-9">
+                                                ปวดศีรษะ/วิงเวียน
+                                            </div>
+                                            <div class="col-3 text-right pr-0">
+                                                <div class="custom-control custom-switch custom-switch-danger mr-1 mb-1">
+                                                    <input type="checkbox" class="custom-control-input" id="eff4">
+                                                    <label class="custom-control-label" for="eff4">
+                                                        <span class="switch-icon-left"><i class="bx bx-check"></i></span>
+                                                    </label>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="row mb-0">
+                                            <div class="col-9">
+                                                ไข้/หนาวสั่น โดยไม่มีน้ำมูก
+                                            </div>
+                                            <div class="col-3 text-right pr-0">
+                                                <div class="custom-control custom-switch custom-switch-danger mr-1 mb-1">
+                                                    <input type="checkbox" class="custom-control-input" id="eff5">
+                                                    <label class="custom-control-label" for="eff5">
+                                                        <span class="switch-icon-left"><i class="bx bx-check"></i></span>
+                                                    </label>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="row  mb-0">
+                                            <div class="col-9">
+                                                อ่อนเพลีย ไม่อยากอาหาร
+                                            </div>
+                                            <div class="col-3 text-right pr-0">
+                                                <div class="custom-control custom-switch custom-switch-danger mr-1 mb-1">
+                                                    <input type="checkbox" class="custom-control-input" id="eff6">
+                                                    <label class="custom-control-label" for="eff6">
+                                                        <span class="switch-icon-left"><i class="bx bx-check"></i></span>
+                                                    </label>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="row">
+                                            <div class="col-12 col-sm-3 pt-3">
+                                                <button class="btn btn-danger round btn-block">บันทึกผล</button>
+                                            </div>
+                                        </div>
+
+
                                     </div>
                                 </div>
                         </div>

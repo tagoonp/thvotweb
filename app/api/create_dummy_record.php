@@ -21,7 +21,7 @@ if(($res) && ($res['status'])){
                    VALUES ('".$row['uid']."', '".$row['username']."', 'non-response', '$date', '1')";
 
         $strSQLmc = "SELECT SUM(med_amount) cn FROM vot2_patient_med WHERE med_username = '".$row['username']."' AND med_pid = '".$row['uid']."' AND med_cnf = 'Y'";
-        $resMc = $db->fetch($strSQL, false);
+        $resMc = $db->fetch($strSQLmc, false);
         $ref = 0;
         if($resMc){
             $ref = $resMc['cn'];

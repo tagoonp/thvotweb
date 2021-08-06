@@ -432,7 +432,7 @@ if(!$resVideo){
 
         function saveCheckVideo(){
             // window.close()
-            alert('a')
+            // alert('a')
             window.history.back();
         }
 

@@ -433,7 +433,8 @@ if(!$resVideo){
         function saveCheckVideo(){
             // window.close()
             // alert('a')
-            window.history.back();
+            // window.history.back();
+            window.location = 'closeinapp.php'
         }
 
         function back2Follow(puid, pname){

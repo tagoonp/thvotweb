@@ -216,19 +216,24 @@ if(!$resVideo){
                                         $strSQL = "SELECT * FROM vot2_patient_med WHERE med_pid = '$patient_id' AND med_cnf = 'Y' ORDER BY med_name";
                                         $resMed = $db->fetch($strSQL, true);
                                         if(($resMed) && ($resMed['status'])){
-                                            while($rowMed = $resMed['data']){
+                                            foreach ($resMed['data'] as $rowMed) {
                                                 ?>
-                                                <div class="row mb-1">
-                                                     <div class="col-10">
+                                                <div class="row mb-0">
+                                                     <div class="col-9">
                                                         <?php echo $rowMed['med_name']; ?>
                                                     </div>
-                                                    <div class="col-2 text-left pr-0" style="padding-top: 3px;">
-                                                        <div class="custom-control custom-switch custom-switch-success mr-1 mb-1">
-                                                            <input type="checkbox" class="custom-control-input" id="checklist1">
-                                                            <label class="custom-control-label" for="checklist1">
-                                                                <span class="switch-icon-left"><i class="bx bx-check"></i></span>
-                                                            </label>
-                                                        </div>
+                                                    <div class="col-3 text-left pr-0" style="padding-top: 0px;">
+                                                        <fieldset class="form-group">
+                                                            <select class="form-control" id="basicSelect">
+                                                                <?php 
+                                                                for ($i=0; $i <= $rowMed['med_amount']; $i++) { 
+                                                                    ?>
+                                                                    <option><?php echo $i; ?></option>
+                                                                    <?php
+                                                                }
+                                                                ?>
+                                                            </select>
+                                                        </fieldset>
                                                     </div>
                                                 </div>
                                                 <?php

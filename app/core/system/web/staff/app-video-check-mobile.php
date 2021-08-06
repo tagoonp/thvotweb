@@ -431,7 +431,9 @@ if(!$resVideo){
         })
 
         function saveCheckVideo(){
-            window.close()
+            // window.close()
+            alert('a')
+            window.history.back();
         }
 
         function back2Follow(puid, pname){

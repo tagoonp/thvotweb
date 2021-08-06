@@ -257,10 +257,7 @@ if(!$resVideo){
                                         <h4 class="mb-1">ส่วนที่ 3 : <br><small>ผลข้างเคียง</small></h4>
 
                                         <div class="row mb-0">
-                                            <div class="col-9">
-                                                ปวดบวม บริเวณใบหน้าหรือตามข้อ
-                                            </div>
-                                            <div class="col-3 text-right pr-0">
+                                            <div class="col-2 text-left pr-0" style="padding-top: 3px;">
                                                 <div class="custom-control custom-switch custom-switch-success mr-1 mb-1">
                                                     <input type="checkbox" class="custom-control-input" id="eff1">
                                                     <label class="custom-control-label" for="eff1">
@@ -268,13 +265,13 @@ if(!$resVideo){
                                                     </label>
                                                 </div>
                                             </div>
+                                            <div class="col-10">
+                                                ปวดบวม บริเวณใบหน้าหรือตามข้อ
+                                            </div>
                                         </div>
 
                                         <div class="row mb-1">
-                                            <div class="col-9">
-                                                เหน็บชา/ปวดแสบ บริเวณปลายมือปลายเท้า
-                                            </div>
-                                            <div class="col-3 text-right pr-0">
+                                            <div class="col-2 text-left pr-0" style="padding-top: 3px;">
                                                 <div class="custom-control custom-switch custom-switch-success mr-1 mb-1">
                                                     <input type="checkbox" class="custom-control-input" id="eff2">
                                                     <label class="custom-control-label" for="eff2">
@@ -282,13 +279,13 @@ if(!$resVideo){
                                                     </label>
                                                 </div>
                                             </div>
+                                            <div class="col-10">
+                                                เหน็บชา/ปวดแสบ บริเวณปลายมือปลายเท้า
+                                            </div>
                                         </div>
 
                                         <div class="row mb-0">
-                                            <div class="col-9">
-                                                มีผื่น/ผื่นคันตามตัว
-                                            </div>
-                                            <div class="col-3 text-right pr-0">
+                                            <div class="col-2 text-left pr-0" style="padding-top: 3px;">
                                                 <div class="custom-control custom-switch custom-switch-success mr-1 mb-1">
                                                     <input type="checkbox" class="custom-control-input" id="eff3">
                                                     <label class="custom-control-label" for="eff3">
@@ -296,13 +293,13 @@ if(!$resVideo){
                                                     </label>
                                                 </div>
                                             </div>
+                                            <div class="col-10">
+                                                มีผื่น/ผื่นคันตามตัว
+                                            </div>
                                         </div>
 
                                         <div class="row mb-0">
-                                            <div class="col-9">
-                                                ปวดศีรษะ/วิงเวียน
-                                            </div>
-                                            <div class="col-3 text-right pr-0">
+                                            <div class="col-2 text-left pr-0" style="padding-top: 3px;">
                                                 <div class="custom-control custom-switch custom-switch-success mr-1 mb-1">
                                                     <input type="checkbox" class="custom-control-input" id="eff4">
                                                     <label class="custom-control-label" for="eff4">
@@ -310,13 +307,13 @@ if(!$resVideo){
                                                     </label>
                                                 </div>
                                             </div>
+                                            <div class="col-10">
+                                                ปวดศีรษะ/วิงเวียน
+                                            </div>
                                         </div>
 
                                         <div class="row mb-0">
-                                            <div class="col-9">
-                                                ไข้/หนาวสั่น โดยไม่มีน้ำมูก
-                                            </div>
-                                            <div class="col-3 text-right pr-0">
+                                            <div class="col-2 text-left pr-0" style="padding-top: 3px;">
                                                 <div class="custom-control custom-switch custom-switch-success mr-1 mb-1">
                                                     <input type="checkbox" class="custom-control-input" id="eff5">
                                                     <label class="custom-control-label" for="eff5">
@@ -324,19 +321,22 @@ if(!$resVideo){
                                                     </label>
                                                 </div>
                                             </div>
+                                            <div class="col-10">
+                                                ไข้/หนาวสั่น โดยไม่มีน้ำมูก
+                                            </div>
                                         </div>
 
                                         <div class="row  mb-0">
-                                            <div class="col-9">
-                                                อ่อนเพลีย ไม่อยากอาหาร
-                                            </div>
-                                            <div class="col-3 text-right pr-0">
+                                            <div class="col-2 text-left pr-0" style="padding-top: 3px;">
                                                 <div class="custom-control custom-switch custom-switch-success mr-1 mb-1">
                                                     <input type="checkbox" class="custom-control-input" id="eff6">
                                                     <label class="custom-control-label" for="eff6">
                                                         <span class="switch-icon-left"><i class="bx bx-check"></i></span>
                                                     </label>
                                                 </div>
+                                            </div>
+                                            <div class="col-10">
+                                                อ่อนเพลีย ไม่อยากอาหาร
                                             </div>
                                         </div>
 

@@ -12,10 +12,6 @@ if(isset($_GET['stage'])){
     $stage = mysqli_real_escape_string($conn, $_GET['stage']);
 }
 
-require('../../../../config/user.inc.php'); 
-
-$menu = 8;
-
 if(
     (!isset($_GET['id'])) ||
     (!isset($_GET['vid'])) ||
@@ -44,6 +40,12 @@ if(isset($_GET['hcode'])){
 
 
 $_SESSION['thvot_session'] = session_id();
+
+require('../../../../config/user.inc.php'); 
+
+$menu = 8;
+
+
 
 require('../../../../config/staff.role.php'); 
 
@@ -338,7 +340,7 @@ if(!$resVideo){
                                         </div>
 
                                         <div class="row">
-                                            <div class="col-12 col-sm-3 pt-3">
+                                            <div class="col-12 col-sm-3 pt-2">
                                                 <button class="btn btn-danger round btn-block">บันทึกผล</button>
                                             </div>
                                         </div>

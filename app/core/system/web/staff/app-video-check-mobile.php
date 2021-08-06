@@ -193,6 +193,24 @@ if(!$resVideo){
                                     </div>
                                     <div class="col-12 col-sm-7">
                                         <div class="p-2">
+
+                                        <div class="row">
+                                            <div class="col-12">
+                                                <div class="badge badge-success round mb-1">
+                                                ตรวจสอบการรับประทานยา
+                                                </div>
+
+                                                <div class="row pb-2">
+                                                    <div class="col-3">
+                                                        <small>ชื่อผู้ป่วย : </small><br>
+                                                    </div>
+                                                    <div class="col-9">
+                                                    
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
                                         <h4 class="mb-1">ส่วนที่ 1 : <br><small>จำนวนยาที่รับประทาน</small></h4>
 
                                         <hr>
@@ -342,7 +360,7 @@ if(!$resVideo){
 
                                         <div class="row">
                                             <div class="col-12 col-sm-3 pt-2">
-                                                <button class="btn btn-danger round btn-block">บันทึกผล</button>
+                                                <button class="btn btn-danger round btn-block" onclick="saveCheckVideo()">บันทึกผล</button>
                                             </div>
                                         </div>
 
@@ -411,6 +429,10 @@ if(!$resVideo){
                 });
             };
         })
+
+        function saveCheckVideo(){
+            window.close()
+        }
 
         function back2Follow(puid, pname){
             Swal.fire({

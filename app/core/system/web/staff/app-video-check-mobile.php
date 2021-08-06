@@ -2,7 +2,6 @@
 require('../../../../../../database_config/thvot/config.inc.php');
 require('../../../../config/configuration.php');
 require('../../../../config/database.php'); 
-require('../../../../config/staff.role.php'); 
 
 $db = new Database();
 $conn = $db->conn();
@@ -45,6 +44,8 @@ if(isset($_GET['hcode'])){
 
 
 $_SESSION['thvot_session'] = session_id();
+
+require('../../../../config/staff.role.php'); 
 
 $patient_id = mysqli_real_escape_string($conn, $_GET['id']);
 $video_id = mysqli_real_escape_string($conn, $_GET['vid']);
@@ -195,9 +196,9 @@ if(!$resVideo){
                                         <h4 class="mb-1">ส่วนที่ 2 : <br><small>ความถูกต้องของวิธีการกินยา</small></h4>
                                         <div class="row mb-1">
                                             <div class="col-2 text-left pr-0" style="padding-top: 3px;">
-                                                <div class="custom-control custom-switch custom-switch-danger mr-1 mb-1">
-                                                    <input type="checkbox" class="custom-control-input" id="eff1">
-                                                    <label class="custom-control-label" for="eff1">
+                                                <div class="custom-control custom-switch custom-switch-success mr-1 mb-1">
+                                                    <input type="checkbox" class="custom-control-input" id="checklist1">
+                                                    <label class="custom-control-label" for="checklist1">
                                                         <span class="switch-icon-left"><i class="bx bx-check"></i></span>
                                                     </label>
                                                 </div>
@@ -209,9 +210,9 @@ if(!$resVideo){
 
                                         <div class="row mb-0">
                                             <div class="col-2 text-left pr-0" style="padding-top: 3px;">
-                                                <div class="custom-control custom-switch custom-switch-danger mr-1 mb-1">
-                                                    <input type="checkbox" class="custom-control-input" id="eff2">
-                                                    <label class="custom-control-label" for="eff2">
+                                                <div class="custom-control custom-switch custom-switch-success mr-1 mb-1">
+                                                    <input type="checkbox" class="custom-control-input" id="checklist2">
+                                                    <label class="custom-control-label" for="checklist2">
                                                         <span class="switch-icon-left"><i class="bx bx-check"></i></span>
                                                     </label>
                                                 </div>
@@ -223,9 +224,9 @@ if(!$resVideo){
 
                                         <div class="row mb-0">
                                             <div class="col-2 text-left pr-0" style="padding-top: 3px;">
-                                                <div class="custom-control custom-switch custom-switch-danger mr-1 mb-1">
-                                                    <input type="checkbox" class="custom-control-input" id="eff3">
-                                                    <label class="custom-control-label" for="eff3">
+                                                <div class="custom-control custom-switch custom-switch-success mr-1 mb-1">
+                                                    <input type="checkbox" class="custom-control-input" id="checklist3">
+                                                    <label class="custom-control-label" for="checklist3">
                                                         <span class="switch-icon-left"><i class="bx bx-check"></i></span>
                                                     </label>
                                                 </div>
@@ -237,9 +238,9 @@ if(!$resVideo){
 
                                         <div class="row mb-1">
                                             <div class="col-2 text-left pr-0" style="padding-top: 3px;">
-                                                <div class="custom-control custom-switch custom-switch-danger mr-1 mb-1">
-                                                    <input type="checkbox" class="custom-control-input" id="eff4">
-                                                    <label class="custom-control-label" for="eff4">
+                                                <div class="custom-control custom-switch custom-switch-success mr-1 mb-1">
+                                                    <input type="checkbox" class="custom-control-input" id="checklist4">
+                                                    <label class="custom-control-label" for="checklist4">
                                                         <span class="switch-icon-left"><i class="bx bx-check"></i></span>
                                                     </label>
                                                 </div>
@@ -257,7 +258,7 @@ if(!$resVideo){
                                                 ปวดบวม บริเวณใบหน้าหรือตามข้อ
                                             </div>
                                             <div class="col-3 text-right pr-0">
-                                                <div class="custom-control custom-switch custom-switch-danger mr-1 mb-1">
+                                                <div class="custom-control custom-switch custom-switch-success mr-1 mb-1">
                                                     <input type="checkbox" class="custom-control-input" id="eff1">
                                                     <label class="custom-control-label" for="eff1">
                                                         <span class="switch-icon-left"><i class="bx bx-check"></i></span>
@@ -271,7 +272,7 @@ if(!$resVideo){
                                                 เหน็บชา/ปวดแสบ บริเวณปลายมือปลายเท้า
                                             </div>
                                             <div class="col-3 text-right pr-0">
-                                                <div class="custom-control custom-switch custom-switch-danger mr-1 mb-1">
+                                                <div class="custom-control custom-switch custom-switch-success mr-1 mb-1">
                                                     <input type="checkbox" class="custom-control-input" id="eff2">
                                                     <label class="custom-control-label" for="eff2">
                                                         <span class="switch-icon-left"><i class="bx bx-check"></i></span>
@@ -285,7 +286,7 @@ if(!$resVideo){
                                                 มีผื่น/ผื่นคันตามตัว
                                             </div>
                                             <div class="col-3 text-right pr-0">
-                                                <div class="custom-control custom-switch custom-switch-danger mr-1 mb-1">
+                                                <div class="custom-control custom-switch custom-switch-success mr-1 mb-1">
                                                     <input type="checkbox" class="custom-control-input" id="eff3">
                                                     <label class="custom-control-label" for="eff3">
                                                         <span class="switch-icon-left"><i class="bx bx-check"></i></span>
@@ -299,7 +300,7 @@ if(!$resVideo){
                                                 ปวดศีรษะ/วิงเวียน
                                             </div>
                                             <div class="col-3 text-right pr-0">
-                                                <div class="custom-control custom-switch custom-switch-danger mr-1 mb-1">
+                                                <div class="custom-control custom-switch custom-switch-success mr-1 mb-1">
                                                     <input type="checkbox" class="custom-control-input" id="eff4">
                                                     <label class="custom-control-label" for="eff4">
                                                         <span class="switch-icon-left"><i class="bx bx-check"></i></span>
@@ -313,7 +314,7 @@ if(!$resVideo){
                                                 ไข้/หนาวสั่น โดยไม่มีน้ำมูก
                                             </div>
                                             <div class="col-3 text-right pr-0">
-                                                <div class="custom-control custom-switch custom-switch-danger mr-1 mb-1">
+                                                <div class="custom-control custom-switch custom-switch-success mr-1 mb-1">
                                                     <input type="checkbox" class="custom-control-input" id="eff5">
                                                     <label class="custom-control-label" for="eff5">
                                                         <span class="switch-icon-left"><i class="bx bx-check"></i></span>
@@ -327,7 +328,7 @@ if(!$resVideo){
                                                 อ่อนเพลีย ไม่อยากอาหาร
                                             </div>
                                             <div class="col-3 text-right pr-0">
-                                                <div class="custom-control custom-switch custom-switch-danger mr-1 mb-1">
+                                                <div class="custom-control custom-switch custom-switch-success mr-1 mb-1">
                                                     <input type="checkbox" class="custom-control-input" id="eff6">
                                                     <label class="custom-control-label" for="eff6">
                                                         <span class="switch-icon-left"><i class="bx bx-check"></i></span>

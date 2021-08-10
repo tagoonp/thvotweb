@@ -227,7 +227,7 @@ if(!$resVideo){
                                                 $resMt = $db->fetch($strSQL, true);
                                                 echo $strSQL;
                                                 $taken = 0;
-                                                if($resMt){
+                                                if(($resMt) && ($resMt['sm'] != null)){
                                                     $taken = $resMt['sm'];
                                                 }
 

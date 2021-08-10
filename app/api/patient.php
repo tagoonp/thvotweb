@@ -980,7 +980,8 @@ if($stage == 'videocheck'){
                fu_eff6 = '$eff6', 
                fu_eff_other = '$effother',
                fu_verify_by = '$uid',
-               fu_verify_datetime = '$datetime'
+               fu_verify_datetime = '$datetime',
+               fu_status = 'complete'
                WHERE fu_id = '$vid'
               ";
     $res = $db->execute($strSQL);

@@ -229,6 +229,7 @@ if(!$resVideo){
                                                            mt_username = '".$resPatient['username']."' 
                                                            AND mt_med_id = '".$rowMed['ID']."' 
                                                            AND mt_med_name = '".$rowMed['med_name']."'
+                                                           AND mt_cnf = 'Y'
                                                            AND mt_vid IN (
                                                                SELECT fu_id FROM vot2_followup WHERE fu_username = '".$resPatient['username']."' AND fu_date IN (
                                                                    SELECT fu_date FROM vot2_followup WHERE fu_id = '$video_id'

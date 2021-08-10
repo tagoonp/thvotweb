@@ -225,7 +225,7 @@ if(!$resVideo){
 
                                                 $strSQL = "SELECT SUM(mt_med_take) as sm FROM vot2_patient_med_take WHERE mt_username = '".$resPatient['username']."' AND mt_med_id = '".$rowMed['ID']."' AND mt_med_name = '".$rowMed['med_name']."'";
                                                 $resMt = $db->fetch($strSQL, false);
-                                                echo $strSQL;
+                                                // echo $strSQL;
                                                 $taken = 0;
                                                 if(($resMt) && ($resMt['sm'] != null)){
                                                     $taken = $resMt['sm'];

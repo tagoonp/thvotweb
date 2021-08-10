@@ -332,7 +332,7 @@ if(!$resVideo){
                                         <div class="row mb-0">
                                             <div class="col-2 text-left pr-0" style="padding-top: 3px;">
                                                 <div class="custom-control custom-switch custom-switch-success mr-1 mb-1">
-                                                    <input type="checkbox" class="custom-control-input" id="eff1">
+                                                    <input type="checkbox" class="custom-control-input" id="eff1" <?php if($resVideo['fu_eff1'] == '1'){ echo "checked"; } ?>>
                                                     <label class="custom-control-label" for="eff1">
                                                         <span class="switch-icon-left"><i class="bx bx-check"></i></span>
                                                     </label>
@@ -346,7 +346,7 @@ if(!$resVideo){
                                         <div class="row mb-0">
                                             <div class="col-2 text-left pr-0" style="padding-top: 3px;">
                                                 <div class="custom-control custom-switch custom-switch-success mr-1 mb-1">
-                                                    <input type="checkbox" class="custom-control-input" id="eff2">
+                                                    <input type="checkbox" class="custom-control-input" id="eff2" <?php if($resVideo['fu_eff2'] == '1'){ echo "checked"; } ?>>
                                                     <label class="custom-control-label" for="eff2">
                                                         <span class="switch-icon-left"><i class="bx bx-check"></i></span>
                                                     </label>
@@ -360,7 +360,7 @@ if(!$resVideo){
                                         <div class="row mb-0">
                                             <div class="col-2 text-left pr-0" style="padding-top: 3px;">
                                                 <div class="custom-control custom-switch custom-switch-success mr-1 mb-1">
-                                                    <input type="checkbox" class="custom-control-input" id="eff3">
+                                                    <input type="checkbox" class="custom-control-input" id="eff3" <?php if($resVideo['fu_eff3'] == '1'){ echo "checked"; } ?>>
                                                     <label class="custom-control-label" for="eff3">
                                                         <span class="switch-icon-left"><i class="bx bx-check"></i></span>
                                                     </label>
@@ -374,7 +374,7 @@ if(!$resVideo){
                                         <div class="row mb-0">
                                             <div class="col-2 text-left pr-0" style="padding-top: 3px;">
                                                 <div class="custom-control custom-switch custom-switch-success mr-1 mb-1">
-                                                    <input type="checkbox" class="custom-control-input" id="eff4">
+                                                    <input type="checkbox" class="custom-control-input" id="eff4" <?php if($resVideo['fu_eff4'] == '1'){ echo "checked"; } ?>>
                                                     <label class="custom-control-label" for="eff4">
                                                         <span class="switch-icon-left"><i class="bx bx-check"></i></span>
                                                     </label>
@@ -388,7 +388,7 @@ if(!$resVideo){
                                         <div class="row mb-0">
                                             <div class="col-2 text-left pr-0" style="padding-top: 3px;">
                                                 <div class="custom-control custom-switch custom-switch-success mr-1 mb-1">
-                                                    <input type="checkbox" class="custom-control-input" id="eff5">
+                                                    <input type="checkbox" class="custom-control-input" id="eff5" <?php if($resVideo['fu_eff5'] == '1'){ echo "checked"; } ?>>
                                                     <label class="custom-control-label" for="eff5">
                                                         <span class="switch-icon-left"><i class="bx bx-check"></i></span>
                                                     </label>
@@ -402,7 +402,7 @@ if(!$resVideo){
                                         <div class="row  mb-0">
                                             <div class="col-2 text-left pr-0" style="padding-top: 3px;">
                                                 <div class="custom-control custom-switch custom-switch-success mr-1 mb-1">
-                                                    <input type="checkbox" class="custom-control-input" id="eff6">
+                                                    <input type="checkbox" class="custom-control-input" id="eff6" <?php if($resVideo['fu_eff6'] == '1'){ echo "checked"; } ?>>
                                                     <label class="custom-control-label" for="eff6">
                                                         <span class="switch-icon-left"><i class="bx bx-check"></i></span>
                                                     </label>

@@ -6,12 +6,16 @@
 // die();
 
 if((!isset($_SESSION['thvot_uid'])) || (!isset($_SESSION['thvot_role']))){
+    echo "Error 1";
     $db->close();
+    die();
     header('Location: '.ROOT_DOMAIN);   
 }
 
 if($_SESSION['thvot_role'] != $active_role){
+    echo "Error 2";
     $db->close();
+    die();
     header('Location: '.ROOT_DOMAIN);   
 }
 
@@ -32,7 +36,9 @@ $strSQL = "SELECT * FROM vot2_account INNER JOIN vot2_chospital ON vot2_account.
 $user = $db->fetch($strSQL, false);
 
 if(!$user){
+    echo "Error 3";
     $db->close();
+    die();
     header('Location: '.ROOT_DOMAIN); 
 }
 ?>

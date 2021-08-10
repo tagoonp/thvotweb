@@ -549,8 +549,6 @@ if(!$resVideo){
 
                     var jxr = $.post(api_url + 'patient?stage=videocheck', param, function(){}, 'json')
                                .always(function(snap){
-                                   console.log(snap);
-                                   return ;
                                     preload.hide()
                                     if(snap.status == 'Success'){
                                         window.location = 'closeinapp.php'

@@ -532,7 +532,7 @@ if(!$resVideo){
             }
 
             console.log(param);
-            return ;
+            // return ;
 
             var jxr = $.post(api_url + 'patient?stage=takedrug', param, function(){}, 'json')
                        .always(function(snap){ console.log(snap); })

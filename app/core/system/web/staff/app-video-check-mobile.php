@@ -240,24 +240,35 @@ if(!$resVideo){
                                                         <input type="hidden" id="txtMedName_<?php echo $c; ?>" value="<?php echo $rowMed['med_name']; ?>">
                                                     </div>
                                                     <div class="col-3 text-left pr-0" style="padding-top: 0px;">
-                                                        <fieldset class="form-group">
-                                                            <select class="form-control" id="txtMedQ_<?php echo $c; ?>" onchange="setDrugTake('<?php echo $c; ?>')">
-                                                                <?php 
-                                                                if($rowMed['med_amount'] != null){
-                                                                    for ($i=0; $i <= ($rowMed['med_amount'] - $taken) ; $i++) { 
+                                                        <?php 
+                                                        if($resVideo['fu_status'] != 'complete'){
+                                                            ?>
+                                                            <fieldset class="form-group">
+                                                                <select class="form-control" id="txtMedQ_<?php echo $c; ?>" onchange="setDrugTake('<?php echo $c; ?>')">
+                                                                    <?php 
+                                                                    if($rowMed['med_amount'] != null){
+                                                                        for ($i=0; $i <= ($rowMed['med_amount'] - $taken) ; $i++) { 
+                                                                            ?>
+                                                                            <option><?php echo $i; ?></option>
+                                                                            <?php
+                                                                        }
+                                                                    }else{
                                                                         ?>
-                                                                        <option><?php echo $i; ?></option>
+                                                                        <option value="0"><?php echo "0"; ?></option>
                                                                         <?php
                                                                     }
-                                                                }else{
+                                                                    
                                                                     ?>
-                                                                    <option value="0"><?php echo "0"; ?></option>
-                                                                    <?php
-                                                                }
-                                                                
-                                                                ?>
-                                                            </select>
-                                                        </fieldset>
+                                                                </select>
+                                                            </fieldset>
+                                                            <?php
+                                                        }else{
+                                                            ?>
+                                                            
+                                                            <?php
+                                                        }
+                                                        ?>
+                                                        
                                                     </div>
                                                 </div>
                                                 <?php
@@ -416,7 +427,7 @@ if(!$resVideo){
                                         <div class="row  mb-0">
                                             <div class="col-12" style="padding-top: 3px;">
                                                 <div class="form-group">
-                                                    <textarea name="txtOthereff" id="txtOthereff" cols="30" rows="10" class="form-control" placeholder="อื่น ๆ (เว้นว่างถ้าไม่มี)" style="height: 80px;"></textarea>
+                                                    <textarea name="txtOthereff" id="txtOthereff" cols="30" rows="10" class="form-control" placeholder="อื่น ๆ (เว้นว่างถ้าไม่มี)" style="height: 80px;"><?php echo $resVideo['fu_eff_other']; ?></textarea>
                                                 </div>
                                             </div>
                                         </div>
@@ -514,8 +525,8 @@ if(!$resVideo){
 
         function saveCheckVideo(){
             Swal.fire({
-                title: 'ยืนยันดำเนินการ',
-                text: 'ท่านยืนยันผลการตรวจสอบวิดีโอนี้หรือไม่',
+                title: 'คำเตือน !!!',
+                text: 'โปรดตรวจสอบข้อมูลให้เรียบร้อยก่อนบันทึกข้อมูล เนื่องจากท่านจะไม่สามารถแก้ไขข้อมูลที่บันทึกไปแล้วได้',
                 icon: 'warning',
                 showCancelButton: true,
                 confirmButtonColor: '#3085d6',

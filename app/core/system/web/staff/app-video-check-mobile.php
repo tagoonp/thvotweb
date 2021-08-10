@@ -257,6 +257,7 @@ if(!$resVideo){
                                                             ?>
                                                             <fieldset class="form-group">
                                                                 <select class="form-control" id="txtMedQ_<?php echo $c; ?>" onchange="setDrugTake('<?php echo $c; ?>')">
+                                                                    <option value="">ระบุ</option>
                                                                     <?php 
                                                                     if($rowMed['med_amount'] != null){
                                                                         for ($i=0; $i <= ($rowMed['med_amount'] - $taken) ; $i++) { 
@@ -275,9 +276,13 @@ if(!$resVideo){
                                                             </fieldset>
                                                             <?php
                                                         }else{
-                                                            ?>
-                                                            
-                                                            <?php
+                                                            $strSQL = "SELECT mt_met_take FROM vot2_patient_med_take WHERE mt_med_name = '".$rowMed['med_name']."' AND mt_vid = '$video_id'";
+                                                            $resPrev = $db->fetch($strSQL, false);
+                                                            if($resPrev){
+                                                                echo $resPrev['mt_met_take'];
+                                                            }else{
+                                                                echo "0";
+                                                            }
                                                         }
                                                         ?>
                                                         

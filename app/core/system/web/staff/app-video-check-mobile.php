@@ -228,7 +228,7 @@ if(!$resVideo){
                                                            mt_username = '".$resPatient['username']."' 
                                                            AND mt_med_id = '".$rowMed['ID']."' 
                                                            AND mt_med_name = '".$rowMed['med_name']."'
-                                                           AND DATE(mt_udatetime) = '$date'
+                                                           AND mt_vid = '$video_id'
                                                            ";
                                                 $resMt = $db->fetch($strSQL, false);
                                                 // echo $strSQL;

@@ -58,6 +58,7 @@ $strSQL = "SELECT * FROM vot2_account a INNER JOIN vot2_userinfo b ON a.username
            a.delete_status = '0' 
            AND a.active_status = '1'
            AND b.info_use = '1'
+           AND a.uid = '$patient_id'
           ";
 $resPatient = $db->fetch($strSQL, false);
 if(!$resPatient){
@@ -79,6 +80,9 @@ if(!$resVideo){
 }
 ?>
 <input type="hidden" id="txtCurrentUid" value="<?php echo $_SESSION['thvot_uid']; ?>">
+<input type="hidden" id="txtCurrentUhcode" value="<?php echo $_SESSION['thvot_hcode']; ?>">
+<input type="hidden" id="txtCurrentPid" value="<?php echo $patient_id; ?>">
+<input type="hidden" id="txtCurrentVid" value="<?php echo $video_id; ?>">
 <!DOCTYPE html>
 <html class="loading" lang="en" data-textdirection="ltr">
 <!-- BEGIN: Head-->
@@ -216,17 +220,30 @@ if(!$resVideo){
                                         $strSQL = "SELECT * FROM vot2_patient_med WHERE med_pid = '$patient_id' AND med_cnf = 'Y' ORDER BY med_name";
                                         $resMed = $db->fetch($strSQL, true);
                                         if(($resMed) && ($resMed['status'])){
+                                            $c = 1;
                                             foreach ($resMed['data'] as $rowMed) {
+
+                                                $strSQL = "SELECT SUM(mt_med_take) sm FROM vot2_patient_med_take WHERE mt_username = '".$resPatient['username']."' AND mt_med_id = '".$rowMed['ID']."'";
+                                                $resMt = $db->fetch($strSQL, true);
+
+                                                $taken = 0;
+                                                if($resMt){
+                                                    $taken = $resMt['sm'];
+                                                }
+
                                                 ?>
                                                 <div class="row mb-0">
                                                      <div class="col-9">
                                                         <?php echo $rowMed['med_name']; ?>
+                                                        <div><span class="text-danger">วันนี้ยังต้องกินอีก <?php echo $rowMed['med_amount'] - $taken; ?> เม็ด</span></div>
+                                                        <input type="hidden" id="txtMedId_<?php echo $c; ?>" value="<?php echo $rowMed['ID']; ?>">
+                                                        <input type="hidden" id="txtMedName_<?php echo $c; ?>" value="<?php echo $rowMed['med_name']; ?>">
                                                     </div>
                                                     <div class="col-3 text-left pr-0" style="padding-top: 0px;">
                                                         <fieldset class="form-group">
-                                                            <select class="form-control" id="basicSelect">
+                                                            <select class="form-control" id="txtMedQ_<?php echo $c; ?>" onchange="setDrugTake('<?php echo $c; ?>')">
                                                                 <?php 
-                                                                for ($i=0; $i <= $rowMed['med_amount']; $i++) { 
+                                                                for ($i=0; $i <= ($rowMed['med_amount'] - $taken) ; $i++) { 
                                                                     ?>
                                                                     <option><?php echo $i; ?></option>
                                                                     <?php
@@ -237,6 +254,7 @@ if(!$resVideo){
                                                     </div>
                                                 </div>
                                                 <?php
+                                                $c++;
                                             }
                                         }else{
                                             echo $strSQL;
@@ -318,7 +336,7 @@ if(!$resVideo){
                                             </div>
                                         </div>
 
-                                        <div class="row mb-1">
+                                        <div class="row mb-0">
                                             <div class="col-2 text-left pr-0" style="padding-top: 3px;">
                                                 <div class="custom-control custom-switch custom-switch-success mr-1 mb-1">
                                                     <input type="checkbox" class="custom-control-input" id="eff2">
@@ -398,7 +416,7 @@ if(!$resVideo){
 
                                         <div class="row">
                                             <div class="col-12 col-sm-3 pt-1">
-                                                <button class="btn btn-danger round btn-block" onclick="saveCheckVideo()">บันทึกผล</button>
+                                                <button class="btn btn-danger round btn-block" onclick="saveCheckVideo()" type="button">บันทึกผล</button>
                                             </div>
                                         </div>
 
@@ -468,11 +486,87 @@ if(!$resVideo){
             };
         })
 
+        function setDrugTake(rid){
+            var param = {
+                did: $('#txtMedId_' + rid).val(),
+                dname: $('#txtMedName_' + rid).val(),
+                dq: $('#txtMedQ_' + rid).val(),
+                vid: $('#txtCurrentVid').val(),
+                pusername: '<?php echo $resPatient['username']; ?>'
+            }
+
+            var jxr = $.post(api_url + 'patient?stage=takedrug', param, function(){}, 'json')
+        }
+
         function saveCheckVideo(){
-            // window.close()
-            // alert('a')
-            // window.history.back();
-            window.location = 'closeinapp.php'
+            Swal.fire({
+                title: 'ยืนยันดำเนินการ',
+                text: 'ท่านยืนยันผลการตรวจสอบวิดีโอนี้หรือไม่',
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                confirmButtonText: 'ยืนยัน',
+                cancelButtonText: 'ยกเลิก',
+                confirmButtonClass: 'btn btn-primary mr-1',
+                cancelButtonClass: 'btn btn-danger',
+                buttonsStyling: false,
+            }).then(function (result) {
+                if (result.value) {
+                    preload.show()
+                    $chk1 = 'N'; $chk2 = 'N'; $chk3 = 'N';  $chk4 = 'N';
+                    $eff1 = 0; $eff2 = 0; $eff3 = 0;  $eff4 = 0;  $eff5 = 0;  $eff6 = 0;
+
+                    if ($('#checklist1').is(':checked')) { $chk1 = 'Y'; }
+                    if ($('#checklist2').is(':checked')) { $chk2 = 'Y'; }
+                    if ($('#checklist3').is(':checked')) { $chk3 = 'Y'; }
+                    if ($('#checklist4').is(':checked')) { $chk4 = 'Y'; }
+
+                    if ($('#eff1').is(':checked')) { $eff1 = 1; }
+                    if ($('#eff2').is(':checked')) { $eff2 = 1; }
+                    if ($('#eff3').is(':checked')) { $eff3 = 1; }
+                    if ($('#eff4').is(':checked')) { $eff4 = 1; }
+                    if ($('#eff5').is(':checked')) { $eff5 = 1; }
+                    if ($('#eff6').is(':checked')) { $eff6 = 1; }
+
+                    var param = {
+                        puid: $('#txtCurrentPid').val(),
+                        check1: $chk1,
+                        check2: $chk2,
+                        check3: $chk3,
+                        check4: $chk4,
+                        eff1: $eff1,
+                        eff2: $eff2,
+                        eff3: $eff3,
+                        eff4: $eff4,
+                        eff5: $eff5,
+                        eff6: $eff6,
+                        effother: $('#txtOthereff').val(),
+                        uid: $('#txtCurrentUid').val(),
+                        uhcode: $('#txtCurrentUhcode').val(),
+                        vid: $('#txtCurrentVid').val()
+                    }
+
+                    var jxr = $.post(api_url + 'patient?stage=videocheck', param, function(){}, 'json')
+                               .always(function(snap){
+                                   console.log(snap);
+                                   return ;
+                                    preload.hide()
+                                    if(snap.status == 'Success'){
+                                        window.location = 'closeinapp.php'
+                                    }else{
+                                        Swal.fire(
+                                            {
+                                                icon: "error",
+                                                title: 'เกิดข้อผิดพลาด',
+                                                text: 'ไม่สามารถดำเนินการได้',
+                                                confirmButtonClass: 'btn btn-danger',
+                                            }
+                                        )
+                                    }
+                               })
+                }
+            })
+            
         }
 
         function back2Follow(puid, pname){

@@ -932,3 +932,107 @@ if($stage == 'back2follow'){
     $db->close(); 
     die();
 }
+
+if($stage == 'videocheck'){
+    if(
+        (!isset($_REQUEST['uid'])) ||
+        (!isset($_REQUEST['puid'])) ||
+        (!isset($_REQUEST['uhcode'])) ||
+        (!isset($_REQUEST['vid']))
+    ){
+        $return['status'] = 'Fail (x101)';
+        $return['error_stage'] = '2';
+        echo json_encode($return);
+        $db->close(); 
+        die();
+    }
+
+    $uid = mysqli_real_escape_string($conn, $_REQUEST['uid']);
+    $puid = mysqli_real_escape_string($conn, $_REQUEST['puid']);
+    $vid = mysqli_real_escape_string($conn, $_REQUEST['vid']);
+    $uhcode = mysqli_real_escape_string($conn, $_REQUEST['uhcode']);
+
+
+    $check1 = mysqli_real_escape_string($conn, $_REQUEST['check1']);
+    $check2 = mysqli_real_escape_string($conn, $_REQUEST['check2']);
+    $check3 = mysqli_real_escape_string($conn, $_REQUEST['check3']);
+    $check4 = mysqli_real_escape_string($conn, $_REQUEST['check4']);
+
+    $eff1 = mysqli_real_escape_string($conn, $_REQUEST['eff1']);
+    $eff2 = mysqli_real_escape_string($conn, $_REQUEST['eff2']);
+    $eff3 = mysqli_real_escape_string($conn, $_REQUEST['eff3']);
+    $eff4 = mysqli_real_escape_string($conn, $_REQUEST['eff4']);
+    $eff5 = mysqli_real_escape_string($conn, $_REQUEST['eff5']);
+    $eff6 = mysqli_real_escape_string($conn, $_REQUEST['eff6']);
+    $effother = mysqli_real_escape_string($conn, $_REQUEST['effother']);
+
+    $strSQL = "UPDATE vot2_followup 
+               SET 
+               fu_checklist1 = '$check1', 
+               fu_checklist2 = '$check2', 
+               fu_checklist3 = '$check3', 
+               fu_checklist4 = '$check4',
+               fu_eff1 = '$eff1', 
+               fu_eff2 = '$eff2', 
+               fu_eff3 = '$eff3', 
+               fu_eff4 = '$eff4', 
+               fu_eff5 = '$eff5', 
+               fu_eff6 = '$eff6', 
+               fu_eff_other = '$effother',
+               fu_verify_by = '$uid',
+               fu_verify_datetime = '$datetime'
+               WHERE fu_id = '$vid'
+              ";
+    $res = $db->execute($strSQL);
+
+    $strSQL = "UPDATE vot2_patient_med_take SET mt_cnf = 'Y' WHERE mt_vid = '$vid'";
+    $res = $db->execute($strSQL);
+
+    $return['status'] = 'Success';
+    echo json_encode($return);
+    $db->close(); 
+    die();
+}
+
+if($stage == 'takedrug'){
+    if(
+        (!isset($_REQUEST['did'])) ||
+        (!isset($_REQUEST['dname'])) ||
+        (!isset($_REQUEST['dq'])) ||
+        (!isset($_REQUEST['pusername'])) ||
+        (!isset($_REQUEST['vid']))
+    ){
+        $return['status'] = 'Fail (x101)';
+        $return['error_stage'] = '2';
+        echo json_encode($return);
+        $db->close(); 
+        die();
+    }
+
+    $did = mysqli_real_escape_string($conn, $_REQUEST['did']);
+    $dname = mysqli_real_escape_string($conn, $_REQUEST['dname']);
+    $dq = mysqli_real_escape_string($conn, $_REQUEST['dq']);
+    $pusername = mysqli_real_escape_string($conn, $_REQUEST['pusername']);
+    $vid = mysqli_real_escape_string($conn, $_REQUEST['vid']);
+
+    $strSQL = "SELECT * FROM vot2_patient_med_take WHERE mt_med_id = '$did' AND mt_med_name = '$dname' AND mt_vid = '$vid'";
+    $res = $db->fetch($strSQL, true, true);
+    if(($res) && ($res['status']) && ($res['count'] > 0)){
+        $strSQL = "UPDATE vot2_patient_med_take SET mt_med_take = '$dq', mt_udatetime = '$datetime' WHERE mt_vid = '$vid'";
+        $resUpdate = $db->execute($strSQL);
+        $return['status'] = 'Success';
+    }else{
+        $strSQL = "INSERT iNTO vot2_patient_med_take (mt_med_id, mt_med_name, mt_med_take, mt_udatetime, mt_vid, mt_username)
+                   VALUES ('$did', '$dname', '$dq', '$datetime', '$vid', '$pusername')
+                  ";
+        $resInsert = $db->insert($strSQL, false);
+        if($resInsert){
+            $return['status'] = 'Success';
+        }else{
+            $return['status'] = 'Fail';
+        }
+    }
+    echo json_encode($return);
+    $db->close(); 
+    die();
+}

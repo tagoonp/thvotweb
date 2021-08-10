@@ -496,6 +496,7 @@ if(!$resVideo){
             }
 
             var jxr = $.post(api_url + 'patient?stage=takedrug', param, function(){}, 'json')
+                       .always(function(snap){ console.log(snap); })
         }
 
         function saveCheckVideo(){

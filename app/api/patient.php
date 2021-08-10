@@ -1018,7 +1018,7 @@ if($stage == 'takedrug'){
     $strSQL = "SELECT * FROM vot2_patient_med_take WHERE mt_med_id = '$did' AND mt_med_name = '$dname' AND mt_vid = '$vid'";
     $res = $db->fetch($strSQL, true, true);
     if(($res) && ($res['status']) && ($res['count'] > 0)){
-        $strSQL = "UPDATE vot2_patient_med_take SET mt_med_take = '$dq', mt_udatetime = '$datetime' AND mt_med_id = '$did' WHERE mt_vid = '$vid'";
+        $strSQL = "UPDATE vot2_patient_med_take SET mt_med_take = '$dq', mt_udatetime = '$datetime' WHERE mt_vid = '$vid' AND mt_med_id = '$did'";
         $resUpdate = $db->execute($strSQL);
         $return['status'] = 'Success';
     }else{

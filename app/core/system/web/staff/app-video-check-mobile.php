@@ -526,12 +526,12 @@ if(!$resVideo){
         function saveCheckVideo(){
             Swal.fire({
                 title: 'คำเตือน !!!',
-                text: 'โปรดตรวจสอบข้อมูลให้เรียบร้อยก่อนบันทึกข้อมูล เนื่องจากท่านจะไม่สามารถแก้ไขข้อมูลที่บันทึกไปแล้วได้',
+                text: 'โปรดตรวจสอบข้อมูลให้เรียบร้อยก่อนบันทึกข้อมูล เนื่องจากท่านจะไม่สามารถแก้ไขข้อมูลที่บันทึกไปแล้วได้ หากมีความผิดพลาดในการลงข้อมูล',
                 icon: 'warning',
                 showCancelButton: true,
                 confirmButtonColor: '#3085d6',
-                confirmButtonText: 'ยืนยัน',
-                cancelButtonText: 'ยกเลิก',
+                confirmButtonText: 'ยืนยันการบันทึกข้อมูล',
+                cancelButtonText: 'ตรวจสอบข้อมูลอีกครั้ง',
                 confirmButtonClass: 'btn btn-primary mr-1',
                 cancelButtonClass: 'btn btn-danger',
                 buttonsStyling: false,

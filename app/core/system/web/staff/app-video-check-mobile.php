@@ -243,11 +243,18 @@ if(!$resVideo){
                                                         <fieldset class="form-group">
                                                             <select class="form-control" id="txtMedQ_<?php echo $c; ?>" onchange="setDrugTake('<?php echo $c; ?>')">
                                                                 <?php 
-                                                                for ($i=0; $i <= ($rowMed['med_amount'] - $taken) ; $i++) { 
+                                                                if($rowMed['med_amount'] != null){
+                                                                    for ($i=0; $i <= ($rowMed['med_amount'] - $taken) ; $i++) { 
+                                                                        ?>
+                                                                        <option><?php echo $i; ?></option>
+                                                                        <?php
+                                                                    }
+                                                                }else{
                                                                     ?>
-                                                                    <option><?php echo $i; ?></option>
+                                                                    <option value="0"><?php echo "0"; ?></option>
                                                                     <?php
                                                                 }
+                                                                
                                                                 ?>
                                                             </select>
                                                         </fieldset>

@@ -223,8 +223,8 @@ if(!$resVideo){
                                             $c = 1;
                                             foreach ($resMed['data'] as $rowMed) {
 
-                                                $strSQL = "SELECT SUM(mt_med_take) sm FROM vot2_patient_med_take WHERE mt_username = '".$resPatient['username']."' AND mt_med_id = '".$rowMed['ID']."' AND mt_med_name = '".$rowMed['med_name']."'";
-                                                $resMt = $db->fetch($strSQL, true);
+                                                $strSQL = "SELECT SUM(mt_med_take) as sm FROM vot2_patient_med_take WHERE mt_username = '".$resPatient['username']."' AND mt_med_id = '".$rowMed['ID']."' AND mt_med_name = '".$rowMed['med_name']."'";
+                                                $resMt = $db->fetch($strSQL, false);
                                                 echo $strSQL;
                                                 $taken = 0;
                                                 if(($resMt) && ($resMt['sm'] != null)){

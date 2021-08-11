@@ -3,6 +3,8 @@ require('../../../database_config/thvot/config.inc.php');
 require('../config/configuration.php');
 require('../config/database.php'); 
 
+include '../../vendor/autoload.php';
+
 $db = new Database();
 $conn = $db->conn();
 
@@ -84,6 +86,22 @@ if (!empty($_FILES)) {
 
         $strSQL = "UPDATE vot2_videosession SET vs_upload = 'done', vs_upload_datetime = '$datetime', vs_vid = '".$res02['mfu_id']."' WHERE vs_session = '$vid' AND vs_uid = '$uid'";
         $res1 = $db->execute($strSQL); 
+
+
+        //
+        $strSQL = "SELECT obs_uid FROM vot2_account WHERE uid = '$uid' AND delete_status = '0' LIMIT 1";
+        $resStaff = $db->fetch($strSQL, false);
+        if(($resStaff) && ($resStaff['obs_uid'] != null)){
+
+            $httpClient = new \LINE\LINEBot\HTTPClient\CurlHTTPClient('ky7UCr1R+Z02rgE4IUujkpubR5e1IOWMI72XpVGOVz94H9YbWEKfDbQnt8r9U08PbZYtSQHYT2jxFHUHNj6O5L8QgX81E4RcZ4mt8RMeruWvEDSnCwHmfHx1ocJbXshH9yPxOoWclP7b56ZGi9PgFQdB04t89/1O/w1cDnyilFU=');
+            $bot = new \LINE\LINEBot($httpClient, ['channelSecret' => 'ebbf7cf8ec444c1c9a61959b5cea83c8']);
+            
+            $textMessageBuilder = new \LINE\LINEBot\MessageBuilder\TextMessageBuilder('ผู้ป่วยรหัส '. $username . ' ได้ทำการส่งวิดีโอ กรุณาตรวจสอบ');
+            // $response = $bot->pushMessage('U4ba9e1e452c9d3160de4924e81da4d6e', $textMessageBuilder);
+            $response = $bot->pushMessage($uid, $textMessageBuilder);
+
+        }
+        //
 
         $return['status'] = 'Success';
         echo json_encode($return);

@@ -98,7 +98,7 @@ if (!empty($_FILES)) {
             
             $textMessageBuilder = new \LINE\LINEBot\MessageBuilder\TextMessageBuilder('ผู้ป่วยรหัส '. $username . ' ได้ทำการส่งวิดีโอ กรุณาตรวจสอบ');
             // $response = $bot->pushMessage('U4ba9e1e452c9d3160de4924e81da4d6e', $textMessageBuilder);
-            $response = $bot->pushMessage($uid, $textMessageBuilder);
+            $response = $bot->pushMessage($resStaff['obs_uid'], $textMessageBuilder);
 
         }
         //

@@ -125,4 +125,27 @@ function viewCommentDialog(com_date, stopdrug){
     }else{
         $('#stopDrug').addClass('dn')
     }
+
+    getVideoList(com_date)
 }
+
+function getVideoList(select_date){
+    var param = {
+        uid: $('#txtCurrentUid').val(),
+        pid: $('#txtPatient_id').val(),
+        sdate: select_date
+    }
+    var jxr = $.post(api_url + 'followup.php?stage=get_daily_video_list', param, function(){}, 'json')
+               .always(function(snap){
+                    console.log(snap);
+                    if(snap.status == 'Success'){
+
+                    }
+               })
+}
+
+$(function(){
+    $('#btnPlayVideo').click(function(){
+        window.location = 'app-video-check?uid=' + $('#txtCurrentUid').val() + '&role=' + $('#txtCurrentUrole').val() + '&hcode=' + $('#txtCurrentUhcode').val() + '&id=' + $('#txtPatient_id').val() + '&vid=' + $('#txtPatient_id').val()
+    })
+})

@@ -763,6 +763,36 @@ if($stage == 'followup_list'){
     }
 }
 
+if($stage == 'get_daily_video_list'){
+    if(
+        (!isset($_REQUEST['uid'])) ||
+        (!isset($_REQUEST['pid'])) ||
+        (!isset($_REQUEST['sdate']))
+    ){
+        $return['status'] = 'Fail (x101)';
+        echo json_encode($return);
+        $db->close(); 
+        die();
+    }
+
+    $uid = mysqli_real_escape_string($conn, $_REQUEST['uid']);
+    $pid = mysqli_real_escape_string($conn, $_REQUEST['pid']);
+    $sdate = mysqli_real_escape_string($conn, $_REQUEST['sdate']);
+
+    $strSQL = "SELECT * FROM vot2_followup WHERE fu_uid = '$pid' AND fu_date = '$sdate'";
+    $res = $db->fetch($strSQL, true, false);
+    if(($res) && ($res['status'])){
+        $return['status'] = 'Success';
+        $return['data'] = $res['data'];
+    }else{
+        $return['status'] = 'Fail';
+        $return['error_msg'] = $strSQL;
+    }
+    echo json_encode($return);
+    $db->close(); 
+    die();
+}
+
 if($stage == 'followup_view'){
     if(
         (!isset($_GET['uid'])) ||

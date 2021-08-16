@@ -589,6 +589,9 @@ if(!$resVideo){
                         vid: $('#txtCurrentVid').val()
                     }
 
+                    console.log(param);
+                    return ;
+
                     var jxr = $.post(api_url + 'patient?stage=videocheck', param, function(){}, 'json')
                                .always(function(snap){
                                     preload.hide()

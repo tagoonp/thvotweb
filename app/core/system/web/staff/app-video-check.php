@@ -458,15 +458,13 @@ if(!$resVideo){
                                         <div class="row">
                                             <div class="col-12 col-sm-6 pt-1">
                                             <?php 
-                                            if($resVideo['fu_status'] == 'complete'){
+                                            if($resVideo['fu_status'] != 'complete'){
 
-                                            }else{
-                                                if($resVideo['fu_date'] != $date){
+                                                $next24time = date("Y-m-d H:i:s", strtotime($resVideo['fu_upload_datetime'] . " +25 hours"));
 
-                                                }else{
+                                                if($resVideo['fu_upload_datetime'] < $next24time){
                                                     ?><button class="btn btn-danger round btn-block" onclick="saveCheckVideo()" type="button">บันทึกผล</button><?php
                                                 }
-                                                
                                             }
                                             ?>
                                             </div>

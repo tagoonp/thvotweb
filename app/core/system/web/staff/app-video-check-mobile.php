@@ -550,7 +550,7 @@ if(!$resVideo){
                 confirmButtonColor: '#3085d6',
                 confirmButtonText: 'ยืนยันการบันทึกข้อมูล',
                 cancelButtonText: 'ตรวจสอบข้อมูลอีกครั้ง',
-                confirmButtonClass: 'btn btn-primary mb-1',
+                confirmButtonClass: 'btn btn-primary mb-1 mb-sm-0',
                 cancelButtonClass: 'btn btn-danger',
                 buttonsStyling: false,
             }).then(function (result) {

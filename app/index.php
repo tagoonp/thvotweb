@@ -148,7 +148,7 @@ if(isset($_GET['stage'])){
     <!-- END: Theme JS-->
 
     <!-- BEGIN: Page JS-->
-    <script src="../assets/js/scripts/authen.js?v=<?php echo filemtime('./assets/js/scripts/authen.js'); ?>"></script>
+    <script src="../assets/js/scripts/authen.js?v=<?php echo filemtime('../assets/js/scripts/authen.js'); ?>"></script>
     <!-- END: Page JS-->
 </body>
 <!-- END: Body-->

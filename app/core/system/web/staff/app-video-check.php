@@ -55,6 +55,8 @@ if(!$resVideo){
     header('Location: ./app-video-wait');
     die();
 }
+
+$next24time = date("Y-m-d H:i:s", strtotime($resVideo['fu_upload_datetime'] . " +25 hours"));
 ?>
 <input type="hidden" id="txtCurrentUid" value="<?php echo $_SESSION['thvot_uid']; ?>">
 <!DOCTYPE html>
@@ -257,7 +259,7 @@ if(!$resVideo){
                                                     <div class="col-3 text-left pr-0" style="padding-top: 0px;">
                                                         <?php 
                                                         if($resVideo['fu_status'] != 'complete'){
-                                                            if($resVideo['fu_date'] == $date){
+                                                            if($datetime < $next24time){
                                                                 ?>
                                                                 <fieldset class="form-group">
                                                                     <select class="form-control" id="txtMedQ_<?php echo $c; ?>" onchange="setDrugTake('<?php echo $c; ?>')">
@@ -459,7 +461,7 @@ if(!$resVideo){
                                             <div class="col-12 col-sm-6 pt-1">
                                             <?php 
                                             if($resVideo['fu_status'] != 'complete'){
-                                                $next24time = date("Y-m-d H:i:s", strtotime($resVideo['fu_upload_datetime'] . " +25 hours"));
+                                                
                                                 if($datetime <= $next24time){
                                                     ?><button class="btn btn-danger round btn-block" onclick="saveCheckVideo()" type="button">บันทึกผล</button><?php
                                                 }

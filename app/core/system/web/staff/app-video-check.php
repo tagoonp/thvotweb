@@ -604,6 +604,9 @@ $next24time = date("Y-m-d H:i:s", strtotime($resVideo['fu_upload_datetime'] . " 
                         vid: $('#txtCurrentVid').val()
                     }
 
+                    console.log(param);
+                    return ;
+
                     var jxr = $.post(api_url + 'patient?stage=videocheck', param, function(){}, 'json')
                                .always(function(snap){
                                    console.log(snap);

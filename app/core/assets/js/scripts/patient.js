@@ -115,7 +115,7 @@ function viewCommentDialog(com_date, stopdrug){
     $('#modalComment').modal()
     $('#txtCommentDate').val(com_date)
     setTimeout(() => {
-        $('#txtCommentPatientMsg').focus()
+        // $('#txtCommentPatientMsg').focus()
     }, 500)
 
     getDailyProgressNote(com_date)

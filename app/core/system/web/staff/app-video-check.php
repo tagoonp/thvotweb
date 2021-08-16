@@ -257,27 +257,30 @@ if(!$resVideo){
                                                     <div class="col-3 text-left pr-0" style="padding-top: 0px;">
                                                         <?php 
                                                         if($resVideo['fu_status'] != 'complete'){
-                                                            ?>
-                                                            <fieldset class="form-group">
-                                                                <select class="form-control" id="txtMedQ_<?php echo $c; ?>" onchange="setDrugTake('<?php echo $c; ?>')">
-                                                                    <option value="">ระบุ</option>
-                                                                    <?php 
-                                                                    if($rowMed['med_amount'] != null){
-                                                                        for ($i=0; $i <= ($rowMed['med_amount'] - $taken) ; $i++) { 
+                                                            if($resVideo['fu_date'] == $date){
+                                                                ?>
+                                                                <fieldset class="form-group">
+                                                                    <select class="form-control" id="txtMedQ_<?php echo $c; ?>" onchange="setDrugTake('<?php echo $c; ?>')">
+                                                                        <option value="">ระบุ</option>
+                                                                        <?php 
+                                                                        if($rowMed['med_amount'] != null){
+                                                                            for ($i=0; $i <= ($rowMed['med_amount'] - $taken) ; $i++) { 
+                                                                                ?>
+                                                                                <option><?php echo $i; ?></option>
+                                                                                <?php
+                                                                            }
+                                                                        }else{
                                                                             ?>
-                                                                            <option><?php echo $i; ?></option>
+                                                                            <option value="0"><?php echo "0"; ?></option>
                                                                             <?php
                                                                         }
-                                                                    }else{
+                                                                        
                                                                         ?>
-                                                                        <option value="0"><?php echo "0"; ?></option>
-                                                                        <?php
-                                                                    }
-                                                                    
-                                                                    ?>
-                                                                </select>
-                                                            </fieldset>
-                                                            <?php
+                                                                    </select>
+                                                                </fieldset>
+                                                                <?php
+                                                            }
+                                                           
                                                         }else{
                                                             $strSQL = "SELECT mt_met_take FROM vot2_patient_med_take WHERE mt_med_name = '".$rowMed['med_name']."' AND mt_vid = '$video_id'";
                                                             $resPrev = $db->fetch($strSQL, false);

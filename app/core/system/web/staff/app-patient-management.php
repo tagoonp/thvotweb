@@ -769,7 +769,6 @@ $selected_location = $db->fetch($strSQL, false);
                                     </tr>
                                 </tbody>
                             </table>
-                            <!-- <button class="btn btn-danger btn-sm-block" id="btnPlayVideo"><i class="bx bx-play"></i> ดูวิดีโอของวันนี้</button> -->
                         </div>
                         <div class="col-12">
                             <h3>ชี้แจงเหตุผล</h3>

@@ -59,6 +59,9 @@ $selected_location = $db->fetch($strSQL, false);
 
 <input type="hidden" id="txtPatient_id" value="<?php echo $id; ?>">
 <input type="hidden" id="txtCurrentUid" value="<?php echo $_SESSION['thvot_uid']; ?>">
+<input type="hidden" id="txtCurrentUrole" value="<?php echo $_SESSION['thvot_role']; ?>">
+<input type="hidden" id="txtCurrentUhcode" value="<?php echo $_SESSION['thvot_hcode']; ?>">
+
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -215,6 +218,23 @@ $selected_location = $db->fetch($strSQL, false);
                 </div>
                 <div class="modal-body">
                     <div class="row">
+                        <div class="col-12 pb-2">
+                            <h3>รายการวิดีโอ</h3>
+                            <table class="table table-striped table-sm">
+                                <thead>
+                                    <tr>
+                                        <th class="th">VID</th>
+                                        <th class="th">วัน - เวลาที่ส่ง</th>
+                                        <th class="th">สถานะ</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="dailyVideoList">
+                                    <tr>
+                                        <td colspan="4" class="text-center th">ไม่พบรายการวิดีโอ</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
                         <div class="col-12">
                             <form action="">
                                 <div class="form-group dn">

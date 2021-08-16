@@ -141,7 +141,9 @@ function getVideoList(select_date){
                     if(snap.status == 'Success'){
                         snap.data.forEach(i=>{
                             $status = '<span class="badge badge-light-danger round">รอการตรวจสอบ</span>'
-                            // if()
+                            if(i.fu_status == 'complete'){
+                                $status = '<span class="badge badge-light-success round">ตรวจสอบแล้ว</span>'
+                            }
                             $dt = '<tr>' + 
                                         '<td><a href="Javascript:manangeVideo(\'' + i.fu_id + '\')"><i class="bx bx-play"></i></a></td>' + 
                                         '<td>' + i.fu_upload_datetime + '</td>' + 

@@ -64,7 +64,7 @@ if (!empty($_FILES)) {
 
         $strSQLx = $strSQL;
 
-        $strSQL = "UPDATE vot2_followup_dummy SET fud_status = 'sended' WHERE fud_uid = '$uid' AND fud_date = '$date'";
+        $strSQL = "UPDATE vot2_followup_dummy SET fud_status = 'in-complete' WHERE fud_uid = '$uid' AND fud_date = '$date'";
         $db->execute($strSQL);
 
         $strSQL = "INSERT INTO vot2_log (`log_datetime`, `log_info`, `log_message`, `log_ip`, `log_uid`) VALUES ('$datetime', 'อัพโหลดวีดีโอ', '', '$remote_ip', '$uid')";

@@ -596,7 +596,23 @@ if(!$resVideo){
                                .always(function(snap){
                                     preload.hide()
                                     if(snap.status == 'Success'){
-                                        window.location = 'closeinapp.php'
+                                       
+                                        Swal.fire({
+                                            title: 'สำเร็จ',
+                                            text: 'วิดีโอได้ถูกตรวจสอบเรียบร้อยแล้ว',
+                                            icon: 'warning',
+                                            showCancelButton: false,
+                                            confirmButtonColor: '#3085d6',
+                                            confirmButtonText: 'รับทราบ',
+                                            // cancelButtonText: 'ตรวจสอบข้อมูลอีกครั้ง',
+                                            confirmButtonClass: 'btn btn-primary mb-1 mb-sm-0 mr-sm-1 mr-0',
+                                            cancelButtonClass: 'btn btn-danger',
+                                            buttonsStyling: false,
+                                        }).then(function (result) {
+                                            if (result.value) {
+                                                window.history.back()
+                                            }
+                                        })
                                     }else{
                                         Swal.fire(
                                             {

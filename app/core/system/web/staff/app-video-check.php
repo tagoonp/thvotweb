@@ -563,7 +563,7 @@ if(!$resVideo){
                 confirmButtonColor: '#3085d6',
                 confirmButtonText: 'ยืนยันการบันทึกข้อมูล',
                 cancelButtonText: 'ตรวจสอบข้อมูลอีกครั้ง',
-                confirmButtonClass: 'btn btn-primary mb-sm-0 mb-1',
+                confirmButtonClass: 'btn btn-primary mb-sm-0 mb-1 mr-sm-1 mr-0',
                 cancelButtonClass: 'btn btn-danger',
                 buttonsStyling: false,
             }).then(function (result) {
@@ -604,6 +604,7 @@ if(!$resVideo){
 
                     var jxr = $.post(api_url + 'patient?stage=videocheck', param, function(){}, 'json')
                                .always(function(snap){
+                                   console.log(snap);
                                     preload.hide()
                                     if(snap.status == 'Success'){
                                         window.location = 'closeinapp.php'

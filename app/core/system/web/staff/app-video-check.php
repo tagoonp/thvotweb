@@ -59,6 +59,9 @@ if(!$resVideo){
 $next24time = date("Y-m-d H:i:s", strtotime($resVideo['fu_upload_datetime'] . " +25 hours"));
 ?>
 <input type="hidden" id="txtCurrentUid" value="<?php echo $_SESSION['thvot_uid']; ?>">
+<input type="hidden" id="txtCurrentUhcode" value="<?php echo $_SESSION['thvot_hcode']; ?>">
+<input type="hidden" id="txtCurrentPid" value="<?php echo $patient_id; ?>">
+<input type="hidden" id="txtCurrentVid" value="<?php echo $video_id; ?>">
 <!DOCTYPE html>
 <html class="loading" lang="en" data-textdirection="ltr">
 <!-- BEGIN: Head-->

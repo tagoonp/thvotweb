@@ -143,21 +143,22 @@ function getVideoList(select_date){
                             $status = '<span class="badge badge-light-danger round">รอการตรวจสอบ</span>'
                             // if()
                             $dt = '<tr>' + 
-                                        '<td>' + i.fu_id + '</td>' + 
+                                        '<td><a href="Javascript:manangeVideo(\'' + i.fu_id + '\')"><i class="bx bx-play"></i></a></td>' + 
                                         '<td>' + i.fu_upload_datetime + '</td>' + 
                                         '<td>' + $status + '</td>' + 
-                                        '<td></td>' + 
                                   '</tr>'
                                   $('#dailyVideoList').append($dt)
                         })
                     }else{
-                        $('#dailyVideoList').html('<tr><td colspan="4" class="text-center th">ไม่พบรายการวิดีโอ</td></tr>')
+                        $('#dailyVideoList').html('<tr><td colspan="3" class="text-center th">ไม่พบรายการวิดีโอ</td></tr>')
                     }
                })
 }
 
+function manangeVideo(vid){
+    window.location = 'app-video-check?uid=' + $('#txtCurrentUid').val() + '&role=' + $('#txtCurrentUrole').val() + '&hcode=' + $('#txtCurrentUhcode').val() + '&id=' + $('#txtPatient_id').val() + '&vid=' + vid
+}
+
 $(function(){
-    $('#btnPlayVideo').click(function(){
-        window.location = 'app-video-check?uid=' + $('#txtCurrentUid').val() + '&role=' + $('#txtCurrentUrole').val() + '&hcode=' + $('#txtCurrentUhcode').val() + '&id=' + $('#txtPatient_id').val() + '&vid=' + $('#txtPatient_id').val()
-    })
+ 
 })

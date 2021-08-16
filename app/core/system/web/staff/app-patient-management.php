@@ -761,7 +761,6 @@ $selected_location = $db->fetch($strSQL, false);
                                         <th class="th">VID</th>
                                         <th class="th">วัน - เวลาที่ส่ง</th>
                                         <th class="th">สถานะ</th>
-                                        <th class="th"></th>
                                     </tr>
                                 </thead>
                                 <tbody id="dailyVideoList">

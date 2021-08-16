@@ -189,45 +189,287 @@ if(!$resVideo){
 
             </div>
             <div class="content-body">
-                <h2 class="mb-2">ตรวจสอบวิดีโอ</h2>
-                <!-- users list start -->
-                <section class="users-list-wrapper">
+            <section class="users-list-wrapper">
                     <div class="users-list-table">
-                        <div class="card">
-                            <div class="card-body p-0">
-                                <div class="p-2">
-                                    <div class="row">
-                                        <div class="col-12">
-                                            <h4>ข้อมูลผู้ป่วย</h4>
-                                            <hr>
-                                        </div>
-                                        <div class="col-12 col-sm-6">
-                                            <fieldset class="form-group">
-                                                <label for="disabledInput">ชื่อ - นามสกุล</label>
-                                                <p class="form-control-static" id="staticInput">
-                                                    <?php echo $resPatient['fname']." ".$resPatient['lname'] ?>
-                                                </p>
-                                            </fieldset>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="row">
+                        <div class="card" style="box-shadow: none;">
+                            <div class="row">
                                     <div class="col-12 col-sm-5">
-                                        <video width="100%" height="240" controls>
+                                        <video width="100%" controls autoplay>
                                             <source src="<?php echo $resVideo['fu_video']; ?>" type="video/mp4">
                                             Your browser does not support the video tag.
                                         </video>
                                     </div>
                                     <div class="col-12 col-sm-7">
-                                    
+                                        <div class="p-2">
+
+                                        <div class="row">
+                                            <div class="col-12">
+                                                <div class="badge badge-success round mb-1">
+                                                ตรวจสอบการรับประทานยา
+                                                </div>
+
+                                                <div class="row pb-2">
+                                                    <div class="col-3">
+                                                        <small>ชื่อผู้ป่วย : </small><br>
+                                                    </div>
+                                                    <div class="col-9">
+                                                    
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <h4 class="mb-1">ส่วนที่ 1 : <br><small>จำนวนยาที่รับประทาน</small></h4>
+                                        <?php 
+                                        $strSQL = "SELECT * FROM vot2_patient_med WHERE med_pid = '$patient_id' AND med_cnf = 'Y' ORDER BY med_name";
+                                        $resMed = $db->fetch($strSQL, true);
+                                        if(($resMed) && ($resMed['status'])){
+                                            $c = 1;
+                                            foreach ($resMed['data'] as $rowMed) {
+
+                                                $strSQL = "SELECT SUM(mt_med_take) as sm FROM vot2_patient_med_take 
+                                                           WHERE 
+                                                           mt_username = '".$resPatient['username']."' 
+                                                           AND mt_med_id = '".$rowMed['ID']."' 
+                                                           AND mt_med_name = '".$rowMed['med_name']."'
+                                                           AND mt_cnf = 'Y'
+                                                           AND mt_vid IN (
+                                                               SELECT fu_id FROM vot2_followup WHERE fu_username = '".$resPatient['username']."' AND fu_date IN (
+                                                                   SELECT fu_date FROM vot2_followup WHERE fu_id = '$video_id'
+                                                               )
+                                                           )
+                                                           ";
+                                                $resMt = $db->fetch($strSQL, false);
+                                                // echo $strSQL;
+                                                $taken = 0;
+                                                if(($resMt) && ($resMt['sm'] != null)){
+                                                    $taken = $resMt['sm'];
+                                                }
+
+                                                ?>
+                                                <div class="row mb-0">
+                                                     <div class="col-9">
+                                                        <?php echo $rowMed['med_name']; ?>
+                                                        <div><span class="text-danger">วันนี้ยังต้องกินอีก <?php echo $rowMed['med_amount'] - $taken; ?> เม็ด</span></div>
+                                                        <input type="hidden" id="txtMedId_<?php echo $c; ?>" value="<?php echo $rowMed['ID']; ?>">
+                                                        <input type="hidden" id="txtMedName_<?php echo $c; ?>" value="<?php echo $rowMed['med_name']; ?>">
+                                                    </div>
+                                                    <div class="col-3 text-left pr-0" style="padding-top: 0px;">
+                                                        <?php 
+                                                        if($resVideo['fu_status'] != 'complete'){
+                                                            ?>
+                                                            <fieldset class="form-group">
+                                                                <select class="form-control" id="txtMedQ_<?php echo $c; ?>" onchange="setDrugTake('<?php echo $c; ?>')">
+                                                                    <option value="">ระบุ</option>
+                                                                    <?php 
+                                                                    if($rowMed['med_amount'] != null){
+                                                                        for ($i=0; $i <= ($rowMed['med_amount'] - $taken) ; $i++) { 
+                                                                            ?>
+                                                                            <option><?php echo $i; ?></option>
+                                                                            <?php
+                                                                        }
+                                                                    }else{
+                                                                        ?>
+                                                                        <option value="0"><?php echo "0"; ?></option>
+                                                                        <?php
+                                                                    }
+                                                                    
+                                                                    ?>
+                                                                </select>
+                                                            </fieldset>
+                                                            <?php
+                                                        }else{
+                                                            $strSQL = "SELECT mt_met_take FROM vot2_patient_med_take WHERE mt_med_name = '".$rowMed['med_name']."' AND mt_vid = '$video_id'";
+                                                            $resPrev = $db->fetch($strSQL, false);
+                                                            if($resPrev){
+                                                                echo $resPrev['mt_met_take'];
+                                                            }else{
+                                                                echo "0";
+                                                            }
+                                                        }
+                                                        ?>
+                                                        
+                                                    </div>
+                                                </div>
+                                                <?php
+                                                $c++;
+                                            }
+                                        }else{
+                                            echo $strSQL;
+                                        }
+                                        ?>
+
+                                        <hr>
+                                        <h4 class="mb-1">ส่วนที่ 2 : <br><small>ความถูกต้องของวิธีการกินยา</small></h4>
+                                        <div class="row mb-1">
+                                            <div class="col-2 text-left pr-0" style="padding-top: 3px;">
+                                                <div class="custom-control custom-switch custom-switch-success mr-1 mb-1">
+                                                    <input type="checkbox" class="custom-control-input" id="checklist1" <?php if($resVideo['fu_checklist1'] == 'Y'){ echo "checked"; } ?>>
+                                                    <label class="custom-control-label" for="checklist1">
+                                                        <span class="switch-icon-left"><i class="bx bx-check"></i></span>
+                                                    </label>
+                                                </div>
+                                            </div>
+                                            <div class="col-10">
+                                            เห็นเม็ดยาตั้งแต่หยิบจากแผ่นแยกแยะยาจนถึงการวางไว้บนลิ้น
+                                            </div>
+                                        </div>
+
+                                        <div class="row mb-0">
+                                            <div class="col-2 text-left pr-0" style="padding-top: 3px;">
+                                                <div class="custom-control custom-switch custom-switch-success mr-1 mb-1">
+                                                    <input type="checkbox" class="custom-control-input" id="checklist2" <?php if($resVideo['fu_checklist2'] == 'Y'){ echo "checked"; } ?>>
+                                                    <label class="custom-control-label" for="checklist2">
+                                                        <span class="switch-icon-left"><i class="bx bx-check"></i></span>
+                                                    </label>
+                                                </div>
+                                            </div>
+                                            <div class="col-10">
+                                            อ้าปากเห็นเม็ดยาชัดเจนก่อนกลืนยา
+                                            </div>
+                                        </div>
+
+                                        <div class="row mb-0">
+                                            <div class="col-2 text-left pr-0" style="padding-top: 3px;">
+                                                <div class="custom-control custom-switch custom-switch-success mr-1 mb-1">
+                                                    <input type="checkbox" class="custom-control-input" id="checklist3" <?php if($resVideo['fu_checklist3'] == 'Y'){ echo "checked"; } ?>>
+                                                    <label class="custom-control-label" for="checklist3">
+                                                        <span class="switch-icon-left"><i class="bx bx-check"></i></span>
+                                                    </label>
+                                                </div>
+                                            </div>
+                                            <div class="col-10">
+                                            ตอนกลืนยาดื่มน้ำด้วยแก้วน้ำใส
+                                            </div>
+                                        </div>
+
+                                        <div class="row mb-1">
+                                            <div class="col-2 text-left pr-0" style="padding-top: 3px;">
+                                                <div class="custom-control custom-switch custom-switch-success mr-1 mb-1">
+                                                    <input type="checkbox" class="custom-control-input" id="checklist4" <?php if($resVideo['fu_checklist4'] == 'Y'){ echo "checked"; } ?>>
+                                                    <label class="custom-control-label" for="checklist4">
+                                                        <span class="switch-icon-left"><i class="bx bx-check"></i></span>
+                                                    </label>
+                                                </div>
+                                            </div>
+                                            <div class="col-10">
+                                            หลังกลืนยาทุกครั้งอ้าปากกระดกลิ้นขึ้น และแลบลิ้นลง
+                                            </div>
+                                        </div>
+                                        <hr>
+
+                                        <h4 class="mb-1">ส่วนที่ 3 : <br><small>ผลข้างเคียง</small></h4>
+
+                                        <div class="row mb-0">
+                                            <div class="col-2 text-left pr-0" style="padding-top: 3px;">
+                                                <div class="custom-control custom-switch custom-switch-success mr-1 mb-1">
+                                                    <input type="checkbox" class="custom-control-input" id="eff1" <?php if($resVideo['fu_eff1'] == '1'){ echo "checked"; } ?>>
+                                                    <label class="custom-control-label" for="eff1">
+                                                        <span class="switch-icon-left"><i class="bx bx-check"></i></span>
+                                                    </label>
+                                                </div>
+                                            </div>
+                                            <div class="col-10">
+                                                ปวดบวม บริเวณใบหน้าหรือตามข้อ
+                                            </div>
+                                        </div>
+
+                                        <div class="row mb-0">
+                                            <div class="col-2 text-left pr-0" style="padding-top: 3px;">
+                                                <div class="custom-control custom-switch custom-switch-success mr-1 mb-1">
+                                                    <input type="checkbox" class="custom-control-input" id="eff2" <?php if($resVideo['fu_eff2'] == '1'){ echo "checked"; } ?>>
+                                                    <label class="custom-control-label" for="eff2">
+                                                        <span class="switch-icon-left"><i class="bx bx-check"></i></span>
+                                                    </label>
+                                                </div>
+                                            </div>
+                                            <div class="col-10">
+                                                เหน็บชา/ปวดแสบ บริเวณปลายมือปลายเท้า
+                                            </div>
+                                        </div>
+
+                                        <div class="row mb-0">
+                                            <div class="col-2 text-left pr-0" style="padding-top: 3px;">
+                                                <div class="custom-control custom-switch custom-switch-success mr-1 mb-1">
+                                                    <input type="checkbox" class="custom-control-input" id="eff3" <?php if($resVideo['fu_eff3'] == '1'){ echo "checked"; } ?>>
+                                                    <label class="custom-control-label" for="eff3">
+                                                        <span class="switch-icon-left"><i class="bx bx-check"></i></span>
+                                                    </label>
+                                                </div>
+                                            </div>
+                                            <div class="col-10">
+                                                มีผื่น/ผื่นคันตามตัว
+                                            </div>
+                                        </div>
+
+                                        <div class="row mb-0">
+                                            <div class="col-2 text-left pr-0" style="padding-top: 3px;">
+                                                <div class="custom-control custom-switch custom-switch-success mr-1 mb-1">
+                                                    <input type="checkbox" class="custom-control-input" id="eff4" <?php if($resVideo['fu_eff4'] == '1'){ echo "checked"; } ?>>
+                                                    <label class="custom-control-label" for="eff4">
+                                                        <span class="switch-icon-left"><i class="bx bx-check"></i></span>
+                                                    </label>
+                                                </div>
+                                            </div>
+                                            <div class="col-10">
+                                                ปวดศีรษะ/วิงเวียน
+                                            </div>
+                                        </div>
+
+                                        <div class="row mb-0">
+                                            <div class="col-2 text-left pr-0" style="padding-top: 3px;">
+                                                <div class="custom-control custom-switch custom-switch-success mr-1 mb-1">
+                                                    <input type="checkbox" class="custom-control-input" id="eff5" <?php if($resVideo['fu_eff5'] == '1'){ echo "checked"; } ?>>
+                                                    <label class="custom-control-label" for="eff5">
+                                                        <span class="switch-icon-left"><i class="bx bx-check"></i></span>
+                                                    </label>
+                                                </div>
+                                            </div>
+                                            <div class="col-10">
+                                                ไข้/หนาวสั่น โดยไม่มีน้ำมูก
+                                            </div>
+                                        </div>
+
+                                        <div class="row  mb-0">
+                                            <div class="col-2 text-left pr-0" style="padding-top: 3px;">
+                                                <div class="custom-control custom-switch custom-switch-success mr-1 mb-1">
+                                                    <input type="checkbox" class="custom-control-input" id="eff6" <?php if($resVideo['fu_eff6'] == '1'){ echo "checked"; } ?>>
+                                                    <label class="custom-control-label" for="eff6">
+                                                        <span class="switch-icon-left"><i class="bx bx-check"></i></span>
+                                                    </label>
+                                                </div>
+                                            </div>
+                                            <div class="col-10">
+                                                อ่อนเพลีย ไม่อยากอาหาร
+                                            </div>
+                                        </div>
+
+                                        <div class="row  mb-0">
+                                            <div class="col-12" style="padding-top: 3px;">
+                                                <div class="form-group">
+                                                    <textarea name="txtOthereff" id="txtOthereff" cols="30" rows="10" class="form-control" placeholder="อื่น ๆ (เว้นว่างถ้าไม่มี)" style="height: 80px;"><?php echo $resVideo['fu_eff_other']; ?></textarea>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="row">
+                                            <div class="col-12 col-sm-3 pt-1">
+                                            <?php 
+                                            if($resVideo['fu_status'] == 'complete'){
+
+                                            }else{
+                                                ?><button class="btn btn-danger round btn-block" onclick="saveCheckVideo()" type="button">บันทึกผล</button><?php
+                                            }
+                                            ?>
+                                            </div>
+                                        </div>
+
+
                                     </div>
                                 </div>
-                            </div>
                         </div>
                     </div>
                 </section>
-                <!-- users list ends -->
 
             </div>
         </div>
@@ -291,6 +533,91 @@ if(!$resVideo){
                 });
             };
         })
+
+        function setDrugTake(rid){
+            var param = {
+                did: $('#txtMedId_' + rid).val(),
+                dname: $('#txtMedName_' + rid).val(),
+                dq: $('#txtMedQ_' + rid).val(),
+                vid: $('#txtCurrentVid').val(),
+                pusername: '<?php echo $resPatient['username']; ?>'
+            }
+
+            console.log(param);
+            // return ;
+
+            var jxr = $.post(api_url + 'patient?stage=takedrug', param, function(){}, 'json')
+                       .always(function(snap){ console.log(snap); })
+        }
+
+        function saveCheckVideo(){
+            Swal.fire({
+                title: 'คำเตือน !!!',
+                text: 'โปรดตรวจสอบข้อมูลให้เรียบร้อยก่อนบันทึกข้อมูล เนื่องจากท่านจะไม่สามารถแก้ไขข้อมูลที่บันทึกไปแล้วได้ หากมีความผิดพลาดในการลงข้อมูล',
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                confirmButtonText: 'ยืนยันการบันทึกข้อมูล',
+                cancelButtonText: 'ตรวจสอบข้อมูลอีกครั้ง',
+                confirmButtonClass: 'btn btn-primary mb-1',
+                cancelButtonClass: 'btn btn-danger',
+                buttonsStyling: false,
+            }).then(function (result) {
+                if (result.value) {
+                    preload.show()
+                    $chk1 = 'N'; $chk2 = 'N'; $chk3 = 'N';  $chk4 = 'N';
+                    $eff1 = 0; $eff2 = 0; $eff3 = 0;  $eff4 = 0;  $eff5 = 0;  $eff6 = 0;
+
+                    if ($('#checklist1').is(':checked')) { $chk1 = 'Y'; }
+                    if ($('#checklist2').is(':checked')) { $chk2 = 'Y'; }
+                    if ($('#checklist3').is(':checked')) { $chk3 = 'Y'; }
+                    if ($('#checklist4').is(':checked')) { $chk4 = 'Y'; }
+
+                    if ($('#eff1').is(':checked')) { $eff1 = 1; }
+                    if ($('#eff2').is(':checked')) { $eff2 = 1; }
+                    if ($('#eff3').is(':checked')) { $eff3 = 1; }
+                    if ($('#eff4').is(':checked')) { $eff4 = 1; }
+                    if ($('#eff5').is(':checked')) { $eff5 = 1; }
+                    if ($('#eff6').is(':checked')) { $eff6 = 1; }
+
+                    var param = {
+                        puid: $('#txtCurrentPid').val(),
+                        check1: $chk1,
+                        check2: $chk2,
+                        check3: $chk3,
+                        check4: $chk4,
+                        eff1: $eff1,
+                        eff2: $eff2,
+                        eff3: $eff3,
+                        eff4: $eff4,
+                        eff5: $eff5,
+                        eff6: $eff6,
+                        effother: $('#txtOthereff').val(),
+                        uid: $('#txtCurrentUid').val(),
+                        uhcode: $('#txtCurrentUhcode').val(),
+                        vid: $('#txtCurrentVid').val()
+                    }
+
+                    var jxr = $.post(api_url + 'patient?stage=videocheck', param, function(){}, 'json')
+                               .always(function(snap){
+                                    preload.hide()
+                                    if(snap.status == 'Success'){
+                                        window.location = 'closeinapp.php'
+                                    }else{
+                                        Swal.fire(
+                                            {
+                                                icon: "error",
+                                                title: 'เกิดข้อผิดพลาด',
+                                                text: 'ไม่สามารถดำเนินการได้',
+                                                confirmButtonClass: 'btn btn-danger',
+                                            }
+                                        )
+                                    }
+                               })
+                }
+            })
+            
+        }
 
         function back2Follow(puid, pname){
             Swal.fire({

@@ -129,8 +129,11 @@ if($stage == 'getpatient_calendar'){
                                 $buf['textColor'] = '#ff8400';
                             }
                         }
-                    }else if($res2['fud_status'] == 'in-complete'){
+                    }else if($res2['fud_status'] == 'in-complete'){ 
                         
+                        $buf['color'] = '#b10000'; 
+                        $buf['borderColor'] = '#b10000';
+
                     }else if($res2['fud_status'] == 'complete'){
                         $buf['color'] = '#2ef39e';
                         if($res2['fud_anycall'] == 1){

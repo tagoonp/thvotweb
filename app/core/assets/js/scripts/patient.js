@@ -146,9 +146,8 @@ function getVideoList(select_date){
                                         '<td>' + i.fu_status + '</td>' + 
                                         '<td></td>' + 
                                   '</tr>'
+                                  $('#dailyVideoList').append($dt)
                         })
-                    }else{
-
                     }
                })
 }

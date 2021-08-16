@@ -240,7 +240,7 @@ if(!$resVideo){
                                                 if(($resMt) && ($resMt['sm'] != null)){
                                                     $taken = $resMt['sm'];
                                                 }
-
+                                                echo $strSQL;
                                                 ?>
                                                 <div class="row mb-0">
                                                      <div class="col-9">

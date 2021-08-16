@@ -2,7 +2,7 @@
 require('../../../../../../database_config/thvot/config.inc.php');
 require('../../../../config/configuration.php');
 require('../../../../config/database.php'); 
-require('../../../../config/staff.role.php'); 
+
 
 
 $db = new Database();
@@ -32,7 +32,8 @@ if(isset($_GET['hcode'])){
 $_SESSION['thvot_session'] = session_id();
 
 $menu = 7;
-
+require('../../../../config/staff.role.php'); 
+require('../../../../config/user.inc.php'); 
 
 if(!(isset($_GET['id']))){
     $db->close();

@@ -462,7 +462,7 @@ if(!$resVideo){
 
                                                 $next24time = date("Y-m-d H:i:s", strtotime($resVideo['fu_upload_datetime'] . " +25 hours"));
 
-                                                echo $next24time." ".$resVideo['fu_upload_datetime'];
+                                                // echo $next24time." ".$resVideo['fu_upload_datetime'];
 
                                                 if($datetime <= $next24time){
                                                     ?><button class="btn btn-danger round btn-block" onclick="saveCheckVideo()" type="button">บันทึกผล</button><?php

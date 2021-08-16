@@ -229,12 +229,11 @@ if(!$resVideo){
 
                                                 $strSQL = "SELECT SUM(mt_med_take) as sm FROM vot2_patient_med_take 
                                                            WHERE 
-                                                           mt_username = '".$resPatient['username']."' 
-                                                           AND mt_med_id = '".$rowMed['ID']."' 
+                                                           mt_med_id = '".$rowMed['ID']."' 
                                                            AND mt_med_name = '".$rowMed['med_name']."'
                                                            AND mt_cnf = 'Y'
                                                            AND mt_vid IN (
-                                                               SELECT fu_id FROM vot2_followup WHERE fu_username = '".$resPatient['username']."' AND fu_date IN (
+                                                               SELECT fu_id FROM vot2_followup WHERE fu_date IN (
                                                                    SELECT fu_date FROM vot2_followup WHERE fu_id = '$video_id'
                                                                )
                                                            )

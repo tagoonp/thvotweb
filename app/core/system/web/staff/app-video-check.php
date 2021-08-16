@@ -244,7 +244,7 @@ if(!$resVideo){
                                                 if(($resMt) && ($resMt['sm'] != null)){
                                                     $taken = $resMt['sm'];
                                                 }
-                                                echo $strSQL;
+                                                // echo $strSQL;
 
                                                 ?>
                                                 <div class="row mb-0">

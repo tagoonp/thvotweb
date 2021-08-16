@@ -107,6 +107,39 @@ if($stage == 'getpatient_calendar'){
                 // }else{
                 //     $buf['color'] = '#ff8400';
                 // }
+                
+                if($res2['fud_followstage'] == '0'){ // สั่งหยุุดยา
+                    $buf['color'] = '#000'; 
+                    $buf['borderColor'] = '#000';
+                    if($res2['fud_anycall'] == 1){
+                        $buf['textColor'] = '#fff';
+                    }
+                }else{
+                    if($res2['fud_status'] == 'non-response'){      // ไม่ส่ง 
+                        if($res2['fud_comment'] == null){           // ไม่ชี้แจง
+                            $buf['color'] = '#ff8400'; 
+                            $buf['borderColor'] = '#ff8400';
+                            if($res2['fud_anycall'] == 1){
+                                $buf['textColor'] = '#fff';
+                            }
+                        }else{                                       // ชี้แจง
+                            $buf['color'] = '#fff'; 
+                            $buf['borderColor'] = '#ff8400';
+                            if($res2['fud_anycall'] == 1){
+                                $buf['textColor'] = '#ff8400';
+                            }
+                        }
+                    }else if($res2['fud_status'] == 'in-complete'){
+                        
+                    }else if($res2['fud_status'] == 'complete'){
+                        $buf['color'] = '#2ef39e';
+                        if($res2['fud_anycall'] == 1){
+                            $buf['textColor'] = '#fff';
+                        }
+                    }
+                }
+                
+
 
                 $buf['url'] = "Javascript:viewCommentDialog('".$res2['fud_date']."')";
                 if($start == $date){

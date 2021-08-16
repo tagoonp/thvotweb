@@ -135,7 +135,7 @@ if($stage == 'getpatient_calendar'){
                         $buf['borderColor'] = '#b10000';
 
                     }else if($res2['fud_status'] == 'complete'){
-                        $buf['color'] = '#2ef39e';
+                        $buf['color'] = '#02b869';
                         if($res2['fud_anycall'] == 1){
                             $buf['textColor'] = '#fff';
                         }

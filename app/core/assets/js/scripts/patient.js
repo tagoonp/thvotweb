@@ -137,8 +137,10 @@ function getVideoList(select_date){
     }
     var jxr = $.post(api_url + 'followup.php?stage=get_daily_video_list', param, function(){}, 'json')
                .always(function(snap){
-                    console.log(snap);
+                    $('#dailyVideoList').html('<tr><td colspan="4" class="text-center th">ไม่พบรายการวิดีโอ</td></tr>')
                     if(snap.status == 'Success'){
+
+                    }else{
 
                     }
                })

@@ -701,7 +701,7 @@ if($stage == 'followup_list'){
               INNER JOIN vot2_chospital d ON b.hcode = d.hoscode
               WHERE 
               b.delete_status = '0' 
-              AND a.fud_status = 'sended'
+              AND a.fud_status = 'in-complete'
               AND a.fud_date = '$date'
               AND c.info_use = '1'
               AND b.hcode = '$hcode'

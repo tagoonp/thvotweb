@@ -989,6 +989,9 @@ if($stage == 'videocheck'){
     $strSQL = "UPDATE vot2_patient_med_take SET mt_cnf = 'Y' WHERE mt_vid = '$vid'";
     $res = $db->execute($strSQL);
 
+    $strSQL = "UPDATE vot2_followup_dummy SET fud_dateview = '1' WHERE fud_uid = '$puid' AND fud_date IN (SELECT fu_date FROM vot2_followup WHERE fu_id = '$vid')";
+    $res = $db->execute($strSQL);
+
     $return['status'] = 'Success';
     echo json_encode($return);
     $db->close(); 

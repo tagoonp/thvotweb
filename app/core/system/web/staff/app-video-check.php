@@ -453,12 +453,17 @@ if(!$resVideo){
                                         </div>
 
                                         <div class="row">
-                                            <div class="col-12 col-sm-3 pt-1">
+                                            <div class="col-12 col-sm-6 pt-1">
                                             <?php 
                                             if($resVideo['fu_status'] == 'complete'){
 
                                             }else{
-                                                ?><button class="btn btn-danger round btn-block" onclick="saveCheckVideo()" type="button">บันทึกผล</button><?php
+                                                if($resVideo['fu_date'] != $date){
+
+                                                }else{
+                                                    ?><button class="btn btn-danger round btn-block" onclick="saveCheckVideo()" type="button">บันทึกผล</button><?php
+                                                }
+                                                
                                             }
                                             ?>
                                             </div>

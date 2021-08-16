@@ -276,9 +276,9 @@ if(!$resVideo){
                                                             $strSQL = "SELECT mt_med_take FROM vot2_patient_med_take WHERE mt_med_name = '".$rowMed['med_name']."' AND mt_vid = '$video_id'";
                                                             $resPrev = $db->fetch($strSQL, false);
                                                             if($resPrev){
-                                                                echo $resPrev['mt_med_take'];
+                                                                echo "ทานครั้งนี้ " . $resPrev['mt_med_take'] . " เม็ด";
                                                             }else{
-                                                                echo "0";
+                                                                echo "ทานครั้งนี้ " . "0 เม็ด";
                                                             }
                                                         }
                                                         ?>

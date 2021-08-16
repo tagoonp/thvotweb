@@ -287,7 +287,7 @@ if(!$resVideo){
                                                             if($resPrev){
                                                                 echo $resPrev['mt_met_take'];
                                                             }else{
-                                                                echo "0";
+                                                                echo "0 ".$strSQL;
                                                             }
                                                         }
                                                         ?>
@@ -459,11 +459,7 @@ if(!$resVideo){
                                             <div class="col-12 col-sm-6 pt-1">
                                             <?php 
                                             if($resVideo['fu_status'] != 'complete'){
-
                                                 $next24time = date("Y-m-d H:i:s", strtotime($resVideo['fu_upload_datetime'] . " +25 hours"));
-
-                                                // echo $next24time." ".$resVideo['fu_upload_datetime'];
-
                                                 if($datetime <= $next24time){
                                                     ?><button class="btn btn-danger round btn-block" onclick="saveCheckVideo()" type="button">บันทึกผล</button><?php
                                                 }

@@ -274,10 +274,10 @@ if(!$resVideo){
                                                             </fieldset>
                                                             <?php
                                                         }else{
-                                                            $strSQL = "SELECT mt_met_take FROM vot2_patient_med_take WHERE mt_med_name = '".$rowMed['med_name']."' AND mt_vid = '$video_id'";
+                                                            $strSQL = "SELECT mt_med_take FROM vot2_patient_med_take WHERE mt_med_name = '".$rowMed['med_name']."' AND mt_vid = '$video_id'";
                                                             $resPrev = $db->fetch($strSQL, false);
                                                             if($resPrev){
-                                                                echo $resPrev['mt_met_take'];
+                                                                echo $resPrev['mt_med_take'];
                                                             }else{
                                                                 echo "0";
                                                             }

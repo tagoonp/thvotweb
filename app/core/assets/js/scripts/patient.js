@@ -137,7 +137,7 @@ function getVideoList(select_date){
     }
     var jxr = $.post(api_url + 'followup.php?stage=get_daily_video_list', param, function(){}, 'json')
                .always(function(snap){
-                    $('#dailyVideoList').html('<tr><td colspan="4" class="text-center th">ไม่พบรายการวิดีโอ</td></tr>')
+                    $('#dailyVideoList').empty()
                     if(snap.status == 'Success'){
                         snap.data.forEach(i=>{
                             $dt = '<tr>' + 
@@ -148,6 +148,8 @@ function getVideoList(select_date){
                                   '</tr>'
                                   $('#dailyVideoList').append($dt)
                         })
+                    }else{
+                        $('#dailyVideoList').html('<tr><td colspan="4" class="text-center th">ไม่พบรายการวิดีโอ</td></tr>')
                     }
                })
 }

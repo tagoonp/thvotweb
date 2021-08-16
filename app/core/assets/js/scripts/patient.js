@@ -140,10 +140,12 @@ function getVideoList(select_date){
                     $('#dailyVideoList').empty()
                     if(snap.status == 'Success'){
                         snap.data.forEach(i=>{
+                            $status = '<span class="badge badge-danger bg-ligth-danger">รอการตรวจสอบ</span>'
+                            // if()
                             $dt = '<tr>' + 
                                         '<td>' + i.fu_id + '</td>' + 
                                         '<td>' + i.fu_upload_datetime + '</td>' + 
-                                        '<td>' + i.fu_status + '</td>' + 
+                                        '<td>' + $status + '</td>' + 
                                         '<td></td>' + 
                                   '</tr>'
                                   $('#dailyVideoList').append($dt)

@@ -141,9 +141,9 @@ function getVideoList(select_date){
                     if(snap.status == 'Success'){
                         snap.data.forEach(i=>{
                             $dt = '<tr>' + 
-                                        '<td></td>' + 
-                                        '<td></td>' + 
-                                        '<td></td>' + 
+                                        '<td>' + i.fu_id + '</td>' + 
+                                        '<td>' + i.fu_upload_datetime + '</td>' + 
+                                        '<td>' + i.fu_status + '</td>' + 
                                         '<td></td>' + 
                                   '</tr>'
                         })

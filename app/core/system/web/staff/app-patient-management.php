@@ -755,7 +755,7 @@ $selected_location = $db->fetch($strSQL, false);
                     <div class="row">
                         <div class="col-12 pb-2">
                             <h3>รายการวิดีโอ</h3>
-                            <table class="table table-bordered table-sm">
+                            <table class="table table-striped table-sm">
                                 <thead>
                                     <tr>
                                         <th class="th">VID</th>

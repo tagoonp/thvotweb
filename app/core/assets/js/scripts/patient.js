@@ -139,7 +139,14 @@ function getVideoList(select_date){
                .always(function(snap){
                     $('#dailyVideoList').html('<tr><td colspan="4" class="text-center th">ไม่พบรายการวิดีโอ</td></tr>')
                     if(snap.status == 'Success'){
-
+                        snap.data.forEach(i=>{
+                            $dt = '<tr>' + 
+                                        '<td></td>' + 
+                                        '<td></td>' + 
+                                        '<td></td>' + 
+                                        '<td></td>' + 
+                                  '</tr>'
+                        })
                     }else{
 
                     }

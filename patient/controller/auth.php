@@ -58,7 +58,7 @@ if($stage == 'patient_session'){
                VALUES ('$datetime', 'เข้าสู่ระบบ (Mobile)', '', '$remote_ip', '$uid')
               ";
     $db->insert($strSQL, false);
-    header('Location: ../core/system/web/'.$role.'/');
+    header('Location: ../../patient/core/system/web/'.$result['role'].'/');
     $db->close();
     die();
 

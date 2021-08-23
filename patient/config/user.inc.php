@@ -37,12 +37,8 @@ $user = $db->fetch($strSQL, false);
 
 if(!$user){
     echo "Error 3";
-    if($active_role == 'patient'){
-        header('Location: ../../../../../patient/'); 
-    }else{
-        header('Location: '.ROOT_DOMAIN); 
-    }
     $db->close();
     die();
+    header('Location: '.ROOT_DOMAIN); 
 }
 ?>

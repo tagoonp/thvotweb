@@ -1,4 +1,32 @@
 var auth = {
+  chk_patient_login(){
+    $check = 0;
+    $('.form-control').removeClass('is-invalid')
+    if($('#txtUsername').val() == ''){
+      $check++; $('#txtUsername').addClass('is-invalid')
+    }
+  
+    if($('#txtPassword').val() == ''){
+      $check++; $('#txtPassword').addClass('is-invalid')
+    }
+    if($check != 0){ return ; }
+    preload.show()
+    var jxt = $.post('../app/api/patient?stage=login', { username: $('#txtUsername').val(), password: $('#txtPassword').val() }, function(){}, 'json')
+              .always(function(snap){
+                if(snap.status == 'Success'){
+                  window.location = '../app/controller/auth?stage=patient_session&uid=' + snap.uid + '&role=patient&hcode=' + snap.hcode
+                }else{
+                  preload.hide()
+                  Swal.fire({
+                      icon: "error",
+                      title: 'เกิดข้อผิดพลาด',
+                      text: 'บัญชีผู้ใช้งานไม่ถูกต้อง',
+                      confirmButtonClass: 'btn btn-danger',
+                  })
+                }
+              })
+    return ;
+  },
   chk_login(){
     $check = 0;
     $('.form-control').removeClass('is-invalid')

@@ -27,7 +27,7 @@ $menu = 0;
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0">
     <meta name="description" content="THVOT ระบบการติดตามยาผู้ป่วยวัณโรค">
     <meta name="author" content="Wisnior, Co, Ltd.">
-    <title>THVOT : Administator</title>
+    <title>THVOT : ผู้ป่วย</title>
     <link rel="apple-touch-icon" href="../../../app-assets/images/ico/apple-icon-120.png">
     <link rel="shortcut icon" type="image/x-icon" href="../../../app-assets/images/ico/favicon.ico">
     <link href="https://fonts.googleapis.com/css?family=Rubik:300,400,500,600%7CIBM+Plex+Sans:300,400,500,600,700" rel="stylesheet">
@@ -130,8 +130,8 @@ $menu = 0;
                                         รพ.สต. / รพ. ที่กำกับการกินยา
                                     </div>
 
-                                    <div class="pt-3 text-center" id="mydropzone">
-                                        <form action="#" class=" bg-danger text-white text-center" action="#" style="height: 150px !important; ">
+                                    <div class="pt-3 text-center">
+                                        <form action="#"  id="mydropzone" class=" bg-danger text-white text-center" action="#">
                                             <i class="bx bx-video" style="font-size: 4.5em; margin-top: 40px;"></i>
                                             <div class="fallback">
                                                 <input name="file" type="file" multiple />

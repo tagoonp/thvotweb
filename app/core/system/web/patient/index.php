@@ -34,8 +34,7 @@ $menu = 0;
 
     <!-- BEGIN: Vendor CSS-->
     <link rel="stylesheet" type="text/css" href="../../../app-assets/vendors/css/vendors.min.css">
-    <link rel="stylesheet" type="text/css" href="../../../app-assets/vendors/css/charts/apexcharts.css">
-    <link rel="stylesheet" type="text/css" href="../../../app-assets/vendors/css/extensions/swiper.min.css">
+    <link rel="stylesheet" type="text/css" href="../../../tools/dropzone/dist/min/dropzone.min.css">
     <!-- END: Vendor CSS-->
 
     <!-- BEGIN: Theme CSS-->
@@ -61,7 +60,7 @@ $menu = 0;
 
 <!-- BEGIN: Body-->
 
-<body class="vertical-layout vertical-menu-modern 2-columns  navbar-sticky footer-static  " data-open="click" data-menu="vertical-menu-modern" data-col="2-columns">
+<body  style="background: #fff;" class="vertical-layout vertical-menu-modern 2-columns  navbar-sticky footer-static  " data-open="click" data-menu="vertical-menu-modern" data-col="2-columns" >
 
     <!-- BEGIN: Header-->
     <div class="header-navbar-shadow"></div>
@@ -122,19 +121,25 @@ $menu = 0;
                     <div class="row">
                         <!-- Greetings Content Starts -->
                         <div class="col-xl-4 col-md-6 col-12 dashboard-greetings">
-                            <div class="card">
+                            <div class="card" style="box-shadow: none;">
                                 <div class="card-body pt-2">
-                                <div><h3 class="greeting-text">Compliance2</h3></div>
-                                    <div><p class="mb-0">โดยเฉลี่ยของผู้ป่วย</p></div>
-                                    <div class="d-flex justify-content-between align-items-end">
-                                        <div class="dashboard-content-left pt-4">
-                                            <h1 class="text-primary font-large-2 text-bold-500">63%</h1>
-                                            <p>เป็นอัตรส่วนโดยเฉลี่ยของผู้ป่วยทั้งหมดในฐานข้อมูลที่มีการติดตามในปัจจุบัน</p>
-                                        </div>
-                                        <div class="dashboard-content-right">
-                                            <img src="../../../app-assets/images/icon/cup.png" height="220" width="220" class="img-fluid" alt="Dashboard Ecommerce" />
-                                        </div>
+                                    <div class="text-center">
+                                        สถานบริการทีตรวจติดตาม
                                     </div>
+                                    <div class="text-center">
+                                        รพ.สต. / รพ. ที่กำกับการกินยา
+                                    </div>
+
+                                    <div class="pt-3 text-center">
+                                        <form action="#" class=" bg-danger text-white text-center" id="mydropzone" action="#" style="width: 150px; height: 150px !important; border-radius: 50%; margin-left: 20%;">
+                                            <i class="bx bx-video" style="font-size: 4.5em; margin-top: 40px;"></i>
+                                            <div class="fallback">
+                                                <input name="file" type="file" multiple />
+                                            </div>
+                                        </form>
+                                    </div>
+                                    <h6 class="text-dark mt-2 text-center pb-3">กดที่ปุ่มสีแดงเพื่อเริ่มบันทึกวิดีโอ</h6>
+                                    <h4 class="text-danger text-center">กรุณาอย่ากินยาร่วมกับนม</h4>
                                 </div>
                             </div>
                         </div>
@@ -167,6 +172,7 @@ $menu = 0;
     <!-- BEGIN: Page Vendor JS-->
     <script src="../../../app-assets/vendors/js/charts/apexcharts.min.js"></script>
     <script src="../../../app-assets/vendors/js/extensions/swiper.min.js"></script>
+    <script src="../../../tools/dropzone/dist/min/dropzone.min.js"></script>
     <!-- END: Page Vendor JS-->
 
     <!-- BEGIN: Theme JS-->
@@ -183,6 +189,30 @@ $menu = 0;
 
     <!-- <script src="../../../app-assets/js/scripts/custom/dashboard-ecommerce.js"></script> -->
     <!-- END: Page JS-->
+
+    <script>
+
+        var dropzone = new Dropzone("#mydropzone", {
+            dictDefaultMessage: "Put your custom message here",
+            url: '../controller/upload_media.php?cat=all',
+            acceptedFiles: 'application/pdf, .docx, .doc, image/*, .xls, .xlsx',
+            maxFilesize: 100,
+            init: function(){
+                this.on("complete", function(file) {
+                console.log(file);
+                this.removeFile(file);
+                if(file.xhr.responseText == 'Y'){
+                    // admin.loadMediaList()
+                }else{
+                    // swal("เกิดข้อผิดพลาด!", "มีไฟล์ที่ไม่สามารถอัพโหลดได้ กรุณาตรวจสอบการตั้งชื่อไฟล์หรือประเภทไฟล์และลองใหม่อีกครั้งโดยการอัพโหลดทีละไฟล์!", "Error")
+                }
+                });
+            }
+        });
+
+        // dropzone.prototype.defaultOptions.dictDefaultMessage = "Drop files here to upload";
+
+    </script>
 
 </body>
 <!-- END: Body-->

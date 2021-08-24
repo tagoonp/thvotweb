@@ -487,7 +487,7 @@ if($stage == 'logout'){
     session_destroy();
     $db->close();
     if($r == 'patient'){
-        header('Location: ../patient/');
+        header('Location: ../../patient/');
     }else{
         header('Location: ../');
     }

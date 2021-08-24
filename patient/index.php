@@ -87,7 +87,7 @@ if(isset($_GET['stage'])){
                                                     <input type="password" class="form-control" id="txtPassword" name="txtPassword" placeholder="Password">
                                                 </div>
                                                 <button type="submit" class="btn btn-primary glow w-100 position-relative round mb-1">เข้าสู่ระบบ<i id="icon-arrow" class="bx bx-right-arrow-alt"></i></button>
-                                                <button type="button" class="btn btn-success glow w-100 position-relative round">Line login<i id="icon-arrow" class="bx bx-right-arrow-alt"></i></button>
+                                                <button type="button" class="btn btn-success glow w-100 position-relative round" onclick="window.location = 'line_login.php'">Line login<i id="icon-arrow" class="bx bx-right-arrow-alt"></i></button>
                                             </form>
                                             <div class="text-center"></div>
                                         </div>

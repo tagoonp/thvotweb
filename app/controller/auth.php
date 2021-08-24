@@ -88,6 +88,45 @@ if($stage == 'line_login'){
 
 }
 
+if($stage == 'line_login_mobile'){
+
+    $token = mysqli_real_escape_string($conn, $_GET['token']);
+
+    $strSQL = "SELECT * FROM vot2_account WHERE uid = '$token' AND delete_status = '0' LIMIT 1";
+    $res = $db->fetch($strSQL, true, true);
+    if($res){
+
+
+        $strSQL = "INSERT INTO vot2_log (`log_datetime`, `log_info`, `log_message`, `log_ip`, `log_uid`)
+               VALUES ('$datetime', 'เข้าสู่ระบบ (Mobile)', '', '$remote_ip', '$token')
+              ";
+        $db->insert($strSQL, false);
+
+        $_SESSION['thvot_session'] = session_id();
+        $_SESSION['thvot_uid'] = $uid;
+        $_SESSION['thvot_role'] = 'patient';
+        $_SESSION['thvot_hcode'] = $res['hcode'];
+
+        header('Location: ../../core/system/web/patient/');
+        $db->close();
+        die();
+
+    }else{
+        mysqli_close($conn);
+        header('Location: ../../patient/');
+        die();
+    }
+
+    if(($result) && (mysqli_num_rows($result) > 0)){
+        // Already registered
+        mysqli_close($conn);
+        die();
+    }else{
+        
+    }
+
+}
+
 if($stage == 'login'){
 
     if(

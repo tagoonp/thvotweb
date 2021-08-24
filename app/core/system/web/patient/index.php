@@ -131,12 +131,12 @@ $menu = 0;
                                     </div>
 
                                     <div class="pt-3 text-center">
-                                        <form action="#"  id="mydropzone" class=" bg-danger text-white text-center" action="#">
-                                            <i class="bx bx-video" style="font-size: 4.5em; margin-top: 40px;"></i>
+                                        <form action="#"  id="mydropzone" class="dropzone bg-danger text-white text-center" action="#" style="height: 150px; border-radius: 50%; width: 150px; border-width: 0px; margin-left: 50px;">
                                             <div class="fallback">
                                                 <input name="file" type="file" multiple />
                                             </div>
                                         </form>
+                                        <!-- <i class="bx bx-video" style="font-size: 4.5em; margin-top: 40px; position: relative; margin-top: -100px;"></i> -->
                                     </div>
                                     <h6 class="text-dark mt-2 text-center pb-3">กดที่ปุ่มสีแดงเพื่อเริ่มบันทึกวิดีโอ</h6>
                                     <h4 class="text-danger text-center">กรุณาอย่ากินยาร่วมกับนม</h4>
@@ -193,7 +193,7 @@ $menu = 0;
     <script>
 
         var dropzone = new Dropzone("#mydropzone", {
-            dictDefaultMessage: "Put your custom message here",
+            dictDefaultMessage: '<i class="bx bx-video" style="font-size: 4.5em; margin-top: -10px;"></i>',
             url: '../controller/upload_media.php?cat=all',
             acceptedFiles: 'application/pdf, .docx, .doc, image/*, .xls, .xlsx',
             maxFilesize: 100,

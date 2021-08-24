@@ -111,7 +111,7 @@ if($stage == 'line_login_mobile'){
         $_SESSION['thvot_role'] = 'patient';
         $_SESSION['thvot_hcode'] = $res['hcode'];
 
-        header('Location: ../../core/system/web/patient/');
+        header('Location: ../../app/core/system/web/patient/');
         $db->close();
         die();
 

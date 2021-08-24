@@ -131,7 +131,7 @@ $menu = 0;
                                     </div>
 
                                     <div class="pt-3 text-center" id="mydropzone">
-                                        <form action="#" class=" bg-danger text-white text-center" action="#" style="width: 150px; height: 150px !important; border-radius: 50%; margin-left: 20%;">
+                                        <form action="#" class=" bg-danger text-white text-center" action="#" style="height: 150px !important; ">
                                             <i class="bx bx-video" style="font-size: 4.5em; margin-top: 40px;"></i>
                                             <div class="fallback">
                                                 <input name="file" type="file" multiple />

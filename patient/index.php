@@ -71,7 +71,7 @@ if(isset($_GET['stage'])){
                             <div class="row m-0">
                                 <!-- left section-login -->
                                 <div class="col-md-6 col-12 px-0">
-                                    <div class="card mb-0 p-2 h-100 d-flex justify-content-center" style="box-shadow: none;">
+                                    <div class="card mb-0 p-2 h-100 d-flex justify-content-center" style="box-shadow: none; margin-top: -20px;">
                                         <div class="card-header pb-1">
                                             <div class="card-title text-center">
                                                 <img src="https://thvot.com/img/thvot1logo.png" alt="" width="100">

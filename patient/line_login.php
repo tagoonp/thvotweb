@@ -8,7 +8,7 @@ $config = [
     'providers' => [
         'Line' => [
             'enabled' => true,
-            'keys'    => [ 'id' => '1655772627', 'secret' => '1d0318a07b154d2dbeda9eb231edb136' ],
+            'keys'    => [ 'id' => '1656349711', 'secret' => '7628b06da19c5740090ce217a8b43708' ],
         ],
     ],
 ];

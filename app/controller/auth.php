@@ -22,6 +22,11 @@ if($stage == 'line_login_staff'){
 
     if(($result) && (mysqli_num_rows($result) > 0)){
         // Already registered
+
+        
+        // if($dt['role'] == 'patient')
+
+
         mysqli_close($conn);
         header('Location: ../staff_info?uid=' . $token . '&referal=webapp&photo='.$photo);
         die();
@@ -76,7 +81,6 @@ if($stage == 'line_login'){
     $t = $_SESSION['reg_type'];
 
     if(($result) && (mysqli_num_rows($result) > 0)){
-        // Already registered
         mysqli_close($conn);
         header('Location: ../register_patient_success?uid=' . $token . '&referal=webapp&photo='.$photo);
         die();

@@ -124,10 +124,32 @@ $menu = 0;
                             <div class="card" style="box-shadow: none;">
                                 <div class="card-body pt-2">
                                     <div class="text-center">
-                                        สถานบริการทีตรวจติดตาม
+                                        สถานบริการที่ตรวจติดตาม
+                                        <div class="text-center">
+                                            <?php 
+                                            $strSQL = "SELECT hserv FROM vot2_projecthospital WHERE phoscode = '".$user['obs_hcode']."'";
+                                            $resObs = $db->fetch($strSQL, false);
+                                            if($resObs){
+                                                echo "<h5 class='text-darj'>".$resObs['hserv']."</h5>";
+                                            }else{
+                                                echo "-";
+                                            }
+                                            ?>
+                                        </div>
                                     </div>
                                     <div class="text-center">
                                         รพ.สต. / รพ. ที่กำกับการกินยา
+                                        <div class="text-center">
+                                            <?php 
+                                            $strSQL = "SELECT hserv FROM vot2_projecthospital WHERE phoscode = '".$user['hcode']."'";
+                                            $resObs = $db->fetch($strSQL, false);
+                                            if($resObs){
+                                                echo "<h5 class='text-darj'>".$resObs['hserv']."</h5>";
+                                            }else{
+                                                echo "-";
+                                            }
+                                            ?>
+                                        </div>
                                     </div>
 
                                     <div class="pt-3 text-center">
@@ -138,7 +160,7 @@ $menu = 0;
                                         </form>
                                         <!-- <i class="bx bx-video" style="font-size: 4.5em; margin-top: 40px; position: relative; margin-top: -100px;"></i> -->
                                     </div>
-                                    <h6 class="text-dark mt-2 text-center pb-3">กดที่ปุ่มสีแดงเพื่อเริ่มบันทึกวิดีโอ</h6>
+                                    <h6 class="text-dark mt-2 text-center pb-3">บันทึกวิดีโอ</h6>
                                     <h4 class="text-danger text-center">กรุณาอย่ากินยาร่วมกับนม</h4>
                                 </div>
                             </div>

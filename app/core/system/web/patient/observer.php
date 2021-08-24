@@ -123,19 +123,48 @@ $menu = 2;
                         <div class="col-xl-4 col-md-6 col-12 dashboard-greetings">
                             <div class="card" style="box-shadow: none;">
                                 <div class="card-body pt-1">
-                                    <h4>ติดต่อพยาบาลคลินิก/พี่เลี้ยง</h4>
+
                                     <div class="card">
                                         <div class="card-body">
                                             <div class="text-center">
+                                                <div class="text-center">
+                                                    <?php 
+                                                    $strSQL = "SELECT * FROM vot2_account a INNER JOIN vot2_userinfo b ON a.uid = b.info_uid 
+                                                               WHERE a.hcode = '".$user['hcode']."' AND b.info_use = '1' AND a.delete_status = '0' AND a.role = 'manager' LIMIT 1 ";
+                                                    $resObsInfo = $db->fetch($strSQL, false);
+                                                    if($resObsInfo){
+                                                        ?>
+                                                        <div>
+                                                            <img src="<?php echo $resObsInfo['profile_img']; ?>" alt="" class="img-fluid mb-1" style="border-radius: 50%; width: 50%;">
+                                                        </div>
+                                                        <?php
+                                                        echo "<h4 class='text-dark'>".$resObsInfo['fname']. " " . $resObsInfo['lname'] ."</h4>";
+                                                       
+                                                    }else{
+                                                        echo "-";
+                                                    }
+                                                    ?>
+                                                </div>
+
                                                 สถานบริการที่ตรวจติดตาม<br>(พยาบาลคลินิก)
                                                 <div class="text-center">
                                                     <?php 
-                                                    $strSQL = "SELECT hserv FROM vot2_projecthospital WHERE phoscode = '".$user['obs_hcode']."'";
+                                                    $strSQL = "SELECT hserv FROM vot2_projecthospital WHERE phoscode = '".$user['hcode']."'";
                                                     $resObs = $db->fetch($strSQL, false);
                                                     if($resObs){
                                                         echo "<h6 class='text-darj'>".$resObs['hserv']."</h6>";
                                                     }else{
                                                         echo "-";
+                                                    }
+                                                    ?>
+
+                                                    <?php 
+                                                    if($resObsInfo){
+                                                        ?>
+                                                        <div>
+                                                            <a href="tel:<?php echo $resObsInfo['phone']; ?>" class="btn btn-danger round"><i class="bx bxs-phone-call"></i> <?php echo $resObsInfo['phone']; ?></a>
+                                                        </div>
+                                                        <?php
                                                     }
                                                     ?>
                                                 </div>
@@ -148,26 +177,27 @@ $menu = 2;
                                             <div class="text-center">
                                                 <div class="text-center">
                                                     <?php 
-                                                    $strSQL = "SELECT * FROM vot2_userinfo WHERE info_uid = '".$user['obs_uid']."' AND info_use = '1' ";
+                                                    $strSQL = "SELECT * FROM vot2_account a INNER JOIN vot2_userinfo b ON a.uid = b.info_uid 
+                                                               WHERE b.info_uid = '".$user['obs_uid']."' AND b.info_use = '1' AND a.delete_status = '0'";
                                                     $resObsInfo = $db->fetch($strSQL, false);
                                                     if($resObsInfo){
-                                                        echo "<h4 class='text-dark'>".$resObsInfo['fname']. " " . $resObsInfo['lname'] ."</h4>";
                                                         ?>
                                                         <div>
-                                                            <a href="tel:<?php echo $resObsInfo['phone']; ?>"><i class="bx bxs-phone-call"></i> <?php echo $resObsInfo['phone']; ?></a>
+                                                            <img src="<?php echo $resObsInfo['profile_img']; ?>" alt="" class="img-fluid mb-1" style="border-radius: 50%; width: 50%;">
                                                         </div>
                                                         <?php
+                                                        echo "<h4 class='text-dark'>".$resObsInfo['fname']. " " . $resObsInfo['lname'] ."</h4>";
+                                                       
                                                     }else{
                                                         echo "-";
                                                     }
                                                     ?>
-                                                    
                                                 </div>
 
                                                 รพ.สต. / รพ. ที่กำกับการกินยา<br>(พี่เลี้ยง)
                                                 <div class="text-center">
                                                     <?php 
-                                                    $strSQL = "SELECT hserv FROM vot2_projecthospital WHERE phoscode = '".$user['hcode']."'";
+                                                    $strSQL = "SELECT hserv FROM vot2_projecthospital WHERE phoscode = '".$user['obs_hcode']."'";
                                                     $resObs = $db->fetch($strSQL, false);
                                                     if($resObs){
                                                         echo "<h6 class='text-darj'>".$resObs['hserv']."</h6>";
@@ -175,10 +205,17 @@ $menu = 2;
                                                         echo "-";
                                                     }
                                                     ?>
+
+                                                    <?php 
+                                                    if($resObsInfo){
+                                                        ?>
+                                                        <div>
+                                                            <a href="tel:<?php echo $resObsInfo['phone']; ?>" class="btn btn-danger round"><i class="bx bxs-phone-call"></i> <?php echo $resObsInfo['phone']; ?></a>
+                                                        </div>
+                                                        <?php
+                                                    }
+                                                    ?>
                                                 </div>
-
-                                                
-
                                             </div>
                                         </div>
                                     </div>
@@ -233,26 +270,6 @@ $menu = 2;
     <!-- END: Page JS-->
 
     <script>
-
-        var dropzone = new Dropzone("#mydropzone", {
-            dictDefaultMessage: '<i class="bx bx-video" style="font-size: 4.5em; margin-top: -10px;"></i>',
-            url: '../controller/upload_media.php?cat=all',
-            acceptedFiles: 'application/pdf, .docx, .doc, image/*, .xls, .xlsx',
-            maxFilesize: 100,
-            init: function(){
-                this.on("complete", function(file) {
-                console.log(file);
-                this.removeFile(file);
-                if(file.xhr.responseText == 'Y'){
-                    // admin.loadMediaList()
-                }else{
-                    // swal("เกิดข้อผิดพลาด!", "มีไฟล์ที่ไม่สามารถอัพโหลดได้ กรุณาตรวจสอบการตั้งชื่อไฟล์หรือประเภทไฟล์และลองใหม่อีกครั้งโดยการอัพโหลดทีละไฟล์!", "Error")
-                }
-                });
-            }
-        });
-
-        // dropzone.prototype.defaultOptions.dictDefaultMessage = "Drop files here to upload";
 
     </script>
 

@@ -124,6 +124,58 @@ $menu = 2;
                             <div class="card" style="box-shadow: none;">
                                 <div class="card-body pt-1 p-0">
                                     <h4 class="text-center">ติดต่อพยาบาลคลินิก / พี่เลี้ยง</h4>
+                                    
+                                    
+                                    <div class="card mb-1">
+                                        <div class="card-body">
+                                            <div class="text-center">
+                                                <div class="text-center">
+                                                    <?php 
+                                                    $strSQL = "SELECT * FROM vot2_account a INNER JOIN vot2_userinfo b ON a.uid = b.info_uid 
+                                                               WHERE b.info_uid = '".$user['obs_uid']."' AND b.info_use = '1' AND a.delete_status = '0'";
+                                                    $resObsInfo = $db->fetch($strSQL, false);
+                                                    if($resObsInfo){
+                                                        ?>
+                                                        <div>
+                                                            <img src="<?php echo $resObsInfo['profile_img']; ?>" alt="" class="img-fluid mb-1" style="border-radius: 50%; width: 50%;">
+                                                        </div>
+                                                        <?php
+                                                        echo "<h4 class='text-dark'>".$resObsInfo['fname']. " " . $resObsInfo['lname'] ."</h4>";
+                                                       
+                                                    }else{
+                                                        echo "-";
+                                                    }
+                                                    ?>
+                                                </div>
+
+                                                รพ.สต. / รพ. ที่กำกับการกินยา<br>(พี่เลี้ยง)
+                                                <div class="text-center">
+                                                    <?php 
+                                                    $strSQL = "SELECT hserv FROM vot2_projecthospital WHERE phoscode = '".$user['obs_hcode']."'";
+                                                    $resObs = $db->fetch($strSQL, false);
+                                                    if($resObs){
+                                                        echo "<h6 class='text-darj'>".$resObs['hserv']."</h6>";
+                                                    }else{
+                                                        echo "-";
+                                                    }
+                                                    ?>
+
+                                                    <?php 
+                                                    if($resObsInfo){
+                                                        ?>
+                                                        <div>
+                                                            <a href="tel:<?php echo $resObsInfo['phone']; ?>" class="btn btn-danger round"><i class="bx bxs-phone-call"></i> <?php echo $resObsInfo['phone']; ?></a>
+                                                            <div><span class="text-danger"><small>* สามารถติดต่อได้ตลอดเวลา<br>เมื่อท่านมีปัญหาการรับประทานยา</small></span></div>
+                                                        </div>
+                                                        <?php
+                                                    }
+                                                    ?>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+
                                     <div class="card mb-0">
                                         <div class="card-body">
                                             <div class="text-center">
@@ -172,53 +224,6 @@ $menu = 2;
                                         </div>
                                     </div>
                                     
-                                    <div class="card">
-                                        <div class="card-body">
-                                            <div class="text-center">
-                                                <div class="text-center">
-                                                    <?php 
-                                                    $strSQL = "SELECT * FROM vot2_account a INNER JOIN vot2_userinfo b ON a.uid = b.info_uid 
-                                                               WHERE b.info_uid = '".$user['obs_uid']."' AND b.info_use = '1' AND a.delete_status = '0'";
-                                                    $resObsInfo = $db->fetch($strSQL, false);
-                                                    if($resObsInfo){
-                                                        ?>
-                                                        <div>
-                                                            <img src="<?php echo $resObsInfo['profile_img']; ?>" alt="" class="img-fluid mb-1" style="border-radius: 50%; width: 50%;">
-                                                        </div>
-                                                        <?php
-                                                        echo "<h4 class='text-dark'>".$resObsInfo['fname']. " " . $resObsInfo['lname'] ."</h4>";
-                                                       
-                                                    }else{
-                                                        echo "-";
-                                                    }
-                                                    ?>
-                                                </div>
-
-                                                รพ.สต. / รพ. ที่กำกับการกินยา<br>(พี่เลี้ยง)
-                                                <div class="text-center">
-                                                    <?php 
-                                                    $strSQL = "SELECT hserv FROM vot2_projecthospital WHERE phoscode = '".$user['obs_hcode']."'";
-                                                    $resObs = $db->fetch($strSQL, false);
-                                                    if($resObs){
-                                                        echo "<h6 class='text-darj'>".$resObs['hserv']."</h6>";
-                                                    }else{
-                                                        echo "-";
-                                                    }
-                                                    ?>
-
-                                                    <?php 
-                                                    if($resObsInfo){
-                                                        ?>
-                                                        <div>
-                                                            <a href="tel:<?php echo $resObsInfo['phone']; ?>" class="btn btn-danger round"><i class="bx bxs-phone-call"></i> <?php echo $resObsInfo['phone']; ?></a>
-                                                        </div>
-                                                        <?php
-                                                    }
-                                                    ?>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
                                 </div>
                             </div>
                         </div>

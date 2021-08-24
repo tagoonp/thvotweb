@@ -477,6 +477,8 @@ if($stage == 'logout'){
                        VALUES ('$datetime', 'ออกจากระบบ', '', '$remote_ip', '".$_SESSION['thvot_uid']."')
                       ";
             $db->insert($strSQL, false);
+    
+    $r = $_SESSION['thvot_role'];
 
     unset($_SESSION['thvot_id']);
     unset($_SESSION['thvot_uid']);
@@ -484,7 +486,12 @@ if($stage == 'logout'){
     
     session_destroy();
     $db->close();
-    header('Location: ../');
+    if($r == 'patient'){
+        header('Location: ../patient/');
+    }else{
+        header('Location: ../');
+    }
+    
     die();
 
 }

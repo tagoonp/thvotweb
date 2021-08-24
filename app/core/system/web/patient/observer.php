@@ -122,9 +122,9 @@ $menu = 2;
                         <!-- Greetings Content Starts -->
                         <div class="col-xl-4 col-md-6 col-12 dashboard-greetings">
                             <div class="card" style="box-shadow: none;">
-                                <div class="card-body pt-1">
-
-                                    <div class="card">
+                                <div class="card-body pt-1 p-0">
+                                    <h4 class="text-center">ติดต่อพยาบาลคลินิก / พี่เลี้ยง</h4>
+                                    <div class="card mb-0">
                                         <div class="card-body">
                                             <div class="text-center">
                                                 <div class="text-center">

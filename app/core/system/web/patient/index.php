@@ -122,7 +122,7 @@ $menu = 0;
                         <!-- Greetings Content Starts -->
                         <div class="col-xl-4 col-md-6 col-12 dashboard-greetings">
                             <div class="card" style="box-shadow: none;">
-                                <div class="card-body pt-2">
+                                <div class="card-body pt-1">
                                     <div class="text-center">
                                         สถานบริการที่ตรวจติดตาม
                                         <div class="text-center">
@@ -152,7 +152,7 @@ $menu = 0;
                                         </div>
                                     </div>
 
-                                    <div class="pt-3 text-center">
+                                    <div class="pt-2 text-center">
                                         <form action="#"  id="mydropzone" class="dropzone bg-danger text-white text-center" action="#" style="height: 150px; border-radius: 50%; width: 150px; border-width: 0px; margin-left: 50px;">
                                             <div class="fallback">
                                                 <input name="file" type="file" multiple />
@@ -160,7 +160,7 @@ $menu = 0;
                                         </form>
                                         <!-- <i class="bx bx-video" style="font-size: 4.5em; margin-top: 40px; position: relative; margin-top: -100px;"></i> -->
                                     </div>
-                                    <h6 class="text-dark mt-2 text-center pb-3">บันทึกวิดีโอ</h6>
+                                    <h6 class="text-dark mt-2 text-center pb-1">บันทึกวิดีโอ</h6>
                                     <h4 class="text-danger text-center">กรุณาอย่ากินยาร่วมกับนม</h4>
                                 </div>
                             </div>

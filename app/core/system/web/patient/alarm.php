@@ -328,7 +328,7 @@ $menu = 1;
 
         function saveAlertTime(){
             var param = { uid : '<?php echo $user['uid'];?>', hh: $('#txtHH').val() , mm: $('#txtMM').val() }
-            var jxr = $.post("https://thvot.com/thvotweb/app/api/core-api?stage=set_notitime2", param, function(){})
+            var jxr = $.post("https://thvot.com/thvotweb/app/api/core-api?stage=set_notitime2", param, function(){}, 'json')
                         .always(function(snap){
                             console.log(snap);
                             if(snap.status == 'Success'){

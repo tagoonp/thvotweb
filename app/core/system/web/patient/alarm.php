@@ -126,7 +126,7 @@ $menu = 1;
                                 <div class="card-body pt-1 pl-1 pr-1">
                                     <h4 class="text-center mb-2">ตั้งเวลาแจ้งเตือน</h4>
                                     <?php 
-                                    $strSQL = "SELECT * FROM vot2_alerttime WHERE alt_uid = '".$user['uid']."'";
+                                    $strSQL = "SELECT * FROM vot2_alerttime WHERE alt_uid = '".$user['uid']."' ORDER BY alt_recordtime";
                                     $alert = $db->fetch($strSQL, true, false);
                                     if(($alert) && ($alert['status'])){
                                         foreach ($alert['data'] as $row) {
@@ -135,7 +135,7 @@ $menu = 1;
                                                 <div class="card-body p-1 mt-0">
                                                     <div class="row">
                                                         <div class="col-2">
-                                                            <button class="btn btn-icon btn-danger"><i class="bx bx-x"></i></button>
+                                                            <button class="btn btn-icon btn-danger" onclick="deleteAlert('<?php echo $row['ID']; ?>')"><i class="bx bx-x"></i></button>
                                                         </div>
                                                         <div class="col-10 text-dark pl-2" style="font-size: 1.5em;" ><?php echo $row['alt_time']; ?></div>
                                                     </div>
@@ -343,6 +343,41 @@ $menu = 1;
                                 })
                             }
                         })
+        }
+
+        function deleteAlert(alt_id){
+            Swal.fire({
+                title: 'คำเตือน',
+                text: "หากลบแล้วจะไม่สามารถนำข้อมูลนี้กลับมาได้อีก",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'ยืนยัน',
+                confirmButtonClass: 'btn btn-primary',
+                cancelButtonClass: 'btn btn-danger ml-1',
+                cancelButtonText: 'ยกเลิก',
+                buttonsStyling: false,
+            }).then(function (result) {
+                if (result.value) {
+                    var param = { uid : '<?php echo $user['uid'];?>', alert_id: alt_id}
+                    var jxr = $.post("https://thvot.com/thvotweb/app/api/alert?stage=deletelist", param, function(){}, 'json')
+                        .always(function(snap){
+                            console.log(snap);
+                            if(snap.status == 'Success'){
+                                window.location.reload()
+                            }else{
+                                preload.hide()
+                                Swal.fire({
+                                        icon: "error",
+                                        title: 'เกิดข้อผิดพลาด',
+                                        text: 'ไม่สามารถตั้งเวลาได้ กรุณาลองใหม่อีกครั้ง',
+                                        confirmButtonClass: 'btn btn-danger',
+                                })
+                            }
+                        })
+                }
+            })
         }
     </script>
 

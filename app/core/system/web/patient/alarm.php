@@ -122,7 +122,7 @@ $menu = 1;
                         <!-- Greetings Content Starts -->
                         <div class="col-xl-4 col-md-6 col-12 dashboard-greetings">
                             <div class="card" style="box-shadow: none;">
-                                <div class="card-body pt-1">
+                                <div class="card-body pt-1 pl-1 pr-1">
                                     <h4 class="text-center mb-2">ตั้งเวลาแจ้งเตือน</h4>
                                     <?php 
                                     $strSQL = "SELECT * FROM vot2_alerttime WHERE alt_uid = '".$user['uid']."'";

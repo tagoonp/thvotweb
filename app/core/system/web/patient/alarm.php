@@ -12,7 +12,7 @@ if(isset($_GET['stage'])){
     $stage = mysqli_real_escape_string($conn, $_GET['stage']);
 }
 
-require('../../../../config/user.inc.php'); 
+require('../../../../config/user_patient.inc.php'); 
 
 $menu = 1;
 ?>

@@ -131,7 +131,7 @@ $menu = 1;
                                     if(($alert) && ($alert['status'])){
                                         foreach ($alert['data'] as $row) {
                                             ?>
-                                            <div class="card mt-1" style="border: solid; border-color: #ccc; border-width: 1px;">
+                                            <div class="card mt-1 mb-0" style="border: solid; border-color: #ccc; border-width: 1px;">
                                                 <div class="card-body p-1 mt-0">
                                                     <div class="row">
                                                         <div class="col-2">
@@ -330,6 +330,7 @@ $menu = 1;
             var param = { uid : '<?php echo $user['uid'];?>', hh: $('#txtHH').val() , mm: $('#txtMM').val() }
             var jxr = $.post("https://thvot.com/thvotweb/app/api/core-api?stage=set_notitime2", param, function(){})
                         .always(function(snap){
+                            console.log(snap);
                             if(snap.status == 'Success'){
                                 window.location.reload()
                             }else{

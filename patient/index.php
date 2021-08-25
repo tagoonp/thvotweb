@@ -72,15 +72,11 @@ if(isset($_GET['stage'])){
                                 <!-- left section-login -->
                                 <div class="col-md-6 col-12 px-0">
                                     <div class="card mb-0 p-2 h-100 d-flex justify-content-center" style="box-shadow: none; margin-top: -20px;">
-                                        <div class="card-header pb-1">
-                                            <div class="card-title text-center">
-                                                <img src="https://thvot.com/img/thvot1logo.png" alt="" width="100">
-                                                <h2 class="text-center mb-1 mt-1">THVOT</h2>
-                                                <h6>แอพพลิเคชันติดตามการรับประทานยา</h6>
-                                            </div>
-                                        </div>
-                                        <div class="card-body">
-                                            <form autocomplete="off" onsubmit="auth.chk_patient_login(); return false;">
+                                        <div class="card-body text-center">
+                                            <img src="https://thvot.com/img/thvot1logo.png" alt="" width="100">
+                                            <h2 class="text-center mb-1 mt-1">THVOT</h2>
+                                            <h6>แอพพลิเคชันติดตามการรับประทานยา</h6>
+                                             <form autocomplete="off" onsubmit="auth.chk_patient_login(); return false;">
                                                 <div class="form-group mb-50">
                                                     <input type="text" class="form-control" id="txtUsername" name="txtUsername" placeholder="ชื่อบัญชีผู้ใช้งาน"></div>
                                                 <div class="form-group">

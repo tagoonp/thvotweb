@@ -123,45 +123,32 @@ $menu = 1;
                         <div class="col-xl-4 col-md-6 col-12 dashboard-greetings">
                             <div class="card" style="box-shadow: none;">
                                 <div class="card-body pt-1">
-                                    <div class="text-center">
-                                        สถานบริการที่ตรวจติดตาม
-                                        <div class="text-center">
-                                            <?php 
-                                            $strSQL = "SELECT hserv FROM vot2_projecthospital WHERE phoscode = '".$user['obs_hcode']."'";
-                                            $resObs = $db->fetch($strSQL, false);
-                                            if($resObs){
-                                                echo "<h5 class='text-darj'>".$resObs['hserv']."</h5>";
-                                            }else{
-                                                echo "-";
-                                            }
+                                    <h4 class="text-center mb-2">ตั้งเวลาแจ้งเตือน</h4>
+                                    <?php 
+                                    $strSQL = "SELECT * FROM vot2_alerttime WHERE alt_uid = '".$user['uid']."'";
+                                    $alert = $db->fetch($strSQL, true, false);
+                                    if(($alert) && ($alert['status'])){
+                                        foreach ($alert['data'] as $row) {
                                             ?>
-                                        </div>
-                                    </div>
-                                    <div class="text-center">
-                                        รพ.สต. / รพ. ที่กำกับการกินยา
-                                        <div class="text-center">
-                                            <?php 
-                                            $strSQL = "SELECT hserv FROM vot2_projecthospital WHERE phoscode = '".$user['hcode']."'";
-                                            $resObs = $db->fetch($strSQL, false);
-                                            if($resObs){
-                                                echo "<h5 class='text-darj'>".$resObs['hserv']."</h5>";
-                                            }else{
-                                                echo "-";
-                                            }
-                                            ?>
-                                        </div>
-                                    </div>
-
-                                    <div class="pt-2 text-center">
-                                        <form action="#"  id="mydropzone" class="dropzone bg-danger text-white text-center" action="#" style="height: 150px; border-radius: 50%; width: 150px; border-width: 0px; margin-left: 50px;">
-                                            <div class="fallback">
-                                                <input name="file" type="file" multiple />
+                                            <div class="card mt-1" style="border: solid; border-color: #ccc; border-width: 1px;">
+                                                <div class="card-body p-1 mt-0">
+                                                    <div class="row">
+                                                        <div class="col-2">
+                                                            <button class="btn btn-icon btn-danger"><i class="bx bx-x"></i></button>
+                                                        </div>
+                                                        <div class="col-10 text-dark pl-2" style="font-size: 1.5em;"><?php echo $row['alt_time']; ?></div>
+                                                    </div>
+                                                </div>
                                             </div>
-                                        </form>
-                                        <!-- <i class="bx bx-video" style="font-size: 4.5em; margin-top: 40px; position: relative; margin-top: -100px;"></i> -->
-                                    </div>
-                                    <h6 class="text-dark mt-2 text-center pb-1">บันทึกวิดีโอ</h6>
-                                    <h4 class="text-danger text-center">กรุณาอย่ากินยาร่วมกับนม</h4>
+                                            <?php
+                                        }
+                                    }else{
+                                        ?>
+                                        <div class="text-center">ยังไม่มีการตั้งเวลา</div>
+                                        <?php
+                                    }
+                                    ?>
+                                    <button class="btn btn-block btn-primary round mt-2"><i class="bx bx-plus"></i> ตั้งเวลา</button>
                                 </div>
                             </div>
                         </div>

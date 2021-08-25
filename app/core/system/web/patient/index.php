@@ -120,7 +120,7 @@ $menu = 0;
                 <section id="dashboard-ecommerce">
                     <div class="row">
                         <!-- Greetings Content Starts -->
-                        <div class="col-xl-4 col-md-6 col-12 dashboard-greetings">
+                        <div class="col-12 col-sm-6 offset-sm-3 dashboard-greetings" id="content-body">
                             <div class="card" style="box-shadow: none;">
                                 <div class="card-body pt-1">
                                     <div class="text-center">
@@ -153,7 +153,7 @@ $menu = 0;
                                     </div>
 
                                     <div class="pt-2 text-center">
-                                        <form action="#"  id="mydropzone" class="dropzone bg-danger text-white text-center" action="#" style="height: 150px; border-radius: 50%; width: 150px; border-width: 0px; margin-left: 50px;">
+                                        <form action="#"  id="mydropzone" class="dropzone bg-danger text-white text-center" action="#" style="height: 150px; border-radius: 50%; width: 150px; border-width: 0px;">
                                             <div class="fallback">
                                                 <input name="file" type="file" multiple />
                                             </div>
@@ -162,6 +162,8 @@ $menu = 0;
                                     </div>
                                     <h6 class="text-dark mt-2 text-center pb-1">บันทึกวิดีโอ</h6>
                                     <h4 class="text-danger text-center">กรุณาอย่ากินยาร่วมกับนม</h4>
+
+
                                 </div>
                             </div>
                         </div>
@@ -215,7 +217,7 @@ $menu = 0;
     <script>
 
         var dropzone = new Dropzone("#mydropzone", {
-            dictDefaultMessage: '<i class="bx bx-video" style="font-size: 4.5em; margin-top: -10px;"></i>',
+            dictDefaultMessage: '<i class="bx bx-video" style="font-size: 4.8em; margin-top: -10px; padding-left: 10px;"></i>',
             url: '../controller/upload_media.php?cat=all',
             acceptedFiles: 'application/pdf, .docx, .doc, image/*, .xls, .xlsx',
             maxFilesize: 100,
@@ -233,7 +235,11 @@ $menu = 0;
         });
 
         // dropzone.prototype.defaultOptions.dictDefaultMessage = "Drop files here to upload";
-
+        $(document).ready(function(){
+            $w = $('#content-body').width();
+            $nw = ($w * 0.5) - 100;
+            $('#mydropzone').css('margin-left', $nw + 'px')
+        })
     </script>
 
 </body>

@@ -8,7 +8,7 @@
 if((!isset($_SESSION['thvot_uid'])) || (!isset($_SESSION['thvot_role']))){
     // echo "Error 1";
     $db->close();
-    header('Location: '.ROOT_DOMAIN.'/thvotweb/patient/');   
+    header('Location: '.ROOT_DOMAIN.'thvotweb/patient/');   
     die();
     
 }
@@ -16,7 +16,7 @@ if((!isset($_SESSION['thvot_uid'])) || (!isset($_SESSION['thvot_role']))){
 if($_SESSION['thvot_role'] != $active_role){
     // echo "Error 2";
     $db->close();
-    header('Location: '.ROOT_DOMAIN.'/thvotweb/patient/');   
+    header('Location: '.ROOT_DOMAIN.'thvotweb/patient/');   
     die();
     // header('Location: '.ROOT_DOMAIN);   
 }
@@ -40,7 +40,8 @@ $user = $db->fetch($strSQL, false);
 if(!$user){
     echo "Error 3";
     if($active_role == 'patient'){
-        header('Location: ../../../../../patient/'); 
+        // header('Location: ../../../../../patient/'); 
+        header('Location: '.ROOT_DOMAIN.'thvotweb/patient/');  
     }else{
         header('Location: '.ROOT_DOMAIN); 
     }

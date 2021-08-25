@@ -210,9 +210,9 @@ if($stage == 'set_notitime'){
 
 if($stage == 'set_notitime2'){
     if(
-        (!isset($_GET['hh'])) ||
-        (!isset($_GET['mm'])) ||
-        (!isset($_GET['uid']))
+        (!isset($_REQUEST['hh'])) ||
+        (!isset($_REQUEST['mm'])) ||
+        (!isset($_REQUEST['uid']))
     ){
         $return['status'] = 'Fail';
         echo json_encode($return);
@@ -220,9 +220,9 @@ if($stage == 'set_notitime2'){
         die();
     }
 
-    $uid = mysqli_real_escape_string($conn, $_GET['uid']);
-    $h = mysqli_real_escape_string($conn, $_GET['hh']);
-    $m = mysqli_real_escape_string($conn, $_GET['mm']);
+    $uid = mysqli_real_escape_string($conn, $_REQUEST['uid']);
+    $h = mysqli_real_escape_string($conn, $_REQUEST['hh']);
+    $m = mysqli_real_escape_string($conn, $_REQUEST['mm']);
 
     if($h < 10){
         $h = '0'.$h;

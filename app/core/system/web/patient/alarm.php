@@ -34,7 +34,8 @@ $menu = 1;
 
     <!-- BEGIN: Vendor CSS-->
     <link rel="stylesheet" type="text/css" href="../../../app-assets/vendors/css/vendors.min.css">
-    <link rel="stylesheet" type="text/css" href="../../../tools/dropzone/dist/min/dropzone.min.css">
+    <link rel="stylesheet" type="text/css" href="../../../app-assets/vendors/css/extensions/sweetalert2.min.css">
+    <link rel="stylesheet" type="text/css" href="../../../tools/preload.js/dist/css/preload.css">
     <!-- END: Vendor CSS-->
 
     <!-- BEGIN: Theme CSS-->
@@ -151,10 +152,10 @@ $menu = 1;
                                     <button class="btn btn-block btn-primary round mt-2"  data-toggle="modal" data-target="#modalTime"><i class="bx bx-plus"></i> ตั้งเวลา</button>
 
                                     <div class="modal fade text-left" id="modalTime" tabindex="-1" role="dialog" aria-labelledby="myModalLabel1" aria-hidden="true">
-                                        <div class="modal-dialog modal-dialog-scrollable">
+                                        <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
                                         <div class="modal-content">
-                                            <div class="modal-header">
-                                            <h3 class="modal-title th" id="myModalLabel1">ตั้งเวลา</h3>
+                                            <div class="modal-header  bg-secondary ">
+                                            <h3 class="modal-title text-white th" id="myModalLabel1">ตั้งเวลา</h3>
                                             <button type="button" class="close rounded-pill" data-dismiss="modal" aria-label="Close">
                                                 <i class="bx bx-x"></i>
                                             </button>
@@ -262,7 +263,7 @@ $menu = 1;
                                                 <i class="bx bx-x d-block d-sm-none"></i>
                                                 <span class="d-none d-sm-block">Close</span>
                                             </button>
-                                            <button type="button" class="btn btn-primary ml-1" data-dismiss="modal">
+                                            <button type="button" class="btn btn-primary ml-1" onclick="saveAlertTime()">
                                                 <i class="bx bx-check d-block d-sm-none"></i>
                                                 <span class="d-none d-sm-block">Accept</span>
                                             </button>
@@ -300,9 +301,8 @@ $menu = 1;
     <!-- BEGIN Vendor JS-->
 
     <!-- BEGIN: Page Vendor JS-->
-    <script src="../../../app-assets/vendors/js/charts/apexcharts.min.js"></script>
-    <script src="../../../app-assets/vendors/js/extensions/swiper.min.js"></script>
-    <script src="../../../tools/dropzone/dist/min/dropzone.min.js"></script>
+    <script src="../../../app-assets/vendors/js/extensions/sweetalert2.all.min.js"></script>
+    <script src="../../../tools/preload.js/dist/js/preload.js"></script>
     <!-- END: Page Vendor JS-->
 
     <!-- BEGIN: Theme JS-->
@@ -322,26 +322,27 @@ $menu = 1;
 
     <script>
 
-        var dropzone = new Dropzone("#mydropzone", {
-            dictDefaultMessage: '<i class="bx bx-video" style="font-size: 4.5em; margin-top: -10px;"></i>',
-            url: '../controller/upload_media.php?cat=all',
-            acceptedFiles: 'application/pdf, .docx, .doc, image/*, .xls, .xlsx',
-            maxFilesize: 100,
-            init: function(){
-                this.on("complete", function(file) {
-                console.log(file);
-                this.removeFile(file);
-                if(file.xhr.responseText == 'Y'){
-                    // admin.loadMediaList()
-                }else{
-                    // swal("เกิดข้อผิดพลาด!", "มีไฟล์ที่ไม่สามารถอัพโหลดได้ กรุณาตรวจสอบการตั้งชื่อไฟล์หรือประเภทไฟล์และลองใหม่อีกครั้งโดยการอัพโหลดทีละไฟล์!", "Error")
-                }
-                });
-            }
-        });
+        $(document).ready(function(){
+            preload.hide()
+        })
 
-        // dropzone.prototype.defaultOptions.dictDefaultMessage = "Drop files here to upload";
-
+        function saveAlertTime(){
+            var param = { uid : '<?php echo $user['uid'];?>', hh: $('#txtHH').val() , mm: $('#txtMM').val() }
+            var jxr = $.post("https://thvot.com/thvotweb/app/api/core-api?stage=set_notitime2", param, function(){})
+                        .always(function(snap){
+                            if(snap.status == 'Success'){
+                                window.location.reload()
+                            }else{
+                                preload.hide()
+                                Swal.fire({
+                                        icon: "error",
+                                        title: 'เกิดข้อผิดพลาด',
+                                        text: 'ไม่สามารถตั้งเวลาได้ กรุณาลองใหม่อีกครั้ง',
+                                        confirmButtonClass: 'btn btn-danger',
+                                })
+                            }
+                        })
+        }
     </script>
 
 </body>

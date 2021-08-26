@@ -35,6 +35,7 @@ $menu = 0;
     <!-- BEGIN: Vendor CSS-->
     <link rel="stylesheet" type="text/css" href="../../../app-assets/vendors/css/vendors.min.css">
     <link rel="stylesheet" type="text/css" href="../../../tools/dropzone/dist/min/dropzone.min.css">
+    <link rel="stylesheet" type="text/css" href="../../../app-assets/vendors/css/extensions/sweetalert2.min.css">
     <!-- END: Vendor CSS-->
 
     <!-- BEGIN: Theme CSS-->
@@ -197,6 +198,7 @@ $menu = 0;
     <script src="../../../app-assets/vendors/js/charts/apexcharts.min.js"></script>
     <script src="../../../app-assets/vendors/js/extensions/swiper.min.js"></script>
     <script src="../../../tools/dropzone/dist/min/dropzone.min.js"></script>
+    <script src="../../../app-assets/vendors/js/extensions/sweetalert2.all.min.js"></script>
     <!-- END: Page Vendor JS-->
 
     <!-- BEGIN: Theme JS-->
@@ -227,9 +229,19 @@ $menu = 0;
                 this.removeFile(file);
                 alert(file.xhr.responseText)
                 if(file.xhr.responseText == 'Y'){
-                    // admin.loadMediaList()
+                    Swal.fire({
+                                        icon: "success",
+                                        title: 'อัพโหลดสำเร็จ',
+                                        text: 'วิดีโอถูกอัพโหลดเรียบร้อยแล้ว',
+                                        confirmButtonClass: 'btn btn-success',
+                                })
                 }else{
-                    // swal("เกิดข้อผิดพลาด!", "มีไฟล์ที่ไม่สามารถอัพโหลดได้ กรุณาตรวจสอบการตั้งชื่อไฟล์หรือประเภทไฟล์และลองใหม่อีกครั้งโดยการอัพโหลดทีละไฟล์!", "Error")
+                    Swal.fire({
+                                        icon: "error",
+                                        title: 'อัพโหลดไม่สำเร็จ กรุณาลองใหม่โดยเลือกอัพโหลดจากอัลบัมภาพ',
+                                        text: 'ไม่สามารถตั้งเวลาได้ กรุณาลองใหม่อีกครั้ง',
+                                        confirmButtonClass: 'btn btn-danger',
+                                })
                 }
                 });
             }

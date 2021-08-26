@@ -218,13 +218,14 @@ $menu = 0;
 
         var dropzone = new Dropzone("#mydropzone", {
             dictDefaultMessage: '<i class="bx bx-video" style="font-size: 4.8em; margin-top: -10px; padding-left: 10px;"></i>',
-            url: '../controller/upload_media.php?cat=all',
-            acceptedFiles: 'application/pdf, .docx, .doc, image/*, .xls, .xlsx',
+            url: '../../../../controller/video_upload_2.php?uid=<?php echo $user['uid']; ?>',
+            // acceptedFiles: 'application/pdf, .docx, .doc, image/*, .xls, .xlsx',
             maxFilesize: 100,
             init: function(){
                 this.on("complete", function(file) {
                 console.log(file);
                 this.removeFile(file);
+                alert(file.xhr.responseText)
                 if(file.xhr.responseText == 'Y'){
                     // admin.loadMediaList()
                 }else{

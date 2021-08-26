@@ -102,8 +102,8 @@ if (!empty($_FILES)) {
         }
         //
 
-        $return['status'] = 'Success';
-        echo json_encode($return);
+        // $return['status'] = 'Success';
+        echo "Y";
         $db->close(); 
         die();
     }
@@ -112,8 +112,8 @@ if (!empty($_FILES)) {
     // $strSQL = "UPDATE vot2_videosession SET vs_upload = 'fail' WHERE vs_session = '$vid' AND vs_uid = '$uid'";
     // $res1 = $db->execute($strSQL); 
 
-    $return['status'] = 'Fail (x102)';
-    echo json_encode($return);
+    // $return['status'] = 'Fail (x102)';
+    echo "N";
     $db->close(); 
     die();
 }

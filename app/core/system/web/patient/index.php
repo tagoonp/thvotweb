@@ -228,7 +228,7 @@ $menu = 0;
                 console.log(file);
                 this.removeFile(file);
                 alert(file.xhr.responseText)
-                if(file.xhr.responseText == "{status: 'Success'}"){
+                if(file.xhr.responseText == "Y"){
                     Swal.fire({
                                         icon: "success",
                                         title: 'อัพโหลดสำเร็จ',

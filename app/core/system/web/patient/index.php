@@ -218,7 +218,7 @@ $menu = 0;
 
         var dropzone = new Dropzone("#mydropzone", {
             dictDefaultMessage: '<i class="bx bx-video" style="font-size: 4.8em; margin-top: -10px; padding-left: 10px;"></i>',
-            url: '../../../../controller/video_upload_2.php?uid=<?php echo $user['uid']; ?>',
+            url: '../../../../api/video_upload_2.php?uid=<?php echo $user['uid']; ?>',
             // acceptedFiles: 'application/pdf, .docx, .doc, image/*, .xls, .xlsx',
             maxFilesize: 100,
             init: function(){

@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!-- <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -9,4 +9,7 @@
 <body>
     <a href="./app/">Go to login</a>
 </body>
-</html>
+</html> -->
+<?php 
+header('Location: ./thvotweb/');
+?>

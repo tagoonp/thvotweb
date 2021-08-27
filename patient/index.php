@@ -130,11 +130,15 @@ if(isset($_GET['stage'])){
 
     <!-- BEGIN: Page JS-->
     <script src="../assets/js/scripts/authen.js?v=<?php echo filemtime('../assets/js/scripts/authen.js'); ?>"></script>
+    <script src="../../../../assets/js/scripts/authen.js?v=<?php echo filemtime('../assets/js/scripts/patient_web.js'); ?>"></script>
     <!-- END: Page JS-->
 
     <script>
         $(document).ready(function(){
             preload.hide()
+            if(($p_uid != null) && ($p_role != null) & ($p_hcode != null)){
+                window.location = '../app/controller/auth?stage=patient_session&uid=' + $p_uid + '&role=patient&hcode=' + $p_hcode
+            }
         })
     </script>
 </body>

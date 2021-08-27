@@ -17,6 +17,10 @@ require('../../../../config/user_patient.inc.php');
 $menu = 0;
 ?>
 
+<input type="hidden" id="txtUid" value="<?php echo $_SESSION['thvot_uid']; ?>">
+<input type="hidden" id="txtRole" value="<?php echo $_SESSION['thvot_role']; ?>">
+<input type="hidden" id="txtHcode" value="<?php echo $_SESSION['thvot_hcode']; ?>">
+
 <!DOCTYPE html>
 <html class="loading" lang="en" data-textdirection="ltr">
 <!-- BEGIN: Head-->
@@ -212,6 +216,7 @@ $menu = 0;
     <!-- BEGIN: Page JS-->
     <script src="../../../assets/js/scripts/core.js?v=<?php echo filemtime('../../../assets/js/scripts/core.js'); ?>"></script>
     <script src="../../../assets/js/scripts/authen.js?v=<?php echo filemtime('../../../assets/js/scripts/authen.js'); ?>"></script>
+    <script src="../../../assets/js/scripts/authen.js?v=<?php echo filemtime('../../../assets/js/scripts/patient_web.js'); ?>"></script>
 
     <!-- <script src="../../../app-assets/js/scripts/custom/dashboard-ecommerce.js"></script> -->
     <!-- END: Page JS-->
@@ -252,6 +257,10 @@ $menu = 0;
             $w = $('#content-body').width();
             $nw = ($w * 0.5) - 100;
             $('#mydropzone').css('margin-left', $nw + 'px')
+
+            window.localStorage.setItem('thvot_patient_web_uid', $('#txtUid').val())
+            window.localStorage.setItem('thvot_patient_web_role', $('#txtRole').val())
+            window.localStorage.setItem('thvot_patient_web_hcode', $('#txtHcode').val())
         })
     </script>
 

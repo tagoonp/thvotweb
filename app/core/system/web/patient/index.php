@@ -232,7 +232,7 @@ $menu = 0;
                 this.on("complete", function(file) {
                 console.log(file);
                 this.removeFile(file);
-                alert(file.xhr.responseText)
+                // alert(file.xhr.responseText)
                 if(file.xhr.responseText == "Y"){
                     Swal.fire({
                                         icon: "success",

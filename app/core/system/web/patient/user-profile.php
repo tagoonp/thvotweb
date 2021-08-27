@@ -208,25 +208,7 @@ $menu = 99;
                         })
         }
 
-        function signout(){
-            Swal.fire({
-                title: 'คำเตือน',
-                text: "ยืนยันการออกจากระบบหรือไม่",
-                icon: 'warning',
-                showCancelButton: true,
-                confirmButtonColor: '#3085d6',
-                cancelButtonColor: '#d33',
-                confirmButtonText: 'ยืนยัน',
-                confirmButtonClass: 'btn btn-primary',
-                cancelButtonClass: 'btn btn-danger ml-1',
-                cancelButtonText: 'ยกเลิก',
-                buttonsStyling: false,
-            }).then(function (result) {
-                if (result.value) {
-                   window.location = '../../../../controller/auth?stage=logout'
-                }
-            })
-        }
+        
     </script>
 
 </body>

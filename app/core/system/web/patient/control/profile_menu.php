@@ -22,6 +22,6 @@
     <div class="dropdown-menu dropdown-menu-right pb-0">
         <a class="dropdown-item" href="user-profile"><i class="bx bx-user mr-50"></i> ข้อมูลส่วนตัว</a>
         <div class="dropdown-divider mb-0"></div>
-        <a class="dropdown-item" href="../../../../controller/auth?stage=logout"><i class="bx bx-power-off mr-50"></i> ออกจากระบบ</a>
+        <a class="dropdown-item" href="Javascript:signout()"><i class="bx bx-power-off mr-50"></i> ออกจากระบบ</a>
     </div>
 </li>

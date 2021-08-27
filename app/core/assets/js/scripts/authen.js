@@ -265,6 +265,9 @@ function signout(){
       buttonsStyling: false,
   }).then(function (result) {
       if (result.value) {
+          window.localStorage.removeItem('thvot_patient_web_uid')
+          window.localStorage.removeItem('thvot_patient_web_role')
+          window.localStorage.removeItem('thvot_patient_web_hcode')
          window.location = '../../../../controller/auth?stage=logout'
       }
   })

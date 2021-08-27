@@ -11,5 +11,5 @@
 </body>
 </html> -->
 <?php 
-header('Location: ./thvotweb/');
+header('Location: ./app/');
 ?>

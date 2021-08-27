@@ -183,6 +183,7 @@ $menu = 7;
                                                        a.delete_status = '0' 
                                                        AND b.info_use = '1'
                                                        AND a.role = 'patient'
+                                                       AND a.obs_hcode = '".$_SESSION['thvot_hcode']."'
                                             ";
                                             $result_list = $db->fetch($strSQL, true, false);
                                             if($result_list['status']){

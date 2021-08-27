@@ -263,6 +263,8 @@ $menu = 0;
             window.localStorage.setItem('thvot_patient_web_uid', $('#txtUid').val())
             window.localStorage.setItem('thvot_patient_web_role', $('#txtRole').val())
             window.localStorage.setItem('thvot_patient_web_hcode', $('#txtHcode').val())
+
+            preload.hide();
         })
     </script>
 

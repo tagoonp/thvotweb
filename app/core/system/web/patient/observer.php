@@ -279,7 +279,7 @@ $menu = 2;
     <!-- END: Page JS-->
 
     <script>
-
+        preload.hide();
     </script>
 
 </body>

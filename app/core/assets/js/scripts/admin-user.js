@@ -201,10 +201,33 @@ var admin_user = {
             if (!$(this).val()) {
                 $check++;
               if ($(this).data('select2')) {
-                $('.select-error').css({
-                  'border': '1px solid #FF5B5C',
-                  'border-radius': '4px'
-                });
+                    if(this.id == 'txtHcodeReg'){ 
+                        $('#regHcode').css({
+                            'border': '1px solid #FF5B5C',
+                            'border-radius': '4px'
+                        });
+                    }
+
+                     if(this.id == 'txtHcodeManage'){ 
+                        $('#manageHcode').css({
+                        'border': '1px solid #FF5B5C',
+                        'border-radius': '4px'
+                        });
+                    }
+
+                    if(this.id == 'txtHcodeObs'){ 
+                        $('#obsHcode').css({
+                        'border': '1px solid #FF5B5C',
+                        'border-radius': '4px'
+                        });
+                    }
+
+                    if(this.id == 'txtStaff'){ 
+                        $('#staff').css({
+                        'border': '1px solid #FF5B5C',
+                        'border-radius': '4px'
+                        });
+                    }
             }
         }});
 
@@ -217,10 +240,48 @@ var admin_user = {
                   confirmButtonClass: 'btn btn-danger',
                 }
               )
-              return false;
+              return ;
         }
 
-        return ;
+
+        preload.show()
+
+        var param = {
+            othbo: $('#txtTbno').val(),
+            pusername: $('#txtUsername').val(),
+            fname: $('#txtFname').val(),
+            lname: $('#txtLname').val(),
+            phone: $('#txtPhone').val(),
+            rphone: $('#txtRelatedPhone').val(),
+            status: '1',
+            ptype: $('#txtRole').val(),
+            verify: '1',
+            hn: $('#txtHn').val(),
+            password: $('#txtPassword1').val(),
+            reg_hcode: $('#txtHcodeReg').val(),
+            hcode: $('#txtHcodeManage').val(),
+            obs_hcode: $('#txtHcodeObs').val(),
+            obs_uid: $('#txtStaff').val(),
+            province: $('#txtProvince').val(),
+            district: $('#txtDist').val(),
+            subdistrict: $('#txtSubdist').val(),
+            uid: $('#txtCurrentUid').val()
+        }
+
+        console.log(param);
+
+        var jxr = $.post(api_url + 'patient?stage=patient_register', param, function(){}, 'json')
+                   .always(function(snap){
+                       if(snap.status == 'Success'){
+                           
+                       }else if(snap.status == 'Duplicate'){
+
+                       }else{
+
+                       }
+                   })
+
+        // return ;
     },
     check_patientupdate_form(){
         $check = 0

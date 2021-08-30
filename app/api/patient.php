@@ -495,6 +495,121 @@ if($stage == 'patient_update_info'){
     }
 }
 
+if($stage == 'patient_register'){
+    if(
+        (!(isset($_REQUEST['puid']))) ||
+        (!(isset($_REQUEST['pusername']))) ||
+        (!(isset($_REQUEST['fname']))) ||
+        (!(isset($_REQUEST['lname']))) ||
+        (!(isset($_REQUEST['phone']))) ||
+        (!(isset($_REQUEST['rphone']))) ||
+        (!(isset($_REQUEST['status']))) ||
+        (!(isset($_REQUEST['verify']))) || 
+        (!(isset($_REQUEST['ptype']))) || 
+        (!(isset($_REQUEST['hn']))) || 
+        (!(isset($_REQUEST['reg_hcode']))) || 
+        (!(isset($_REQUEST['hcode']))) || 
+        (!(isset($_REQUEST['obs_hcode']))) || 
+        (!(isset($_REQUEST['province']))) ||
+        (!(isset($_REQUEST['district']))) ||
+        (!(isset($_REQUEST['subdistrict']))) ||
+        (!(isset($_REQUEST['uid'])))
+    ){
+        $return['status'] = 'Fail';
+        $return['error_stage'] = '1';
+        echo json_encode($return);
+        $db->close(); 
+        die();
+    }
+
+    $uid = mysqli_real_escape_string($conn, $_REQUEST['uid']);
+    $puid = mysqli_real_escape_string($conn, $_REQUEST['puid']);
+    $username = mysqli_real_escape_string($conn, $_REQUEST['pusername']);
+    $fname = mysqli_real_escape_string($conn, $_REQUEST['fname']);
+    $lname = mysqli_real_escape_string($conn, $_REQUEST['lname']);
+    $phone = mysqli_real_escape_string($conn, $_REQUEST['phone']);
+    $rphone = mysqli_real_escape_string($conn, $_REQUEST['rphone']);
+    $status = mysqli_real_escape_string($conn, $_REQUEST['status']);
+    $verify = mysqli_real_escape_string($conn, $_REQUEST['verify']);
+    $ptype = mysqli_real_escape_string($conn, $_REQUEST['ptype']);
+    $hn = mysqli_real_escape_string($conn, $_REQUEST['hn']);
+    $othbo = mysqli_real_escape_string($conn, $_REQUEST['othbo']);
+    $reg_hcode = mysqli_real_escape_string($conn, $_REQUEST['reg_hcode']);
+    $manage_hcode = mysqli_real_escape_string($conn, $_REQUEST['hcode']);
+    $obs_hcode = mysqli_real_escape_string($conn, $_REQUEST['obs_hcode']);
+    $obs_uid = mysqli_real_escape_string($conn, $_REQUEST['obs_uid']);
+
+    $password = mysqli_real_escape_string($conn, $_REQUEST['password']);
+
+    $province = mysqli_real_escape_string($conn, $_REQUEST['province']);
+    $district = mysqli_real_escape_string($conn, $_REQUEST['district']);
+    $subdistrict = mysqli_real_escape_string($conn, $_REQUEST['subdistrict']);
+
+    $strSQL = "SELECT * FROM vot2_account WHERE uid = '$uid' AND role != 'patient' AND delete_status = '0' LIMIT 1";
+    $res1 = $db->fetch($strSQL, true, true);
+    if(!$res1['status']){
+        $return['status'] = 'Fail';
+        $return['error_stage'] = '2';
+        echo json_encode($return);
+        $db->close(); 
+        die();
+    }
+
+    $patient_uid = base64_encode($dateuniversal.$username);
+
+    $strSQL = "SELECT * FROM vot2_account WHERE username = '$username' AND delete_status = '0' LIMIT 1";
+    $res1 = $db->fetch($strSQL, false);
+    if($res1){
+        $return['status'] = 'Duplicate';
+        $return['error_stage'] = '3';
+        echo json_encode($return);
+        $db->close(); 
+        die();
+    }
+
+    $strSQL = "INSERT INTO vot2_account 
+               (
+                    `uid`, `hn`, `tbno`, `username`, `password`, `password_len`, 
+                    `phone`, `relative_phone`, `role`, `patient_type`, `hcode`, 
+                    `verify_status`, `active_status`, `u_datetime`, `p_udatetime`, `start_obsdate`, 
+                    `end_obsdate`, `cal_end_obsdate`, `obs_hcode`, `reg_hcode`, `reg_uid`, 
+                    `obs_uid`, `reg_type`
+               )
+               VALUES 
+               (
+                   '$patient_uid', '$hn', '$othbo', '$username', '', '',
+                   '$phone', '$rphone', 'patient', '$ptype', '$hcode',
+                   '1', '1', '$datetime', '$datetime', '$date', 
+                   '', '', '$obs_hcode', '$reg_hcode', '$uid', 
+                   '$obs_uid', 'manual'
+               )
+               ";
+
+    $res = $db->insert($strSQL, false);
+    if($res){
+
+        $strSQL = "INSERT INTO vot2_userinfo (`fname`, `lname`, `phone`, `info_prov`, `info_district`, `info_subdistrict`, `info_udatetime`, `info_use`, `info_uid`) 
+                   VALUES ('$fname', '$lname', '$phone', '$province', '$district', '$subdistrict', '$datetime', '1', '$patient_uid')";
+        $res = $db->insert($strSQL, false);
+
+        $strSQL = "INSERT INTO vot2_log (`log_datetime`, `log_info`, `log_message`, `log_ip`, `log_uid`)
+                    VALUES ('$datetime', 'ลงทะเบียนผู้ป่วยใหม่', '$fname $lname ($patient_uid)', '$remote_ip', '$uid')
+                    ";
+        $db->insert($strSQL, false);
+        $return['status'] = 'Success';
+        echo json_encode($return);
+        $db->close(); 
+        die();
+        
+    }else{
+        $return['status'] = 'Fail';
+        $return['error_stage'] = '4';
+        echo json_encode($return);
+        $db->close(); 
+        die();
+    }
+}
+
 if($stage == 'updatepassword'){
     if(
         (!(isset($_REQUEST['uid']))) ||

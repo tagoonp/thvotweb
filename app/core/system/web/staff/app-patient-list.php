@@ -155,6 +155,11 @@ $menu = 7;
                 <!-- users list start -->
                 <section class="users-list-wrapper">
                     <div class="users-list-table">
+                        <div class="row">
+                            <div class="col-12 pb-2">
+                                <button class="btn btn-primary" onclick="window.location = 'app-patient-add'"><i class="bx bx-plus"></i> ลงทะเบียนผู้ป่วยใหม่</button>
+                            </div>
+                        </div>
                         <div class="card">
                             <div class="card-body">
                                 <!-- datatable start -->

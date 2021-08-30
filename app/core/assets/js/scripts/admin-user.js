@@ -182,7 +182,7 @@ var admin_user = {
         $check = 0
         $('.form-control').removeClass('is-invalid')
         $('.select-error').css({'border': 'none'});
-        if($('#txtUsername').val() == ''){ $check++; $('#txtUsername').addClass('is-invalid') }
+        // if($('#txtUsername').val() == ''){ $check++; $('#txtUsername').addClass('is-invalid') }
         if($('#txtFname').val() == ''){ $check++; $('#txtFname').addClass('is-invalid') }
         if($('#txtLname').val() == ''){ $check++; $('#txtLname').addClass('is-invalid') }
         if($('#txtRole').val() == ''){ $check++; $('#txtRole').addClass('is-invalid') }

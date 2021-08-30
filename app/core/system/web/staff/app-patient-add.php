@@ -175,7 +175,7 @@ $menu = 12;
                                                     <div class="col-6">
                                                         <div class="form-group">
                                                             <div class="controls">
-                                                                <label>TB NO. (ใน NTIP) : <span class="text-danger">*</span></label>
+                                                                <label>TB NO. (ใน NTIP) : </label>
                                                                 <input type="text" class="form-control" placeholder="" id="txtUsername" name="txtUsername" >
                                                             </div>
                                                         </div>
@@ -224,36 +224,7 @@ $menu = 12;
                                                         </div>
                                                     </div>
                                                 </div>
-                                                <div class="form-group">
-                                                    <div class="controls">
-                                                        <label>หมายเลขโทรศัพท์ : <span class="text-danger">*</span></label>
-                                                        <input type="text" class="form-control" placeholder="Phone number" name="txtPhone" id="txtPhone">
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="col-12 col-sm-6">
-                                                <div class="form-group">
-                                                    <label>หน่วย/สถานบริการ : <span class="text-danger">*</span></label>
-                                                    <div class="select-error">
-                                                        <select name="txtHcode" id="txtHcode" data-required class="form-control select2">
-                                                            <option value="">-- เลือกหน่วยบริการ --</option>
-                                                            <?php 
-                                                            $strSQL = "SELECT vot2_projecthospital.* FROM vot2_projecthospital 
-                                                            WHERE phosstatus = 'Y' ORDER BY hserv";
-                                                            $result_list = $db->fetch($strSQL, true, false);
-                                                            if($result_list['status']){
-                                                                $c = 1;
-                                                                foreach($result_list['data'] as $row){
-                                                                    ?>
-                                                                    <option value="<?php echo $row['phoscode'];?>" <?php  ?>>[<?php echo $row['phoscode'];?>] <?php echo $row['hserv'];?></option>
-                                                                    <?php
-                                                                }
-                                                            }
-                                                            ?>
-                                                        </select>
-                                                    </div>
-                                                    
-                                                </div>
+
                                                 <div class="form-group">
                                                     <label>ประเภทการติดตาม : <span class="text-danger">*</span></label>
                                                     <select class="form-control" id="txtRole" name="txtRole">
@@ -263,22 +234,109 @@ $menu = 12;
                                                         <option value="TESTER">TESTER</option>
                                                     </select>
                                                 </div>
-                                                
+
                                                 <div class="form-group">
-                                                    <label>สถานะการใช้งาน : <span class="text-danger">*</span></label>
-                                                    <select class="form-control" id="txtStatus" name="txtStatus">
-                                                        <option value="" selected>-- เลือกสถานะ --</option>
-                                                        <option value="1">เปิดใช้งาน</option>
-                                                        <option value="0">ปิดใช้งาน</option>
-                                                    </select>
+                                                    <div class="controls">
+                                                        <label>หมายเลขโทรศัพท์ : <span class="text-danger">*</span></label>
+                                                        <input type="text" class="form-control" placeholder="Phone number" name="txtPhone" id="txtPhone">
+                                                    </div>
                                                 </div>
+                                            </div>
+                                            <div class="col-12 col-sm-6">
                                                 <div class="form-group">
-                                                    <label>สถานะการตรวจสอบบัญชีผู้ใช้ : <span class="text-danger">*</span></label>
-                                                    <select class="form-control" id="txtVerify" name="txtVerify">
-                                                        <option value="" selected>-- เลือกสถานะ --</option>
-                                                        <option value="1">ยืนยันแล้ว</option>
-                                                        <option value="0">รอการยืนยัน</option>
-                                                    </select>
+                                                    <label>หน่วย/สถานบริการที่ขึ้นทะเบียนผู้ป่วย : <span class="text-danger">*</span></label>
+                                                    <div class="select-error">
+                                                        <select name="txtHcodeReg" id="txtHcodeReg" data-required class="form-control select2">
+                                                            <option value="">-- เลือกหน่วยบริการที่ขึ้นทะเบียนผู้ป่วย --</option>
+                                                            <?php 
+                                                            $strSQL = "SELECT vot2_projecthospital.* FROM vot2_projecthospital 
+                                                            WHERE phosstatus = 'Y' ORDER BY hserv";
+                                                            $result_list = $db->fetch($strSQL, true, false);
+                                                            if($result_list['status']){
+                                                                $c = 1;
+                                                                foreach($result_list['data'] as $row){
+                                                                    ?>
+                                                                    <option value="<?php echo $row['phoscode'];?>" >[<?php echo $row['phoscode'];?>] <?php echo $row['hserv'];?></option>
+                                                                    <?php
+                                                                }
+                                                            }
+                                                            ?>
+                                                        </select>
+                                                    </div>
+                                                </div>
+
+                                                <div class="form-group">
+                                                    <label>หน่วย/สถานบริการสุขภาพที่ตรวจติดตาม : <span class="text-danger">*</span></label>
+                                                    <div class="select-error">
+                                                        <select name="txtHcodeManage" id="txtHcodeManage" data-required class="form-control select2">
+                                                            <option value="">-- เลือกหน่วยบริการที่ตรวจติดตาม --</option>
+                                                            <?php 
+                                                            $strSQL = "SELECT vot2_projecthospital.* FROM vot2_projecthospital 
+                                                            WHERE phosstatus = 'Y' ORDER BY hserv";
+                                                            $result_list = $db->fetch($strSQL, true, false);
+                                                            if($result_list['status']){
+                                                                $c = 1;
+                                                                foreach($result_list['data'] as $row){
+                                                                    ?>
+                                                                    <option value="<?php echo $row['phoscode'];?>" >[<?php echo $row['phoscode'];?>] <?php echo $row['hserv'];?></option>
+                                                                    <?php
+                                                                }
+                                                            }
+                                                            ?>
+                                                        </select>
+                                                    </div>
+                                                </div>
+
+                                                <div class="form-group">
+                                                    <label>หน่วย/สถานบริการสุขภาพของพี่เลี้ยง : <span class="text-danger">*</span></label>
+                                                    <div class="select-error">
+                                                        <select name="txtHcodeObs" id="txtHcodeObs" data-required class="form-control select2">
+                                                            <option value="">-- เลือกหน่วยบริการของพี่เลี้ยง --</option>
+                                                            <?php 
+                                                            $strSQL = "SELECT vot2_projecthospital.* FROM vot2_projecthospital 
+                                                            WHERE phosstatus = 'Y' ORDER BY hserv";
+                                                            $result_list = $db->fetch($strSQL, true, false);
+                                                            if($result_list['status']){
+                                                                $c = 1;
+                                                                foreach($result_list['data'] as $row){
+                                                                    ?>
+                                                                    <option value="<?php echo $row['phoscode'];?>" >[<?php echo $row['phoscode'];?>] <?php echo $row['hserv'];?></option>
+                                                                    <?php
+                                                                }
+                                                            }
+                                                            ?>
+                                                        </select>
+                                                    </div>
+                                                </div>
+
+                                                <div class="form-group">
+                                                    <label>ชื่อพี่เลี้ยง : <span class="text-danger">*</span></label>
+                                                    <div class="select-error">
+                                                        <select name="txtStaff" id="txtStaff" data-required class="form-control select2">
+                                                            <option value="">-- เลือกพี่เลี้ยง --</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+
+                                               
+                                                
+                                                <div class="row">
+                                                    <div class="form-group col-12 col-sm-6">
+                                                        <label>สถานะการใช้งาน : <span class="text-danger">*</span></label>
+                                                        <select class="form-control" id="txtStatus" name="txtStatus">
+                                                            <option value="" selected>-- เลือกสถานะ --</option>
+                                                            <option value="1" >เปิดใช้งาน</option>
+                                                            <option value="0" >ปิดใช้งาน</option>
+                                                        </select>
+                                                    </div>
+                                                    <div class="form-group col-12 col-sm-6">
+                                                        <label>สถานะการตรวจสอบบัญชีผู้ใช้ : <span class="text-danger">*</span></label>
+                                                        <select class="form-control" id="txtVerify" name="txtVerify">
+                                                            <option value="" selected>-- เลือกสถานะ --</option>
+                                                            <option value="1" >ยืนยันแล้ว</option>
+                                                            <option value="0" >รอการยืนยัน</option>
+                                                        </select>
+                                                    </div>
                                                 </div>
                                                 
                                             </div>
@@ -342,7 +400,7 @@ $menu = 12;
 
 
     <?php 
-    require("../../control/footer.php");
+    require("./control/footer.php");
     ?>
 
 
@@ -488,37 +546,55 @@ $menu = 12;
                 }
             })
 
-            $('#txtProvince').change(function(){
-                $('#txtDist').empty()
-                $('#txtSubdist').empty()
+            $('#txtHcodeObs').change(function(){
+                $dt = $('#txtHcodeObs').select2('data')[0].id;
+                if($dt == ''){
+                    $('#txtStaff').html('<option value="">-- เลือกพี่เลี้ยง --</option>')
+                }else{
+                    // getobserver
+                    var jxr = $.post(api_url + 'core-api?stage=getobserver', {hcod: $dt}, function(){}, 'json')
+                               .always(function(snap){
+                                    $('#txtStaff').html('<option value="">-- เลือกพี่เลี้ยง --</option>')
+                                    if(snap.status == 'Success'){
+                                        snap.data.forEach(i=>{
+                                            $('#txtStaff').append('<option value="' + i.hcode + '">' + i.fname + ' ' + i.lname + '</option>')
+                                        })
+                                    }
+                               })
+                }
+            })
 
-                $('#txtDist').append('<option value="">-- เลือกอำเภอ --</option>')
-                $('#txtSubdist').append('<option value="">-- เลือกตำบล --</option>')
+            // $('#txtProvince').change(function(){
+            //     $('#txtDist').empty()
+            //     $('#txtSubdist').empty()
 
-                var jxt = $.post('../../../api/core-api?stage=district', {province : $('#txtProvince').val()}, function(){}, 'json')
-                        .always(function(snap){
-                            if(snap.status == 'Success'){
-                            snap.data.forEach(i => {
-                                $('#txtDist').append('<option value="' + i.Ampur + '">' + i.Name + '</option>')
-                            });
-                            }
-                        })
-                })
+            //     $('#txtDist').append('<option value="">-- เลือกอำเภอ --</option>')
+            //     $('#txtSubdist').append('<option value="">-- เลือกตำบล --</option>')
 
-            $('#txtDist').change(function(){
-                $('#txtSubdist').empty()
-                $('#txtSubdist').append('<option value="">-- เลือกตำบล --</option>')
+            //     var jxt = $.post('../../../api/core-api?stage=district', {province : $('#txtProvince').val()}, function(){}, 'json')
+            //             .always(function(snap){
+            //                 if(snap.status == 'Success'){
+            //                 snap.data.forEach(i => {
+            //                     $('#txtDist').append('<option value="' + i.Ampur + '">' + i.Name + '</option>')
+            //                 });
+            //                 }
+            //             })
+            //     })
 
-                var jxt = $.post('../../../api/core-api?stage=subdistrict', {province : $('#txtProvince').val(), dist: $('#txtDist').val() }, function(){}, 'json')
-                        .always(function(snap){
-                            console.log(snap);
-                            if(snap.status == 'Success'){
-                            snap.data.forEach(i => {
-                                $('#txtSubdist').append('<option value="' + i.Tumbon + '">' + i.Name + '</option>')
-                            });
-                            }
-                        })
-             })
+            // $('#txtDist').change(function(){
+            //     $('#txtSubdist').empty()
+            //     $('#txtSubdist').append('<option value="">-- เลือกตำบล --</option>')
+
+            //     var jxt = $.post('../../../api/core-api?stage=subdistrict', {province : $('#txtProvince').val(), dist: $('#txtDist').val() }, function(){}, 'json')
+            //             .always(function(snap){
+            //                 console.log(snap);
+            //                 if(snap.status == 'Success'){
+            //                 snap.data.forEach(i => {
+            //                     $('#txtSubdist').append('<option value="' + i.Tumbon + '">' + i.Name + '</option>')
+            //                 });
+            //                 }
+            //             })
+            //  })
             
         })
 

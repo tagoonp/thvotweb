@@ -224,8 +224,9 @@ $(function () {
       $('#txtDist').append('<option value="">-- เลือกอำเภอ --</option>')
       $('#txtSubdist').append('<option value="">-- เลือกตำบล --</option>')
 
-      var jxt = $.post(api_url + 'core-api?stage=district', {province : $('#txtProvince').val()}, function(){}, 'json')
+      var jxt = $.post(api_url + 'core-api.php?stage=district', {province : $('#txtProvince').val()}, function(){}, 'json')
               .always(function(snap){
+                console.log(snap);
                 if(snap.status == 'Success'){
                   snap.data.forEach(i => {
                     $('#txtDist').append('<option value="' + i.Ampur + '">' + i.Name + '</option>')

@@ -522,7 +522,6 @@ if($stage == 'patient_register'){
     }
 
     $uid = mysqli_real_escape_string($conn, $_REQUEST['uid']);
-    $puid = mysqli_real_escape_string($conn, $_REQUEST['puid']);
     $username = mysqli_real_escape_string($conn, $_REQUEST['pusername']);
     $fname = mysqli_real_escape_string($conn, $_REQUEST['fname']);
     $lname = mysqli_real_escape_string($conn, $_REQUEST['lname']);
@@ -582,7 +581,7 @@ if($stage == 'patient_register'){
                VALUES 
                (
                    '$patient_uid', '$hn', '$othbo', '$username', '', '',
-                   '$phone', '$rphone', 'patient', '$ptype', '$hcode',
+                   '$phone', '$rphone', 'patient', '$ptype', '$manage_hcode',
                    '1', '1', '$datetime', '$datetime', '$date', 
                    '$endmondate', '$endmondate', '$obs_hcode', '$reg_hcode', '$uid', 
                    '$obs_uid', 'manual'

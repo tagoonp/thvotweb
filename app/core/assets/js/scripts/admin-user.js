@@ -272,6 +272,7 @@ var admin_user = {
 
         var jxr = $.post(api_url + 'patient?stage=patient_register', param, function(){}, 'json')
                    .always(function(snap){
+                       console.log(snap);
                        preload.hide()
                        if(snap.status == 'Success'){
                            window.location = 'app-patient-management?uid=' + $('#txtCurrentUid').val() + '&role=' + $('#txtCurrentRole').val() + '&hcode=' + $('#txtCurrentHcode').val() + '&id=' + snap.pid

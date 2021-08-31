@@ -346,6 +346,7 @@ var admin_user = {
             fname: $('#txtFname').val(),
             lname: $('#txtLname').val(),
             phone: $('#txtPhone').val(),
+            rphone: $('#txtRPhone').val(),
             status: $('#txtStatus').val(),
             ptype: $('#txtRole').val(),
             verify: $('#txtVerify').val(),

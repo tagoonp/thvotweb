@@ -207,7 +207,7 @@ $selected_location = $db->fetch($strSQL, false);
                         <button class="btn btn-primary" onclick="window.location = 'app-patient-list'"><i class="bx bx-list-ul"></i> รายชื่อผู้ป่วยติดตาม</button>
                     </div>
                 </div>
-                
+
                 <section class="users-edit">
                     <div class="card">
                         <div class="card-body">
@@ -341,6 +341,13 @@ $selected_location = $db->fetch($strSQL, false);
                                                     <div class="controls">
                                                         <label>หมายเลขโทรศัพท์ : <span class="text-danger">*</span></label>
                                                         <input type="text" class="form-control" placeholder="Phone number" name="txtPhone" id="txtPhone" value="<?php echo $selected_user['phone'];?>">
+                                                    </div>
+                                                </div>
+
+                                                <div class="form-group">
+                                                    <div class="controls">
+                                                        <label>หมายเลขโทรศัพท์ญาติ : </label>
+                                                        <input type="text" class="form-control" placeholder="Phone number" name="txtRPhone" id="txtRPhone" value="<?php echo $selected_user['relative_phone'];?>">
                                                     </div>
                                                 </div>
 

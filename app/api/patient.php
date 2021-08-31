@@ -423,6 +423,7 @@ if($stage == 'patient_update_info'){
     $fname = mysqli_real_escape_string($conn, $_POST['fname']);
     $lname = mysqli_real_escape_string($conn, $_POST['lname']);
     $phone = mysqli_real_escape_string($conn, $_POST['phone']);
+    $rphone = mysqli_real_escape_string($conn, $_POST['rphone']);
     $status = mysqli_real_escape_string($conn, $_POST['status']);
     $verify = mysqli_real_escape_string($conn, $_POST['verify']);
     $reg_hcode = mysqli_real_escape_string($conn, $_POST['reg_hcode']);
@@ -457,6 +458,7 @@ if($stage == 'patient_update_info'){
     $strSQL = "UPDATE vot2_account 
                SET 
                phone = '$phone', 
+               relative_phone = '$rphone',
                patient_type = '$ptype', 
                verify_status = '$verify', 
                active_status = '$status', 
@@ -603,7 +605,7 @@ if($stage == 'patient_register'){
         $strSQL = "INSERT INTO vot2_followup_dummy (`fud_uid`, `fud_username`, `fud_status`, `fud_date`, `fud_followstage`)
                    VALUES ('$patient_uid', '$username', 'non-response', '$date', '1')";
         $db->insert($strSQL, false);
-        
+
         $return['status'] = 'Success';
         $return['pid'] = $patient_uid;
         echo json_encode($return);

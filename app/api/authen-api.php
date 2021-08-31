@@ -138,9 +138,9 @@ if($stage == 'savelocation'){
 if($stage == 'savelocation2'){
 
     if(
-        (!isset($_GET['lat'])) ||
-        (!isset($_GET['lng'])) ||
-        (!isset($_GET['uid']))
+        (!isset($_REQUEST['lat'])) ||
+        (!isset($_REQUEST['lng'])) ||
+        (!isset($_REQUEST['uid']))
     ){
         $return['status'] = 'Fail (x101)';
         echo json_encode($return);
@@ -148,9 +148,9 @@ if($stage == 'savelocation2'){
         die();
     }
 
-    $lat = mysqli_real_escape_string($conn, $_GET['lat']);
-    $lng = mysqli_real_escape_string($conn, $_GET['lng']);
-    $uid = mysqli_real_escape_string($conn, $_GET['uid']);
+    $lat = mysqli_real_escape_string($conn, $_REQUEST['lat']);
+    $lng = mysqli_real_escape_string($conn, $_REQUEST['lng']);
+    $uid = mysqli_real_escape_string($conn, $_REQUEST['uid']);
 
     $strSQL = "DELETE FROM vot2_patient_location WHERE loc_patient_uid = '$uid'";
     $db->execute($strSQL);

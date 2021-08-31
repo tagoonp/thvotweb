@@ -183,6 +183,7 @@ $menu = 99;
     <!-- BEGIN: Page JS-->
     <script src="../../../assets/js/scripts/core.js?v=<?php echo filemtime('../../../assets/js/scripts/core.js'); ?>"></script>
     <script src="../../../assets/js/scripts/authen.js?v=<?php echo filemtime('../../../assets/js/scripts/authen.js'); ?>"></script>
+    
 
     <!-- <script src="../../../app-assets/js/scripts/custom/dashboard-ecommerce.js"></script> -->
     <!-- END: Page JS-->
@@ -191,10 +192,6 @@ $menu = 99;
 
         $(document).ready(function(){
             preload.hide()
-
-            setTimeout(() => {
-                initMap()
-            }, 3000);
         })
 
         function saveAlertTime(){

@@ -293,8 +293,8 @@ if($stage == 'patient_info'){
 
 if($stage == 'patient_location'){
     if(
-        (!isset($_GET['uid'])) ||
-        (!isset($_GET['patient_id']))
+        (!isset($_REQUEST['uid'])) ||
+        (!isset($_REQUEST['patient_id']))
     ){
         $return['status'] = 'Fail (x101)';
         echo json_encode($return);
@@ -302,8 +302,8 @@ if($stage == 'patient_location'){
         die();
     }
 
-    $uid = mysqli_real_escape_string($conn, $_GET['uid']);
-    $patient_id = mysqli_real_escape_string($conn, $_GET['patient_id']);
+    $uid = mysqli_real_escape_string($conn, $_REQUEST['uid']);
+    $patient_id = mysqli_real_escape_string($conn, $_REQUEST['patient_id']);
 
 
     $strSQL = "SELECT * FROM vot2_patient_location WHERE loc_patient_uid = '$patient_id' AND loc_status = '1'";

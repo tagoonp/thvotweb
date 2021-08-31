@@ -155,7 +155,7 @@ if($stage == 'savelocation2'){
     $strSQL = "DELETE FROM vot2_patient_location WHERE loc_patient_uid = '$uid'";
     $db->execute($strSQL);
 
-    $strSQL = "SELECT * FROM vot2_account WHERE uid = '$uid'";
+    $strSQL = "SELECT * FROM vot2_account WHERE uid = '$uid' AND delete_status = '0' ORDER BY ID DESC LIMIT 1";
     $resp = $db->fetch($strSQL, false);
     if($resp){
         $username = $resp['username'];

@@ -129,7 +129,8 @@ $menu = 99;
                                     <img class="round" src="<?php if(($user['profile_img'] != '') && ($user['profile_img'] != null)){ echo $user['profile_img']; }else{ echo "../../../app-assets/images/portrait/small/avatar-s-11.jpg"; }?>" alt="avatar" height="140" width="140" style="border-radius: 50%; margin-bottom: 20px;">
                                     </div>
                                     <h4 class="text-center mb-2"><?php echo $user['fname']." ".$user['lname']; ?></h4>
-                                    <h6 class="text-center mb-5"><?php echo $user['username']; ?></h6>
+                                    <h6 class="text-center mb-5">ID : <?php echo $user['username']; ?></h6>
+                                    <button class="btn btn-block btn-outline-secondary round mt-2" onclick="signout()"><i class="bx bx-power-off mr-50"></i> เปลี่ยนรูปโปรไฟล์</button>
                                     <button class="btn btn-block btn-danger round mt-2" onclick="signout()"><i class="bx bx-power-off mr-50"></i> ออกจากระบบ</button>
 
                                     

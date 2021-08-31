@@ -159,7 +159,7 @@ $menu = 99;
 
     <!-- BEGIN: Vendor JS-->
 
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAoLb4C5rLn6joROEdlA9mXhBMS7Bxy9ig&callback=initMap&libraries=&v=weekly" async ></script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAoLb4C5rLn6joROEdlA9mXhBMS7Bxy9ig" async ></script>
 
     <script src="../../../app-assets/vendors/js/vendors.min.js"></script>
     <script src="../../../app-assets/fonts/LivIconsEvo/js/LivIconsEvo.tools.js"></script>
@@ -191,6 +191,10 @@ $menu = 99;
 
         $(document).ready(function(){
             preload.hide()
+
+            setTimeout(() => {
+                initMap()
+            }, 3000);
         })
 
         function saveAlertTime(){

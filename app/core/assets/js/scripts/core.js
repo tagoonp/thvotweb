@@ -28,11 +28,7 @@ function initMap() {
     //   infoWindow.open(map);
     // });
 
-    if (navigator.geolocation) {
-        navigator.geolocation.getCurrentPosition(showPosition);
-    } else {
-        alert("Geolocation is not supported by this browser.");
-    }
+    getLocation()
   }
 
   function getLocation() {

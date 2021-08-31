@@ -220,6 +220,9 @@ $menu = 99;
                                 })
                 }
                 });
+            },
+            addedfile: function(){
+                preload.show()
             }
         });
 

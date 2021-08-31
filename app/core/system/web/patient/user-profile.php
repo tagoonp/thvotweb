@@ -130,7 +130,7 @@ $menu = 99;
                                     </div>
                                     <h4 class="text-center mb-2"><?php echo $user['fname']." ".$user['lname']; ?></h4>
                                     <h6 class="text-center mb-5">ID : <?php echo $user['username']; ?></h6>
-                                    <button class="btn btn-block btn-outline-secondary round mt-2" onclick="signout()"><i class="bx bx-power-off mr-50"></i> เปลี่ยนรูปโปรไฟล์</button>
+                                    <button class="btn btn-block btn-outline-secondary round mt-2" onclick="signout()"><i class="bx bx-camera mr-50"></i> เปลี่ยนรูปโปรไฟล์</button>
                                     <button class="btn btn-block btn-danger round mt-2" onclick="signout()"><i class="bx bx-power-off mr-50"></i> ออกจากระบบ</button>
 
                                     

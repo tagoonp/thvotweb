@@ -681,7 +681,7 @@ $selected_location = $db->fetch($strSQL, false);
                                             $c++;
                                         }
                                     }else{
-                                        echo $strSQL;
+                                        // echo $strSQL;
                                     }
                                     ?>
                                 </tbody>

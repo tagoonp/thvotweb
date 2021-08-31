@@ -124,10 +124,14 @@ if($stage == 'getpatient_calendar'){
                     $buf['start'] = $start;
                     $buf['status'] = "NA";
                     // $buf['err'] = $strSQL;
-                    $buf['color'] = '#000'; 
+                    // $buf['color'] = '#000'; 
                     // $buf['title'] = '&nbsp;';
                     $buf['textColor'] = '#fff';
-                    $buf['borderColor'] = '#000';
+                    // $buf['borderColor'] = '#000';
+
+                    $buf['color'] = '#ff8400'; 
+                    $buf['borderColor'] = '#ff8400';
+
                     $return[] = $buf;
                 }
             }

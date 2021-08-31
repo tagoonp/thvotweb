@@ -47,7 +47,7 @@ if (!empty($_FILES)) {
     if (move_uploaded_file($_FILES['file']['tmp_name'], $filePath)) {
         $fileUrl = 'https://thvot.com/thvotweb/app/uploads/'.$generatedName;
 
-        $strSQL = "UPDATE vot2_account SET profile_img = '$fileUrl' WHERE uid = '$uid' AND delete_status = '0'";
+        $strSQL = "UPDATE vot2_account SET profile_img = '$fileUrl', profile_status = '0' WHERE uid = '$uid' AND delete_status = '0'";
         $db->execute($strSQL);
         echo "Y";
         $db->close(); 

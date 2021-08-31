@@ -131,10 +131,14 @@ $menu = 99;
                                     </div>
                                     <h4 class="text-center mb-2"><?php echo $user['fname']." ".$user['lname']; ?></h4>
                                     <h6 class="text-center mb-5">ID : <?php echo $user['username']; ?></h6>
-                                    <button class="btn btn-block btn-outline-secondary round mt-2" onclick="takePhoto()"><i class="bx bx-camera mr-50"></i> เปลี่ยนรูปโปรไฟล์</button>
+                                    <?php 
+                                    if($user['profile_status'] == '1'){
+                                        ?>
+                                        <button class="btn btn-block btn-outline-secondary round mt-2" onclick="takePhoto()"><i class="bx bx-camera mr-50"></i> เปลี่ยนรูปโปรไฟล์</button>    
+                                        <?php
+                                    }
+                                    ?>
                                     <button class="btn btn-block btn-danger round mt-1" onclick="signout()"><i class="bx bx-power-off mr-50"></i> ออกจากระบบ</button>
-
-                                    
                                     <div class="pt-2 text-center" style="display: none;">
                                         <form action="#"  id="mydropzone" class="dropzone bg-danger text-white text-center" action="#" style="height: 150px; border-radius: 50%; width: 150px; border-width: 0px;">
                                             <div class="fallback">

@@ -599,6 +599,11 @@ if($stage == 'patient_register'){
                     VALUES ('$datetime', 'ลงทะเบียนผู้ป่วยใหม่', '$fname $lname ($patient_uid)', '$remote_ip', '$uid')
                     ";
         $db->insert($strSQL, false);
+
+        $strSQL = "INSERT INTO vot2_followup_dummy (`fud_uid`, `fud_username`, `fud_status`, `fud_date`, `fud_followstage`)
+                   VALUES ('$patient_uid', '$username', 'non-response', '$date', '1')";
+        $db->insert($strSQL, false);
+        
         $return['status'] = 'Success';
         $return['pid'] = $patient_uid;
         echo json_encode($return);

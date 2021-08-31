@@ -23,8 +23,12 @@ if(isset($_GET['stage'])){
     <meta name="keywords" content="admin template, Frest admin template, dashboard template, flat admin template, responsive admin template, web app">
     <meta name="author" content="PIXINVENT">
     <title>THVOT : ระบบการติดตามการรับประทานยา</title>
-    <link rel="apple-touch-icon" href="../app-assets/images/ico/apple-icon-120.png">
-    <link rel="shortcut icon" type="image/x-icon" href="../app-assets/images/ico/favicon.ico">
+    <!-- <link rel="apple-touch-icon" href="../app-assets/images/ico/apple-icon-120.png"> -->
+    <!-- <link rel="shortcut icon" type="image/x-icon" href="../app-assets/images/ico/favicon.ico"> -->
+
+    <link rel="shortcut icon" type="image/x-icon" href="https://thvot.com/img/thvot1logo.png">
+
+    
     <link href="https://fonts.googleapis.com/css?family=Rubik:300,400,500,600%7CIBM+Plex+Sans:300,400,500,600,700" rel="stylesheet">
 
     <!-- BEGIN: Vendor CSS-->

@@ -497,7 +497,6 @@ if($stage == 'patient_update_info'){
 
 if($stage == 'patient_register'){
     if(
-        (!(isset($_REQUEST['puid']))) ||
         (!(isset($_REQUEST['pusername']))) ||
         (!(isset($_REQUEST['fname']))) ||
         (!(isset($_REQUEST['lname']))) ||

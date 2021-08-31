@@ -580,7 +580,7 @@ if($stage == 'patient_register'){
                )
                VALUES 
                (
-                   '$patient_uid', '$hn', '$othbo', '$username', '', '',
+                   '$patient_uid', '$hn', '$othbo', '$username', '$password', '$passwordlen',
                    '$phone', '$rphone', 'patient', '$ptype', '$manage_hcode',
                    '1', '1', '$datetime', '$datetime', '$date', 
                    '$endmondate', '$endmondate', '$obs_hcode', '$reg_hcode', '$uid', 

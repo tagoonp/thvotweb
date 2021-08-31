@@ -275,7 +275,7 @@ var admin_user = {
                        console.log(snap);
                        preload.hide()
                        if(snap.status == 'Success'){
-                           window.location = 'app-patient-management?uid=' + $('#txtCurrentUid').val() + '&role=' + $('#txtCurrentRole').val() + '&hcode=' + $('#txtCurrentHcode').val() + '&id=' + snap.pid
+                           window.location = 'app-patient-management?uid=' + $('#txtCurrentUid').val() + '&role=' + $('#txtCurrentUrole').val() + '&hcode=' + $('#txtCurrentUhcode').val() + '&id=' + snap.pid
                        }else if(snap.status == 'Duplicate'){
                             Swal.fire(
                                 {

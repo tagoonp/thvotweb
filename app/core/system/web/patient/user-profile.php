@@ -201,26 +201,21 @@ $menu = 99;
 
         var dropzone = new Dropzone("#mydropzone", {
             dictDefaultMessage: '<i class="bx bx-video" style="font-size: 4.8em; margin-top: -10px; padding-left: 10px;"></i>',
-            url: '../../../../api/video_upload_2.php?uid=<?php echo $user['uid']; ?>',
+            url: '../../../../api/profile_upload.php?uid=' + window.localStorage.getItem('thvot_patient_web_uid'),
             acceptedFiles: 'image/*',
             maxFilesize: 100,
             init: function(){
                 this.on("complete", function(file) {
                 console.log(file);
                 this.removeFile(file);
-                // alert(file.xhr.responseText)
+                console.log(file.xhr.responseText);
                 if(file.xhr.responseText == "Y"){
-                    Swal.fire({
-                                        icon: "success",
-                                        title: 'อัพโหลดสำเร็จ',
-                                        text: 'วิดีโอถูกอัพโหลดเรียบร้อยแล้ว',
-                                        confirmButtonClass: 'btn btn-success',
-                                })
+                    window.location.reload()
                 }else{
                     Swal.fire({
                                         icon: "error",
-                                        title: 'อัพโหลดไม่สำเร็จ กรุณาลองใหม่โดยเลือกอัพโหลดจากอัลบัมภาพ',
-                                        text: 'ไม่สามารถตั้งเวลาได้ กรุณาลองใหม่อีกครั้ง',
+                                        title: 'เกิดข้อผิดพลาด',
+                                        text: 'อัพโหลดไม่สำเร็จ กรุณาลองใหม่อีกครั้ง',
                                         confirmButtonClass: 'btn btn-danger',
                                 })
                 }

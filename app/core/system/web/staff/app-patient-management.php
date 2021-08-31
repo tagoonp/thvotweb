@@ -716,7 +716,7 @@ $selected_location = $db->fetch($strSQL, false);
                                                 ORDER BY log_datetime DESC
                                             ";
                                     $result_list = $db->fetch($strSQL, true, false);
-                                    if($result_list['status']){
+                                    if(($result_list) && ($result_list['status'])){
                                         $c = 1;
                                         foreach($result_list['data'] as $row){
                                             ?>

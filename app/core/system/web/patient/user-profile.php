@@ -212,6 +212,7 @@ $menu = 99;
                 if(file.xhr.responseText == "Y"){
                     window.location.reload()
                 }else{
+                    preload.hide()
                     Swal.fire({
                                         icon: "error",
                                         title: 'เกิดข้อผิดพลาด',

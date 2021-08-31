@@ -272,16 +272,31 @@ var admin_user = {
 
         var jxr = $.post(api_url + 'patient?stage=patient_register', param, function(){}, 'json')
                    .always(function(snap){
+                       preload.hide()
                        if(snap.status == 'Success'){
-                           
+                           window.location = 'app-patient-management?uid=' + $('#txtCurrentUid').val() + '&role=' + $('#txtCurrentRole').val() + '&hcode=' + $('#txtCurrentHcode').val() + '&id=' + snap.pid
                        }else if(snap.status == 'Duplicate'){
-
+                            Swal.fire(
+                                {
+                                icon: "error",
+                                title: 'คำเตือน',
+                                text: 'พบชื่อบัญชีผู้ใช้นี้แล้ว',
+                                confirmButtonClass: 'btn btn-danger',
+                                }
+                            )
                        }else{
-
+                            Swal.fire(
+                                {
+                                icon: "error",
+                                title: 'เกิดข้อผิดพลาด',
+                                text: 'ไม่สามารถลงทะเบียนผู้ป่าวยได้ กรุณาลองใหม่หรือติดต่อผู้ดูแลระบบ',
+                                confirmButtonClass: 'btn btn-danger',
+                                }
+                            )
                        }
                    })
 
-        // return ;
+        return ;
     },
     check_patientupdate_form(){
         $check = 0

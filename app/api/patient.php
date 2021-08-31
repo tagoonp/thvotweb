@@ -545,6 +545,11 @@ if($stage == 'patient_register'){
     $district = mysqli_real_escape_string($conn, $_REQUEST['district']);
     $subdistrict = mysqli_real_escape_string($conn, $_REQUEST['subdistrict']);
 
+    $passwordlen = strlen($password);
+    $password = password_hash($password, PASSWORD_DEFAULT);
+
+    $endmondate = Date("Y-m-d", strtotime("$date +2 Month"));  
+
     $strSQL = "SELECT * FROM vot2_account WHERE uid = '$uid' AND role != 'patient' AND delete_status = '0' LIMIT 1";
     $res1 = $db->fetch($strSQL, true, true);
     if(!$res1['status']){
@@ -557,7 +562,7 @@ if($stage == 'patient_register'){
 
     $patient_uid = base64_encode($dateuniversal.$username);
 
-    $strSQL = "SELECT * FROM vot2_account WHERE username = '$username' AND delete_status = '0' LIMIT 1";
+    $strSQL = "SELECT * FROM vot2_account WHERE username = '$username' AND reg_hcode = '$reg_hcode' AND delete_status = '0' LIMIT 1";
     $res1 = $db->fetch($strSQL, false);
     if($res1){
         $return['status'] = 'Duplicate';
@@ -580,7 +585,7 @@ if($stage == 'patient_register'){
                    '$patient_uid', '$hn', '$othbo', '$username', '', '',
                    '$phone', '$rphone', 'patient', '$ptype', '$hcode',
                    '1', '1', '$datetime', '$datetime', '$date', 
-                   '', '', '$obs_hcode', '$reg_hcode', '$uid', 
+                   '$endmondate', '$endmondate', '$obs_hcode', '$reg_hcode', '$uid', 
                    '$obs_uid', 'manual'
                )
                ";
@@ -597,6 +602,7 @@ if($stage == 'patient_register'){
                     ";
         $db->insert($strSQL, false);
         $return['status'] = 'Success';
+        $return['pid'] = $patient_uid;
         echo json_encode($return);
         $db->close(); 
         die();

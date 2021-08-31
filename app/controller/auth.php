@@ -236,7 +236,7 @@ if($stage == 'signup_dot'){
     $passwordlen = strlen($password);
     $password = password_hash($password, PASSWORD_DEFAULT);
 
-    $endmondate = Date("Y-m-d", strtotime("$date +4 Month"));    
+    $endmondate = Date("Y-m-d", strtotime("$date +2 Month"));    
 
     $strSQL = "INSERT INTO vot2_account 
               (`uid`, `username`, `password`, `password_len`, `email`, 
@@ -317,7 +317,7 @@ if($stage == 'signup_staff'){
     $passwordlen = strlen($password);
     $password = password_hash($password, PASSWORD_DEFAULT);
 
-    $endmondate = Date("Y-m-d", strtotime("$date +4 Month"));  
+    $endmondate = Date("Y-m-d", strtotime("$date +2 Month"));  
 
     $strSQL = "INSERT INTO vot2_account 
               (`uid`, `username`, `password`, `password_len`, `email`, 

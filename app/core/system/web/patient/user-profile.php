@@ -36,6 +36,7 @@ $menu = 99;
     <link rel="stylesheet" type="text/css" href="../../../app-assets/vendors/css/vendors.min.css">
     <link rel="stylesheet" type="text/css" href="../../../app-assets/vendors/css/extensions/sweetalert2.min.css">
     <link rel="stylesheet" type="text/css" href="../../../tools/preload.js/dist/css/preload.css">
+    <link rel="stylesheet" type="text/css" href="../../../tools/dropzone/dist/min/dropzone.min.css">
     <!-- END: Vendor CSS-->
 
     <!-- BEGIN: Theme CSS-->
@@ -130,11 +131,18 @@ $menu = 99;
                                     </div>
                                     <h4 class="text-center mb-2"><?php echo $user['fname']." ".$user['lname']; ?></h4>
                                     <h6 class="text-center mb-5">ID : <?php echo $user['username']; ?></h6>
-                                    <button class="btn btn-block btn-outline-secondary round mt-2" onclick="signout()"><i class="bx bx-camera mr-50"></i> เปลี่ยนรูปโปรไฟล์</button>
+                                    <button class="btn btn-block btn-outline-secondary round mt-2" onclick="takePhoto()"><i class="bx bx-camera mr-50"></i> เปลี่ยนรูปโปรไฟล์</button>
                                     <button class="btn btn-block btn-danger round mt-1" onclick="signout()"><i class="bx bx-power-off mr-50"></i> ออกจากระบบ</button>
 
                                     
-
+                                    <div class="pt-2 text-center" style="display: none;">
+                                        <form action="#"  id="mydropzone" class="dropzone bg-danger text-white text-center" action="#" style="height: 150px; border-radius: 50%; width: 150px; border-width: 0px;">
+                                            <div class="fallback">
+                                                <input name="file" type="file" multiple />
+                                            </div>
+                                        </form>
+                                        <!-- <i class="bx bx-video" style="font-size: 4.5em; margin-top: 40px; position: relative; margin-top: -100px;"></i> -->
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -170,6 +178,7 @@ $menu = 99;
     <!-- BEGIN: Page Vendor JS-->
     <script src="../../../app-assets/vendors/js/extensions/sweetalert2.all.min.js"></script>
     <script src="../../../tools/preload.js/dist/js/preload.js"></script>
+    <script src="../../../tools/dropzone/dist/min/dropzone.min.js"></script>
     <!-- END: Page Vendor JS-->
 
     <!-- BEGIN: Theme JS-->
@@ -190,9 +199,42 @@ $menu = 99;
 
     <script>
 
+        var dropzone = new Dropzone("#mydropzone", {
+            dictDefaultMessage: '<i class="bx bx-video" style="font-size: 4.8em; margin-top: -10px; padding-left: 10px;"></i>',
+            url: '../../../../api/video_upload_2.php?uid=<?php echo $user['uid']; ?>',
+            acceptedFiles: 'image/*',
+            maxFilesize: 100,
+            init: function(){
+                this.on("complete", function(file) {
+                console.log(file);
+                this.removeFile(file);
+                // alert(file.xhr.responseText)
+                if(file.xhr.responseText == "Y"){
+                    Swal.fire({
+                                        icon: "success",
+                                        title: 'อัพโหลดสำเร็จ',
+                                        text: 'วิดีโอถูกอัพโหลดเรียบร้อยแล้ว',
+                                        confirmButtonClass: 'btn btn-success',
+                                })
+                }else{
+                    Swal.fire({
+                                        icon: "error",
+                                        title: 'อัพโหลดไม่สำเร็จ กรุณาลองใหม่โดยเลือกอัพโหลดจากอัลบัมภาพ',
+                                        text: 'ไม่สามารถตั้งเวลาได้ กรุณาลองใหม่อีกครั้ง',
+                                        confirmButtonClass: 'btn btn-danger',
+                                })
+                }
+                });
+            }
+        });
+
         $(document).ready(function(){
             preload.hide()
         })
+
+        function takePhoto(){
+            $('#mydropzone').trigger('click')
+        }
 
         function saveAlertTime(){
             var param = { uid : '<?php echo $user['uid'];?>', hh: $('#txtHH').val() , mm: $('#txtMM').val() }

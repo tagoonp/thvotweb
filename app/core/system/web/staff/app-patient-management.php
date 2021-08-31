@@ -202,6 +202,12 @@ $selected_location = $db->fetch($strSQL, false);
             <div class="content-body">
             <h2 class="mb-2">แก้ไขข้อมูลผู้ป่วย</h2>
                 <!-- users edit start -->
+                <div class="row">
+                    <div class="col-12 pb-1">
+                        <button class="btn btn-primary" onclick="window.location = 'app-patient-list'"><i class="bx bx-list-ul"></i> รายชื่อผู้ป่วยติดตาม</button>
+                    </div>
+                </div>
+                
                 <section class="users-edit">
                     <div class="card">
                         <div class="card-body">

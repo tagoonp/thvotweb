@@ -508,58 +508,6 @@ $menu = 12;
 
         $(function(){
 
-            // $('#txtUsername').blur(function(){
-            //     if(($('#txtUsername').val() != '') && ($('#txtRole').val() != '')){
-            //         $hcode = $('#txtHcode').select2('val')
-            //         var param = {
-            //             username: $('#txtUsername').val(), 
-            //             role: $('#txtRole').val(), 
-            //             hcode: $hcode
-            //         }
-            //         var jxr = $.post('../../../api/admin-api?stage=checkuser', param, function(){})
-            //                     .always(function(resp){
-            //                         console.log(resp);
-            //                         if(resp != 'Success'){
-            //                             Swal.fire(
-            //                                 {
-            //                                   icon: "error",
-            //                                   title: 'คำเตือน',
-            //                                   text: 'บัญชีผู้ใช้งานนี้ถูกใช้งานแล้ว',
-            //                                   confirmButtonClass: 'btn btn-danger',
-            //                                 }
-            //                               )
-            //                             return false;
-            //                         }
-            //                     })
-            //     }
-            // })
-
-            // $('#txtRole').change(function(){
-            //     if(($('#txtUsername').val() != '') && ($('#txtRole').val() != '')){
-            //         $hcode = $('#txtHcode').select2('val')
-            //         var param = {
-            //             username: $('#txtUsername').val(), 
-            //             role: $('#txtRole').val(), 
-            //             hcode: $hcode
-            //         }
-            //         var jxr = $.post('../../../api/admin-api?stage=checkuser', param, function(){})
-            //                     .always(function(resp){
-            //                         console.log(resp);
-            //                         if(resp != 'Success'){
-            //                             Swal.fire(
-            //                                 {
-            //                                   icon: "error",
-            //                                   title: 'คำเตือน',
-            //                                   text: 'บัญชีผู้ใช้งานนี้ถูกใช้งานแล้ว',
-            //                                   confirmButtonClass: 'btn btn-danger',
-            //                                 }
-            //                               )
-            //                             return false;
-            //                         }
-            //                     })
-            //     }
-            // })
-
             $('#txtHcodeObs').change(function(){
                 $dt = $('#txtHcodeObs').select2('data')[0].id;
                 if($dt == ''){
@@ -571,7 +519,7 @@ $menu = 12;
                                     $('#txtStaff').html('<option value="">-- เลือกพี่เลี้ยง --</option>')
                                     if(snap.status == 'Success'){
                                         snap.data.forEach(i=>{
-                                            $('#txtStaff').append('<option value="' + i.hcode + '">' + i.fname + ' ' + i.lname + '</option>')
+                                            $('#txtStaff').append('<option value="' + i.uid + '">' + i.fname + ' ' + i.lname + '</option>')
                                         })
                                     }
                                })

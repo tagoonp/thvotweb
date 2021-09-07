@@ -522,6 +522,8 @@ var admin_user = {
               return false;
         }
 
+        preload.show()
+
         var param = {
             username: $('#txtUsername').val(),
             fname: $('#txtFname').val(),
@@ -531,11 +533,20 @@ var admin_user = {
             status: $('#txtStatus').val(),
             verify: $('#txtVerify').val(),
             password: $('#txtPassword1').val(),
+            email: $('#txtEmail').val(),
         }
 
+        console.log(param);
+        return ;
         var jxr = $.post(api_url + 'user?stage=create', param, function(){})
                    .always(function(resp){
-                    //    $('#txtEndmonitor').val(resp)
+                        if(snap.status == 'Success'){
+
+                        }else if(snap.status == 'Duplicate'){
+
+                        }else{
+
+                        }
                    })
 
     },

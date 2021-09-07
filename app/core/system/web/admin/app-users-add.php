@@ -38,6 +38,7 @@ $menu = 2;
     <link rel="stylesheet" type="text/css" href="../../../app-assets/vendors/css/tables/datatable/buttons.bootstrap4.min.css">
     <link rel="stylesheet" type="text/css" href="../../../app-assets/vendors/css/extensions/sweetalert2.min.css">
     <link rel="stylesheet" type="text/css" href="../../../app-assets/vendors/css/forms/select/select2.min.css">
+    <link rel="stylesheet" type="text/css" href="../../../tools/preload.js/dist/css/preload.css">
     <!-- END: Vendor CSS-->
 
     <!-- BEGIN: Theme CSS-->
@@ -318,6 +319,7 @@ $menu = 2;
     <script src="../../../app-assets/vendors/js/extensions/sweetalert2.all.min.js"></script>
     <script src="../../../app-assets/vendors/js/extensions/polyfill.min.js"></script>
     <script src="../../../app-assets/vendors/js/forms/select/select2.full.min.js"></script>
+    <script src="../../../tools/preload.js/dist/js/preload.js"></script>
     <!-- END: Page Vendor JS-->
 
     <!-- BEGIN: Theme JS-->
@@ -337,6 +339,7 @@ $menu = 2;
     <!-- END: Page JS-->
     <script>
         $(document).ready(function(){
+            preload.hide()
             $(".select2").select2({
             dropdownAutoWidth: true,
             width: '100%'
@@ -383,31 +386,31 @@ $menu = 2;
         })
 
         $(function(){
-            $('#txtRole').change(function(){
-                if($('#txtRole').val() != ''){
-                    $hcode = $('#txtHcode').select2('val')
-                    var param = {
-                        username: $('#txtUsername').val(), 
-                        role: $('#txtRole').val(), 
-                        hcode: $hcode
-                    }
-                    var jxr = $.post('../../../api/admin-api?stage=checkuser', param, function(){})
-                                .always(function(resp){
-                                    console.log(resp);
-                                    if(resp != 'Success'){
-                                        Swal.fire(
-                                            {
-                                              icon: "error",
-                                              title: 'คำเตือน',
-                                              text: 'บัญชีผู้ใช้งานนี้ถูกใช้งานแล้ว',
-                                              confirmButtonClass: 'btn btn-danger',
-                                            }
-                                          )
-                                        return false;
-                                    }
-                                })
-                }
-            })
+            // $('#txtRole').change(function(){
+            //     if($('#txtRole').val() != ''){
+            //         $hcode = $('#txtHcode').select2('val')
+            //         var param = {
+            //             username: $('#txtUsername').val(), 
+            //             role: $('#txtRole').val(), 
+            //             hcode: $hcode
+            //         }
+            //         var jxr = $.post('../../../api/admin-api?stage=checkuser', param, function(){})
+            //                     .always(function(resp){
+            //                         console.log(resp);
+            //                         if(resp != 'Success'){
+            //                             Swal.fire(
+            //                                 {
+            //                                   icon: "error",
+            //                                   title: 'คำเตือน',
+            //                                   text: 'บัญชีผู้ใช้งานนี้ถูกใช้งานแล้ว',
+            //                                   confirmButtonClass: 'btn btn-danger',
+            //                                 }
+            //                               )
+            //                             return false;
+            //                         }
+            //                     })
+            //     }
+            // })
         })
     </script>
 </body>

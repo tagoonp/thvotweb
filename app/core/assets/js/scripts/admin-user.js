@@ -522,7 +522,22 @@ var admin_user = {
               return false;
         }
 
-        // $('.useraddform').submit()
+        var param = {
+            username: $('#txtUsername').val(),
+            fname: $('#txtFname').val(),
+            lname: $('#txtLname').val(),
+            role: $('#txtRole').val(),
+            phone: $('#txtPhone').val(),
+            status: $('#txtStatus').val(),
+            verify: $('#txtVerify').val(),
+            password: $('#txtPassword1').val(),
+        }
+
+        var jxr = $.post(api_url + 'user?stage=create', param, function(){})
+                   .always(function(resp){
+                    //    $('#txtEndmonitor').val(resp)
+                   })
+
     },
     calculate_findate(){
 

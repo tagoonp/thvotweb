@@ -180,8 +180,8 @@ if($stage == 'login'){
         }
     }else{
 
-        echo $strSQL;
-        die();
+        // echo $strSQL;
+        // die();
 
         ?>
         <script>

@@ -155,7 +155,7 @@ $menu = 2;
                     <div class="card">
                         <div class="card-body">
                             <!-- users edit account form start -->
-                            <form class="useraddform" onsubmit="return admin_user.check_add_form()" method="post" action="../../../controller/user?stage=create">
+                            <form class="useraddform" onsubmit="admin_user.check_add_form(); return false;" method="post" action="../../../controller/user?stage=create">
                                         <div class="row">
                                             <div class="col-12 col-sm-6">
                                                 <div class="row">

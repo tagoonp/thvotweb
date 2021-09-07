@@ -10,6 +10,18 @@ if(!isset($_GET['stage'])){ $db->close(); header('Location: ../404?stage=001'); 
 $stage = mysqli_real_escape_string($conn, $_GET['stage']);
 $return = array();
 
+if($stage == 'create'){
+    if(
+        (!isset($_GET['uid'])) ||
+        (!isset($_GET['hcode']))
+    ){
+        $return['status'] = 'Fail (x101)';
+        echo json_encode($return);
+        $db->close(); 
+        die();
+    }
+}
+
 if($stage == 'list'){
     if(
         (!isset($_GET['uid'])) ||

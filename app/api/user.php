@@ -12,14 +12,81 @@ $return = array();
 
 if($stage == 'create'){
     if(
-        (!isset($_GET['uid'])) ||
-        (!isset($_GET['hcode']))
+        (!isset($_REQUEST['uid'])) ||
+        (!isset($_REQUEST['username'])) ||
+        (!isset($_REQUEST['password'])) ||
+        (!isset($_REQUEST['fname'])) ||
+        (!isset($_REQUEST['lname'])) ||
+        (!isset($_REQUEST['phone'])) ||
+        (!isset($_REQUEST['role']))
     ){
         $return['status'] = 'Fail (x101)';
         echo json_encode($return);
         $db->close(); 
         die();
     }
+
+    $staff_id = mysqli_real_escape_string($conn, $_REQUEST['uid']);
+    $username = mysqli_real_escape_string($conn, $_REQUEST['username']);
+    $password = mysqli_real_escape_string($conn, $_REQUEST['password']);
+    $fname = mysqli_real_escape_string($conn, $_REQUEST['fname']);
+    $lname = mysqli_real_escape_string($conn, $_REQUEST['lname']);
+    $role = mysqli_real_escape_string($conn, $_REQUEST['role']);
+    $phone = mysqli_real_escape_string($conn, $_REQUEST['phone']);
+    $status = mysqli_real_escape_string($conn, $_REQUEST['status']);
+    $verify = mysqli_real_escape_string($conn, $_REQUEST['verify']);
+    $email = mysqli_real_escape_string($conn, $_REQUEST['email']);
+    $hcode = mysqli_real_escape_string($conn, $_REQUEST['hcode']);
+
+    $strSQL = "SELECT * FROM vot2_account WHERE username = '$username' AND delete_status = '0'";
+    $res = $db->fetch($strSQL, true, true);
+    if(($res) && ($res['status'])){
+        $return['status'] = 'Duplicate';
+        echo json_encode($return);
+        $db->close(); 
+        die();
+    }
+
+    $uid = base64_encode($dateuniversal.$username);
+    $passwordlen = strlen($password);
+    $password = password_hash($password, PASSWORD_DEFAULT);
+
+    $strSQL = "INSERT INTO vot2_account 
+               (
+                   `uid`, `username`, `password`, `password_len`, `email`, 
+                   `phone`, `role`, `hcode`, `profile_img`, `verify_status`, 
+                   `active_status`, `u_datetime`, `p_udatetime`, `reg_type`
+               ) 
+               VALUES 
+               (
+                   '$uid', '$username', '$password', '$passwordlen', '$email', 
+                   '$phone', '$role', '$hcode', 'https://thvot.com/thvotweb/app/uploads/usertemp.png', '$verify', 
+                   '$status', '$datetime', '$datetime', 'manual'
+               )
+              ";
+
+    $res = $db->insert($strSQL, false);
+    if($res){
+
+        $strSQL = "INSERT INTO vot2_userinfo (`fname`, `lname`, `phone`, `info_udatetime`, `info_use`, `info_uid`) 
+                   VALUES ('$fname', '$lname', '$phone', '$datetime', '1', '$uid')";
+        $res = $db->insert($strSQL, false);
+
+        $strSQL = "INSERT INTO vot2_log (`log_datetime`, `log_info`, `log_message`, `log_ip`, `log_uid`)
+                    VALUES ('$datetime', 'ลงทะเบียนผู้ใช้งานใหม่', '$fname $lname ($uid)', '$remote_ip', '$staff_id')
+                    ";
+        $db->insert($strSQL, false);
+
+        $return['status'] = 'Success';
+        $return['uid'] = $uid;
+    }else{
+        $return['status'] = 'Fail';
+        $return['error_stage'] = '4';
+        $return['error_msg'] = $strSQL;
+    }
+    echo json_encode($return);
+    $db->close(); 
+    die();
 }
 
 if($stage == 'list'){

@@ -525,6 +525,7 @@ var admin_user = {
         preload.show()
 
         var param = {
+            uid: $('#txtCurrentUid').val(),
             username: $('#txtUsername').val(),
             fname: $('#txtFname').val(),
             lname: $('#txtLname').val(),
@@ -534,18 +535,30 @@ var admin_user = {
             verify: $('#txtVerify').val(),
             password: $('#txtPassword1').val(),
             email: $('#txtEmail').val(),
+            hcode: $('#txtHcode').val()
         }
 
-        console.log(param);
-        return ;
-        var jxr = $.post(api_url + 'user?stage=create', param, function(){})
-                   .always(function(resp){
+        var jxr = $.post(api_url + 'user?stage=create', param, function(){}, 'json')
+                   .always(function(snap){
+                        console.log(snap);
                         if(snap.status == 'Success'){
-
+                            window.location = 'app-user-edit?id='+ snap.uid
                         }else if(snap.status == 'Duplicate'){
-
+                            preload.hide()
+                            Swal.fire({
+                                icon: "error",
+                                title: 'เกิดข้อผิดพลาด',
+                                text: 'ชื่อผู้ใช้งานนี้ถูกใช้แล้ว',
+                                confirmButtonClass: 'btn btn-danger',
+                            })
                         }else{
-
+                            preload.hide()
+                            Swal.fire({
+                                icon: "error",
+                                title: 'เกิดข้อผิดพลาด',
+                                text: 'ไม่สามารถเพิ่มผู้ใช้ใหม่ได้',
+                                confirmButtonClass: 'btn btn-danger',
+                            })
                         }
                    })
 

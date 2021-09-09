@@ -11,5 +11,12 @@
 </body>
 </html> -->
 <?php 
-header('Location: ./app/');
+// header('Location: app/');
+// echo "as";
 ?>
+
+<html>
+    <script>
+        window.location = './app/'
+    </script>
+</html>

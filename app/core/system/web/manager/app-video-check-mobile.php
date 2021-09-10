@@ -1,7 +1,7 @@
 <?php 
 require('../../../../../../database_config/thvot/config.inc.php');
 require('../../../../config/configuration.php');
-require('../../../../config/staff.role.php'); 
+require('../../../../config/database.php'); 
 
 
 $db = new Database();

@@ -2,6 +2,7 @@
 require('../../../../../../database_config/thvot/config.inc.php');
 require('../../../../config/configuration.php');
 require('../../../../config/database.php'); 
+require('../../../../config/manager.role.php'); 
 
 
 $db = new Database();
@@ -15,16 +16,22 @@ if(isset($_GET['stage'])){
 if(isset($_GET['uid'])){ 
     $uid = mysqli_real_escape_string($conn, $_GET['uid']);
     $_SESSION['thvot_uid'] = $uid;
+}else{
+    
 }
 
 if(isset($_GET['role'])){ 
     $role = mysqli_real_escape_string($conn, $_GET['role']);
     $_SESSION['thvot_role'] = $role;
+}else{
+    
 }
 
 if(isset($_GET['hcode'])){ 
     $hcode = mysqli_real_escape_string($conn, $_GET['hcode']);
     $_SESSION['thvot_hcode'] = $hcode;
+}else{
+    
 }
 
 
@@ -32,8 +39,6 @@ $_SESSION['thvot_session'] = session_id();
 
 $menu = 7;
 
-require('../../../../config/manager.role.php'); 
-require('../../../../config/user.inc.php'); 
 
 if(!(isset($_GET['id']))){
     $db->close();
@@ -60,15 +65,13 @@ $selected_location = $db->fetch($strSQL, false);
 
 <input type="hidden" id="txtPatient_id" value="<?php echo $id; ?>">
 <input type="hidden" id="txtCurrentUid" value="<?php echo $_SESSION['thvot_uid']; ?>">
-<input type="hidden" id="txtCurrentUrole" value="<?php echo $_SESSION['thvot_role']; ?>">
-<input type="hidden" id="txtCurrentUhcode" value="<?php echo $_SESSION['thvot_hcode']; ?>">
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0">
     <meta name="description" content="THVOT ระบบการติดตามยาผู้ป่วยวัณโรค">
     <meta name="author" content="Wisnior, Co, Ltd.">
-    <title>THVOT : พี่เลี้ยง</title>
+    <title>THVOT : Administator</title>
     <link rel="apple-touch-icon" href="../../../app-assets/images/ico/apple-icon-120.png">
     <link rel="shortcut icon" type="image/x-icon" href="../../../app-assets/images/ico/favicon.ico">
     <link href="https://fonts.googleapis.com/css?family=Rubik:300,400,500,600%7CIBM+Plex+Sans:300,400,500,600,700" rel="stylesheet">
@@ -185,14 +188,11 @@ $selected_location = $db->fetch($strSQL, false);
                                 <div id="calendar" class="calendar-content"></div>
                                     <div class="row">
                                         <div class="col-12 pt-2">
-                                        <button class="btn mr-1" style="widht: 20px; height:20px; background-color: #ff8400; border: solid; border-width: 2px 2px 2px 2px; border-color: #ff8400;"></button> ผู้ป่วยไม่ส่งวิดีโอ/กินยาไม่ครบ และไม่มีการติดตามให้ผู้ป่วยกินยาจนครบ <br>
-                                        <button class="btn mr-1" style="widht: 20px; height:20px; background-color: #fff; border: solid; border-width: 2px 2px 2px 2px; border-color: #ff8400;"></button> ผู้ป่วยไม่ส่งวิดีโอ/กินยาไม่ครบ และไม่สามารถติดตามให้ผู้ป่วยกินยาจนครบได้ <br>
-
-                                        <!-- <button class="btn mr-1" style="widht: 20px; height:20px; background-color: #b10000; border: solid; border-width: 2px 2px 2px 2px; border-color: #b10000;"></button> ผู้ป่วยส่งวิดีโอแล้วแต่ไม่มีการติดตามการกินยาจนครบ<br> -->
-                                        <button class="btn mr-1" style="widht: 20px; height:20px; background-color: #b10000; border: solid; border-width: 2px 2px 2px 2px; border-color: #b10000;"></button> ไม่มีการติดตามการกินยาจนเลยเวลาที่กำหนด (1 วัน) หลังจากผู้ป่วยส่งวิดีโอแล้ว<br>
-                                        <!-- <button class="btn mr-1" style="widht: 20px; height:20px; background-color: #fff; border: solid; border-width: 2px 2px 2px 2px; border-color: #b10000;"></button> ผู้ป่วยส่งวิดีโอแล้วแต่ไม่สามารดำเนินการกำกับการกินยาจนครบ <br> -->
-                                        <button class="btn mr-1" style="widht: 20px; height:20px; background-color: #fff; border: solid; border-width: 2px 2px 2px 2px; border-color: #b10000;"></button> ไม่มีการติดตามการกินยาจนเลยเวลาที่กำหนด (1 วัน) หลังจากผู้ป่วยส่งวิดีโอแล้ว เนื่องจากมีเหตุจำเป็น <br>
-                                        <button class="btn mr-1" style="widht: 20px; height:20px; background-color: #02b869; border: solid; border-width: 2px 2px 2px 2px; border-color: #02b869;"></button> ผู้ป่วยส่งวิดีโอและกำกับการกินยาจนครบเรียบร้อย<br>
+                                        <button class="btn mr-1" style="widht: 20px; height:20px; background-color: #ff8400; border: solid; border-width: 2px 2px 2px 2px; border-color: #ff8400;"></button> ผู้ป่วยไม่ส่งวิดีโอและไม่มีการติดตาม <br>
+                                        <button class="btn mr-1" style="widht: 20px; height:20px; background-color: #fff; border: solid; border-width: 2px 2px 2px 2px; border-color: #ff8400;"></button> ผู้ป่วยไม่ส่งวิดีโอและไม่สามารถติดตามได้ <br>
+                                        <button class="btn mr-1" style="widht: 20px; height:20px; background-color: #b10000; border: solid; border-width: 2px 2px 2px 2px; border-color: #b10000;"></button> ผู้ป่วยส่งวิดีโอแล้วแต่ไม่มีการติดตามการกินยา<br>
+                                        <button class="btn mr-1" style="widht: 20px; height:20px; background-color: #fff; border: solid; border-width: 2px 2px 2px 2px; border-color: #b10000;"></button> ผู้ป่วยส่งวิดีโอแล้วแต่ไม่สามารดำเนินการกำกับการกินยาได้ <br>
+                                        <button class="btn mr-1" style="widht: 20px; height:20px; background-color: #02b869; border: solid; border-width: 2px 2px 2px 2px; border-color: #02b869;"></button> ผู้ป่วยส่งวิดีโอและกำกับการกินยาเรียบร้อย<br>
 
                                         <button class="btn mr-1" style="widht: 20px; height:20px; background-color: #000; border: solid; border-width: 2px 2px 2px 2px; border-color: #000;"></button> ช่วงที่ผู้ป่วยหยุดยาเนื่องจากมีข้อบ่งชี้<br>
                                         <button class="btn pl-0 mr-1" style="widht: 20px; height:20px; background-color: #fff; border: solid; border-width: 0px; border-color: #fff;"><i class="bx bxs-phone-call"></i></button> มีการติดต่อกับผู้ป่วย<br>
@@ -221,23 +221,6 @@ $selected_location = $db->fetch($strSQL, false);
                 </div>
                 <div class="modal-body">
                     <div class="row">
-                        <div class="col-12 pb-2">
-                            <h3>รายการวิดีโอ</h3>
-                            <table class="table table-striped table-sm">
-                                <thead>
-                                    <tr>
-                                        <th class="th">VID</th>
-                                        <th class="th">วัน - เวลาที่ส่ง</th>
-                                        <th class="th">สถานะ</th>
-                                    </tr>
-                                </thead>
-                                <tbody id="dailyVideoList">
-                                    <tr>
-                                        <td colspan="4" class="text-center th">ไม่พบรายการวิดีโอ</td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
                         <div class="col-12">
                             <form action="">
                                 <div class="form-group dn">

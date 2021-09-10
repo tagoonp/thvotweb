@@ -74,7 +74,7 @@ $selected_location = $db->fetch($strSQL, false);
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0">
     <meta name="description" content="THVOT ระบบการติดตามยาผู้ป่วยวัณโรค">
     <meta name="author" content="Wisnior, Co, Ltd.">
-    <title>THVOT : พี่เลี้ยง</title>
+    <title>THVOT : Administator</title>
     <link rel="apple-touch-icon" href="../../../app-assets/images/ico/apple-icon-120.png">
     <link rel="shortcut icon" type="image/x-icon" href="../../../app-assets/images/ico/favicon.ico">
     <link href="https://fonts.googleapis.com/css?family=Rubik:300,400,500,600%7CIBM+Plex+Sans:300,400,500,600,700" rel="stylesheet">
@@ -227,7 +227,7 @@ $selected_location = $db->fetch($strSQL, false);
                                         </div>
                                     </div>
                                     <div class="col-3 text-right">
-                                        <button class="btn btn-primary"  data-toggle="modal" data-target="#addDrugModal"><i class="bx bx-plus"></i> เพิ่ม/แก้ไข รายการยา</button>
+                                        <button class="btn btn-primary"  data-toggle="modal" data-target="#addDrugModal"><i class="bx bx-plus"></i> เพิ่มรายการยา</button>
                                     </div>
                                 </div>
                             </div>
@@ -238,7 +238,7 @@ $selected_location = $db->fetch($strSQL, false);
                                     <div class="modal-dialog modal-dialog-centered modal-dialog-centered modal-dialog-scrollable">
                                         <div class="modal-content">
                                             <div class="modal-header bg-dark">
-                                                <h5 class="modal-title text-white th" id="exampleModalCenterTitle"><i class="bx bx-plus"></i> เพิ่ม/แก้ไข รายการยา</h5>
+                                                <h5 class="modal-title text-white th" id="exampleModalCenterTitle"><i class="bx bx-plus"></i> เพิ่มรายการยา</h5>
                                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                                     <i class="bx bx-x"></i>
                                                 </button>

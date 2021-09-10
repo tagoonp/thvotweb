@@ -15,7 +15,7 @@ if(isset($_GET['stage'])){
 
 require('../../../../config/user.inc.php'); 
 
-$menu = 7;
+$menu = 13;
 
 ?>
 <input type="hidden" id="txtCurrentUid" value="<?php echo $_SESSION['thvot_uid']; ?>">
@@ -151,15 +151,10 @@ $menu = 7;
 
             </div>
             <div class="content-body">
-                <h2 class="mb-2">รายชื่อผู้ป่วยทั้งหมด</h2>
+                <h2 class="mb-2">รายการวิดีโอทั้งหมด</h2>
                 <!-- users list start -->
                 <section class="users-list-wrapper">
                     <div class="users-list-table">
-                        <div class="row">
-                            <div class="col-12 pb-2">
-                                <button class="btn btn-primary" onclick="window.location = 'app-patient-add'"><i class="bx bx-plus"></i> ลงทะเบียนผู้ป่วยใหม่</button>
-                            </div>
-                        </div>
                         <div class="card">
                             <div class="card-body">
                                 <!-- datatable start -->
@@ -169,111 +164,42 @@ $menu = 7;
                                             <tr>
                                                 <th style="width: 40px;" class="th"></th>
                                                 <!-- <th class="th">บัญชีผู้ใช้งาน</th> -->
-                                                <th class="th" style="width: 360px;">ชื่อ - นามสกุล</th>
-                                                <th class="th" style="width: 150px;">การติดตาม</th>
-                                                <th class="th" style="width: 100px;">สถานะยา</th>
-                                                <th class="th" style="width: 100px;">วันที่เริ่มติดตาม</th>
-                                                <th class="th" style="width: 100px;">วันสิ้นสุดการติดตาม</th>
+                                                <th class="th" style="width: 360px;">วิดีโอ</th>
+                                                <th class="th" style="width: 100px;">สถานะการตรวจ</th>
+                                                <th class="th" style="width: 100px;">วัน-เวลาที่ส่ง</th>
+                                                <th class="th" style="width: 100px;">วัน-เวลาที่ตรวจ</th>
                                                 
                                             </tr>
                                         </thead>
                                         <tbody>
                                             <?php 
-                                            $strSQL = "SELECT a.*, a.ID user_id, b.* , regh.hserv rhserve, obsh.hserv hhserve, menh.hserv mhserve
-                                                            FROM vot2_account a INNER JOIN vot2_userinfo b ON a.uid = b.info_uid 
-                                                            LEFT JOIN vot2_projecthospital regh ON a.reg_hcode = regh.phoscode
-                                                            LEFT JOIN vot2_projecthospital obsh ON a.obs_hcode = obsh.phoscode
-                                                            LEFT JOIN vot2_projecthospital menh ON a.hcode = menh.phoscode
-                                                            WHERE 
-                                                            a.delete_status = '0' 
-                                                            AND b.info_use = '1'
-                                                            AND a.role = 'patient'
-                                                            AND (a.reg_hcode = '".$_SESSION['thvot_hcode']."' OR a.hcode = '".$_SESSION['thvot_hcode']."')
-                                                ";
+                                            $strSQL = "SELECT *
+                                                       FROM vot2_followup a INNER JOIN vot2_account b ON a.fu_username = b.username
+                                                       WHERE 
+                                                       b.delete_status = '0' 
+                                                       AND b.role = 'patient'
+                                                       AND b.obs_hcode = '$hcode'
+                                            ";
                                             $result_list = $db->fetch($strSQL, true, false);
                                             if($result_list['status']){
                                                 $c = 1;
                                                 foreach($result_list['data'] as $row){
                                                     ?>
                                                     <tr>
-                                                        <td class="text-left" style="vertical-align:top;">
-                                                            <a class="btn btn-icon btn-success rounded-circle" style="height: 36px; width: 36px; margin-bottom: 2px;" href="app-patient-management?uid=<?php echo $user['uid']; ?>&role=<?php echo $user['role']; ?>&hcode=<?php echo $user['hcode']; ?>&id=<?php echo $row['uid'];?>" class="mr-1"><i class="bx bx-edit-alt"></i></a>
-                                                            <a class="btn btn-icon btn-success rounded-circle" style="height: 36px; width: 36px; margin-bottom: 2px;" href="app-patient-drug?uid=<?php echo $user['uid']; ?>&role=<?php echo $user['role']; ?>&hcode=<?php echo $user['hcode']; ?>&id=<?php echo $row['uid'];?>" class="mr-1"><i class="bx bxs-capsule"></i></a>
-                                                            <?php 
-                                                            if($row['role'] != 'admin'){
-                                                                ?>
-                                                                <a class="btn btn-icon btn-outline-danger rounded-circle mb-1" style="height: 36px; width: 36px; margin-bottom: 2px;" href="Javascript:admin_user.delete_user('<?php echo $row['uid'];?>')" clsas=""><i class="bx bx-trash-alt text-danger"></i></a>
-                                                                <?php
-                                                            }else{
-                                                                ?>
-                                                                <a class="btn btn-icon btn-success-danger rounded-circle mb-1" style="height: 36px; width: 36px; margin-bottom: 2px;" href="#" clsas="" disabled><i class="bx bx-trash-alt text-muted"></i></a>
-                                                                <?php
-                                                            }
-                                                            ?>
+                                                        <td class="text-left" style="vertical-align:top; width: 50px;">
+                                                            <a class="btn btn-icon btn-success rounded-circle" style="height: 36px; width: 36px; margin-bottom: 2px;" href="app-patient-management?uid=<?php echo $user['uid']; ?>&role=<?php echo $user['role']; ?>&hcode=<?php echo $user['hcode']; ?>&id=<?php echo $row['uid'];?>" class="mr-1"><i class="bx bx-search"></i></a>    
                                                         </td>
                                                         <td class="th" style="vertical-align:top;">
-                                                            <div>ID : <?php echo $row['username']; ?></div>
-                                                            <span class="text-dark"><?php echo $row['fname']." ".$row['lname']; ?></span>
+                                                            <div>VID : <?php echo $row['fu_id']; ?></div>
+                                                            <span class="text-dark">Username : <?php echo $row['username']; ?></span>
                                                             <div  style="padding-top: 4px; font-size: 0.8em; ">
-                                                                ลงทะเบียน : <a href="Javascript:void(0);"><?php if($row['rhserve'] != null){ echo $row['rhserve'];} else { echo "-"; }; ?></a><br>
-                                                                ติดตามรักษา : <a href="Javascript:void(0);"><?php if($row['rhserve'] != null){ echo $row['mhserve'];} else { echo "-"; }; ?></a><br>
-                                                                พี่เลี้ยง : <a href="Javascript:void(0);"><?php if($row['rhserve'] != null){ echo $row['hhserve'];} else { echo "-"; }; ?></a>
-                                                            </div>
-                                                            <div class="" style="padding-top: 4px;">
-                                                            <?php 
-                                                            $ptt = $row['patient_type'];
-                                                            if($row['patient_type'] == 'DOT'){
-                                                                ?>
-                                                                <span class="badge badge-warning"><?php echo $ptt; ?></span>
-                                                                <?php
-                                                            }else if($row['patient_type'] == 'VOT'){
-                                                                ?>
-                                                                <span class="badge badge-primary"><?php echo $ptt; ?></span>
-                                                                <?php
-                                                            }
-                                                            
-                                                            ?>
+                                                                Video URL : <a href="<?php echo $row['fu_video']; ?>"><?php echo $row['fu_video']; ?></a>
                                                             </div>
                                                         </td>
-                                                        <td class="th" style="vertical-align:top;">
-                                                            <?php 
-                                                            if($row['stop_drug'] == '1'){
-                                                                ?>
-                                                                <i class="bx bxs-circle text-danger"></i> หยุดยา/หยุดติดตาม
-                                                                <div>
-                                                                    <span class="btn btn-light-warning btn-sm round th" style="cursor: pointer; margin-top: 5px;" onclick="back2Follow('<?php echo $row['uid']; ?>', '<?php echo $row['fname']." ".$row['lname']; ?>')">กลับมาติดตาม</span>
-                                                                </div>
-                                                                <?php
-                                                            }else{
-                                                                ?>
-                                                                <i class="bx bxs-circle text-success"></i> กำลังติดตาม
-                                                                <div>
-                                                                    <span class="btn btn-light-danger btn-sm round th" style="cursor: pointer; margin-top: 5px;" onclick="window.location='app-patient-calendar?uid=<?php echo $_SESSION['thvot_uid']; ?>&role=<?php echo $_SESSION['thvot_role']; ?>&hcode=<?php echo $_SESSION['thvot_hcode']; ?>&id=<?php echo $row['uid']; ?>'">สั่งหยุดยา</span>
-                                                                </div>
-                                                                <?php
-                                                            }
-                                                            ?>
-                                                        </td>
-                                                        <td class="th" style="vertical-align:top; width: 100px;">
-                                                            <?php 
-                                                            $strSQL = "SELECT * FROM vot2_med_transaction WHERE mt_patient_uid = '".$row['uid']."' AND mt_status = 'Y' LIMIT 1";
-                                                            $resCheckDrug = $db->fetch($strSQL, true, true);
-                                                            if(($resCheckDrug) && ($resCheckDrug['count'] > 0)){
-                                                                ?>
-                                                                <i class="bx bxs-circle text-success"></i> ยืนยันแล้ว
-                                                                <?php
-                                                            }else{
-                                                                ?>
-                                                                <i class="bx bxs-circle text-danger"></i> ยังไม่ยืนยัน
-                                                                <div>
-                                                                    <span class="btn btn-light-danger btn-sm round th" style="cursor: pointer; margin-top: 5px;" onclick="window.location='app-patient-drug?uid=<?php echo $_SESSION['thvot_uid']; ?>&role=<?php echo $_SESSION['thvot_role']; ?>&hcode=<?php echo $_SESSION['thvot_hcode']; ?>&id=<?php echo $row['uid']; ?>'">ไปยืนยัน</span>
-                                                                </div>
-                                                                <?php
-                                                            }
-                                                            ?>
-                                                        </td>
-                                                        <td class="th" style="vertical-align:top;"><?php echo $row['start_obsdate']; ?></td>
-                                                        <td class="th" style="vertical-align:top;"><?php echo $row['end_obsdate']; ?></td>
+                                                        
+                                                        <td class="th" style="vertical-align:top; width: 100px;">รอการตรวจสอบ</td>
+                                                        <td class="th" style="vertical-align:top;"><?php echo $row['fu_upload_datetime']; ?></td>
+                                                        <td class="th" style="vertical-align:top;"><?php echo $row['fu_verify_datetime']; ?></td>
                                                     </tr>
                                                     <?php
                                                     $c++;

@@ -4,6 +4,8 @@ require('../../../../config/configuration.php');
 require('../../../../config/database.php'); 
 require('../../../../config/manager.role.php'); 
 
+// die();
+
 $db = new Database();
 $conn = $db->conn();
 
@@ -13,7 +15,7 @@ if(isset($_GET['stage'])){
 }
 
 require('../../../../config/user.inc.php'); 
-
+// die();
 $menu = 0;
 ?>
 

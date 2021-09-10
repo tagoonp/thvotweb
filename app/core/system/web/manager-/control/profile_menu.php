@@ -2,8 +2,8 @@
         <div class="user-nav d-sm-flex d-none"><span class="user-name"><?php echo $user['fname']." ".$user['lname']; ?> <span class="badge badge-danger">(<?php 
         if($user['role'] == 'admin'){ echo "ผู้ดูแลระบบ"; }
         if($user['role'] == 'moderator'){ echo "ผู้รับผิดชอบส่วนกลาง"; }
-        if($user['role'] == 'manager'){ echo "พยาบาลคลินิก"; }
-        if($user['role'] == 'staff'){ echo "พี่เลี้ยง"; }
+        if($user['role'] == 'manager'){ echo "ผู้รับผิดชอบส่วนงานสถานบริการ"; }
+        if($user['role'] == 'staff'){ echo "ผู้ปฏิบัติงานบันทึกข้อมูล"; }
         if($user['role'] == 'patient'){ echo "ผู้ป่วย"; }
         ?>)</span></span><span class="user-status text-muted">
         

@@ -1,8 +1,8 @@
 <?php 
 require('../../../../../../database_config/thvot/config.inc.php');
 require('../../../../config/configuration.php');
-require('../../../../config/staff.role.php'); 
-
+require('../../../../config/database.php'); 
+require('../../../../config/manager.role.php'); 
 
 $db = new Database();
 $conn = $db->conn();
@@ -12,6 +12,10 @@ $stage = '';
 if(isset($_GET['stage'])){ 
     $stage = mysqli_real_escape_string($conn, $_GET['stage']);
 }
+
+require('../../../../config/user.inc.php'); 
+
+$menu = 8;
 
 if(
     (!isset($_GET['id'])) ||
@@ -24,31 +28,6 @@ if(
     die();
 }
 
-if(isset($_GET['uid'])){ 
-    $uid = mysqli_real_escape_string($conn, $_GET['uid']);
-    $_SESSION['thvot_uid'] = $uid;
-}
-
-if(isset($_GET['role'])){ 
-    $role = mysqli_real_escape_string($conn, $_GET['role']);
-    $_SESSION['thvot_role'] = $role;
-}
-
-if(isset($_GET['hcode'])){ 
-    $hcode = mysqli_real_escape_string($conn, $_GET['hcode']);
-    $_SESSION['thvot_hcode'] = $hcode;
-}
-
-
-$_SESSION['thvot_session'] = session_id();
-
-require('../../../../config/staff.role.php'); 
-require('../../../../config/user.inc.php'); 
-
-$menu = 8;
-
-
-
 $patient_id = mysqli_real_escape_string($conn, $_GET['id']);
 $video_id = mysqli_real_escape_string($conn, $_GET['vid']);
 
@@ -57,7 +36,6 @@ $strSQL = "SELECT * FROM vot2_account a INNER JOIN vot2_userinfo b ON a.username
            a.delete_status = '0' 
            AND a.active_status = '1'
            AND b.info_use = '1'
-           AND a.uid = '$patient_id'
           ";
 $resPatient = $db->fetch($strSQL, false);
 if(!$resPatient){
@@ -77,6 +55,8 @@ if(!$resVideo){
     header('Location: ./app-video-wait');
     die();
 }
+
+$next24time = date("Y-m-d H:i:s", strtotime($resVideo['fu_upload_datetime'] . " +25 hours"));
 ?>
 <input type="hidden" id="txtCurrentUid" value="<?php echo $_SESSION['thvot_uid']; ?>">
 <input type="hidden" id="txtCurrentUhcode" value="<?php echo $_SESSION['thvot_hcode']; ?>">
@@ -133,6 +113,33 @@ if(!$resVideo){
 
 <body class="vertical-layout vertical-menu-modern 2-columns  navbar-sticky footer-static  " data-open="click" data-menu="vertical-menu-modern" data-col="2-columns">
 
+    <!-- BEGIN: Header-->
+    <div class="header-navbar-shadow"></div>
+    <nav class="header-navbar main-header-navbar navbar-expand-lg navbar navbar-with-menu fixed-top ">
+        <div class="navbar-wrapper">
+            <div class="navbar-container content">
+                <div class="navbar-collapse" id="navbar-mobile">
+                    <div class="mr-auto float-left bookmark-wrapper d-flex align-items-center">
+                        <ul class="nav navbar-nav">
+                            <li class="nav-item mobile-menu d-xl-none mr-auto"><a class="nav-link nav-menu-main menu-toggle hidden-xs" href="javascript:void(0);"><i class="ficon bx bx-menu"></i></a></li>
+                        </ul>
+                    </div>
+                    <ul class="nav navbar-nav float-right">
+     
+                        <li class="nav-item d-none d-lg-block"><a class="nav-link nav-link-expand"><i class="ficon bx bx-fullscreen"></i></a></li>
+                        <?php 
+                        require("./control/notification.php");
+                        require("./control/profile_menu.php");
+                        ?>
+                        
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </nav>
+    <!-- END: Header-->
+
+
     <!-- BEGIN: Main Menu-->
     <div class="main-menu menu-fixed menu-light menu-accordion menu-shadow" data-scroll-to-active="true">
         <div class="navbar-header">
@@ -179,12 +186,15 @@ if(!$resVideo){
     <!-- END: Main Menu-->
 
     <!-- BEGIN: Content-->
-    <div class="app-content content bg-white">
+    <div class="app-content content">
         <div class="content-overlay"></div>
-        <div class="content-wrapper mt-0 p-0">
+        
+        <div class="content-wrapper">
+            <div class="content-header row">
+
+            </div>
             <div class="content-body">
-                <!-- users list start -->
-                <section class="users-list-wrapper">
+            <section class="users-list-wrapper">
                     <div class="users-list-table">
                         <div class="card" style="box-shadow: none;">
                             <div class="row">
@@ -223,16 +233,16 @@ if(!$resVideo){
                                             foreach ($resMed['data'] as $rowMed) {
 
                                                 $strSQL = "SELECT SUM(mt_med_take) as sm FROM vot2_patient_med_take 
-                                                            WHERE 
-                                                            mt_med_id = '".$rowMed['ID']."' 
-                                                            AND mt_med_name = '".$rowMed['med_name']."'
-                                                            AND mt_cnf = 'Y'
-                                                            AND mt_vid IN (
-                                                                SELECT fu_id FROM vot2_followup WHERE fu_date IN (
-                                                                    SELECT fu_date FROM vot2_followup WHERE fu_id = '$video_id'
-                                                                )
-                                                            )
-                                                            ";
+                                                           WHERE 
+                                                           mt_med_id = '".$rowMed['ID']."' 
+                                                           AND mt_med_name = '".$rowMed['med_name']."'
+                                                           AND mt_cnf = 'Y'
+                                                           AND mt_vid IN (
+                                                               SELECT fu_id FROM vot2_followup WHERE fu_date IN (
+                                                                   SELECT fu_date FROM vot2_followup WHERE fu_id = '$video_id'
+                                                               )
+                                                           )
+                                                           ";
                                                 $resMt = $db->fetch($strSQL, false);
                                                 // echo $strSQL;
                                                 $taken = 0;
@@ -240,6 +250,7 @@ if(!$resVideo){
                                                     $taken = $resMt['sm'];
                                                 }
                                                 // echo $strSQL;
+
                                                 ?>
                                                 <div class="row mb-0">
                                                      <div class="col-9">
@@ -251,27 +262,30 @@ if(!$resVideo){
                                                     <div class="col-3 text-left pr-0" style="padding-top: 0px;">
                                                         <?php 
                                                         if($resVideo['fu_status'] != 'complete'){
-                                                            ?>
-                                                            <fieldset class="form-group">
-                                                                <select class="form-control" id="txtMedQ_<?php echo $c; ?>" onchange="setDrugTake('<?php echo $c; ?>')">
-                                                                    <option value="">ระบุ</option>
-                                                                    <?php 
-                                                                    if($rowMed['med_amount'] != null){
-                                                                        for ($i=0; $i <= ($rowMed['med_amount'] - $taken) ; $i++) { 
+                                                            if($datetime < $next24time){
+                                                                ?>
+                                                                <fieldset class="form-group">
+                                                                    <select class="form-control" id="txtMedQ_<?php echo $c; ?>" onchange="setDrugTake('<?php echo $c; ?>')">
+                                                                        <option value="">ระบุ</option>
+                                                                        <?php 
+                                                                        if($rowMed['med_amount'] != null){
+                                                                            for ($i=0; $i <= ($rowMed['med_amount'] - $taken) ; $i++) { 
+                                                                                ?>
+                                                                                <option><?php echo $i; ?></option>
+                                                                                <?php
+                                                                            }
+                                                                        }else{
                                                                             ?>
-                                                                            <option><?php echo $i; ?></option>
+                                                                            <option value="0"><?php echo "0"; ?></option>
                                                                             <?php
                                                                         }
-                                                                    }else{
+                                                                        
                                                                         ?>
-                                                                        <option value="0"><?php echo "0"; ?></option>
-                                                                        <?php
-                                                                    }
-                                                                    
-                                                                    ?>
-                                                                </select>
-                                                            </fieldset>
-                                                            <?php
+                                                                    </select>
+                                                                </fieldset>
+                                                                <?php
+                                                            }
+                                                           
                                                         }else{
                                                             $strSQL = "SELECT mt_med_take FROM vot2_patient_med_take WHERE mt_med_name = '".$rowMed['med_name']."' AND mt_vid = '$video_id'";
                                                             $resPrev = $db->fetch($strSQL, false);
@@ -447,10 +461,10 @@ if(!$resVideo){
                                         </div>
 
                                         <div class="row">
-                                            <div class="col-12 col-sm-3 pt-1">
+                                            <div class="col-12 col-sm-6 pt-1">
                                             <?php 
                                             if($resVideo['fu_status'] != 'complete'){
-                                                $next24time = date("Y-m-d H:i:s", strtotime($resVideo['fu_upload_datetime'] . " +25 hours"));
+                                                
                                                 if($datetime <= $next24time){
                                                     ?><button class="btn btn-danger round btn-block" onclick="saveCheckVideo()" type="button">บันทึกผล</button><?php
                                                 }
@@ -465,12 +479,16 @@ if(!$resVideo){
                         </div>
                     </div>
                 </section>
-                <!-- users list ends -->
 
             </div>
         </div>
     </div>
     <!-- END: Content-->
+
+
+    <?php 
+    require("./control/footer.php");
+    ?>
 
 
     <!-- BEGIN: Vendor JS-->
@@ -550,7 +568,7 @@ if(!$resVideo){
                 confirmButtonColor: '#3085d6',
                 confirmButtonText: 'ยืนยันการบันทึกข้อมูล',
                 cancelButtonText: 'ตรวจสอบข้อมูลอีกครั้ง',
-                confirmButtonClass: 'btn btn-primary mb-1 mb-sm-0 mr-sm-1 mr-0',
+                confirmButtonClass: 'btn btn-primary mb-sm-0 mb-1 mr-sm-1 mr-0',
                 cancelButtonClass: 'btn btn-danger',
                 buttonsStyling: false,
             }).then(function (result) {
@@ -594,10 +612,26 @@ if(!$resVideo){
 
                     var jxr = $.post(api_url + 'patient?stage=videocheck', param, function(){}, 'json')
                                .always(function(snap){
+                                   console.log(snap);
                                     preload.hide()
                                     if(snap.status == 'Success'){
-                                       
-                                        window.location = 'closeinapp.php'
+                                        // window.location = 'closeinapp.php'
+                                        Swal.fire({
+                                            title: 'สำเร็จ',
+                                            text: 'วิดีโอได้ถูกตรวจสอบเรียบร้อยแล้ว',
+                                            icon: 'warning',
+                                            showCancelButton: false,
+                                            confirmButtonColor: '#3085d6',
+                                            confirmButtonText: 'รับทราบ',
+                                            // cancelButtonText: 'ตรวจสอบข้อมูลอีกครั้ง',
+                                            confirmButtonClass: 'btn btn-primary mb-1 mb-sm-0 mr-sm-1 mr-0',
+                                            cancelButtonClass: 'btn btn-danger',
+                                            buttonsStyling: false,
+                                        }).then(function (result) {
+                                            if (result.value) {
+                                                window.history.back()
+                                            }
+                                        })
                                     }else{
                                         Swal.fire(
                                             {

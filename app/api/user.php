@@ -10,6 +10,41 @@ if(!isset($_GET['stage'])){ $db->close(); header('Location: ../404?stage=001'); 
 $stage = mysqli_real_escape_string($conn, $_GET['stage']);
 $return = array();
 
+if($stage == 'user_reshcode'){
+    if(
+        (!isset($_REQUEST['uid'])) ||
+        (!isset($_REQUEST['hcode']))
+        (!isset($_REQUEST['role']))
+    ){
+        $return['status'] = 'Fail (x101)';
+        echo json_encode($return);
+        $db->close(); 
+        die();
+    }
+
+    $staff_id = mysqli_real_escape_string($conn, $_REQUEST['uid']);
+    $hcode = mysqli_real_escape_string($conn, $_REQUEST['hcode']);
+    $role = mysqli_real_escape_string($conn, $_REQUEST['role']);
+
+    $buffhcode1 = array();
+
+    if($role == 'manager'){
+        $strSQL = "SELECT phoscode, hserv FROM vot2_projecthospital WHERE hospcode = '$hcode' ";
+        $res = $db->fetch($strSQL, true, false);
+        if(($res) && ($res['status'])){
+            foreach ($res['data'] as $row) {
+                $buffhcode2 = array();
+                $buffhcode2['hcode'] = $row['phoscode'];
+                $buffhcode2['hname'] = $row['hserv'];
+                $buffhcode1[] = $buffhcode;
+            }
+        }
+        // $strSQL = "";
+    }else if($role == 'staff'){
+        
+    }
+}
+
 if($stage == 'update'){
     if(
         (!isset($_REQUEST['uid'])) ||

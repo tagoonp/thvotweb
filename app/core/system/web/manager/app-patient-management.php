@@ -2,7 +2,7 @@
 require('../../../../../../database_config/thvot/config.inc.php');
 require('../../../../config/configuration.php');
 require('../../../../config/database.php'); 
-require('../../../../config/staff.role.php'); 
+require('../../../../config/manager.role.php'); 
 
 $db = new Database();
 $conn = $db->conn();
@@ -67,6 +67,8 @@ $selected_location = $db->fetch($strSQL, false);
 
 <input type="hidden" id="txtPatient_id" value="<?php echo $id; ?>">
 <input type="hidden" id="txtCurrentUid" value="<?php echo $_SESSION['thvot_uid']; ?>">
+<input type="hidden" id="txtCurrentUrole" value="<?php echo $_SESSION['thvot_role']; ?>">
+<input type="hidden" id="txtCurrentUhcode" value="<?php echo $_SESSION['thvot_hcode']; ?>">
 
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -74,7 +76,7 @@ $selected_location = $db->fetch($strSQL, false);
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0">
     <meta name="description" content="THVOT ระบบการติดตามยาผู้ป่วยวัณโรค">
     <meta name="author" content="Wisnior, Co, Ltd.">
-    <title>THVOT : Administator</title>
+    <title>THVOT : พี่เลี้ยง</title>
     <link rel="apple-touch-icon" href="../../../app-assets/images/ico/apple-icon-120.png">
     <link rel="shortcut icon" type="image/x-icon" href="../../../app-assets/images/ico/favicon.ico">
     <link href="https://fonts.googleapis.com/css?family=Rubik:300,400,500,600%7CIBM+Plex+Sans:300,400,500,600,700" rel="stylesheet">
@@ -200,6 +202,12 @@ $selected_location = $db->fetch($strSQL, false);
             <div class="content-body">
             <h2 class="mb-2">แก้ไขข้อมูลผู้ป่วย</h2>
                 <!-- users edit start -->
+                <div class="row">
+                    <div class="col-12 pb-1">
+                        <button class="btn btn-primary" onclick="window.location = 'app-patient-list'"><i class="bx bx-list-ul"></i> รายชื่อผู้ป่วยติดตาม</button>
+                    </div>
+                </div>
+
                 <section class="users-edit">
                     <div class="card">
                         <div class="card-body">
@@ -325,6 +333,7 @@ $selected_location = $db->fetch($strSQL, false);
                                                         <option value="">-- เลือกประเภท --</option>
                                                         <option value="VOT" <?php if($selected_user['patient_type'] == 'VOT'){ echo "selected"; } ?>>ผู้ป่วย (VOT)</option>
                                                         <option value="DOT" <?php if($selected_user['patient_type'] == 'DOT'){ echo "selected"; } ?>>ผู้ป่วย (DOT)</option>
+                                                        <option value="TESTER" <?php if($selected_user['patient_type'] == 'TESTER'){ echo "selected"; } ?>>ผู้ป่วย (TESTER)</option>
                                                     </select>
                                                 </div>
                                                 
@@ -332,6 +341,13 @@ $selected_location = $db->fetch($strSQL, false);
                                                     <div class="controls">
                                                         <label>หมายเลขโทรศัพท์ : <span class="text-danger">*</span></label>
                                                         <input type="text" class="form-control" placeholder="Phone number" name="txtPhone" id="txtPhone" value="<?php echo $selected_user['phone'];?>">
+                                                    </div>
+                                                </div>
+
+                                                <div class="form-group">
+                                                    <div class="controls">
+                                                        <label>หมายเลขโทรศัพท์ญาติ : </label>
+                                                        <input type="text" class="form-control" placeholder="Phone number" name="txtRPhone" id="txtRPhone" value="<?php echo $selected_user['relative_phone'];?>">
                                                     </div>
                                                 </div>
 
@@ -678,7 +694,7 @@ $selected_location = $db->fetch($strSQL, false);
                                             $c++;
                                         }
                                     }else{
-                                        echo $strSQL;
+                                        // echo $strSQL;
                                     }
                                     ?>
                                 </tbody>
@@ -713,7 +729,7 @@ $selected_location = $db->fetch($strSQL, false);
                                                 ORDER BY log_datetime DESC
                                             ";
                                     $result_list = $db->fetch($strSQL, true, false);
-                                    if($result_list['status']){
+                                    if(($result_list) && ($result_list['status'])){
                                         $c = 1;
                                         foreach($result_list['data'] as $row){
                                             ?>
@@ -751,13 +767,31 @@ $selected_location = $db->fetch($strSQL, false);
                 </div>
                 <div class="modal-body">
                     <div class="row">
+                        <div class="col-12 pb-2">
+                            <h3>รายการวิดีโอ</h3>
+                            <table class="table table-striped table-sm">
+                                <thead>
+                                    <tr>
+                                        <th class="th">VID</th>
+                                        <th class="th">วัน - เวลาที่ส่ง</th>
+                                        <th class="th">สถานะ</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="dailyVideoList">
+                                    <tr>
+                                        <td colspan="4" class="text-center th">ไม่พบรายการวิดีโอ</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
                         <div class="col-12">
+                            <h3>ชี้แจงเหตุผล</h3>
                             <form action="">
                                 <div class="form-group dn">
-                                        <input type="text" id="txtCommentDate">
+                                    <input type="text" id="txtCommentDate">
                                 </div>
                                 <div class="form-group dn">
-                                        <input type="text" id="txtCommentPatientId" value="<?php echo $id; ?>">
+                                    <input type="text" id="txtCommentPatientId" value="<?php echo $id; ?>">
                                 </div>
 
                                 <div class="form-group">

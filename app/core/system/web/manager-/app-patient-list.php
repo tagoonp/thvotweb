@@ -180,16 +180,16 @@ $menu = 7;
                                         <tbody>
                                             <?php 
                                             $strSQL = "SELECT a.*, a.ID user_id, b.* , regh.hserv rhserve, obsh.hserv hhserve, menh.hserv mhserve
-                                                            FROM vot2_account a INNER JOIN vot2_userinfo b ON a.uid = b.info_uid 
-                                                            LEFT JOIN vot2_projecthospital regh ON a.reg_hcode = regh.phoscode
-                                                            LEFT JOIN vot2_projecthospital obsh ON a.obs_hcode = obsh.phoscode
-                                                            LEFT JOIN vot2_projecthospital menh ON a.hcode = menh.phoscode
-                                                            WHERE 
-                                                            a.delete_status = '0' 
-                                                            AND b.info_use = '1'
-                                                            AND a.role = 'patient'
-                                                            AND (a.reg_hcode = '".$_SESSION['thvot_hcode']."' OR a.hcode = '".$_SESSION['thvot_hcode']."')
-                                                ";
+                                                       FROM vot2_account a INNER JOIN vot2_userinfo b ON a.uid = b.info_uid 
+                                                       LEFT JOIN vot2_projecthospital regh ON a.reg_hcode = regh.phoscode
+                                                       LEFT JOIN vot2_projecthospital obsh ON a.obs_hcode = obsh.phoscode
+                                                       LEFT JOIN vot2_projecthospital menh ON a.hcode = menh.phoscode
+                                                       WHERE 
+                                                       a.delete_status = '0' 
+                                                       AND b.info_use = '1'
+                                                       AND a.role = 'patient'
+                                                       AND (a.reg_hcode = '".$_SESSION['thvot_hcode']."' OR a.hcode = '".$_SESSION['thvot_hcode']."')
+                                            ";
                                             $result_list = $db->fetch($strSQL, true, false);
                                             if($result_list['status']){
                                                 $c = 1;

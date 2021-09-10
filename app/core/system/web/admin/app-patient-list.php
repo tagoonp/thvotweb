@@ -225,6 +225,10 @@ $menu = 7;
                                                                 ?>
                                                                 <span class="badge badge-primary"><?php echo $ptt; ?></span>
                                                                 <?php
+                                                            }else if($row['patient_type'] == 'TESTER'){
+                                                                ?>
+                                                                <span class="badge badge-danger"><?php echo $ptt; ?></span>
+                                                                <?php
                                                             }
                                                             
                                                             ?>

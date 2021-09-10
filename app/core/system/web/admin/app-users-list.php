@@ -163,9 +163,8 @@ $menu = 1;
                                     <table id="users-list-datatable" class="table">
                                         <thead>
                                             <tr>
-                                                <th>Username</th>
+                                                <th>ผู้ใช้งาน</th>
                                                 <th>รหัสสถานบริการ</th>
-                                                <th>ชื่อ - นามสกุล</th>
                                                 <th>เวลาของกิจกรรมล่าสุด</th>
                                                 <th>ยืนยันการใช้งาน</th>
                                                 <th>สิทธิ์</th>
@@ -187,10 +186,12 @@ $menu = 1;
                                                 foreach($result_list['data'] as $row){
                                                     ?>
                                                     <tr>
-                                                        <td><?php echo $row['username']; ?></td>
-                                                        <td><a href="../../../html/ltr/vertical-menu-template/app-users-view.html"><?php echo $row['hcode']; ?></a>
+                                                        <td>
+                                                            <span style="font-size: 0.8em;">Username : <?php echo $row['username']; ?></span>
+                                                            <div class="text-dark"><?php echo $row['fname']." ".$row['lname']; ?></div>
+                                                            <div class="">สถานบริการ : <?php echo $row['fname']." ".$row['lname']; ?></div>
                                                         </td>
-                                                        <td><?php echo $row['fname']." ".$row['lname']; ?></td>
+                                                        <td><a href="../../../html/ltr/vertical-menu-template/app-users-view.html"><?php echo $row['hcode']; ?></a></td>
                                                         <td>30/04/2019</td>
                                                         <td class="pt-2">
                                                             <div class="custom-control mt-1 custom-switch custom-switch-success mr-2 mb-1">

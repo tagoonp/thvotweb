@@ -325,6 +325,7 @@ $selected_location = $db->fetch($strSQL, false);
                                                         <option value="">-- เลือกประเภท --</option>
                                                         <option value="VOT" <?php if($selected_user['patient_type'] == 'VOT'){ echo "selected"; } ?>>ผู้ป่วย (VOT)</option>
                                                         <option value="DOT" <?php if($selected_user['patient_type'] == 'DOT'){ echo "selected"; } ?>>ผู้ป่วย (DOT)</option>
+                                                        <option value="TESTER" <?php if($selected_user['patient_type'] == 'TESTER'){ echo "selected"; } ?>>ผู้ป่วย (TESTER)</option>
                                                     </select>
                                                 </div>
                                                 

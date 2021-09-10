@@ -10,6 +10,63 @@ if(!isset($_GET['stage'])){ $db->close(); header('Location: ../404?stage=001'); 
 $stage = mysqli_real_escape_string($conn, $_GET['stage']);
 $return = array();
 
+if($stage == 'update'){
+    if(
+        (!isset($_REQUEST['uid'])) ||
+        (!isset($_REQUEST['username'])) ||
+        (!isset($_REQUEST['fname'])) ||
+        (!isset($_REQUEST['lname'])) ||
+        (!isset($_REQUEST['phone'])) ||
+        (!isset($_REQUEST['role']))
+    ){
+        $return['status'] = 'Fail (x101)';
+        echo json_encode($return);
+        $db->close(); 
+        die();
+    }
+
+    $staff_id = mysqli_real_escape_string($conn, $_REQUEST['uid']);
+    $username = mysqli_real_escape_string($conn, $_REQUEST['username']);
+    $fname = mysqli_real_escape_string($conn, $_REQUEST['fname']);
+    $lname = mysqli_real_escape_string($conn, $_REQUEST['lname']);
+    $role = mysqli_real_escape_string($conn, $_REQUEST['role']);
+    $phone = mysqli_real_escape_string($conn, $_REQUEST['phone']);
+    $status = mysqli_real_escape_string($conn, $_REQUEST['status']);
+    $verify = mysqli_real_escape_string($conn, $_REQUEST['verify']);
+    $email = mysqli_real_escape_string($conn, $_REQUEST['email']);
+    $hcode = mysqli_real_escape_string($conn, $_REQUEST['hcode']);
+
+    $strSQL = "SELECT * FROM vot2_account WHERE username = '$username' AND delete_status = '0'";
+    $res1 = $db->fetch($strSQL, false, false);
+    if($res1){
+        $strSQL = "UPDATE vot2_account SET hcode = '$hcode', phone = '$phone', role = '$role', verify_status = '$verify', active_status = '$status' WHERE username = '$username'";
+        $res = $db->execute($strSQL);
+
+        $strSQL = "UPDATE vot2_userinfo SET info_use = '0' WHERE info_uid = '".$res1['uid']."'";
+        $res = $db->execute($strSQL);
+
+        $strSQL = "INSERT INTO vot2_userinfo (`fname`, `lname`, `phone`, `info_udatetime`, `info_use`, `info_uid`) 
+                   VALUES ('$fname', '$lname', '$phone', '$datetime', '1', '".$res1['uid']."')";
+        $res = $db->insert($strSQL, false);
+
+        $strSQL = "INSERT INTO vot2_log (`log_datetime`, `log_info`, `log_message`, `log_ip`, `log_uid`)
+                    VALUES ('$datetime', 'ลงทะเบียนผู้ใช้งานใหม่', '$fname $lname ('".$res1['uid']."')', '$remote_ip', '$staff_id')
+                    ";
+        $db->insert($strSQL, false);
+
+        $return['status'] = 'Success';
+
+    }else{
+        $return['status'] = 'Fail';
+        $return['error_stage'] = '4';
+        $return['error_msg'] = $strSQL;
+    }
+
+    echo json_encode($return);
+    $db->close(); 
+    die();
+}
+
 if($stage == 'create'){
     if(
         (!isset($_REQUEST['uid'])) ||

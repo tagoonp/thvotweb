@@ -14,6 +14,18 @@ if(isset($_GET['stage'])){
 
 require('../../../../config/user.inc.php'); 
 
+if(isset($_GET['id'])){ 
+    $id = mysqli_real_escape_string($conn, $_GET['id']);
+}else{
+    header('Location: ./app-users-list');
+}
+
+$strSQL = "SELECT * FROM vot2_account a INNER JOIN vot2_userinfo b ON a.uid = b.info_uid WHERE a.uid = '$id' AND a.delete_status = '0' AND b.info_use = '1'";
+$userData = $db->fetch($strSQL, false, false);
+
+if(!$userData){
+    header('Location: ./app-users-list');
+}
 $menu = 2;
 ?>
 
@@ -150,7 +162,7 @@ $menu = 2;
             <div class="content-header row">
             </div>
             <div class="content-body">
-            <h2 class="mb-2">เพิ่มผู้ใช้งานใหม่</h2>
+            <h2 class="mb-2">แก้ไขข้อมูลผู้ใช้งาน</h2>
                 <!-- users edit start -->
                 <div class="row">
                     <div class="col-12 pb-1">
@@ -161,41 +173,15 @@ $menu = 2;
                     <div class="card">
                         <div class="card-body">
                             <!-- users edit account form start -->
-                            <form class="useraddform" onsubmit="admin_user.check_add_form(); return false;" method="post" action="../../../controller/user?stage=create">
+                            <form class="useraddform" onsubmit="admin_user.check_update_form(); return false;" method="post" action="../../../controller/user?stage=create">
                                         <div class="row">
                                             <div class="col-12 col-sm-6">
                                                 <div class="row">
-                                                    <div class="col-3">
-                                                        <div class="form-group">
-                                                            <div class="controls">
-                                                                <label>Prefix (เฉพาะผู้ป่วย)</label>
-                                                                <input type="text" class="form-control" placeholder=""  name="txtPrefix" id="txtPrefix" readonly>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-9">
+                                                    <div class="col-12">
                                                         <div class="form-group">
                                                             <div class="controls">
                                                                 <label>Username / HN ของผู้ป่วย : <span class="text-danger">*</span></label>
-                                                                <input type="text" class="form-control" placeholder="" id="txtUsername" name="txtUsername" >
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="row">
-                                                    <div class="col-12 col-sm-6">
-                                                        <div class="form-group">
-                                                            <div class="controls">
-                                                                <label>ตั้งรหัสผ่าน : <span class="text-danger">*</span></label>
-                                                                <input type="password" class="form-control" placeholder="" id="txtPassword1" name="txtPassword1" >
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-12 col-sm-6">
-                                                        <div class="form-group">
-                                                            <div class="controls">
-                                                                <label>ยืนยันรหัสผ่าน : <span class="text-danger">*</span></label>
-                                                                <input type="password" class="form-control" placeholder="" id="txtPassword2" name="txtPassword2" >
+                                                                <input type="text" class="form-control" placeholder="" id="txtUsername" name="txtUsername" value="<?php echo $userData['username']; ?>" readonly>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -205,13 +191,13 @@ $menu = 2;
                                                         <div class="col-12 col-sm-6">
                                                             <div class="controls">
                                                                 <label>ชื่อ : <span class="text-danger">*</span></label>
-                                                                <input type="text" class="form-control" placeholder="Name" name="txtFname" id="txtFname">
+                                                                <input type="text" class="form-control" placeholder="Name" name="txtFname" id="txtFname" value="<?php echo $userData['fname']; ?>">
                                                             </div>
                                                         </div>
                                                         <div class="col-12 col-sm-6">
                                                             <div class="controls">
                                                                 <label>นามสกุล : <span class="text-danger">*</span></label>
-                                                                <input type="text" class="form-control" placeholder="Surname"  name="txtLname" id="txtLname">
+                                                                <input type="text" class="form-control" placeholder="Surname"  name="txtLname" id="txtLname" value="<?php echo $userData['lname']; ?>">
                                                             </div>
                                                         </div>
                                                     </div>
@@ -219,13 +205,13 @@ $menu = 2;
                                                 <div class="form-group">
                                                     <div class="controls">
                                                         <label>หมายเลขโทรศัพท์ : <span class="text-danger">*</span></label>
-                                                        <input type="text" class="form-control" placeholder="Phone number" name="txtPhone" id="txtPhone">
+                                                        <input type="text" class="form-control" placeholder="Phone number" name="txtPhone" id="txtPhone"  value="<?php echo $userData['phone']; ?>">
                                                     </div>
                                                 </div>
                                                 <div class="form-group">
                                                     <div class="controls">
                                                         <label>E-mail :</label>
-                                                        <input type="email" class="form-control" placeholder="Email" name="txtEmail" id="txtEmail">
+                                                        <input type="email" class="form-control" placeholder="Email" name="txtEmail" id="txtEmail" value="<?php echo $userData['email']; ?>">
                                                     </div>
                                                 </div>
                                             </div>
@@ -243,7 +229,7 @@ $menu = 2;
                                                                 $c = 1;
                                                                 foreach($result_list['data'] as $row){
                                                                     ?>
-                                                                    <option value="<?php echo $row['phoscode'];?>" <?php  ?>>[<?php echo $row['phoscode'];?>] <?php echo $row['hserv'];?></option>
+                                                                    <option value="<?php echo $row['phoscode'];?>"  <?php if($userData['hcode'] == $row['phoscode']){ echo "selected"; } ?>>[<?php echo $row['phoscode'];?>] <?php echo $row['hserv'];?></option>
                                                                     <?php
                                                                 }
                                                             }
@@ -256,10 +242,10 @@ $menu = 2;
                                                     <label>สิทธิ์การใช้งาน : <span class="text-danger">*</span></label>
                                                     <select class="form-control" id="txtRole" name="txtRole">
                                                         <option value="">-- เลือกสิทธิ์ --</option>
-                                                        <option value="admin">ผู้ดูแลระบบ (Admin)</option>
-                                                        <option value="moderator">ผู้รับผิดชอบส่วนกลาง (Moderator)</option>
-                                                        <option value="manager">ผู้รับผิดชอบส่วนงานของสถานบริการ/พยาบาลคลินิก (Manager)</option>
-                                                        <option value="staff">ผู้ปฏิบัติงานติิดตาม/พี่เลี้ยง (Staff)</option>
+                                                        <option value="admin" <?php if($userData['role'] == 'admin'){ echo "selected"; } ?>>ผู้ดูแลระบบ (Admin)</option>
+                                                        <option value="moderator" <?php if($userData['role'] == 'moderator'){ echo "selected"; } ?>>ผู้รับผิดชอบส่วนกลาง (Moderator)</option>
+                                                        <option value="manager" <?php if($userData['role'] == 'manager'){ echo "selected"; } ?>>ผู้รับผิดชอบส่วนงานของสถานบริการ/พยาบาลคลินิก (Manager)</option>
+                                                        <option value="staff" <?php if($userData['role'] == 'staff'){ echo "selected"; } ?>>ผู้ปฏิบัติงานติิดตาม/พี่เลี้ยง (Staff)</option>
                                                         <!-- <option value="patient">ผู้ป่วย (VOT)</option> -->
                                                     </select>
                                                 </div>
@@ -268,22 +254,21 @@ $menu = 2;
                                                     <label>สถานะการใช้งาน : <span class="text-danger">*</span></label>
                                                     <select class="form-control" id="txtStatus" name="txtStatus">
                                                         <option value="" selected>-- เลือกสถานะ --</option>
-                                                        <option value="1">เปิดใช้งาน</option>
-                                                        <option value="0">ปิดใช้งาน</option>
+                                                        <option value="1" <?php if($userData['active_status'] == '1'){ echo "selected"; } ?>>เปิดใช้งาน</option>
+                                                        <option value="0" <?php if($userData['active_status'] == '0'){ echo "selected"; } ?>>ปิดใช้งาน</option>
                                                     </select>
                                                 </div>
                                                 <div class="form-group">
                                                     <label>สถานะการตรวจสอบบัญชีผู้ใช้ : <span class="text-danger">*</span></label>
                                                     <select class="form-control" id="txtVerify" name="txtVerify">
                                                         <option value="" selected>-- เลือกสถานะ --</option>
-                                                        <option value="1">ยืนยันแล้ว</option>
-                                                        <option value="0">รอการยืนยัน</option>
+                                                        <option value="1" <?php if($userData['verify_status'] == '1'){ echo "selected"; } ?>>ยืนยันแล้ว</option>
+                                                        <option value="0" <?php if($userData['verify_status'] == '0'){ echo "selected"; } ?>>รอการยืนยัน</option>
                                                     </select>
                                                 </div>
                                                 
                                             </div>
                                             <div class="col-12 d-flex flex-sm-row flex-column justify-content-end mt-1">
-                                                <!-- <button type="button" onclick="admin_user.check_add_form()" class="btn btn-primary glow mb-1 mb-sm-0 mr-0 mr-sm-1">บันทึก</button> -->
                                                 <button type="submit" class="btn btn-primary glow mb-1 mb-sm-0 mr-0 mr-sm-1" style="display-: none;">บันทึก</button>
                                                 <button type="reset" class="btn btn-light">รีเซ็ต</button>
                                             </div>

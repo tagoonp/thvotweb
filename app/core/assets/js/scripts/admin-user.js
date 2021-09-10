@@ -484,6 +484,87 @@ var admin_user = {
               return false;
         }
     },
+    check_update_form(){
+        $check = 0
+        $('.form-control').removeClass('is-invalid')
+        $('.select-error').css({'border': 'none'});
+        if($('#txtUsername').val() == ''){ $check++; $('#txtUsername').addClass('is-invalid') }
+        if($('#txtFname').val() == ''){ $check++; $('#txtFname').addClass('is-invalid') }
+        if($('#txtLname').val() == ''){ $check++; $('#txtLname').addClass('is-invalid') }
+        if($('#txtRole').val() == ''){ $check++; $('#txtRole').addClass('is-invalid') }
+        if($('#txtPhone').val() == ''){ $check++; $('#txtPhone').addClass('is-invalid') }
+        if($('#txtStatus').val() == ''){ $check++; $('#txtStatus').addClass('is-invalid') }
+        if($('#txtVerify').val() == ''){ $check++; $('#txtVerify').addClass('is-invalid') }
+
+        $('[data-required]').each(function() {
+            if (!$(this).val()) {
+                $check++;
+              if ($(this).data('select2')) {
+                $('.select-error').css({
+                  'border': '1px solid #FF5B5C',
+                  'border-radius': '4px'
+                });
+            }
+        }});
+
+        if($check != 0){
+            Swal.fire(
+                {
+                  icon: "error",
+                  title: 'คำเตือน',
+                  text: 'กรุณากรอกข้อมูลให้ครบถ้วน',
+                  confirmButtonClass: 'btn btn-danger',
+                }
+              )
+              return false;
+        }
+
+        preload.show()
+
+        var param = {
+            uid: $('#txtCurrentUid').val(),
+            username: $('#txtUsername').val(),
+            fname: $('#txtFname').val(),
+            lname: $('#txtLname').val(),
+            role: $('#txtRole').val(),
+            phone: $('#txtPhone').val(),
+            status: $('#txtStatus').val(),
+            verify: $('#txtVerify').val(),
+            email: $('#txtEmail').val(),
+            hcode: $('#txtHcode').val()
+        }
+
+        var jxr = $.post(api_url + 'user?stage=update', param, function(){}, 'json')
+                   .always(function(snap){
+                        console.log(snap);
+                        if(snap.status == 'Success'){
+                            preload.hide()
+                            Swal.fire({
+                                icon: "success",
+                                title: 'สำเร็จ',
+                                text: 'ปรับปรุงข้อมูลสำเร็จ',
+                                confirmButtonClass: 'btn btn-success',
+                            })
+                                
+                        }else if(snap.status == 'Duplicate'){
+                            preload.hide()
+                            Swal.fire({
+                                icon: "error",
+                                title: 'เกิดข้อผิดพลาด',
+                                text: 'ชื่อผู้ใช้งานนี้ถูกใช้แล้ว',
+                                confirmButtonClass: 'btn btn-danger',
+                            })
+                        }else{
+                            preload.hide()
+                            Swal.fire({
+                                icon: "error",
+                                title: 'เกิดข้อผิดพลาด',
+                                text: 'ไม่สามารถเพิ่มผู้ใช้ใหม่ได้',
+                                confirmButtonClass: 'btn btn-danger',
+                            })
+                        }
+                   })
+    },
     check_add_form(){
         $check = 0
         $('.form-control').removeClass('is-invalid')
@@ -542,7 +623,7 @@ var admin_user = {
                    .always(function(snap){
                         console.log(snap);
                         if(snap.status == 'Success'){
-                            window.location = 'app-user-edit?id='+ snap.uid
+                            window.location = 'app-users-edit?id='+ snap.uid
                         }else if(snap.status == 'Duplicate'){
                             preload.hide()
                             Swal.fire({

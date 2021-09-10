@@ -202,8 +202,8 @@ $menu = 1;
                                                             <?php 
                                                             if($row['role'] == 'admin'){ echo "ผู้ดูแลระบบ"; }
                                                             if($row['role'] == 'moderator'){ echo "ผู้รับผิดชอบส่วนกลาง"; }
-                                                            if($row['role'] == 'manager'){ echo "ผู้รับผิดชอบส่วนงานของสถานบริการ"; }
-                                                            if($row['role'] == 'staff'){ echo "ผู้ปฏิบัติงานบันทึกข้อมูล"; }
+                                                            if($row['role'] == 'manager'){ echo "พยาบาลคลินิก"; }
+                                                            if($row['role'] == 'staff'){ echo "พี่เลี้ยง"; }
                                                             if($row['role'] == 'patient'){ echo "ผู้ป่วย"; }
                                                             ?>
                                                         </td>

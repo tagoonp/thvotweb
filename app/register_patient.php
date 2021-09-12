@@ -140,7 +140,7 @@ $photo = mysqli_real_escape_string($conn, $_GET['photo']);
                                                 </div>
 
                                                 <div class="form-group mb-50">
-                                                    <label class="" for="exampleInputPassword1">TB NO. (ใน NTIP) : <span class="text-danger">*</span></label>
+                                                    <label class="" for="exampleInputPassword1">TB NO. (ใน NTIP) : </label>
                                                     <input type="text" class="form-control" id="txtUsername" name="txtUsername">
                                                 </div>
 

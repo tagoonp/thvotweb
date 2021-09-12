@@ -21,7 +21,7 @@ $(document).ready(function () {
             'columnDefs': [
                 {
                     "orderable": false,
-                    "targets": [7]
+                    "targets": [6]
                 }]
         });
     };

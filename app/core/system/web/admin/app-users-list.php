@@ -175,6 +175,7 @@ $menu = 1;
                                         <tbody>
                                             <?php 
                                             $strSQL = "SELECT a.*, a.ID user_id, b.* FROM vot2_account a INNER JOIN vot2_userinfo b ON a.uid = b.info_uid 
+                                                       LEFT JOIN vot2_projecthospital c ON a.hcode = c.phoscode
                                                       WHERE 
                                                       a.delete_status = '0' 
                                                       AND b.info_use = '1'
@@ -189,7 +190,7 @@ $menu = 1;
                                                         <td>
                                                             <span style="font-size: 0.8em;">Username : <?php echo $row['username']; ?></span>
                                                             <div class="text-dark"><?php echo $row['fname']." ".$row['lname']; ?></div>
-                                                            <div class="">สถานบริการ : <?php echo $row['fname']." ".$row['lname']; ?></div>
+                                                            <div class="">สถานบริการ : <?php echo $row['hserv']; ?></div>
                                                         </td>
                                                         <td><a href="../../../html/ltr/vertical-menu-template/app-users-view.html"><?php echo $row['hcode']; ?></a></td>
                                                         <td>30/04/2019</td>

@@ -174,7 +174,7 @@ $menu = 1;
                                         </thead>
                                         <tbody>
                                             <?php 
-                                            $strSQL = "SELECT a.*, a.ID user_id, b.* FROM vot2_account a INNER JOIN vot2_userinfo b ON a.uid = b.info_uid 
+                                            $strSQL = "SELECT a.*, a.ID user_id, b.*, c.* FROM vot2_account a INNER JOIN vot2_userinfo b ON a.uid = b.info_uid 
                                                        LEFT JOIN vot2_projecthospital c ON a.hcode = c.phoscode
                                                       WHERE 
                                                       a.delete_status = '0' 

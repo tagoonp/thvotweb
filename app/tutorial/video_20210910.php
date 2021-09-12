@@ -6,7 +6,7 @@
     </head>
 
     <body>
-        <video width="100%"  autoplay controls>
+        <video width="100%"  autoplay >
             <source src="../img/TBvideo.mp4" type="video/mp4">
             Your browser does not support the video tag.
         </video>

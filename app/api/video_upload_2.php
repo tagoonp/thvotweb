@@ -63,9 +63,17 @@ if (!empty($_FILES)) {
 
         $strSQLx = $strSQL;
 
-        $strSQL = "UPDATE vot2_followup_dummy SET fud_status = 'in-complete' WHERE fud_uid = '$uid' AND fud_date = '$date'";
-        $db->execute($strSQL);
+        $strSQL = "SELECT * FROM vot2_followup_dummy WHERE fud_uid = '$uid' AND fud_date = '$date'";
+        $resC = $db->fetch($strSQL, false, false);
+        if($resC){
+            $strSQL = "UPDATE vot2_followup_dummy SET fud_status = 'in-complete' WHERE fud_uid = '$uid' AND fud_date = '$date'";
+            $db->execute($strSQL);
+        }else{
+            $strSQL = "INSERT INTO vot2_followup_dummy (`fud_uid`, `fud_username`, `fud_status`, `fud_date`, `fud_followstage`) VALUES ('$uid, '$username', 'non-response', '$date', '1')";
+            $db->insert($strSQL, false);
+        }
 
+        
         $strSQL = "INSERT INTO vot2_log (`log_datetime`, `log_info`, `log_message`, `log_ip`, `log_uid`) VALUES ('$datetime', 'อัพโหลดวีดีโอ', '', '$remote_ip', '$uid')";
         $res1 = $db->insert($strSQL, false);
 

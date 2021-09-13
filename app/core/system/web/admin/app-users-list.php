@@ -164,7 +164,7 @@ $menu = 1;
                                         <thead>
                                             <tr>
                                                 <th>ผู้ใช้งาน</th>
-                                                <th>รหัสสถานบริการ</th>
+                                                <th>จำนวนผู้ป่วยที่ดูแล</th>
                                                 <th>เวลาของกิจกรรมล่าสุด</th>
                                                 <th>ยืนยันการใช้งาน</th>
                                                 <th>สิทธิ์</th>
@@ -190,9 +190,27 @@ $menu = 1;
                                                         <td>
                                                             <span style="font-size: 0.8em;">Username : <?php echo $row['username']; ?></span>
                                                             <div class="text-dark"><?php echo $row['fname']." ".$row['lname']; ?></div>
-                                                            <div class="">สถานบริการ : <?php echo $row['hserv']; ?></div>
+                                                            <div class="">สถานบริการ : <?php echo $row['hcode']; ?><br><?php echo $row['hserv']; ?></div>
                                                         </td>
-                                                        <td><a href="../../../html/ltr/vertical-menu-template/app-users-view.html"><?php echo $row['hcode']; ?></a></td>
+                                                        <td>
+                                                            <?php 
+                                                            if($row['role'] == 'admin'){ 
+                                                               ?>
+                                                               <a href="./app-patient-list">ทั้งหมด</a>
+                                                               <?php
+                                                            }else if($row['role'] == 'moderator'){
+                                                                ?><?php
+                                                            }else if($row['role'] == 'manager'){
+                                                                ?><?php
+                                                            }else if($row['role'] == 'staff'){
+                                                                $strSQL = "SELECT * FROM vot2_account WHERE role = 'patient' AND obs_hcode = '".$row['hcode']."'";
+                                                                $resCount = $db->fetch($strSQL, true, true);
+                                                                if(($resCount) && ($resCount['status'])){
+                                                                    echo $resCount['count'];
+                                                                }
+                                                            }
+                                                            ?>
+                                                        </td>
                                                         <td>30/04/2019</td>
                                                         <td class="pt-2">
                                                             <div class="custom-control mt-1 custom-switch custom-switch-success mr-2 mb-1">

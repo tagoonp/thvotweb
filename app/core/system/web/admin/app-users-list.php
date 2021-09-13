@@ -207,6 +207,8 @@ $menu = 1;
                                                                 $resCount = $db->fetch($strSQL, true, true);
                                                                 if(($resCount) && ($resCount['status'])){
                                                                     echo $resCount['count'];
+                                                                }else{
+                                                                    echo "0";
                                                                 }
                                                             }
                                                             ?>

@@ -165,7 +165,7 @@ $menu = 1;
                                             <tr>
                                                 <th>ผู้ใช้งาน</th>
                                                 <th>จำนวนผู้ป่วยที่ดูแล</th>
-                                                <th>เวลาของกิจกรรมล่าสุด</th>
+                                                <!-- <th>เวลาของกิจกรรมล่าสุด</th> -->
                                                 <th>ยืนยันการใช้งาน</th>
                                                 <th>สิทธิ์</th>
                                                 <th>เปิด/ปิดการใช้งาน</th>
@@ -220,7 +220,7 @@ $menu = 1;
                                                                     echo "0";
                                                                 }
                                                             }else if($row['role'] == 'staff'){
-                                                                $strSQL = "SELECT * FROM vot2_account WHERE role = 'patient' AND obs_hcode = '".$row['hcode']."'  AND delete_status = '0'";
+                                                                $strSQL = "SELECT * FROM vot2_account WHERE role = 'patient' AND obs_hcode = '".$row['hcode']."' AND delete_status = '0'";
                                                                 $resCount = $db->fetch($strSQL, true, true);
                                                                 if(($resCount) && ($resCount['status'])){
                                                                     ?>
@@ -232,7 +232,7 @@ $menu = 1;
                                                             }
                                                             ?>
                                                         </td>
-                                                        <td>30/04/2019</td>
+                                                        <!-- <td>30/04/2019</td> -->
                                                         <td class="pt-2">
                                                             <div class="custom-control mt-1 custom-switch custom-switch-success mr-2 mb-1">
                                                                 <input type="checkbox"  onclick="admin_user.toggle_active('<?php echo $row['user_id'];?>')" class="custom-control-input" id="sw_active_<?php echo $row['user_id'];?>" <?php if($row['verify_status'] == 1){ echo "checked"; } ?>>

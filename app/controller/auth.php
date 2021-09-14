@@ -3,6 +3,8 @@ require('../../../database_config/thvot/config.inc.php');
 require('../config/configuration.php');
 require('../config/database.php'); 
 
+include '../../vendor/autoload.php';
+
 $db = new Database();
 $conn = $db->conn();
 
@@ -440,6 +442,10 @@ if($stage == 'signup_vot'){
               )
               ";
     $res = $db->insert($strSQL, false);
+
+
+
+
     if($res){
 
         $strSQL = "UPDATE vot2_userinfo SET info_use = '0' WHERE info_uid = '$uid'";

@@ -94,7 +94,6 @@ if($stage == 'listofpatientstaff'){
                 AND a.active_status = '1'
                 AND a.verify_status = '1'
                 AND a.cal_end_obsdate >= '$date'
-                AND a.obs_uid = '$uid'
                 AND (a.hcode = '$hcode' OR a.reg_hcode = '$hcode')
                 LIMIT $page, $limit";
     }

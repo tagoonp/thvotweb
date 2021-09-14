@@ -352,6 +352,7 @@ var admin_user = {
             verify: $('#txtVerify').val(),
             reg_hcode: $('#txtHcodeReg').val(),
             hcode: $('#txtHcodeManage').val(),
+            rhcode: $('#txtrPhone').val(),
             obs_hcode: $('#txtHcodeObs').val(),
             province: $('#txtProvince').val(),
             district: $('#txtDist').val(),

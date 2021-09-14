@@ -149,6 +149,7 @@ if($stage == 'unwatch_number'){
                AND a.fu_delete = '0'
                AND a.fu_date = '$date'
                AND a.fu_username IN 
+               AND a.fu_status = 'non-verify'
                (SELECT username FROM vot2_account WHERE obs_hcode = '$hcode') 
               ";
     if($role == 'admin'){
@@ -156,6 +157,7 @@ if($stage == 'unwatch_number'){
                WHERE 
                a.fu_view = '0' 
                AND a.fu_date = '$date'
+               AND a.fu_status = 'non-verify'
                AND a.fu_delete = '0'";
     }else if($role == 'manager'){
         $strSQL = "SELECT COUNT(a.fu_id) cn FROM vot2_followup a
@@ -163,8 +165,9 @@ if($stage == 'unwatch_number'){
                a.fu_view = '0' 
                AND a.fu_delete = '0'
                AND a.fu_date = '$date'
+               AND a.fu_status = 'non-verify'
                AND a.fu_username IN 
-               (SELECT username FROM vot2_account WHERE obs_hcode = '$hcode' OR reg_hcode = '$hcode' OR hcode = '$hcode') 
+               (SELECT username FROM vot2_account WHERE (reg_hcode = '$hcode' OR hcode = '$hcode')) 
                ";
     }
     $res = $db->fetch($strSQL, false);

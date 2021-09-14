@@ -462,7 +462,7 @@ if($stage == 'signup_vot'){
         header('Location: ../register_patient_success?uid=' . $uid . '&referal=webapp');
         die();
     }else{
-        // echo $strSQL;
+        echo $strSQL;
         die();
         ?>
         <script>

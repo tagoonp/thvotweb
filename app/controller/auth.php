@@ -429,6 +429,8 @@ if($stage == 'signup_vot'){
 
     $endmondate = Date("Y-m-d", strtotime("$date +2 Month"));  
 
+    $username = $hcode.$hn;
+
     $strSQL = "INSERT INTO vot2_account 
               (`uid`, `username`, `hn`, `password`, `password_len`, `email`, 
               `phone`, `relative_phone`, `role`, `patient_type`, `hcode`,  `profile_img`, 
@@ -442,9 +444,6 @@ if($stage == 'signup_vot'){
               )
               ";
     $res = $db->insert($strSQL, false);
-
-
-
 
     if($res){
 

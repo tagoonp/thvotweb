@@ -93,8 +93,9 @@ if($stage == 'listofpatientstaff'){
 
 if($stage == 'numofpatientstaff'){
     if(
-        (!isset($_GET['uid'])) ||
-        (!isset($_GET['hcode']))
+        (!isset($_REQUEST['uid'])) ||
+        (!isset($_REQUEST['role'])) ||
+        (!isset($_REQUEST['hcode']))
     ){
         $return['status'] = 'Fail (x101)';
         echo json_encode($return);
@@ -102,10 +103,12 @@ if($stage == 'numofpatientstaff'){
         die();
     }
 
-    $uid = mysqli_real_escape_string($conn, $_GET['uid']);
-    $hcode = mysqli_real_escape_string($conn, $_GET['hcode']);
+    $uid = mysqli_real_escape_string($conn, $_REQUEST['uid']);
+    $role = mysqli_real_escape_string($conn, $_REQUEST['role']);
+    $hcode = mysqli_real_escape_string($conn, $_REQUEST['hcode']);
 
 
+    // base role as staff
     $strSQL = "SELECT a.uid
                 FROM vot2_account a INNER JOIN vot2_userinfo b ON a.uid = b.info_uid 
                 INNER JOIN vot2_chospital c ON a.hcode = c.hoscode 
@@ -116,7 +119,23 @@ if($stage == 'numofpatientstaff'){
                 AND a.role = 'patient'
                 AND a.active_status = '1'
                 AND a.verify_status = '1'
+                AND a.end_obsdate >= '$date'
                 AND a.obs_uid = '$uid'";
+
+    if($role == 'manager'){
+        $strSQL = "SELECT a.uid
+                FROM vot2_account a INNER JOIN vot2_userinfo b ON a.uid = b.info_uid 
+                INNER JOIN vot2_chospital c ON a.hcode = c.hoscode 
+                WHERE 
+                b.info_use = '1' 
+                AND a.delete_status = '0' 
+                AND a.role = 'patient'
+                AND a.active_status = '1'
+                AND a.verify_status = '1'
+                AND a.end_obsdate >= '$date'
+                AND (a.hcode = '$hcode' OR a.reg_hcode = '$hcode')";
+    }
+
     $res = $db->fetch($strSQL, true, true);
     if(($res) && ($res['status'])){
         $return['status'] = 'Success';

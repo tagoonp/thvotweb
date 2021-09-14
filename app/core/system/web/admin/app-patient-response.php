@@ -214,7 +214,7 @@ if(!$resSelectUser){
                                                        a.delete_status = '0' 
                                                        AND b.info_use = '1'
                                                        AND a.role = 'patient'
-                                                       AND a.reg_hcode = '".$resSelectUser['hcode']."' OR a.hcode = '".$resSelectUser['hcode']."'
+                                                       AND (a.reg_hcode = '".$resSelectUser['hcode']."' OR a.hcode = '".$resSelectUser['hcode']."')
                                             ";
                                             }else if($resSelectUser['role'] == 'staff'){
                                                 $strSQL = "SELECT a.*, a.ID user_id, b.* , regh.hserv rhserve, obsh.hserv hhserve, menh.hserv mhserve

@@ -199,9 +199,21 @@ $menu = 1;
                                                                <a href="./app-patient-list">ทั้งหมด</a>
                                                                <?php
                                                             }else if($row['role'] == 'moderator'){
-                                                                ?><?php
+                                                                $strSQL = "SELECT * FROM vot2_account WHERE role = 'patient'";
+                                                                $resCount = $db->fetch($strSQL, true, true);
+                                                                if(($resCount) && ($resCount['status'])){
+                                                                    echo $resCount['count'];
+                                                                }else{
+                                                                    echo "0";
+                                                                }
                                                             }else if($row['role'] == 'manager'){
-                                                                ?><?php
+                                                                $strSQL = "SELECT * FROM vot2_account WHERE role = 'patient' AND hcode = '".$row['hcode']."'";
+                                                                $resCount = $db->fetch($strSQL, true, true);
+                                                                if(($resCount) && ($resCount['status'])){
+                                                                    echo $resCount['count'];
+                                                                }else{
+                                                                    echo "0";
+                                                                }
                                                             }else if($row['role'] == 'staff'){
                                                                 $strSQL = "SELECT * FROM vot2_account WHERE role = 'patient' AND obs_hcode = '".$row['hcode']."'";
                                                                 $resCount = $db->fetch($strSQL, true, true);

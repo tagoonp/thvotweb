@@ -29,8 +29,10 @@ $menu = 1;
 $strSQL = "SELECT * FROM vot2_account WHERE uid = '$select_uid' AND delete_status = '0' AND role != 'patient'";
 $resSelectUser = $db->fetch($strSQL, false, false);
 if($resSelectUser){
-    $db->close();
-    header('Location: ' . $_SERVER['HTTP_REFERER']);
+    echo $strSQL;
+    die();
+    // $db->close();
+    // header('Location: ' . $_SERVER['HTTP_REFERER']);
 }
 
 ?>

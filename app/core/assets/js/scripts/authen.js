@@ -154,26 +154,27 @@ var auth = {
         if (!$(this).val()) {
             $check++;
           if ($(this).data('select2')) {
-            if($('#txtRegHcode').val() == ''){
+            if(this.id == 'txtRegHcode'){ 
               $('#regHcode').css({
                 'border': '1px solid #FF5B5C',
                 'border-radius': '4px'
               });
             }
-            if($('#txtHcode').val() == ''){
+            if(this.id == 'txtHcode'){ 
               $('#Hcode').css({
                 'border': '1px solid #FF5B5C',
                 'border-radius': '4px'
               });
             }
-            if($('#txtHcode2').val() == ''){
+            if(this.id == 'txtHcode2'){ 
               $('#obsHcode').css({
                 'border': '1px solid #FF5B5C',
                 'border-radius': '4px'
               });
             }
+          }
         }
-    }});
+    });
 
     if($check != 0){ return false; }
   },

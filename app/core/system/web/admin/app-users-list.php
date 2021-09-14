@@ -209,7 +209,8 @@ $menu = 1;
                                                                     echo "0";
                                                                 }
                                                             }else if($row['role'] == 'manager'){
-                                                                $strSQL = "SELECT * FROM vot2_account WHERE role = 'patient' AND hcode = '".$row['hcode']."'";
+                                                                $strSQL = "SELECT * FROM vot2_account WHERE role = 'patient' 
+                                                                           AND hcode = '".$row['hcode']."' OR reg_hcode = '".$row['hcode']."'";
                                                                 $resCount = $db->fetch($strSQL, true, true);
                                                                 if(($resCount) && ($resCount['status'])){
                                                                     ?>

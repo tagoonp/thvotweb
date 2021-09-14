@@ -42,7 +42,7 @@ if(isset($_GET['hcode'])){
 
 $_SESSION['thvot_session'] = session_id();
 
-require('../../../../config/staff.role.php'); 
+require('../../../../config/manager.role.php'); 
 require('../../../../config/user.inc.php'); 
 
 $menu = 8;

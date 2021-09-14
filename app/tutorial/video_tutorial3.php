@@ -66,7 +66,7 @@ if(isset($_GET['stage'])){
                 <section id="auth-login" class="row flexbox-container">
                     <div class="col-xl-12">
                         <div style="padding-bottom: 20px;">
-                            <h2 style="text-align: center;">วิดีโอการแนะนำวิธีการใช้งานระบบสำหรับสือถือยืมใช้งาน</h2>
+                            <h2 style="text-align: center;">วิดีโอการแนะนำวิธีการใช้งานระบบสำหรับมือถือยืมใช้งาน</h2>
                             <video width="100%"  controls >
                                 <source src="../img/TBvideo2.mp4" type="video/mp4">
                                 Your browser does not support the video tag.

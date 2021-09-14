@@ -170,7 +170,7 @@ if(!$resSelectUser){
 
             </div>
             <div class="content-body">
-                <h2 class="mb-2">รายชื่อผู้ป่วยทั้งหมด</h2>
+                <h2 class="mb-2">รายชื่อผู้ป่วยที่รับผิดชอบ</h2>
                 <!-- users list start -->
                 <section class="users-list-wrapper">
                     <div class="users-list-table">
@@ -204,6 +204,31 @@ if(!$resSelectUser){
                                                        AND b.info_use = '1'
                                                        AND a.role = 'patient'
                                             ";
+                                            if($resSelectUser['role'] == 'manager'){
+                                                $strSQL = "SELECT a.*, a.ID user_id, b.* , regh.hserv rhserve, obsh.hserv hhserve, menh.hserv mhserve
+                                                       FROM vot2_account a INNER JOIN vot2_userinfo b ON a.uid = b.info_uid 
+                                                       LEFT JOIN vot2_projecthospital regh ON a.reg_hcode = regh.phoscode
+                                                       LEFT JOIN vot2_projecthospital obsh ON a.reg_hcode = obsh.phoscode
+                                                       LEFT JOIN vot2_projecthospital menh ON a.reg_hcode = menh.phoscode
+                                                       WHERE 
+                                                       a.delete_status = '0' 
+                                                       AND b.info_use = '1'
+                                                       AND a.role = 'patient'
+                                                       AND a.reg_hcode = '".$resSelectUser['hcode']."' OR a.hcode = '".$resSelectUser['hcode']."'
+                                            ";
+                                            }else if($resSelectUser['role'] == 'staff'){
+                                                $strSQL = "SELECT a.*, a.ID user_id, b.* , regh.hserv rhserve, obsh.hserv hhserve, menh.hserv mhserve
+                                                       FROM vot2_account a INNER JOIN vot2_userinfo b ON a.uid = b.info_uid 
+                                                       LEFT JOIN vot2_projecthospital regh ON a.reg_hcode = regh.phoscode
+                                                       LEFT JOIN vot2_projecthospital obsh ON a.reg_hcode = obsh.phoscode
+                                                       LEFT JOIN vot2_projecthospital menh ON a.reg_hcode = menh.phoscode
+                                                       WHERE 
+                                                       a.delete_status = '0' 
+                                                       AND b.info_use = '1'
+                                                       AND a.role = 'patient'
+                                                       AND a.obs_uid = '".$resSelectUser['uid']."'
+                                            ";
+                                            }
                                             $result_list = $db->fetch($strSQL, true, false);
                                             if($result_list['status']){
                                                 $c = 1;

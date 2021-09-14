@@ -391,7 +391,7 @@ if($stage == 'untakendrug_list'){
               AND a.fud_status != 'complete'
               AND a.fud_date = '$date'
               AND c.info_use = '1'
-              AND b.obs_hcode = '$hcode' OR b.reg_hcode = '$hcode' OR b.hcode = '$hcode'
+              AND (b.reg_hcode = '$hcode' OR b.hcode = '$hcode')
               LIMIT $page, $limit
               ";
         $res = $db->fetch($strSQL, true, false);

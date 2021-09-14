@@ -129,9 +129,9 @@ var auth = {
       $check++; $('#txtHn').addClass('is-invalid')
     }
 
-    if($('#txtUsername').val() == ''){
-      $check++; $('#txtUsername').addClass('is-invalid')
-    }
+    // if($('#txtUsername').val() == ''){
+    //   $check++; $('#txtUsername').addClass('is-invalid')
+    // }
   
     if($('#txtPhone').val() == ''){
       $check++; $('#txtPhone').addClass('is-invalid')

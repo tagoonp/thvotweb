@@ -69,8 +69,8 @@ if(isset($_GET['stage'])){
                             <div class="card-body">
                                 <h3 class="text-center th mb-2">วิดีโอแนะนำการใช้งาน</h3>
                                 <button class="btn btn-primary btn-lg mb-1 btn-block" onclick="window.location='video_tutorial1'">แนะนำวิธีการกินยา</button>
-                                <button class="btn btn-primary btn-lg mb-1 btn-block">แนะนำวิธีการติดตั้งขาตั้งกล้อง</button>
-                                <button class="btn btn-primary btn-lg mb-1 btn-block">คำแนะนำสำหรับมือถือยืมใช้งาน</button>
+                                <button class="btn btn-primary btn-lg mb-1 btn-block" onclick="window.location='video_tutorial2'">แนะนำวิธีการติดตั้งขาตั้งกล้อง</button>
+                                <button class="btn btn-primary btn-lg mb-1 btn-block" onclick="window.location='video_tutorial3'">คำแนะนำสำหรับมือถือยืมใช้งาน</button>
                             </div>
                         </div>
                     </div>

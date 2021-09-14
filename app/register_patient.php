@@ -205,6 +205,31 @@ $photo = mysqli_real_escape_string($conn, $_GET['photo']);
 
                                                 <hr>
 
+                                                <h6 class="text-bold-600">สถานบริการสุขภาพที่ขึ้นทะเบียนผู้ป่วย</h6>
+                                                <div class="form-group mb-50">
+                                                    <label class="" for="exampleInputPassword1">สถานบริการสุขภาพที่ขึ้นทะเบียน : <span class="text-danger">*</span></label>
+                                                    <div class="select-error">
+                                                        <select name="txtRegHcode" id="txtRegHcode" data-required class="form-control select2">
+                                                            <option value="">-- เลือกหน่วยบริการที่ขึ้นทะเบียนผู้ป่วย --</option>
+                                                            <?php 
+                                                            $strSQL = "SELECT vot2_projecthospital.* FROM vot2_projecthospital 
+                                                            WHERE phosstatus = 'Y' ORDER BY hserv";
+                                                            $result_list = $db->fetch($strSQL, true, false);
+                                                            if($result_list['status']){
+                                                                $c = 1;
+                                                                foreach($result_list['data'] as $row){
+                                                                    ?>
+                                                                    <option value="<?php echo $row['phoscode'];?>" <?php  ?>>[<?php echo $row['phoscode'];?>] <?php echo $row['hserv'];?></option>
+                                                                    <?php
+                                                                }
+                                                            }
+                                                            ?>
+                                                        </select>
+                                                    </div>
+                                                </div>
+
+                                                <hr>
+
                                                 <h6 class="text-bold-600">สถานบริการสุขภาพที่ตรวจติดตาม</h6>
                                                 <div class="form-group mb-50">
                                                     <label class="" for="exampleInputPassword1">สถานบริการสุขภาพ : <span class="text-danger">*</span></label>

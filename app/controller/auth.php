@@ -412,6 +412,8 @@ if($stage == 'signup_vot'){
     $password = mysqli_real_escape_string($conn, $_POST['txtPassword1']);
     $photo = mysqli_real_escape_string($conn, $_POST['txtPhoto']);
 
+    $reg_hcode = mysqli_real_escape_string($conn, $_POST['txtRegHcode']);
+
     $patienttype = mysqli_real_escape_string($conn, $_POST['txtPatientType']);
     $obs_hcode = mysqli_real_escape_string($conn, $_POST['txtHcode2']);
     $obs_uid = mysqli_real_escape_string($conn, $_POST['txtObserver']);
@@ -435,12 +437,12 @@ if($stage == 'signup_vot'){
               (`uid`, `username`, `hn`, `password`, `password_len`, `email`, 
               `phone`, `relative_phone`, `role`, `patient_type`, `hcode`,  `profile_img`, 
               `verify_status`, `active_status`, `line_token`, `u_datetime`, `p_udatetime`, `start_obsdate`, `end_obsdate`, `cal_end_obsdate`,
-              `obs_hcode`, `obs_uid`)
+              `obs_hcode`, `reg_hcode`, `obs_uid`)
               VALUES (
                   '$uid', '$username', '$hn', '$password', '$passwordlen', '', 
                   '$phone', '$phone2', 'patient', '$patienttype', '$hcode', '$photo',
                   '1', '1', '$uid', '$datetime', '$datetime', '$date', '$endmondate', '$endmondate',
-                  '$obs_hcode', '$obs_uid'
+                  '$obs_hcode', '$reg_hcode', '$obs_uid'
               )
               ";
     $res = $db->insert($strSQL, false);

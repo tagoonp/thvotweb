@@ -263,12 +263,15 @@ if($stage == 'signup_dot'){
         $strSQL = "INSERT INTO vot2_userinfo (`fname`, `lname`, `phone`, `info_udatetime`, `info_use`, `info_prov`, `info_district`, `info_subdistrict`, `info_uid`) 
                    VALUES ('$fname', '$lname', '$phone', '$datetime', '1', '$tprovince', '$dist', '$subdist', '$uid')";
         $res = $db->insert($strSQL, false);
+
+       
+        
         mysqli_close($conn);
         header('Location: ../dot_info?uid=' . $uid . '&referal=webapp');
         die();
     }else{
         // echo $strSQL;
-        die();
+        // die();
         ?>
         <script>
             alert('Can not create new account');
@@ -460,12 +463,34 @@ if($stage == 'signup_vot'){
         $strSQL = "INSERT INTO vot2_userinfo (`fname`, `lname`, `phone`, `info_udatetime`, `info_use`, `info_prov`, `info_district`, `info_subdistrict`, `info_uid`) 
                    VALUES ('$fname', '$lname', '$phone', '$datetime', '1', '$tprovince', '$dist', '$subdist', '$uid')";
         $res = $db->insert($strSQL, false);
+
+        $httpClient = new \LINE\LINEBot\HTTPClient\CurlHTTPClient('ky7UCr1R+Z02rgE4IUujkpubR5e1IOWMI72XpVGOVz94H9YbWEKfDbQnt8r9U08PbZYtSQHYT2jxFHUHNj6O5L8QgX81E4RcZ4mt8RMeruWvEDSnCwHmfHx1ocJbXshH9yPxOoWclP7b56ZGi9PgFQdB04t89/1O/w1cDnyilFU=');
+        $bot = new \LINE\LINEBot($httpClient, ['channelSecret' => 'ebbf7cf8ec444c1c9a61959b5cea83c8']);
+        
+        $textMessageBuilder = new \LINE\LINEBot\MessageBuilder\TextMessageBuilder('ตรวจพบผู้ป่วย รหัส '. $username .' ได้รับการมอบหมายการติดตามมายังท่าน กรุณาเข้าสู่ระบบเพื่อตรวจสอบ');
+        $response = $bot->pushMessage($obs_uid, $textMessageBuilder);
+
+        $strSQL = "SELECT uid FROM vot2_account WHERE hcode = '' AND delete_status = '0' AND role != 'manage'";
+        $resManage = $db->fetch($strSQL, true, true);
+        if(($resManage) && ($resManage['status'])){
+            $uidArr = array();
+            $c = 0;
+            foreach ($resManage as $row) {
+                $uidArr[$c] = $row['uid'];
+            }
+
+            if(sizeof($uidArr) > 0){
+                $textMessageBuilder = new \LINE\LINEBot\MessageBuilder\TextMessageBuilder('ตรวจพบผู้ป่วย รหัส '. $username .' ได้ถูกส่งต่อมายังสถานบริการที่ท่านรับผิดชอบ กรุณาเข้าสู่ระบบเพื่อตรวจสอบ');
+                $response = $bot->pushMessage($uidArr, $textMessageBuilder);
+            }
+        }
+
         mysqli_close($conn);
         header('Location: ../register_patient_success?uid=' . $uid . '&referal=webapp');
         die();
     }else{
-        echo $strSQL;
-        die();
+        // echo $strSQL;
+        // die();
         ?>
         <script>
             alert('Can not create new account');

@@ -268,7 +268,7 @@ if($stage == 'undrug_number'){
                 ) 
               ";
     if($role == 'admin'){
-        $strSQL = "SELECT COUNT(a.fud_id) cn FROM vot2_followup a
+        $strSQL = "SELECT COUNT(a.fud_id) cn FROM vot2_followup_dummy a
                WHERE 
                 a.fud_date = '$date' 
                 AND a.fud_status != 'complete'
@@ -276,7 +276,7 @@ if($stage == 'undrug_number'){
                 AND stop_drug = '0'
                 AND role = 'patient'";
     }else if($role == 'manager'){
-        $strSQL = "SELECT COUNT(a.fud_id) cn FROM vot2_followup a
+        $strSQL = "SELECT COUNT(a.fud_id) cn FROM vot2_followup_dummy a
                WHERE 
                a.fud_date = '$date' 
                AND a.fud_status != 'complete'

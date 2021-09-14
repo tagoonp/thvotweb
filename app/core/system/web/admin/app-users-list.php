@@ -199,7 +199,7 @@ $menu = 1;
                                                                <a href="./app-patient-list">ทั้งหมด</a>
                                                                <?php
                                                             }else if($row['role'] == 'moderator'){
-                                                                $strSQL = "SELECT * FROM vot2_account WHERE role = 'patient'";
+                                                                $strSQL = "SELECT * FROM vot2_account WHERE role = 'patient' AND delete_status = '0'";
                                                                 $resCount = $db->fetch($strSQL, true, true);
                                                                 if(($resCount) && ($resCount['status'])){
                                                                     ?>
@@ -210,7 +210,7 @@ $menu = 1;
                                                                 }
                                                             }else if($row['role'] == 'manager'){
                                                                 $strSQL = "SELECT * FROM vot2_account WHERE role = 'patient' 
-                                                                           AND hcode = '".$row['hcode']."' OR reg_hcode = '".$row['hcode']."'";
+                                                                           AND hcode = '".$row['hcode']."' OR reg_hcode = '".$row['hcode']."'  AND delete_status = '0'";
                                                                 $resCount = $db->fetch($strSQL, true, true);
                                                                 if(($resCount) && ($resCount['status'])){
                                                                     ?>
@@ -220,7 +220,7 @@ $menu = 1;
                                                                     echo "0";
                                                                 }
                                                             }else if($row['role'] == 'staff'){
-                                                                $strSQL = "SELECT * FROM vot2_account WHERE role = 'patient' AND obs_hcode = '".$row['hcode']."'";
+                                                                $strSQL = "SELECT * FROM vot2_account WHERE role = 'patient' AND obs_hcode = '".$row['hcode']."'  AND delete_status = '0'";
                                                                 $resCount = $db->fetch($strSQL, true, true);
                                                                 if(($resCount) && ($resCount['status'])){
                                                                     ?>

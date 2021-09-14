@@ -468,15 +468,21 @@ if($stage == 'signup_vot'){
                    VALUES ('$fname', '$lname', '$phone', '$datetime', '1', '$tprovince', '$dist', '$subdist', '$uid', '$username')";
         $res = $db->insert($strSQL, false);
 
+
+        // พี่เลี้ยง
         $httpClient = new \LINE\LINEBot\HTTPClient\CurlHTTPClient('ky7UCr1R+Z02rgE4IUujkpubR5e1IOWMI72XpVGOVz94H9YbWEKfDbQnt8r9U08PbZYtSQHYT2jxFHUHNj6O5L8QgX81E4RcZ4mt8RMeruWvEDSnCwHmfHx1ocJbXshH9yPxOoWclP7b56ZGi9PgFQdB04t89/1O/w1cDnyilFU=');
         $bot = new \LINE\LINEBot($httpClient, ['channelSecret' => 'ebbf7cf8ec444c1c9a61959b5cea83c8']);
         
-        $textMessageBuilder = new \LINE\LINEBot\MessageBuilder\TextMessageBuilder('ตรวจพบผู้ป่วย รหัส '. $username .' ได้รับการมอบหมายการติดตามมายังท่าน กรุณาเข้าสู่ระบบเพื่อตรวจสอบ');
+        $textMessageBuilder = new \LINE\LINEBot\MessageBuilder\TextMessageBuilder('มีผู้ป่วย รหัส '. $username .' ถูกมอบหมายให้ท่านเป็นพี่เลี้ยงในการติดตามการกินยาวัณโรค กรุณาเข้าสู่ระบบเพื่อตรวจสอบ');
         $response = $bot->pushMessage($obs_uid, $textMessageBuilder);
 
         $strSQL = "SELECT uid FROM vot2_account WHERE hcode = '$hcode' AND delete_status = '0' AND role = 'manager' AND reg_type = 'line'";
         $resManage = $db->fetch($strSQL, true, true);
         if(($resManage) && ($resManage['status'])){
+
+            $strSQL = "SELECT hserv FROM vot2_projecthospital WHERE phoscode = '$obs_hcode' LIMIT 1";
+            $resHosp = $db->fetch($strSQL, false, false);
+
             $uidArr = array();
             $c = 0;
             foreach ($resManage as $row) {
@@ -484,7 +490,8 @@ if($stage == 'signup_vot'){
             }
 
             if(sizeof($uidArr) > 0){
-                $textMessageBuilder = new \LINE\LINEBot\MessageBuilder\TextMessageBuilder('ตรวจพบผู้ป่วย รหัส '. $username .' ได้ถูกส่งต่อมายังสถานบริการที่ท่านรับผิดชอบ กรุณาเข้าสู่ระบบเพื่อตรวจสอบ');
+                // โรงพยาบาลติดตามรักษา
+                $textMessageBuilder = new \LINE\LINEBot\MessageBuilder\TextMessageBuilder('มีผู้ป่วย รหัส '. $username .' ถูกมอบหมายให้มาติดตามรักษาต่อที่โรงพยาบาลของท่าน โดยมีพี่เลี้ยงที่ประจำอยู่ที่'.$resHosp['hserv'].' ทำหน้าที่นการติดตามการกินยา กรุณาเข้าสู่ระบบเพื่อตรวจสอบ');
                 $response = $bot->pushMessage($uidArr, $textMessageBuilder);
             }
         }

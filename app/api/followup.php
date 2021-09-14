@@ -366,6 +366,7 @@ if($stage == 'untakendrug_list'){
                 $item['hospital_name'] = $row['hospital_name'];
                 $item['profile_img'] = $row['profile_img'];
                 $item['phone'] = $row['phone'];
+                $item['rphone'] = $row['relative_phone'];
                 
                 $strSQL = "SELECT COUNT(fud_uid) cn FROM vot2_followup_dummy WHERE fud_uid = '".$row['uid']."'";
                 $resp = $db->fetch($strSQL, false);
@@ -656,50 +657,7 @@ if($stage == 'followup_list'){
     $limit = mysqli_real_escape_string($conn, $_GET['limit']);
     $page = ($page * $limit) - $limit;
     if($role == 'admin'){
-        $strSQL = "SELECT * FROM vot2_notification 
-              WHERE 
-              noti_allow_admin = '1' 
-              AND noti_hide = '0' 
-              AND noti_type = 'workprocess'
-              LIMIT $page, $limit
-              ";
-        $res = $db->fetch($strSQL, true, false);
-        if(($res) && ($res['status'])){
-            $return['status'] = 'Success';
-            $a = array();
-            foreach($res['data'] as $row){
-                $item = array();
-                
-                $item['noti_id'] = $row['noti_id'];
-                $item['noti_header'] = $row['noti_header'];
-                $item['noti_content'] = $row['noti_content'];
-                $item['noti_datetime'] = $row['noti_datetime'];
-                $item['noti_url'] = $row['noti_url'];
-                $item['noti_hcode'] = $row['noti_hcode'];
-                $item['noti_uid'] = $row['noti_specific_uid'];
-                $item['noti_hide'] = $row['noti_hide'];
-                
-                $strSQL = "SELECT uid FROM vot2_account WHERE username = '".$row['noti_specific_uid']."'";
-                $resp = $db->fetch($strSQL, false);
-                if($resp){
-                    $item['uid'] = $resp['uid'];
-                }
-                if($row['noti_header'] == 'แจ้งเตือนการสมัครใช้งาน'){
-                    $item['noti_redirect'] = 'userinfo';
-                    $item['noti_icon'] = 'https://thvot.com/img/register-icon.png';
-                }else{
-                    $item['noti_redirect'] = 'userinfo';
-                    $item['noti_icon'] = 'https://thvot.com/img/notification-icon.png';
-                }
-                $a[] = $item;
-            }
-            $return['data'] = $a;
-        }else{
-            $return['status'] = 'Fail';
-        }
-        echo json_encode($return);
-        $db->close(); 
-        die();
+        
     }else if($role == 'manager'){
         $strSQL = "SELECT *, d.hosname hospital_name FROM vot2_followup_dummy a INNER JOIN vot2_account b ON a.fud_uid = b.uid 
               INNER JOIN vot2_userinfo c ON b.uid = c.info_uid

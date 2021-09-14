@@ -190,7 +190,7 @@ $menu = 1;
                                                         <td>
                                                             <span style="font-size: 0.8em;">Username : <?php echo $row['username']; ?></span>
                                                             <div class="text-dark"><?php echo $row['fname']." ".$row['lname']; ?></div>
-                                                            <div class="">สถานบริการ : <span class="badge badge-primary round"><?php echo $row['hcode']; ?></span> <br><?php echo $row['hserv']; ?></div>
+                                                            <div class="">สถานบริการ : <span class="badge badge-light-primary round"><?php echo $row['hcode']; ?></span> <br><?php echo $row['hserv']; ?></div>
                                                         </td>
                                                         <td>
                                                             <?php 

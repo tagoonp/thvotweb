@@ -9,7 +9,7 @@ $conn = $db->conn();
 $strSQL = "SELECT * FROM vot2_account 
            WHERE 
            role = 'patient' 
-           AND patient_type = 'VOT' 
+           AND patient_type IN ('VOT', 'TESTER')
            AND delete_status = '0' 
            AND (cal_end_obsdate IS NULL OR cal_end_obsdate >= '$date')
            AND uid NOT IN (SELECT fud_uid FROM vot2_followup_dummy WHERE fud_date = '$date')

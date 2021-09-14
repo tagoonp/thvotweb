@@ -452,6 +452,10 @@ if($stage == 'signup_vot'){
 
     if($res){
 
+        $strSQL = "INSERT INTO vot2_followup_dummy (`fud_uid`, `fud_username`, `fud_status`, `fud_date`, `fud_followstage`)
+                   VALUES ('$uid', '$username', 'non-response', '$date', '1')";
+        $db->insert($strSQL, false);
+
         $strSQL = "UPDATE vot2_userinfo SET info_use = '0' WHERE info_uid = '$uid'";
         $db->execute($strSQL);
 

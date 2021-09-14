@@ -208,7 +208,7 @@ $photo = mysqli_real_escape_string($conn, $_GET['photo']);
                                                 <h6 class="text-bold-600">สถานบริการสุขภาพที่ขึ้นทะเบียนผู้ป่วย</h6>
                                                 <div class="form-group mb-50">
                                                     <label class="" for="exampleInputPassword1">สถานบริการสุขภาพที่ขึ้นทะเบียน : <span class="text-danger">*</span></label>
-                                                    <div class="select-error">
+                                                    <div class="select-error" id="regHcode">
                                                         <select name="txtRegHcode" id="txtRegHcode" data-required class="form-control select2">
                                                             <option value="">-- เลือกหน่วยบริการที่ขึ้นทะเบียนผู้ป่วย --</option>
                                                             <?php 
@@ -233,7 +233,7 @@ $photo = mysqli_real_escape_string($conn, $_GET['photo']);
                                                 <h6 class="text-bold-600">สถานบริการสุขภาพที่ตรวจติดตาม</h6>
                                                 <div class="form-group mb-50">
                                                     <label class="" for="exampleInputPassword1">สถานบริการสุขภาพ : <span class="text-danger">*</span></label>
-                                                    <div class="select-error">
+                                                    <div class="select-error" id="Hcode">
                                                         <select name="txtHcode" id="txtHcode" data-required class="form-control select2">
                                                             <option value="">-- สถานบริการสุขภาพ --</option>
                                                             <?php 
@@ -258,7 +258,7 @@ $photo = mysqli_real_escape_string($conn, $_GET['photo']);
                                                 <h6 class="text-bold-600">สถานบริการสุขภาพที่ติดตามการกินยา</h6>
                                                 <div class="form-group mb-50">
                                                     <label class="" for="exampleInputPassword1">สถานบริการสุขภาพของพี่เลี้ยง : <span class="text-danger">*</span></label>
-                                                    <div class="select-error">
+                                                    <div class="select-error" id="obsHcode">
                                                         <select name="txtHcode2" id="txtHcode2" data-required class="form-control select2">
                                                             <option value="">-- สถานบริการสุขภาพพี่เลี้ยง --</option>
                                                             <?php 

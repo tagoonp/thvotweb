@@ -3,6 +3,8 @@ require('../../../database_config/thvot/config.inc.php');
 require('../config/configuration.php');
 require('../config/database.php'); 
 
+include '../../vendor/autoload.php';
+
 $db = new Database();
 $conn = $db->conn();
 
@@ -1196,6 +1198,82 @@ if($stage == 'videocheck'){
     $res = $db->execute($strSQL);
 
     $return['status'] = 'Success';
+
+
+    $strSQL = "SELECT * FROM vot2_account 
+               WHERE 
+               uid = '$puid' 
+               AND role = 'patient' 
+               AND delete_status = '0'";
+    $resUser = $db->fetch($strSQL, false, false);
+    if($resUser){
+        if($resUser['reg_type'] == 'line'){
+
+            $httpClient = new \LINE\LINEBot\HTTPClient\CurlHTTPClient('ky7UCr1R+Z02rgE4IUujkpubR5e1IOWMI72XpVGOVz94H9YbWEKfDbQnt8r9U08PbZYtSQHYT2jxFHUHNj6O5L8QgX81E4RcZ4mt8RMeruWvEDSnCwHmfHx1ocJbXshH9yPxOoWclP7b56ZGi9PgFQdB04t89/1O/w1cDnyilFU=');
+            $bot = new \LINE\LINEBot($httpClient, ['channelSecret' => 'ebbf7cf8ec444c1c9a61959b5cea83c8']);
+            
+            
+            
+            if($check1 == '0'){
+                // 
+                $message = 'โปรดทบทวนวิธีการจัดวางมุมมองกล้อง >> https://thvot.com/thvotweb/tutorial/checklist1.php';
+                $textMessageBuilder = new \LINE\LINEBot\MessageBuilder\TextMessageBuilder($message);
+                $response = $bot->pushMessage($puid, $textMessageBuilder);
+            }
+
+            if($check2 == '0'){
+                // 
+                $message = 'โปรดทบทวนวิธีการรแสดงยาก่อนกลืน >> https://thvot.com/thvotweb/tutorial/checklist2.php';
+                $textMessageBuilder = new \LINE\LINEBot\MessageBuilder\TextMessageBuilder($message);
+                $response = $bot->pushMessage($puid, $textMessageBuilder);
+            }
+
+            if($check3 == '0'){
+                // 
+                $message = 'โปรดใช้แก้วน้ำชนิดใสตอนกินยา >> https://thvot.com/thvotweb/tutorial/checklist3.php';
+                $textMessageBuilder = new \LINE\LINEBot\MessageBuilder\TextMessageBuilder($message);
+                $response = $bot->pushMessage($puid, $textMessageBuilder);
+            }
+
+            if($check4 == '0'){
+                // 
+                $message = 'โปรดทบทวนวิธีการรายงานหลังกินยา >> https://thvot.com/thvotweb/tutorial/checklist4.php ';
+                $textMessageBuilder = new \LINE\LINEBot\MessageBuilder\TextMessageBuilder($message);
+                $response = $bot->pushMessage($puid, $textMessageBuilder);
+            }
+        }else{
+
+            if($check1 == '0'){
+                // 
+                $message = 'โปรดทบทวนวิธีการจัดวางมุมมองกล้อง >> https://thvot.com/thvotweb/tutorial/checklist1.php';
+                $textMessageBuilder = new \LINE\LINEBot\MessageBuilder\TextMessageBuilder($message);
+                $response = $bot->pushMessage($puid, $textMessageBuilder);
+            }
+
+            if($check2 == '0'){
+                // 
+                $message = 'โปรดทบทวนวิธีการรแสดงยาก่อนกลืน >> https://thvot.com/thvotweb/tutorial/checklist2.php';
+                $textMessageBuilder = new \LINE\LINEBot\MessageBuilder\TextMessageBuilder($message);
+                $response = $bot->pushMessage($puid, $textMessageBuilder);
+            }
+
+            if($check3 == '0'){
+                // 
+                $message = 'โปรดใช้แก้วน้ำชนิดใสตอนกินยา >> https://thvot.com/thvotweb/tutorial/checklist3.php';
+                $textMessageBuilder = new \LINE\LINEBot\MessageBuilder\TextMessageBuilder($message);
+                $response = $bot->pushMessage($puid, $textMessageBuilder);
+            }
+
+            if($check4 == '0'){
+                // 
+                $message = 'โปรดทบทวนวิธีการรายงานหลังกินยา >> https://thvot.com/thvotweb/tutorial/checklist4.php ';
+                $textMessageBuilder = new \LINE\LINEBot\MessageBuilder\TextMessageBuilder($message);
+                $response = $bot->pushMessage($puid, $textMessageBuilder);
+            }
+
+        }
+    }
+
     echo json_encode($return);
     $db->close(); 
     die();

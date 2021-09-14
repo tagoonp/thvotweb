@@ -94,16 +94,6 @@ if(isset($_GET['stage'])){
                                                 </div>
                                                 <button type="submit" class="btn btn-primary glow w-100 position-relative">เข้าสู่ระบบ<i id="icon-arrow" class="bx bx-right-arrow-alt"></i></button>
                                             </form>
-
-                                            <!-- <div class="divider">
-                                                <div class="divider-text text-uppercase text-muted"><small>หรือเข้าสู่ระบบด้วย Social media account</small>
-                                                </div>
-                                            </div>
-
-                                            <div class="d-flex flex-md-row flex-column justify-content-around">
-                                                <a href="javascript:void(0);" class="btn btn-social btn-block btn-success mt-0 btn-facebook font-small-3">
-                                                    <i class="bx bxl-facebook-square font-medium-3"></i><span class="pl-50 d-block text-center">Line</span></a>
-                                            </div> -->
                                             
                                             <div class="text-center"></div>
                                         </div>

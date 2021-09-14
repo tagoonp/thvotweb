@@ -333,7 +333,7 @@ if($stage == 'untakendrug_list'){
               INNER JOIN vot2_chospital d ON b.obs_hcode = d.hoscode
               WHERE 
               b.delete_status = '0' 
-              AND a.fud_status = 'non-response'
+              AND a.fud_status != 'complete'
               AND a.fud_date = '$date'
               AND c.info_use = '1'
               AND b.obs_hcode = '$hcode'
@@ -346,7 +346,7 @@ if($stage == 'untakendrug_list'){
               INNER JOIN vot2_chospital d ON b.obs_hcode = d.hoscode
               WHERE 
               b.delete_status = '0' 
-              AND a.fud_status = 'non-response'
+              AND a.fud_status != 'complete'
               AND a.fud_date = '$date'
               AND c.info_use = '1'
               LIMIT $page, $limit
@@ -388,7 +388,7 @@ if($stage == 'untakendrug_list'){
               INNER JOIN vot2_chospital d ON b.obs_hcode = d.hoscode
               WHERE 
               b.delete_status = '0' 
-              AND a.fud_status = 'non-response'
+              AND a.fud_status != 'complete'
               AND a.fud_date = '$date'
               AND c.info_use = '1'
               AND b.obs_hcode = '$hcode' OR b.reg_hcode = '$hcode' OR b.hcode = '$hcode'

@@ -470,7 +470,7 @@ if($stage == 'signup_vot'){
         $textMessageBuilder = new \LINE\LINEBot\MessageBuilder\TextMessageBuilder('ตรวจพบผู้ป่วย รหัส '. $username .' ได้รับการมอบหมายการติดตามมายังท่าน กรุณาเข้าสู่ระบบเพื่อตรวจสอบ');
         $response = $bot->pushMessage($obs_uid, $textMessageBuilder);
 
-        $strSQL = "SELECT uid FROM vot2_account WHERE hcode = '$hcode' AND delete_status = '0' AND role = 'manage'";
+        $strSQL = "SELECT uid FROM vot2_account WHERE hcode = '$hcode' AND delete_status = '0' AND role = 'manager'";
         $resManage = $db->fetch($strSQL, true, true);
         if(($resManage) && ($resManage['status'])){
             $uidArr = array();

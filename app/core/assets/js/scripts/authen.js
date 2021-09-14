@@ -80,15 +80,30 @@ var auth = {
     }
 
     $('[data-required]').each(function() {
-        if (!$(this).val()) {
-            $check++;
-          if ($(this).data('select2')) {
-            $('.select-error').css({
+      if (!$(this).val()) {
+          $check++;
+        if ($(this).data('select2')) {
+          if(this.id == 'txtRegHcode'){ 
+            $('#regHcode').css({
               'border': '1px solid #FF5B5C',
               'border-radius': '4px'
             });
+          }
+          if(this.id == 'txtHcode'){ 
+            $('#Hcode').css({
+              'border': '1px solid #FF5B5C',
+              'border-radius': '4px'
+            });
+          }
+          if(this.id == 'txtHcode2'){ 
+            $('#obsHcode').css({
+              'border': '1px solid #FF5B5C',
+              'border-radius': '4px'
+            });
+          }
         }
-    }});
+      }
+    });
 
     if($check != 0){ return false; }
   },

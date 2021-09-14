@@ -701,25 +701,61 @@ if($stage == 'followup_list'){
         $db->close(); 
         die();
     }else if($role == 'manager'){
-        $strSQL = "SELECT * FROM vot2_notification 
+        $strSQL = "SELECT *, d.hosname hospital_name FROM vot2_followup_dummy a INNER JOIN vot2_account b ON a.fud_uid = b.uid 
+              INNER JOIN vot2_userinfo c ON b.uid = c.info_uid
+              INNER JOIN vot2_chospital d ON b.hcode = d.hoscode
               WHERE 
-              noti_view = '0' 
-              AND noti_type = 'workprocess'
-              AND noti_hcode IN (
-                  SELECT phoscode FROM vot2_projecthospital WHERE hospcode = '$hcode'
-              )
+              b.delete_status = '0' 
+              AND a.fud_status = 'in-complete'
+              AND a.fud_date = '$date'
+              AND c.info_use = '1'
+              AND (b.hcode = '$hcode' OR b.reg_hcode = '$hcode')
               LIMIT $page, $limit
               ";
         $res = $db->fetch($strSQL, true, false);
         if(($res) && ($res['status'])){
             $return['status'] = 'Success';
-            $return['data'] = $res['data'];
-        }else{
-            $return['status'] = 'Fail';
-        }
-        echo json_encode($return);
-        $db->close(); 
-        die();
+
+            $a = array();
+            foreach($res['data'] as $row){
+                $item = array();
+                
+                $item['uid'] = $row['uid'];
+                $item['username'] = $row['username'];
+                $item['fname'] = $row['fname'];
+                $item['lname'] = $row['lname'];
+                $item['hospital_name'] = $row['hospital_name'];
+                $item['profile_img'] = $row['profile_img'];
+
+                $strSQL = "SELECT COUNT(*) cn FROM vot2_followup_dummy WHERE fud_status = 'non-response' AND fud_username = '".$row['username']."'";
+                $resf = $db->fetch($strSQL, false);
+                if($resf){
+                    if($resf['cn'] != 0){
+                        $item['numdate'] = $resf['cn'];
+                        $item['color'] = "primary";
+                        if($resf['cn'] >= 14){
+                            $item['color'] = "danger";
+                        }else if(($resf['cn'] >= 7) && ($resf['cn'] < 14)){
+                            $item['numdate'] = $resf['cn'];
+                            $item['color'] = "warning";
+                        }
+                    }else{
+                        $item['numdate'] = "0";
+                        $item['color'] = "primary";
+                    }
+                }else{
+                    $item['numdate'] = "0";
+                    $item['color'] = "primary";
+                }
+                
+                $strSQL = "SELECT COUNT(fud_uid) cn FROM vot2_followup_dummy WHERE fud_uid = '".$row['uid']."'";
+                $resp = $db->fetch($strSQL, false);
+                if($resp){
+                    $item['curedate'] = $resp['cn'];
+                }
+                $a[] = $item;
+            }
+            $return['data'] = $a;
     }else if($role == 'staff'){
         $strSQL = "SELECT *, d.hosname hospital_name FROM vot2_followup_dummy a INNER JOIN vot2_account b ON a.fud_uid = b.uid 
               INNER JOIN vot2_userinfo c ON b.uid = c.info_uid
@@ -729,7 +765,7 @@ if($stage == 'followup_list'){
               AND a.fud_status = 'in-complete'
               AND a.fud_date = '$date'
               AND c.info_use = '1'
-              AND b.hcode = '$hcode'
+              AND b.obs_hcode = '$hcode'
               LIMIT $page, $limit
               ";
         $res = $db->fetch($strSQL, true, false);

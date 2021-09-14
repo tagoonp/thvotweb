@@ -178,8 +178,8 @@ $menu = 7;
                                             $strSQL = "SELECT a.*, a.ID user_id, b.* , regh.hserv rhserve, obsh.hserv hhserve, menh.hserv mhserve
                                                        FROM vot2_account a INNER JOIN vot2_userinfo b ON a.uid = b.info_uid 
                                                        LEFT JOIN vot2_projecthospital regh ON a.reg_hcode = regh.phoscode
-                                                       LEFT JOIN vot2_projecthospital obsh ON a.reg_hcode = obsh.phoscode
-                                                       LEFT JOIN vot2_projecthospital menh ON a.reg_hcode = menh.phoscode
+                                                       LEFT JOIN vot2_projecthospital obsh ON a.obs_hcode = obsh.phoscode
+                                                       LEFT JOIN vot2_projecthospital menh ON a.hcode = menh.phoscode
                                                        WHERE 
                                                        a.delete_status = '0' 
                                                        AND b.info_use = '1'

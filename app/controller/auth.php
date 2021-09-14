@@ -460,8 +460,8 @@ if($stage == 'signup_vot'){
                     ";
         $db->insert($strSQL, false);
 
-        $strSQL = "INSERT INTO vot2_userinfo (`fname`, `lname`, `phone`, `info_udatetime`, `info_use`, `info_prov`, `info_district`, `info_subdistrict`, `info_uid`) 
-                   VALUES ('$fname', '$lname', '$phone', '$datetime', '1', '$tprovince', '$dist', '$subdist', '$uid')";
+        $strSQL = "INSERT INTO vot2_userinfo (`fname`, `lname`, `phone`, `info_udatetime`, `info_use`, `info_prov`, `info_district`, `info_subdistrict`, `info_uid`, `info_username`) 
+                   VALUES ('$fname', '$lname', '$phone', '$datetime', '1', '$tprovince', '$dist', '$subdist', '$uid', '$username')";
         $res = $db->insert($strSQL, false);
 
         $httpClient = new \LINE\LINEBot\HTTPClient\CurlHTTPClient('ky7UCr1R+Z02rgE4IUujkpubR5e1IOWMI72XpVGOVz94H9YbWEKfDbQnt8r9U08PbZYtSQHYT2jxFHUHNj6O5L8QgX81E4RcZ4mt8RMeruWvEDSnCwHmfHx1ocJbXshH9yPxOoWclP7b56ZGi9PgFQdB04t89/1O/w1cDnyilFU=');

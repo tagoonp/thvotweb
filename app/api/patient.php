@@ -593,8 +593,8 @@ if($stage == 'patient_register'){
     $res = $db->insert($strSQL, false);
     if($res){
 
-        $strSQL = "INSERT INTO vot2_userinfo (`fname`, `lname`, `phone`, `info_prov`, `info_district`, `info_subdistrict`, `info_udatetime`, `info_use`, `info_uid`) 
-                   VALUES ('$fname', '$lname', '$phone', '$province', '$district', '$subdistrict', '$datetime', '1', '$patient_uid')";
+        $strSQL = "INSERT INTO vot2_userinfo (`fname`, `lname`, `phone`, `info_prov`, `info_district`, `info_subdistrict`, `info_udatetime`, `info_use`, `info_uid`, `info_username`) 
+                   VALUES ('$fname', '$lname', '$phone', '$province', '$district', '$subdistrict', '$datetime', '1', '$patient_uid', '$username')";
         $res = $db->insert($strSQL, false);
 
         $strSQL = "INSERT INTO vot2_log (`log_datetime`, `log_info`, `log_message`, `log_ip`, `log_uid`)

@@ -254,7 +254,7 @@ if($stage == 'undrug_number'){
     $strSQL = "SELECT COUNT(a.fud_id) cn FROM vot2_followup_dummy a
                WHERE 
                a.fud_date = '$date' 
-               AND a.fud_status = 'non-response'
+               AND a.fud_status != 'complete'
                AND a.fud_username IN 
                (
                    SELECT username 
@@ -271,7 +271,7 @@ if($stage == 'undrug_number'){
         $strSQL = "SELECT COUNT(a.fud_id) cn FROM vot2_followup a
                WHERE 
                 a.fud_date = '$date' 
-                AND a.fud_status = 'non-response'
+                AND a.fud_status != 'complete'
                 AND delete_status = '0'
                 AND stop_drug = '0'
                 AND role = 'patient'";
@@ -279,7 +279,7 @@ if($stage == 'undrug_number'){
         $strSQL = "SELECT COUNT(a.fud_id) cn FROM vot2_followup a
                WHERE 
                a.fud_date = '$date' 
-               AND a.fud_status = 'non-response'
+               AND a.fud_status != 'complete'
                AND a.fud_username IN 
                (
                    SELECT 

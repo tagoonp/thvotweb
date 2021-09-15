@@ -560,7 +560,7 @@ if($stage == 'user_subhospital'){
     $strSQL = "SELECT phoscode, hserv 
                FROM vot2_projecthospital 
                WHERE 
-               htype_code IN ('HPH', 'etc')
+               htype_code IN ('HPH', 'etc', 'Hospital')
                AND phoscode IN (
                    SELECT hoscode FROM vot2_chospital WHERE provcode = '$prov' AND distcode = '$dist'
                )

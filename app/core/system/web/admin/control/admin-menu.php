@@ -25,6 +25,8 @@
                             <li class="<?php if($menu == 6){ echo "active"; } ?>"><a class="d-flex align-items-center" href="app-drug-add"><i class="bx bx-right-arrow-alt"></i><span class="menu-item text-truncate" data-i18n="View">เพิ่มยาใหม่</span></a></li>
                         </ul>
                     </li>
+
+                    <li class="nav-item"><a href="./"><i class="menu-livicon" data-icon="desktop"></i><span class="menu-title text-truncate">ข้อมูลเครื่องยืม</span></a></li>
                     <?php
                 }
                 ?>

@@ -68,7 +68,7 @@ if(isset($_GET['stage'])){
                         <div style="padding-bottom: 20px;">
                             <h2 style="text-align: center;">วิดีโอการแนะนำวิธีการใช้งานระบบสำหรับมือถือยืมใช้งาน</h2>
                             <video width="100%"  controls >
-                                <source src="https://thvot.com/img/TBvideo2.mp4" type="video/mp4">
+                                <source src="https://thvot.com/media/TBvideo2.mp4" type="video/mp4">
                                 Your browser does not support the video tag.
                             </video>
                         </div>

@@ -423,7 +423,7 @@ if($stage == 'user_province'){
     $strSQL = "SELECT b.ap_code province_code, c.Name province_name
                FROM 
                vot2_chospital a INNER JOIN vot2_active_province b ON a.provcode = b.ap_code
-               INNER JOIN vot2_changwat d ON b.ap_code = c.Changwat
+               INNER JOIN vot2_changwat c ON b.ap_code = c.Changwat
                WHERE a.hoscode = '$hcode'
                ";
     $res = $db->fetch($strSQL, false, false);

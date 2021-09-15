@@ -67,7 +67,7 @@
 
                 <li class="navigation-header text-truncate"><span data-i18n="Support">สนับสนุน</span>
                 </li>
-                <li class="nav-item"><a href="https://pixinvent.com/demo/frest-clean-bootstrap-admin-dashboard-template/documentation" target="_blank"><i class="menu-livicon" data-icon="morph-folder"></i><span class="menu-title text-truncate" data-i18n="Documentation">คู่มือการใช้งาน</span></a></li>
-                <li class="nav-item"><a href="https://pixinvent.ticksy.com/" target="_blank"><i class="menu-livicon" data-icon="file"></i><span class="menu-title text-truncate" data-i18n="Raise Support">คำถามที่พบบ่อย</span></a></li>
-                <li class="nav-item"><a href="https://pixinvent.ticksy.com/" target="_blank"><i class="menu-livicon" data-icon="help"></i><span class="menu-title text-truncate" data-i18n="Raise Support">ติดต่อฝ่ายสนับสนุน</span></a></li>
+                <li class="nav-item"><a href="./documentation?role=<?php echo $_SESSION['thvot_role'];?>" target="_blank"><i class="menu-livicon" data-icon="morph-folder"></i><span class="menu-title text-truncate" data-i18n="Documentation">คู่มือการใช้งาน</span></a></li>
+                <li class="nav-item"><a href="./qanda" target="_blank"><i class="menu-livicon" data-icon="question-alt"></i><span class="menu-title text-truncate" data-i18n="Raise Support">คำถามที่พบบ่อย</span></a></li>
+                <li class="nav-item"><a href="./contactus" target="_blank"><i class="menu-livicon" data-icon="help"></i><span class="menu-title text-truncate" data-i18n="Raise Support">ติดต่อฝ่ายสนับสนุน</span></a></li>
             </ul>

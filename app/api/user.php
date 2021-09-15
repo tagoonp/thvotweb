@@ -566,7 +566,7 @@ if($stage == 'user_subhospital'){
             $b['hserv'] = $row['hserv'];
             
             $c = explode("โรงพยาบาลส่งเสริมสุขภาพตำบล", $row['hserv']);
-            if(sizof($c) > 1){
+            if(sizeof($c) > 1){
                 $b['hserv'] = "รพ.สต.".$c[1];
             }
             $arr[$j] = $b;

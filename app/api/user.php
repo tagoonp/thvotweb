@@ -432,6 +432,7 @@ if($stage == 'user_province'){
         $return['data'] = $res;
     }else{
         $return['status'] = 'Fail (x102)';
+        $return['err_msg'] = $strSQL;
     }
     echo json_encode($return);
     $db->close(); 

@@ -558,7 +558,21 @@ if($stage == 'user_subhospital'){
     $res = $db->fetch($strSQL, true, false);
     if(($res) && ($res['status'])){
         $return['status'] = 'Success';
-        $return['data'] = $res['data'];
+        $arr = array();
+        $j = 0;
+        foreach ($res['data'] as $row) {
+            $b = array();
+            $b['phoscode'] = $row['phoscode'];
+            $b['hserv'] = $row['hserv'];
+            
+            $c = explode("โรงพยาบาลส่งเสริมสุขภาพตำบล", $row['hserv']);
+            if(sizof($c) > 1){
+                $b['hserv'] = "รพ.สต.".$c[1];
+            }
+            $arr[$j] = $b;
+        }
+        // $return['data'] = $res['data'];
+        $return['data'] = $arr;
     }else{
         $return['status'] = 'Fail (x102)';
         $return['err_msg'] = $strSQL;

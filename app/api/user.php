@@ -522,3 +522,48 @@ if($stage == 'user_hospital'){
     $db->close(); 
     die();
 }
+
+// user_subhospital
+if($stage == 'user_subhospital'){
+    if(
+        (!isset($_REQUEST['uid'])) ||
+        (!isset($_REQUEST['role'])) ||
+        (!isset($_REQUEST['hcode'])) ||
+        (!isset($_REQUEST['prov'])) ||
+        (!isset($_REQUEST['dist'])) ||
+        (!isset($_REQUEST['shcode']))
+    ){
+        $return['status'] = 'Fail (x101)';
+        echo json_encode($return);
+        $db->close(); 
+        die();
+    }
+
+    $uid = mysqli_real_escape_string($conn, $_REQUEST['uid']);
+    $role = mysqli_real_escape_string($conn, $_REQUEST['role']);
+    $hcode = mysqli_real_escape_string($conn, $_REQUEST['hcode']);
+    $prov = mysqli_real_escape_string($conn, $_REQUEST['prov']);
+    $dist = mysqli_real_escape_string($conn, $_REQUEST['dist']);
+    $shcode = mysqli_real_escape_string($conn, $_REQUEST['shcode']);
+
+    $strSQL = "SELECT phoscode, hserv 
+               FROM vot2_projecthospital 
+               WHERE 
+               htype_code IN ('HPH', 'etc')
+               AND phoscode IN (
+                   SELECT hoscode FROM vot2_chospital WHERE provcode = '$prov' AND distcode = '$dist'
+               )
+               AND hospcode = '$hcode'
+                ";
+    $res = $db->fetch($strSQL, true, false);
+    if(($res) && ($res['status'])){
+        $return['status'] = 'Success';
+        $return['data'] = $res['data'];
+    }else{
+        $return['status'] = 'Fail (x102)';
+        $return['err_msg'] = $strSQL;
+    }
+    echo json_encode($return);
+    $db->close(); 
+    die();
+}

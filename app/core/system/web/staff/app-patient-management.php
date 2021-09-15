@@ -802,6 +802,7 @@ $selected_location = $db->fetch($strSQL, false);
                                 <div class="form-group dn" id="stopDrug">
                                     <label for="">สั่งหยุดยา : <span class="text-danger">*</span></label>
                                     <select name="txtCommentPatientStopdrug" id="txtCommentPatientStopdrug" class="form-control">
+                                        <option value="">-- เลือก --</option>
                                         <option value="1">ให้ทานต่อ</option>
                                         <option value="0">สั่งหยุดยาชั่วคราว</option>
                                     </select>

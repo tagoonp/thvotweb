@@ -1,9 +1,19 @@
 function addDailyProgressNote(){
+
+    $('.form-control').removeClass('is-invalid')
+    $check = 0;
     
     if($('#txtCommentPatientMsg').val() == ''){
         $('#txtCommentPatientMsg').addClass('is-invalid')
-        return ;
+        $check++;
     }
+
+    if($('#txtCommentPatientStopdrug').val() == ''){
+        $('#txtCommentPatientStopdrug').addClass('is-invalid')
+        $check++;
+    }
+
+    if($check != 0){ return ; }
 
     preload.show()
     

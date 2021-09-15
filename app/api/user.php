@@ -481,3 +481,44 @@ if($stage == 'user_district'){
     $db->close(); 
     die();
 }
+
+if($stage == 'user_hospital'){
+    if(
+        (!isset($_REQUEST['uid'])) ||
+        (!isset($_REQUEST['role'])) ||
+        (!isset($_REQUEST['hcode'])) ||
+        (!isset($_REQUEST['prov'])) ||
+        (!isset($_REQUEST['dist']))
+    ){
+        $return['status'] = 'Fail (x101)';
+        echo json_encode($return);
+        $db->close(); 
+        die();
+    }
+
+    $uid = mysqli_real_escape_string($conn, $_REQUEST['uid']);
+    $role = mysqli_real_escape_string($conn, $_REQUEST['role']);
+    $hcode = mysqli_real_escape_string($conn, $_REQUEST['hcode']);
+    $prov = mysqli_real_escape_string($conn, $_REQUEST['prov']);
+    $dist = mysqli_real_escape_string($conn, $_REQUEST['dist']);
+
+    $strSQL = "SELECT phoscode, hserv 
+               FROM vot2_projecthospital 
+               WHERE 
+               htype_code = 'Hospital'
+               AND phoscode IN (
+                   SELECT hoscode FROM vot2_chospital WHERE provcode = '$prov' AND distcode = '$dist'
+               )
+                ";
+    $res = $db->fetch($strSQL, true, false);
+    if(($res) && ($res['status'])){
+        $return['status'] = 'Success';
+        $return['data'] = $res['data'];
+    }else{
+        $return['status'] = 'Fail (x102)';
+        $return['err_msg'] = $strSQL;
+    }
+    echo json_encode($return);
+    $db->close(); 
+    die();
+}

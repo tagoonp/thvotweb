@@ -554,6 +554,7 @@ if($stage == 'user_subhospital'){
                    SELECT hoscode FROM vot2_chospital WHERE provcode = '$prov' AND distcode = '$dist'
                )
                AND hospcode = '$hcode'
+               ORDER BY hserv
                 ";
     $res = $db->fetch($strSQL, true, false);
     if(($res) && ($res['status'])){

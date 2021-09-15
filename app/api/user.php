@@ -438,3 +438,44 @@ if($stage == 'user_province'){
     $db->close(); 
     die();
 }
+
+if($stage == 'user_district'){
+    if(
+        (!isset($_REQUEST['uid'])) ||
+        (!isset($_REQUEST['role'])) ||
+        (!isset($_REQUEST['hcode'])) ||
+        (!isset($_REQUEST['prov']))
+    ){
+        $return['status'] = 'Fail (x101)';
+        echo json_encode($return);
+        $db->close(); 
+        die();
+    }
+
+    $uid = mysqli_real_escape_string($conn, $_REQUEST['uid']);
+    $role = mysqli_real_escape_string($conn, $_REQUEST['role']);
+    $hcode = mysqli_real_escape_string($conn, $_REQUEST['hcode']);
+    $prov = mysqli_real_escape_string($conn, $_REQUEST['prov']);
+
+    $strSQL = "SELECT Ampur dist_code, Name dist_name
+               FROM vot2_ampur
+               WHERE Changwat = '$prov'
+               ";
+    if($role == 'manager'){
+        $strSQL = "SELECT Ampur dist_code, Name dist_name
+               FROM vot2_ampur
+               WHERE Changwat IN (SELECT provcode FROM vot2_chospital WHERE hoscode = '$hcode')
+               ";
+    }
+    $res = $db->fetch($strSQL, true, false);
+    if(($res) && ($res['status'])){
+        $return['status'] = 'Success';
+        $return['data'] = $res['data'];
+    }else{
+        $return['status'] = 'Fail (x102)';
+        $return['err_msg'] = $strSQL;
+    }
+    echo json_encode($return);
+    $db->close(); 
+    die();
+}

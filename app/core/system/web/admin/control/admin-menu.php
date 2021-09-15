@@ -26,7 +26,7 @@
                         </ul>
                     </li>
 
-                    <li class="nav-item"><a href="./"><i class="menu-livicon" data-icon="desktop"></i><span class="menu-title text-truncate">ข้อมูลเครื่องยืม</span></a></li>
+                    <li class="nav-item"><a href="https://docs.google.com/spreadsheets/d/1jGhcETCfWfud1DcUqhrDgEYu69ExgBELt8wujoLDps4/edit?usp=sharing" target="_blank"><i class="menu-livicon" data-icon="desktop"></i><span class="menu-title text-truncate">ข้อมูลเครื่องยืม</span></a></li>
                     <?php
                 }
                 ?>

@@ -464,7 +464,9 @@ if($stage == 'user_district'){
     if($role == 'manager'){
         $strSQL = "SELECT Ampur dist_code, Name dist_name
                FROM vot2_ampur
-               WHERE Ampur IN (SELECT distcode FROM vot2_chospital WHERE hoscode = '$hcode' AND provcode = '$prov')
+               WHERE 
+               Ampur IN (SELECT distcode FROM vot2_chospital WHERE hoscode = '$hcode')
+               AND Changwat = '$prov'
                ";
     }
     $res = $db->fetch($strSQL, true, false);

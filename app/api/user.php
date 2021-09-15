@@ -510,6 +510,17 @@ if($stage == 'user_hospital'){
                    SELECT hoscode FROM vot2_chospital WHERE provcode = '$prov' AND distcode = '$dist'
                )
                 ";
+    if($role == 'manager'){
+        $strSQL = "SELECT phoscode, hserv 
+               FROM vot2_projecthospital 
+               WHERE 
+               htype_code = 'Hospital'
+               AND phoscode IN (
+                   SELECT hoscode FROM vot2_chospital WHERE provcode = '$prov' AND distcode = '$dist'
+               )
+               AND phoscode = '$hcode'
+                ";
+    }
     $res = $db->fetch($strSQL, true, false);
     if(($res) && ($res['status'])){
         $return['status'] = 'Success';

@@ -426,10 +426,10 @@ if($stage == 'user_province'){
                INNER JOIN vot2_changwat c ON b.ap_code = c.Changwat
                WHERE a.hoscode = '$hcode'
                ";
-    $res = $db->fetch($strSQL, false, false);
-    if($res){
+    $res = $db->fetch($strSQL, true, false);
+    if(($res) && ($res['status'])){
         $return['status'] = 'Success';
-        $return['data'] = $res;
+        $return['data'] = $res['data'];
     }else{
         $return['status'] = 'Fail (x102)';
         $return['err_msg'] = $strSQL;

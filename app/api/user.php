@@ -570,6 +570,7 @@ if($stage == 'user_subhospital'){
                 $b['hserv'] = "รพ.สต.".$c[1];
             }
             $arr[$j] = $b;
+            $j++;
         }
         // $return['data'] = $res['data'];
         $return['data'] = $arr;

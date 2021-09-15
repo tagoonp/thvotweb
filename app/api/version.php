@@ -38,3 +38,32 @@ if($stage == 'checkversion'){
 
 }
 
+// checkversion_votview
+if($stage == 'checkversion_votview'){
+    if(
+        (!isset($_GET['version']))
+    ){
+        $return['status'] = 'Fail';
+        $return['stage_fail'] = '0';
+        echo json_encode($return);
+        $db->close(); 
+        die();
+    }
+
+    $version = mysqli_real_escape_string($conn, $_GET['version']);
+    $return['status'] = 'Fail';
+    
+    $strSQL = "SELECT * FROM vot2_version WHERE version_id = '$version' AND version_allow = '1' AND version_app = 'votview'";
+    $res1 = $db->fetch($strSQL, true, false); 
+    if(($res1) && ($res1['status'])){
+        $return['status'] = 'Success';
+    }else{
+        $return['status'] = 'New version available';
+    }
+    
+    echo json_encode($return);
+    $db->close(); 
+    die();
+
+}
+

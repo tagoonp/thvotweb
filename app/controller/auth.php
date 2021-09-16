@@ -11,6 +11,31 @@ $conn = $db->conn();
 if(!isset($_GET['stage'])){ $db->close(); header('Location: ../404?stage=001'); die(); }
 $stage = mysqli_real_escape_string($conn, $_GET['stage']);
 
+if($stage == 'line_login_web'){
+    $token = mysqli_real_escape_string($conn, $_GET['token']);
+
+    $strSQL = "SELECT * FROM vot2_account WHERE uid = '$token' AND delete_status = '0' LIMIT 1";
+    $result = mysqli_query($conn, $strSQL);
+
+    if(($result) && (mysqli_num_rows($result) > 0)){
+
+        $dt = mysqli_fetch_assoc($result);
+
+        $_SESSION['thvot_session'] = session_id();
+        $_SESSION['thvot_uid'] = $token;
+        $_SESSION['thvot_role'] = $dt['role'];
+        $_SESSION['thvot_hcode'] = $dt['hcode'];
+
+        mysqli_close($conn);
+        header('Location: ../core/system/web/'.$dt['role'].'/');
+        die();
+
+    }else{
+        mysqli_close($conn);
+        header('Location: ../');
+        die();
+    }
+}
 
 if($stage == 'line_login_staff'){
     $token = mysqli_real_escape_string($conn, $_GET['token']);

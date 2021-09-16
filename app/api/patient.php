@@ -1011,7 +1011,8 @@ if($stage == 'delete_patient_drug'){
         $res2 = $db->execute($strSQL);
 
         $return['status'] = 'Success';
-        $return['data'] = $res['data'];
+        // $return['data'] = $res['data'];
+
         echo json_encode($return);
         $db->close(); 
         die();

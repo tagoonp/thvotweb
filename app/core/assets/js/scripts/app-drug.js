@@ -142,6 +142,7 @@ function deleteDrug(did){
           }
           var jxr = $.post(api_url + 'patient?stage=delete_patient_drug', param, function(){}, 'json')
                .always(function(snap){
+                   console.log(snap);
                    if(snap.status == 'Success'){
                     loadDruglist()
                         Swal.fire({

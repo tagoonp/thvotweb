@@ -93,7 +93,7 @@ if(isset($_GET['stage'])){
                                                     <div class="text-right"><a href="auth-forget-password" class="card-link"><small>ลืมรหัสผ่าน?</small></a></div>
                                                 </div>
                                                 <button type="submit" class="btn btn-primary glow w-100 position-relative mb-1">เข้าสู่ระบบ<i id="icon-arrow" class="bx bx-right-arrow-alt"></i></button>
-                                                <button type="button" class="btn btn-success glow w-100 position-relative" onclick="window.location='../line_login_web'">Line login<i id="icon-arrow" class="bx bx-right-arrow-alt"></i></button>
+                                                <button type="button" class="btn btn-success glow w-100 position-relative" onclick="window.location='./line_login_web'">Line login<i id="icon-arrow" class="bx bx-right-arrow-alt"></i></button>
                                             </form>
                                             
                                             <div class="text-center"></div>

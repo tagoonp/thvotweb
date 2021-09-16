@@ -36,7 +36,7 @@ try {
 
     
 
-    header('Location: ./app/controller/auth?stage=line_login_web&token='.$ukey);
+    header('Location: ../app/controller/auth?stage=line_login_web&token='.$ukey);
     $adapter->disconnect();
 }
 catch (\Exception $e) {

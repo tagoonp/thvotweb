@@ -13,6 +13,7 @@ var auth = {
     preload.show()
     var jxt = $.post('../app/api/patient?stage=login', { username: $('#txtUsername').val(), password: $('#txtPassword').val() }, function(){}, 'json')
               .always(function(snap){
+                console.log(snap);
                 if(snap.status == 'Success'){
                   window.location = '../app/controller/auth?stage=patient_session&uid=' + snap.uid + '&role=patient&hcode=' + snap.hcode
                 }else{

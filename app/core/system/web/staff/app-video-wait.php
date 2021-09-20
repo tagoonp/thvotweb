@@ -13,6 +13,12 @@ if(isset($_GET['stage'])){
     $stage = mysqli_real_escape_string($conn, $_GET['stage']);
 }
 
+if(!isset($_GET['patient_id'])){
+    header('Location: ./app-video-patient.php');
+}
+
+$patient_id = mysqli_real_escape_string($conn, $_GET['patient_id']);
+
 require('../../../../config/user.inc.php'); 
 
 $menu = 8;
@@ -156,23 +162,22 @@ $menu = 8;
                 <section class="users-list-wrapper">
                     <div class="users-list-table">
                         <div class="card">
-                            <div class="card-body">
+                            <div class="card-body p-0">
                                 <!-- datatable start -->
                                 <div class="table-responsive">
                                     <table id="users-list-datatable-patient" class="table">
                                         <thead>
                                             <tr>
-                                                <!-- <th style="width: 40px;" class="th"></th> -->
-                                                <!-- <th class="th">บัญชีผู้ใช้งาน</th> -->
                                                 <th class="th">วิดีโอ</th>
                                                 <th class="th" style="width: 120px;">สถานะการตรวจ</th>
-                                                <th class="th" style="width: 100px;">วัน-เวลาที่ส่ง</th>
-                                                <th class="th" style="width: 100px;">วัน-เวลาที่ตรวจ</th>
+                                                <th class="th" style="width: 200px;">วัน-เวลาที่ส่ง</th>
                                                 
                                             </tr>
                                         </thead>
                                         <tbody>
                                             <?php 
+                                            $last48hr = date("Y-m-d H:i:s", strtotime($datetime . " -48 hours"));
+                                            // echo $last48hr;
                                             $strSQL = "SELECT *
                                                        FROM vot2_followup a INNER JOIN vot2_account b ON a.fu_username = b.username
                                                        INNER JOIN vot2_userinfo c ON b.username = c.info_username
@@ -182,31 +187,64 @@ $menu = 8;
                                                        AND a.fu_verify_datetime IS NULL
                                                        AND c.info_use = '1'
                                                        AND b.obs_hcode = '$hcode'
+                                                       AND a.fu_upload_datetime >= '$last48hr'
+                                                       AND b.uid = '$patient_id'
+                                                       ORDER BY a.fu_upload_datetime ASC
                                             ";
+                                            if($_SESSION['thvot_role'] == 'manager'){
+                                                $strSQL = "SELECT *
+                                                       FROM vot2_followup a INNER JOIN vot2_account b ON a.fu_username = b.username
+                                                       INNER JOIN vot2_userinfo c ON b.username = c.info_username
+                                                       WHERE 
+                                                       b.delete_status = '0' 
+                                                       AND b.role = 'patient'
+                                                       AND a.fu_verify_datetime IS NULL
+                                                       AND c.info_use = '1'
+                                                       AND b.obs_hcode = '$hcode'
+                                                       AND a.fu_upload_datetime >= '$last48hr'
+                                                       AND b.uid = '$patient_id'
+                                                       AND (b.hcode = '$hcode' OR b.reg_hcode = '$hcode')
+                                                       ORDER BY a.fu_upload_datetime ASC
+                                                       ";
+                                            }
                                             $result_list = $db->fetch($strSQL, true, false);
                                             if($result_list['status']){
                                                 $c = 1;
                                                 foreach($result_list['data'] as $row){
                                                     ?>
                                                     <tr>
-                                                        <!-- <td class="text-left" style="vertical-align:top; width: 50px;">
-                                                            
-                                                        </td> -->
                                                         <td class="th" style="vertical-align:top;">
-                                                            <span class="badge- badge-dark- round" style="font-size: 0.8em; margin-left: 0px;">Username : <?php echo $row['username']; ?></span>
+                                                            <span class="badge- badge-dark- round" style="font-size: 0.8em; margin-left: 0px;">รหัส : <span class="badge badge-light-success round"><?php echo $row['username']; ?></span></span>
                                                             <div><?php echo $row['fname']." ".$row['lname']; ?></div>
                                                             <div style="padding-top: 5px;">
                                                                 <a class="btn btn-icon btn-success rounded-circle" style="height: 34px; width: 34px; margin-bottom: 2px;" href="app-video-check?uid=<?php echo $user['uid']; ?>&role=<?php echo $user['role']; ?>&hcode=<?php echo $user['hcode']; ?>&id=<?php echo $row['uid'];?>&vid=<?php echo $row['fu_id']; ?>" class="mr-1"><i class="bx bx-search"></i></a>    
                                                             </div>
                                                         </td>
                                                         
-                                                        <td class="th" style="vertical-align:top; width: 100px;">รอการตรวจสอบ</td>
+                                                        <td class="th" style="vertical-align:top; width: 100px;">
+                                                            <?php 
+                                                            if($row['fu_status'] == 'non-verify'){
+                                                                ?>
+                                                                <span class="badge- badge-dark- round" style="font-size: 0.8em; margin-left: 0px;"><span class="badge badge-danger round th">รอการตรวจสอบ</span></span>
+                                                                <?php
+                                                            }else if($row['fu_status'] == 'complete'){
+                                                                ?>
+                                                                <span class="badge- badge-dark- round" style="font-size: 0.8em; margin-left: 0px;"><span class="badge badge-success round th">ตรวจสอบแล้ว</span></span>
+                                                                <?php
+                                                            }
+                                                            ?>
+                                                        </td>
                                                         <td class="th" style="vertical-align:top;"><?php echo $row['fu_upload_datetime']; ?></td>
-                                                        <td class="th" style="vertical-align:top;"><?php echo $row['fu_verify_datetime']; ?></td>
                                                     </tr>
                                                     <?php
                                                     $c++;
                                                 }
+                                            }else{
+                                                ?>
+                                                <tr>
+                                                    <td colspan="4" class="text-center th">ไม่มีรายการรอตรวจสอบ</td>
+                                                </tr>
+                                                <?php
                                             }
                                             ?>
                                         </tbody>
@@ -271,14 +309,14 @@ $menu = 8;
             preload.hide();
 
             if ($("#users-list-datatable-patient").length > 0) {
-                usersTable = $("#users-list-datatable-patient").DataTable({
-                    responsive: true,
-                    'columnDefs': [
-                        {
-                            "orderable": false,
-                            "targets": [0, 2, 3]
-                        }]
-                });
+                // usersTable = $("#users-list-datatable-patient").DataTable({
+                //     responsive: true,
+                //     'columnDefs': [
+                //         {
+                //             "orderable": false,
+                //             "targets": [0, 2, 3]
+                //         }]
+                // });
             };
         })
 

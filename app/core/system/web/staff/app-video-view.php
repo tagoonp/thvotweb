@@ -649,7 +649,7 @@ $next24time = date("Y-m-d H:i:s", strtotime($resVideo['fu_upload_datetime'] . " 
                                             buttonsStyling: false,
                                         }).then(function (result) {
                                             if (result.value) {
-                                                window.location = 'app-video-patient'
+                                                window.history.back()
                                             }
                                         })
                                     }else{

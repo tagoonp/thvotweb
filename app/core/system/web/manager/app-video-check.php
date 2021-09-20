@@ -36,6 +36,8 @@ $strSQL = "SELECT * FROM vot2_account a INNER JOIN vot2_userinfo b ON a.username
            a.delete_status = '0' 
            AND a.active_status = '1'
            AND b.info_use = '1'
+           AND a.uid = '$patient_id'
+           ORDER BY a.ID DESC LIMIT 1
           ";
 $resPatient = $db->fetch($strSQL, false);
 if(!$resPatient){
@@ -196,6 +198,14 @@ $next24time = date("Y-m-d H:i:s", strtotime($resVideo['fu_upload_datetime'] . " 
             <div class="content-body">
             <section class="users-list-wrapper">
                     <div class="users-list-table">
+                        <h3>ตรวจสอบการรับประทานยา</h3>
+                        <nav aria-label="breadcrumb">
+                            <ol class="breadcrumb">
+                            <li class="breadcrumb-item"><a href="./"><i class="bx bx-home"></i></a></li>
+                            <li class="breadcrumb-item"><a href="./app-patient-list" class="text-primary">รายชื่อผู้ป่วย</a></li>
+                            <li class="breadcrumb-item" aria-current="page">ตรวจสอบวิดีโอ</li>
+                            </ol>
+                        </nav>
                         <div class="card" style="box-shadow: none;">
                             <div class="row">
                                     <div class="col-12 col-sm-5">
@@ -207,22 +217,19 @@ $next24time = date("Y-m-d H:i:s", strtotime($resVideo['fu_upload_datetime'] . " 
                                     <div class="col-12 col-sm-7">
                                         <div class="p-2">
 
-                                        <div class="row">
-                                            <div class="col-12">
-                                                <div class="badge badge-success round mb-1">
-                                                ตรวจสอบการรับประทานยา
-                                                </div>
 
-                                                <div class="row pb-2">
-                                                    <div class="col-3">
-                                                        <small>ชื่อผู้ป่วย : </small><br>
-                                                    </div>
-                                                    <div class="col-9">
-                                                    
-                                                    </div>
+                                        <h4 class="mb-1">ข้อมูลผู้ป่วย : </h4>
+                                        <div>
+                                            <span class="badge badge-light-success round"><?php echo $resPatient['username']; ?></span>
+                                            <div class="row">
+                                                <div class="col-12"><h3 class="mt-1"><?php echo $resPatient['fname']." ".$resPatient['lname'];  ?></h3></div>
+                                                <div class="col-12 pt-1 text-left">
+                                                    <a class="btn btn-secondary round" href="app-patient-management?uid=<?php echo $_SESSION['thvot_uid']; ?>&role=<?php echo $_SESSION['thvot_role']; ?>&hcode=<?php echo $_SESSION['thvot_hcode']; ?>&id=<?php echo $patient_id; ?>"><i class="bx bx-pencil"></i> ดูข้อมูลผู้ป่วย</a>
                                                 </div>
                                             </div>
                                         </div>
+
+                                        <hr>
 
                                         <h4 class="mb-1">ส่วนที่ 1 : <br><small>จำนวนยาที่รับประทาน</small></h4>
                                         <?php 
@@ -303,7 +310,20 @@ $next24time = date("Y-m-d H:i:s", strtotime($resVideo['fu_upload_datetime'] . " 
                                                 $c++;
                                             }
                                         }else{
-                                            echo $strSQL;
+                                            // echo $strSQL;
+                                            ?>
+                                            <div class="alert alert-danger alert-dismissible mb-2" role="alert">
+                                                <!-- <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                                </button> -->
+                                                <div class="d-flex align-items-center">
+                                                <i class="bx bx-error"></i>
+                                                <span>
+                                                    ไม่พบรายการยาที่ยืนยันแล้วของผู้ป่วยรายนี้
+                                                </span>
+                                                </div>
+                                            </div>
+                                            <?php
                                         }
                                         ?>
 
@@ -629,7 +649,7 @@ $next24time = date("Y-m-d H:i:s", strtotime($resVideo['fu_upload_datetime'] . " 
                                             buttonsStyling: false,
                                         }).then(function (result) {
                                             if (result.value) {
-                                                window.history.back()
+                                                window.location = 'app-video-patient'
                                             }
                                         })
                                     }else{

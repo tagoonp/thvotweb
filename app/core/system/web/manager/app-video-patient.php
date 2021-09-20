@@ -13,12 +13,6 @@ if(isset($_GET['stage'])){
     $stage = mysqli_real_escape_string($conn, $_GET['stage']);
 }
 
-if(!isset($_GET['patient_id'])){
-    header('Location: ./app-video-patient.php');
-}
-
-$patient_id = mysqli_real_escape_string($conn, $_GET['patient_id']);
-
 require('../../../../config/user.inc.php'); 
 
 $menu = 8;
@@ -168,9 +162,10 @@ $menu = 8;
                                     <table id="users-list-datatable-patient" class="table">
                                         <thead>
                                             <tr>
-                                                <th class="th">วิดีโอ</th>
+                                                <th class="th" style="width: 150px;"></th>
+                                                <th class="th">ผู้ป่วย</th>
                                                 <th class="th" style="width: 120px;">สถานะการตรวจ</th>
-                                                <th class="th" style="width: 200px;">วัน-เวลาที่ส่ง</th>
+                                                <th class="th" style="width: 100px;">ประเภทผู้ป้วย</th>
                                                 
                                             </tr>
                                         </thead>
@@ -178,34 +173,30 @@ $menu = 8;
                                             <?php 
                                             $last48hr = date("Y-m-d H:i:s", strtotime($datetime . " -48 hours"));
                                             // echo $last48hr;
-                                            $strSQL = "SELECT *
-                                                       FROM vot2_followup a INNER JOIN vot2_account b ON a.fu_username = b.username
-                                                       INNER JOIN vot2_userinfo c ON b.username = c.info_username
+
+                                            $strSQL = "SELECT * FROM vot2_account a INNER JOIN vot2_userinfo b ON a.username = b.info_username
                                                        WHERE 
-                                                       b.delete_status = '0' 
-                                                       AND b.role = 'patient'
-                                                       AND a.fu_verify_datetime IS NULL
-                                                       AND c.info_use = '1'
-                                                       AND b.obs_hcode = '$hcode'
-                                                       AND a.fu_upload_datetime >= '$last48hr'
-                                                       AND b.uid = '$patient_id'
-                                                       ORDER BY a.fu_upload_datetime ASC
-                                            ";
+                                                       a.delete_status = '0'
+                                                       AND a.role = 'patient'
+                                                       AND b.info_use = '1'
+                                                       AND a.obs_hcode = '$hcode'
+                                                       AND a.username IN 
+                                                       (
+                                                           SELECT fu_username FROM vot2_followup WHERE fu_upload_datetime >= '$last48hr' AND fu_verify_datetime IS NULL
+                                                       )
+                                                      ";
                                             if($_SESSION['thvot_role'] == 'manager'){
-                                                $strSQL = "SELECT *
-                                                       FROM vot2_followup a INNER JOIN vot2_account b ON a.fu_username = b.username
-                                                       INNER JOIN vot2_userinfo c ON b.username = c.info_username
+                                                $strSQL = "SELECT * FROM vot2_account a INNER JOIN vot2_userinfo b ON a.username = b.info_username
                                                        WHERE 
-                                                       b.delete_status = '0' 
-                                                       AND b.role = 'patient'
-                                                       AND a.fu_verify_datetime IS NULL
-                                                       AND c.info_use = '1'
-                                                       AND b.obs_hcode = '$hcode'
-                                                       AND a.fu_upload_datetime >= '$last48hr'
-                                                       AND b.uid = '$patient_id'
-                                                       AND (b.hcode = '$hcode' OR b.reg_hcode = '$hcode')
-                                                       ORDER BY a.fu_upload_datetime ASC
-                                                       ";
+                                                       a.delete_status = '0'
+                                                       AND a.role = 'patient'
+                                                       AND b.info_use = '1'
+                                                       AND (a.hcode = '$hcode' OR a.reg_hcode = '$hcode')
+                                                       AND a.username IN 
+                                                       (
+                                                           SELECT fu_username FROM vot2_followup WHERE fu_upload_datetime >= '$last48hr' AND fu_verify_datetime IS NULL
+                                                       )
+                                                      ";
                                             }
                                             $result_list = $db->fetch($strSQL, true, false);
                                             if($result_list['status']){
@@ -213,28 +204,37 @@ $menu = 8;
                                                 foreach($result_list['data'] as $row){
                                                     ?>
                                                     <tr>
+                                                        <td>
+                                                        <div style="padding-top: 5px;">
+                                                                <a class="btn btn-icon btn-success rounded-circle" style="height: 34px; width: 34px; margin-bottom: 2px;" href="app-video-wait?patient_id=<?php echo $row['uid'];?>" class="mr-1"><i class="bx bx-play"></i></a>    
+                                                                <a class="btn btn-icon btn-success rounded-circle" style="height: 34px; width: 34px; margin-bottom: 2px;" href="app-patient-management?uid=<?php echo $_SESSION['thvot_uid']; ?>&role=<?php echo $_SESSION['thvot_role']; ?>&hcode=<?php echo $_SESSION['thvot_hcode']; ?>&id=<?php echo $row['uid']; ?>" class="mr-1"><i class="bx bx-search"></i></a>    
+                                                            </div>
+                                                        </td>
                                                         <td class="th" style="vertical-align:top;">
                                                             <span class="badge- badge-dark- round" style="font-size: 0.8em; margin-left: 0px;">รหัส : <span class="badge badge-light-success round"><?php echo $row['username']; ?></span></span>
                                                             <div><?php echo $row['fname']." ".$row['lname']; ?></div>
-                                                            <div style="padding-top: 5px;">
-                                                                <a class="btn btn-icon btn-success rounded-circle" style="height: 34px; width: 34px; margin-bottom: 2px;" href="app-video-check?uid=<?php echo $user['uid']; ?>&role=<?php echo $user['role']; ?>&hcode=<?php echo $user['hcode']; ?>&id=<?php echo $row['uid'];?>&vid=<?php echo $row['fu_id']; ?>" class="mr-1"><i class="bx bx-search"></i></a>    
-                                                            </div>
+                                                            
                                                         </td>
                                                         
                                                         <td class="th" style="vertical-align:top; width: 100px;">
+                                                        </td>
+                                                        <td class="th" style="vertical-align:top;">
                                                             <?php 
-                                                            if($row['fu_status'] == 'non-verify'){
+                                                            if($row['patient_type'] == 'TESTER'){
                                                                 ?>
-                                                                <span class="badge- badge-dark- round" style="font-size: 0.8em; margin-left: 0px;"><span class="badge badge-danger round th">รอการตรวจสอบ</span></span>
+                                                                <span class="badge badge-light-primary">TESTER</span>
                                                                 <?php
-                                                            }else if($row['fu_status'] == 'complete'){
+                                                            }else if($row['patient_type'] == 'DOT'){
                                                                 ?>
-                                                                <span class="badge- badge-dark- round" style="font-size: 0.8em; margin-left: 0px;"><span class="badge badge-success round th">ตรวจสอบแล้ว</span></span>
+                                                                <span class="badge badge-light-secondary">DOT</span>
+                                                                <?php
+                                                            }else if($row['patient_type'] == 'VOT'){
+                                                                ?>
+                                                                <span class="badge badge-light-danger">VOT</span>
                                                                 <?php
                                                             }
                                                             ?>
                                                         </td>
-                                                        <td class="th" style="vertical-align:top;"><?php echo $row['fu_upload_datetime']; ?></td>
                                                     </tr>
                                                     <?php
                                                     $c++;
@@ -242,7 +242,7 @@ $menu = 8;
                                             }else{
                                                 ?>
                                                 <tr>
-                                                    <td colspan="4" class="text-center th">ไม่มีรายการรอตรวจสอบ</td>
+                                                    <td colspan="4" class="text-center th">ไม่มีรายการรอตรวจสอบ <?php echo $strSQL; ?></td>
                                                 </tr>
                                                 <?php
                                             }

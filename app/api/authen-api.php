@@ -86,6 +86,57 @@ if($stage == 'profileimg'){
     die();
 }
 
+// getDrugStatus
+if($stage == 'getDrugStatus'){
+    if(
+        (!isset($_REQUEST['uid']))
+    ){
+        $return['status'] = 'Fail (x101)';
+        echo json_encode($return);
+        $db->close(); 
+        die();
+    }
+
+    $uid = mysqli_real_escape_string($conn, $_REQUEST['uid']);
+
+    $strSQL = "SELECT * FROM vot2_med_transaction 
+               WHERE mt_patient_uid = '$uid' 
+               AND mt_status = 'Y' 
+               AND mt_patient_uid IN 
+                (
+                    SELECT uid FROM vot2_account WHERE uid = '$uid' AND verify_status = '1' AND active_status = '1' AND delete_status = '0' AND cal_end_obsdate >= '$date'
+                )
+              ";
+    echo json_encode($return);
+    $db->close(); 
+    die();
+}
+
+// getStopDrugStatus
+if($stage == 'getStopDrugStatus'){
+    if(
+        (!isset($_REQUEST['uid']))
+    ){
+        $return['status'] = 'Fail (x101)';
+        echo json_encode($return);
+        $db->close(); 
+        die();
+    }
+
+    $uid = mysqli_real_escape_string($conn, $_REQUEST['uid']);
+
+    $strSQL = "SELECT * FROM vot2_account WHERE uid = '$uid' AND verify_status = '1' AND active_status = '1' AND delete_status = '0' AND stop_status = '1'";
+    $res = $db->fetch($strSQL, false);
+    if($res){
+        $return['status'] = 'Stop';
+    }else{
+        $return['status'] = 'Continue';
+    }
+    echo json_encode($return);
+    $db->close(); 
+    die();
+}
+
 if($stage == 'savelocation'){
     $json = file_get_contents('php://input');
     $array = json_decode($json, true);

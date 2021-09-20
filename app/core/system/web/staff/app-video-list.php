@@ -175,11 +175,24 @@ $menu = 13;
                                             <?php 
                                             $strSQL = "SELECT *
                                                        FROM vot2_followup a INNER JOIN vot2_account b ON a.fu_username = b.username
+                                                       INNER JOIN vot2_userinfo c ON b.username = c.info_username
                                                        WHERE 
                                                        b.delete_status = '0' 
                                                        AND b.role = 'patient'
                                                        AND b.obs_hcode = '$hcode'
+                                                       ORDER BY a.fu_upload_datetime DESC
                                             ";
+                                            if($_SESSION['thvot_role'] == 'manager'){
+                                                $strSQL = "SELECT *
+                                                       FROM vot2_followup a INNER JOIN vot2_account b ON a.fu_username = b.username
+                                                       INNER JOIN vot2_userinfo c ON b.username = c.info_username
+                                                       WHERE 
+                                                       b.delete_status = '0' 
+                                                       AND b.role = 'patient'
+                                                       AND (b.hcode = '$hcode' OR b.reg_hcode = '$hcode')
+                                                       ORDER BY a.fu_upload_datetime DESC
+                                            ";
+                                            }
                                             $result_list = $db->fetch($strSQL, true, false);
                                             if($result_list['status']){
                                                 $c = 1;
@@ -187,19 +200,66 @@ $menu = 13;
                                                     ?>
                                                     <tr>
                                                         <td class="text-left" style="vertical-align:top; width: 50px;">
-                                                            <a class="btn btn-icon btn-success rounded-circle" style="height: 36px; width: 36px; margin-bottom: 2px;" href="app-patient-management?uid=<?php echo $user['uid']; ?>&role=<?php echo $user['role']; ?>&hcode=<?php echo $user['hcode']; ?>&id=<?php echo $row['uid'];?>" class="mr-1"><i class="bx bx-search"></i></a>    
+                                                            <?php 
+                                                            if($row['fu_status'] == 'complete'){
+                                                                ?>
+                                                                <a class="btn btn-icon btn-success rounded-circle" style="height: 36px; width: 36px; margin-bottom: 2px;" href="app-video-check?uid=<?php echo $user['uid']; ?>&role=<?php echo $user['role']; ?>&hcode=<?php echo $user['hcode']; ?>&id=<?php echo $row['uid'];?>&vid=<?php echo $row['fu_id']; ?>" class="mr-1"><i class="bx bx-search"></i></a>    
+                                                                <?php
+                                                            }else{
+                                                                if($row['fu_upload_datetime'] != null){
+                                                                    $datetimeObj2 = new DateTime($datetime);
+                                                                    $datetimeObj1 = new DateTime($row['fu_upload_datetime']);
+                                                                    $interval = $datetimeObj2->diff($datetimeObj1);
+                                                                    $hr = ($interval->format('%a') * 24) + $interval->format('%h');
+                                                                    // echo $hr;
+                                                                    if($hr < 25){
+                                                                        ?>
+                                                                        <a class="btn btn-icon btn-success rounded-circle" style="height: 36px; width: 36px; margin-bottom: 2px;" href="app-video-check?uid=<?php echo $user['uid']; ?>&role=<?php echo $user['role']; ?>&hcode=<?php echo $user['hcode']; ?>&id=<?php echo $row['uid'];?>&vid=<?php echo $row['fu_id']; ?>" class="mr-1"><i class="bx bx-search"></i></a>    
+                                                                        <?php
+                                                                    }else{
+                                                                        ?>
+                                                                        <a class="btn btn-icon btn-success rounded-circle" style="height: 36px; width: 36px; margin-bottom: 2px;" href="app-video-view?uid=<?php echo $user['uid']; ?>&role=<?php echo $user['role']; ?>&hcode=<?php echo $user['hcode']; ?>&id=<?php echo $row['uid'];?>&vid=<?php echo $row['fu_id']; ?>" class="mr-1"><i class="bx bx-search"></i></a>    
+                                                                        <?php
+                                                                    }
+                                                                }
+                                                            }
+                                                            // $last48hr = date("Y-m-d H:i:s", strtotime($row['fu_upload_datetime'] . " -25 hours"));
+                                                            
+                                                            ?>
                                                         </td>
                                                         <td class="th" style="vertical-align:top;">
-                                                            <div>VID : <?php echo $row['fu_id']; ?></div>
-                                                            <span class="text-dark">Username : <?php echo $row['username']; ?></span>
-                                                            <div  style="padding-top: 4px; font-size: 0.8em; ">
-                                                                Video URL : <a href="<?php echo $row['fu_video']; ?>"><?php echo $row['fu_video']; ?></a>
-                                                            </div>
+                                                            <span class="badge- badge-dark- round" style="font-size: 0.8em; margin-left: 0px;">รหัส : <span class="badge badge-light-success round"><?php echo $row['username']; ?></span></span>
+                                                            <div><?php echo $row['fname']." ".$row['lname']; ?></div>
                                                         </td>
                                                         
-                                                        <td class="th" style="vertical-align:top; width: 100px;">รอการตรวจสอบ</td>
+                                                        <td class="th" style="vertical-align:top; width: 100px;">
+                                                            <?php 
+                                                            if($row['fu_status'] == 'non-verify'){
+                                                                if($hr >= 25){
+                                                                    ?>
+                                                                    <span class="badge badge-danger round th">หมดเวลา</span>
+                                                                    <?php
+                                                                }else{
+                                                                    ?>
+                                                                    <span class="badge badge-danger round th">รอตรวจสอบ</span>
+                                                                    <?php
+                                                                }
+                                                            }else if($row['fu_status'] == 'complete'){
+                                                                ?>
+                                                                <span class="badge- badge-dark- round" style="font-size: 0.8em; margin-left: 0px;"><span class="badge badge-success round th">ตรวจสอบแล้ว</span></span>
+                                                                <?php
+                                                            }
+                                                            ?>
+                                                        </td>
                                                         <td class="th" style="vertical-align:top;"><?php echo $row['fu_upload_datetime']; ?></td>
-                                                        <td class="th" style="vertical-align:top;"><?php echo $row['fu_verify_datetime']; ?></td>
+                                                        <td class="th" style="vertical-align:top;">
+                                                        <?php 
+                                                        if($row['fu_verify_datetime'] == null){
+                                                            echo "-";
+                                                        }else{
+                                                            echo $row['fu_verify_datetime'];
+                                                        }
+                                                        ?></td>
                                                     </tr>
                                                     <?php
                                                     $c++;
@@ -270,6 +330,7 @@ $menu = 13;
             if ($("#users-list-datatable-patient").length > 0) {
                 usersTable = $("#users-list-datatable-patient").DataTable({
                     responsive: true,
+                    "aaSorting": [],
                     'columnDefs': [
                         {
                             "orderable": false,

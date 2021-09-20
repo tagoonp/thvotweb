@@ -2,7 +2,7 @@
 require('../../../../../../database_config/thvot/config.inc.php');
 require('../../../../config/configuration.php');
 require('../../../../config/database.php'); 
-require('../../../../config/staff.role.php'); 
+require('../../../../config/manager.role.php'); 
 
 $db = new Database();
 $conn = $db->conn();
@@ -649,7 +649,7 @@ $next24time = date("Y-m-d H:i:s", strtotime($resVideo['fu_upload_datetime'] . " 
                                             buttonsStyling: false,
                                         }).then(function (result) {
                                             if (result.value) {
-                                                window.location = 'app-video-patient'
+                                                window.history.back()
                                             }
                                         })
                                     }else{

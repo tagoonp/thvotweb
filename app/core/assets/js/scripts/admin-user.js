@@ -352,7 +352,7 @@ var admin_user = {
             verify: $('#txtVerify').val(),
             reg_hcode: $('#txtHcodeReg').val(),
             hcode: $('#txtHcodeManage').val(),
-            rphone: $('#txtrPhone').val(),
+            rphone: $('#txtRPhone').val(),
             obs_hcode: $('#txtHcodeObs').val(),
             province: $('#txtProvince').val(),
             district: $('#txtDist').val(),
@@ -360,8 +360,8 @@ var admin_user = {
             uid: $('#txtCurrentUid').val()
         }
 
-        console.log(param);
-        return ;
+        // console.log(param);
+        // return ;
 
         var jxr = $.post(api_url + 'patient?stage=patient_update_info', param, function(){}, 'json')
                    .always(function(snap){

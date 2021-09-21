@@ -27,7 +27,7 @@ $menu = 0;
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0">
     <meta name="description" content="THVOT ระบบการติดตามยาผู้ป่วยวัณโรค">
     <meta name="author" content="Wisnior, Co, Ltd.">
-    <title>THVOT : Administator</title>
+    <title>THVOT : Manager</title>
     <link rel="apple-touch-icon" href="../../../app-assets/images/ico/apple-icon-120.png">
     <link rel="shortcut icon" type="image/x-icon" href="../../../app-assets/images/ico/favicon.ico">
     <link href="https://fonts.googleapis.com/css?family=Rubik:300,400,500,600%7CIBM+Plex+Sans:300,400,500,600,700" rel="stylesheet">
@@ -123,8 +123,8 @@ $menu = 0;
                         <!-- Greetings Content Starts -->
                         <div class="col-xl-4 col-md-6 col-12 dashboard-greetings">
                             <div class="card">
-                                <div class="card-body pt-2">
-                                <div><h3 class="greeting-text">Compliance2</h3></div>
+                                <div class="card-body pt-0">
+                                <div><h3 class="greeting-text">Compliance</h3></div>
                                     <div><p class="mb-0">โดยเฉลี่ยของผู้ป่วย</p></div>
                                     <div class="d-flex justify-content-between align-items-end">
                                         <div class="dashboard-content-left pt-4">

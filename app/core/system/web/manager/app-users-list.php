@@ -7,7 +7,6 @@ require('../../../../config/manager.role.php');
 $db = new Database();
 $conn = $db->conn();
 
-
 $stage = '';
 if(isset($_GET['stage'])){ 
     $stage = mysqli_real_escape_string($conn, $_GET['stage']);
@@ -15,10 +14,9 @@ if(isset($_GET['stage'])){
 
 require('../../../../config/user.inc.php'); 
 
-$menu = 8;
 
+$menu = 1;
 ?>
-<input type="hidden" id="txtCurrentUid" value="<?php echo $_SESSION['thvot_uid']; ?>">
 <!DOCTYPE html>
 <html class="loading" lang="en" data-textdirection="ltr">
 <!-- BEGIN: Head-->
@@ -41,8 +39,6 @@ $menu = 8;
     <link rel="stylesheet" type="text/css" href="../../../app-assets/vendors/css/tables/datatable/buttons.bootstrap4.min.css">
     <link rel="stylesheet" type="text/css" href="../../../app-assets/vendors/css/extensions/sweetalert2.min.css">
     <link rel="stylesheet" type="text/css" href="../../../app-assets/vendors/css/forms/select/select2.min.css">
-    <link rel="stylesheet" type="text/css" href="../../../tools/preload.js/dist/css/preload.css">
-    <link rel="stylesheet" type="text/css" href="../../../app-assets/vendors/css/extensions/sweetalert2.min.css">
     <!-- END: Vendor CSS-->
 
     <!-- BEGIN: Theme CSS-->
@@ -151,100 +147,152 @@ $menu = 8;
 
             </div>
             <div class="content-body">
-                <h2 class="mb-2">รายการวิดีโอรอตรวจ</h2>
+                <h2 class="mb-2">รายชื่อผู้ใช้งานระบบ</h2>
                 <!-- users list start -->
                 <section class="users-list-wrapper">
                     <div class="users-list-table">
                         <div class="card">
-                            <div class="card-body p-0">
+                            <div class="card-body">
                                 <!-- datatable start -->
                                 <div class="table-responsive">
-                                    <table id="users-list-datatable-patient" class="table">
+                                    <table id="users-list-datatable" class="table">
                                         <thead>
                                             <tr>
-                                                <th class="th" style="width: 150px;"></th>
-                                                <th class="th">ผู้ป่วย</th>
-                                                <th class="th" style="width: 120px;">สถานะการตรวจ</th>
-                                                <th class="th" style="width: 100px;">ประเภทผู้ป้วย</th>
+                                                <th>ผู้ใช้งาน</th>
+                                                <th>จำนวนผู้ป่วยที่ดูแล</th>
+                                                <!-- <th>เวลาของกิจกรรมล่าสุด</th> -->
                                                 
+                                                <th>สิทธิ์</th>
+                                                <th>ยืนยันการใช้งาน</th>
+                                                <th>เปิด/ปิดการใช้งาน</th>
+                                                <th style="width: 80px;"></th>
                                             </tr>
                                         </thead>
                                         <tbody>
                                             <?php 
-                                            $last48hr = date("Y-m-d H:i:s", strtotime($datetime . " -48 hours"));
-                                            // echo $last48hr;
-
-                                            $strSQL = "SELECT * FROM vot2_account a INNER JOIN vot2_userinfo b ON a.username = b.info_username
-                                                       WHERE 
-                                                       a.delete_status = '0'
-                                                       AND a.role = 'patient'
-                                                       AND b.info_use = '1'
-                                                       AND a.obs_hcode = '$hcode'
-                                                       AND a.username IN 
-                                                       (
-                                                           SELECT fu_username FROM vot2_followup WHERE fu_upload_datetime >= '$last48hr' AND fu_verify_datetime IS NULL
-                                                       )
+                                            $strSQL = "SELECT a.*, a.ID user_id, b.*, c.* FROM vot2_account a INNER JOIN vot2_userinfo b ON a.uid = b.info_uid 
+                                                       LEFT JOIN vot2_projecthospital c ON a.hcode = c.phoscode
+                                                      WHERE 
+                                                      a.delete_status = '0' 
+                                                      AND b.info_use = '1'
+                                                      AND a.role != 'patient'
+                                                      AND a.hcode IN (
+                                                          SELECT phoscode FROM vot2_projecthospital WHERE hospcode = '".$_SESSION['thvot_hcode']."'
+                                                      )
                                                       ";
-                                            if($_SESSION['thvot_role'] == 'manager'){
-                                                $strSQL = "SELECT * FROM vot2_account a INNER JOIN vot2_userinfo b ON a.username = b.info_username
-                                                       WHERE 
-                                                       a.delete_status = '0'
-                                                       AND a.role = 'patient'
-                                                       AND b.info_use = '1'
-                                                       AND (a.hcode = '$hcode' OR a.reg_hcode = '$hcode')
-                                                       AND a.username IN 
-                                                       (
-                                                           SELECT fu_username FROM vot2_followup WHERE fu_upload_datetime >= '$last48hr' AND fu_verify_datetime IS NULL
-                                                       )
-                                                      ";
-                                            }
                                             $result_list = $db->fetch($strSQL, true, false);
-                                            if(($result_list) && ($result_list['status'])){
+                                            if($result_list['status']){
                                                 $c = 1;
                                                 foreach($result_list['data'] as $row){
                                                     ?>
                                                     <tr>
                                                         <td>
-                                                        <div style="padding-top: 5px;">
-                                                                <a class="btn btn-icon btn-success rounded-circle" style="height: 34px; width: 34px; margin-bottom: 2px;" href="app-video-wait?patient_id=<?php echo $row['uid'];?>" class="mr-1"><i class="bx bx-play"></i></a>    
-                                                                <a class="btn btn-icon btn-success rounded-circle" style="height: 34px; width: 34px; margin-bottom: 2px;" href="app-patient-management?uid=<?php echo $_SESSION['thvot_uid']; ?>&role=<?php echo $_SESSION['thvot_role']; ?>&hcode=<?php echo $_SESSION['thvot_hcode']; ?>&id=<?php echo $row['uid']; ?>" class="mr-1"><i class="bx bx-search"></i></a>    
-                                                            </div>
+                                                            <span style="font-size: 0.8em;">Username : <?php echo $row['username']; ?></span>
+                                                            <div class="text-dark"><?php echo $row['fname']." ".$row['lname']; ?></div>
+                                                            <div class="">สถานบริการ : <span class="badge badge-light-primary round"><?php echo $row['hcode']; ?></span> <br><?php echo $row['hserv']; ?></div>
                                                         </td>
-                                                        <td class="th" style="vertical-align:top;">
-                                                            <span class="badge- badge-dark- round" style="font-size: 0.8em; margin-left: 0px;">รหัส : <span class="badge badge-light-success round"><?php echo $row['username']; ?></span></span>
-                                                            <div><?php echo $row['fname']." ".$row['lname']; ?></div>
-                                                            
-                                                        </td>
-                                                        
-                                                        <td class="th" style="vertical-align:top; width: 100px;">
-                                                        </td>
-                                                        <td class="th" style="vertical-align:top;">
+                                                        <td>
                                                             <?php 
-                                                            if($row['patient_type'] == 'TESTER'){
+                                                            if($row['role'] == 'admin'){ 
+                                                               ?>
+                                                               <a href="./app-patient-list">ทั้งหมด</a>
+                                                               <?php
+                                                            }else if($row['role'] == 'moderator'){
+                                                                $strSQL = "SELECT * FROM vot2_account WHERE role = 'patient' AND delete_status = '0'";
+                                                                $resCount = $db->fetch($strSQL, true, true);
+                                                                if(($resCount) && ($resCount['status'])){
+                                                                    ?>
+                                                                    <a href="app-patient-response?uid=<?php echo $row['uid'];?>"><?php echo $resCount['count']; ?></a>
+                                                                    <?php
+                                                                }else{
+                                                                    echo "0";
+                                                                }
+                                                            }else if($row['role'] == 'manager'){
+                                                                $strSQL = "SELECT * FROM vot2_account WHERE role = 'patient' 
+                                                                           AND (hcode = '".$row['hcode']."' OR reg_hcode = '".$row['hcode']."')  AND delete_status = '0'";
+                                                                $resCount = $db->fetch($strSQL, true, true);
+                                                                if(($resCount) && ($resCount['status'])){
+                                                                    ?>
+                                                                    <a href="app-patient-response?uid=<?php echo $row['uid'];?>"><?php echo $resCount['count']; ?></a>
+                                                                    <?php
+                                                                }else{
+                                                                    echo "0";
+                                                                }
+                                                            }else if($row['role'] == 'staff'){
+                                                                $strSQL = "SELECT * FROM vot2_account WHERE role = 'patient' AND obs_hcode = '".$row['hcode']."' AND delete_status = '0'";
+                                                                $resCount = $db->fetch($strSQL, true, true);
+                                                                if(($resCount) && ($resCount['status'])){
+                                                                    ?>
+                                                                    <a href="app-patient-response?uid=<?php echo $row['uid'];?>"><?php echo $resCount['count']; ?></a>
+                                                                    <?php
+                                                                }else{
+                                                                    echo "0";
+                                                                }
+                                                            }
+                                                            ?>
+                                                        </td>
+                                                        <!-- <td>30/04/2019</td> -->
+                                                        
+                                                        <td class="th">
+                                                            <?php 
+                                                            if($row['role'] == 'admin'){ echo "ผู้ดูแลระบบ"; }
+                                                            if($row['role'] == 'moderator'){ echo "ผู้รับผิดชอบส่วนกลาง"; }
+                                                            if($row['role'] == 'manager'){ echo "พยาบาลคลินิก"; }
+                                                            if($row['role'] == 'staff'){ echo "พี่เลี้ยง"; }
+                                                            if($row['role'] == 'patient'){ echo "ผู้ป่วย"; }
+                                                            ?>
+                                                        </td>
+                                                        <td class="pt-2">
+                                                            <?php 
+                                                            if($row['verify_status'] == 1){
                                                                 ?>
-                                                                <span class="badge badge-light-primary">TESTER</span>
+                                                                <span class="badge badge-light-success round th">ยืนยันแล้ว</span>
                                                                 <?php
-                                                            }else if($row['patient_type'] == 'DOT'){
+                                                            }else{
                                                                 ?>
-                                                                <span class="badge badge-light-secondary">DOT</span>
-                                                                <?php
-                                                            }else if($row['patient_type'] == 'VOT'){
-                                                                ?>
-                                                                <span class="badge badge-light-danger">VOT</span>
+                                                                <span class="badge badge-light-danger round th">ยังไม่ยืนยัน</span>
                                                                 <?php
                                                             }
                                                             ?>
+                                                        </td>
+                                                        <td>
+                                                        <?php 
+                                                            if($row['active_status'] == 1){
+                                                                ?>
+                                                                <span class="badge badge-light-success round th">เปิดใช้งาน</span>
+                                                                <?php
+                                                            }else{
+                                                                ?>
+                                                                <span class="badge badge-light-danger round th">ถูกระงับ</span>
+                                                                <?php
+                                                            }
+                                                            ?>
+                                                        </td>
+                                                        <td class="text-right">
+                                                            <?php 
+                                                            if($row['uid'] == $_SESSION['thvot_uid']){
+                                                                ?>
+                                                                <a href="app-users-edit?id=<?php echo $row['uid'];?>" class="mr-1"><i class="bx bx-edit-alt"></i></a>
+                                                                <?php 
+                                                                if($row['role'] == 'admin'){
+                                                                    ?>
+                                                                    <a href="Javascript:admin_user.delete_user('<?php echo $row['uid'];?>')" clsas=""><i class="bx bx-trash-alt text-danger"></i></a>
+                                                                    <?php
+                                                                }else{
+                                                                    ?>
+                                                                    <a href="#" clsas="" disabled><i class="bx bx-trash-alt text-muted"></i></a>
+                                                                    <?php
+                                                                }
+                                                                ?>
+                                                                <?php
+                                                            }
+                                                            ?>
+                                                            
                                                         </td>
                                                     </tr>
                                                     <?php
                                                     $c++;
                                                 }
-                                            }else{
-                                                ?>
-                                                <tr>
-                                                    <td colspan="4" class="text-center th">ไม่มีรายการรอตรวจสอบ <?php //echo $strSQL; ?></td>
-                                                </tr>
-                                                <?php
                                             }
                                             ?>
                                         </tbody>
@@ -286,7 +334,6 @@ $menu = 8;
     <script src="../../../app-assets/vendors/js/extensions/sweetalert2.all.min.js"></script>
     <script src="../../../app-assets/vendors/js/extensions/polyfill.min.js"></script>
     <script src="../../../app-assets/vendors/js/forms/select/select2.full.min.js"></script>
-    <script src="../../../tools/preload.js/dist/js/preload.js"></script>
     <!-- END: Page Vendor JS-->
 
     <!-- BEGIN: Theme JS-->
@@ -302,59 +349,8 @@ $menu = 8;
     <script src="../../../assets/js/scripts/authen.js?v=<?php echo filemtime('../../../assets/js/scripts/authen.js'); ?>"></script>
     <script src="../../../app-assets/js/scripts/pages/app-users.js?v=<?php echo filemtime('../../../app-assets/js/scripts/pages/app-users.js'); ?>"></script>
     <script src="../../../assets/js/scripts/admin-user.js?v=<?php echo filemtime('../../../assets/js/scripts/admin-user.js'); ?>"></script>
-    <script src="../../../assets/js/scripts/patient.js?v=<?php echo filemtime('../../../assets/js/scripts/patient.js'); ?>"></script>
     <!-- END: Page JS-->
-    <script>
-        $(document).ready(function(){
-            preload.hide();
 
-            if ($("#users-list-datatable-patient").length > 0) {
-                // usersTable = $("#users-list-datatable-patient").DataTable({
-                //     responsive: true,
-                //     'columnDefs': [
-                //         {
-                //             "orderable": false,
-                //             "targets": [0, 2, 3]
-                //         }]
-                // });
-            };
-        })
-
-        function back2Follow(puid, pname){
-            Swal.fire({
-                title: 'ยืนยันดำเนินการ',
-                text: 'ท่านยืนยันการกลับมาติดตามของคุณ ' + pname + ' หรือไม่',
-                icon: 'warning',
-                showCancelButton: true,
-                confirmButtonColor: '#3085d6',
-                confirmButtonText: 'ยืนยัน',
-                cancelButtonText: 'ยกเลิก',
-                confirmButtonClass: 'btn btn-primary mr-1',
-                cancelButtonClass: 'btn btn-danger',
-                buttonsStyling: false,
-            }).then(function (result) {
-                if (result.value) {
-                    preload.show()
-                    var param = {
-                        puid: puid,
-                        uid: $('#txtCurrentUid').val()
-                    }
-
-                    var jxr = $.post(api_url + 'patient?stage=back2follow', param, function(){}, 'json')
-                               .always(function(snap){
-                                   console.log(snap);
-                                   return ;
-                                    preload.hide()
-                                    if(snap.status == 'Success'){
-
-                                    }else{
-
-                                    }
-                               })
-                }
-            })
-        }
-    </script>
 </body>
 <!-- END: Body-->
 

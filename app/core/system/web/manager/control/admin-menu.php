@@ -28,6 +28,19 @@
                     <?php
                 }
                 ?>
+
+                <?php 
+                if($_SESSION['thvot_role'] == 'manager'){
+                    ?>
+                    <li class=" navigation-header text-truncate"><span data-i18n="Apps">จัดการข้อมูล</span></li>
+                    <li class=" nav-item"><a href="#"><i class="menu-livicon" data-icon="users"></i><span class="menu-title text-truncate" data-i18n="User">ผู้ใช้งานระบบ</span></a>
+                        <ul class="menu-content">
+                            <li class="<?php if($menu == 1){ echo "active"; } ?>"><a class="d-flex align-items-center" href="app-users-list"><i class="bx bx-right-arrow-alt"></i><span class="menu-item text-truncate" data-i18n="List">รายชื่อผู้ใช้งาน/พี่เลี้ยง</span></a></li>
+                        </ul>
+                    </li>
+                    <?php
+                }
+                ?>
                 
                 
                 <li class="navigation-header text-truncate"><span data-i18n="UI Elements">THVOT</span></li>

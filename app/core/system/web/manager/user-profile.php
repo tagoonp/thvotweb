@@ -16,40 +16,28 @@ if(isset($_GET['stage'])){
 if(isset($_GET['uid'])){ 
     $uid = mysqli_real_escape_string($conn, $_GET['uid']);
     $_SESSION['thvot_uid'] = $uid;
-}else{
-    
 }
 
 if(isset($_GET['role'])){ 
     $role = mysqli_real_escape_string($conn, $_GET['role']);
     $_SESSION['thvot_role'] = $role;
-}else{
-    
 }
 
 if(isset($_GET['hcode'])){ 
     $hcode = mysqli_real_escape_string($conn, $_GET['hcode']);
     $_SESSION['thvot_hcode'] = $hcode;
-}else{
-    
 }
 
 
 $_SESSION['thvot_session'] = session_id();
 
-$menu = 7;
+$menu = 1;
 
 require('../../../../config/user.inc.php'); 
 
 
-if(!(isset($_GET['id']))){
-    $db->close();
-    die();
-    header('Location: ./app-user-list');
-}
-
-$id = mysqli_real_escape_string($conn, $_GET['id']);
-$strSQL = "SELECT a.*, b.*, a.ID user_id FROM vot2_account a INNER JOIN vot2_userinfo b ON a.uid = b.info_uid WHERE a.uid = '$id' AND a.delete_status = '0' AND b.info_use = '1' LIMIT 1";
+$id = mysqli_real_escape_string($conn, $_SESSION['thvot_uid']);
+$strSQL = "SELECT a.*, b.*, a.ID user_id FROM vot2_account a INNER JOIN vot2_userinfo b ON a.uid = b.info_uid WHERE a.uid = '".$_SESSION['thvot_uid']."' AND a.delete_status = '0' AND b.info_use = '1' LIMIT 1";
 $selected_user = $db->fetch($strSQL, false);
 if(!$selected_user){
     $db->close();
@@ -57,15 +45,13 @@ if(!$selected_user){
     header('Location: ./app-user-list');
 }
 
-$strSQL = "SELECT * FROM vot2_patient_location WHERE loc_patient_uid = '$id' AND loc_status = '1'";
-$selected_location = $db->fetch($strSQL, false);
 ?>
 <!DOCTYPE html>
 <html class="loading" lang="en" data-textdirection="ltr">
 <!-- BEGIN: Head-->
 
 
-<input type="hidden" id="txtPatient_id" value="<?php echo $id; ?>">
+<input type="hidden" id="txtPatient_id" value="<?php echo $_SESSION['thvot_uid']; ?>">
 <input type="hidden" id="txtCurrentUid" value="<?php echo $_SESSION['thvot_uid']; ?>">
 <input type="hidden" id="txtCurrentUrole" value="<?php echo $_SESSION['thvot_role']; ?>">
 <input type="hidden" id="txtCurrentUhcode" value="<?php echo $_SESSION['thvot_hcode']; ?>">
@@ -200,13 +186,8 @@ $selected_location = $db->fetch($strSQL, false);
             <div class="content-header row">
             </div>
             <div class="content-body">
-            <h2 class="mb-2">แก้ไขข้อมูลผู้ป่วย</h2>
+            <h2 class="mb-2">แก้ไขข้อมูลผู้ใช้งานระบบ</h2>
                 <!-- users edit start -->
-                <div class="row">
-                    <div class="col-12 pb-1">
-                        <button class="btn btn-primary" onclick="window.location = 'app-patient-list'"><i class="bx bx-list-ul"></i> รายชื่อผู้ป่วยติดตาม</button>
-                    </div>
-                </div>
 
                 <section class="users-edit">
                     <div class="card">
@@ -215,21 +196,6 @@ $selected_location = $db->fetch($strSQL, false);
                                 <li class="nav-item">
                                     <a class="nav-link d-flex align-items-center active" id="account-tab" data-toggle="tab" href="#account" aria-controls="account" role="tab" aria-selected="true">
                                         <i class="bx bx-user mr-25"></i><span class="d-none d-sm-block">บัญชีผู้ใช้งาน</span>
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link d-flex align-items-center" id="information-tab" data-toggle="tab" href="#information" aria-controls="information" role="tab" aria-selected="false">
-                                        <i class="bx bx-navigation mr-25"></i><span class="d-none d-sm-block">การติดตาม</span>
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link d-flex align-items-center" id="information-tab" data-toggle="tab" href="#calendar" aria-controls="information" role="tab" aria-selected="false">
-                                        <i class="bx bx-calendar mr-25"></i><span class="d-none d-sm-block">ปฏิทินการรับประทานยา</span>
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link d-flex align-items-center" id="information-tab" data-toggle="tab" href="#location" aria-controls="information" role="tab" aria-selected="false">
-                                        <i class="bx bxs-map mr-25"></i><span class="d-none d-sm-block">พิกัดตำแหน่ง</span>
                                     </a>
                                 </li>
                                 <li class="nav-item">
@@ -256,36 +222,11 @@ $selected_location = $db->fetch($strSQL, false);
                                             ?>
                                             
                                         </a>
-                                        <div class="media-body">
-                                            <h4 class="media-heading"><?php echo $selected_user['fname']." ".$selected_user['lname'];?></h4>
-                                            <div class="col-12 px-0 d-flex">
-                                                <a href="javascript:void(0);" class="btn btn-sm btn-light-secondary">Reset</a>
-                                            </div>
-                                        </div>
                                     </div>
                                     <!-- users edit media object ends -->
                                     <!-- users edit account form start -->
                                     <form class="patientupdateform" onsubmit="admin_user.check_patientupdate_form(); return false;" method="post">
                                         <div class="row">
-                                            <div class="col-12">
-                                                <?php 
-                                                if($selected_user['start_obsdate'] == null){
-                                                    ?>
-                                                    <div class="alert alert-danger alert-dismissible mb-2" role="alert">
-                                                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                                                            <span aria-hidden="true">&times;</span>
-                                                        </button>
-                                                        <div class="d-flex align-items-center">
-                                                            <i class="bx bx-error"></i>
-                                                            <span>
-                                                                ผู้ป่วยยังไม่มีการตั้งค่าวันที่เริ่มและสิ้นสุดการติดตาม
-                                                            </span>
-                                                        </div>
-                                                    </div>
-                                                    <?php
-                                                }
-                                                ?>
-                                            </div>
                                             <div class="col-12 col-sm-6">
 
                                                 <div class="row" style="display: none;">
@@ -327,60 +268,15 @@ $selected_location = $db->fetch($strSQL, false);
                                                     </div>
                                                 </div>
 
-                                                <div class="form-group">
-                                                    <label>ประเภทการติดตาม : <span class="text-danger">*</span></label>
-                                                    <select class="form-control" id="txtRole" name="txtRole">
-                                                        <option value="">-- เลือกประเภท --</option>
-                                                        <option value="VOT" <?php if($selected_user['patient_type'] == 'VOT'){ echo "selected"; } ?>>ผู้ป่วย (VOT)</option>
-                                                        <option value="DOT" <?php if($selected_user['patient_type'] == 'DOT'){ echo "selected"; } ?>>ผู้ป่วย (DOT)</option>
-                                                        <option value="TESTER" <?php if($selected_user['patient_type'] == 'TESTER'){ echo "selected"; } ?>>ผู้ป่วย (TESTER)</option>
-                                                    </select>
-                                                </div>
-                                                
-                                                <div class="form-group">
-                                                    <div class="controls">
-                                                        <label>หมายเลขโทรศัพท์ : <span class="text-danger">*</span></label>
-                                                        <input type="text" class="form-control" placeholder="Phone number" name="txtPhone" id="txtPhone" value="<?php echo $selected_user['phone'];?>">
-                                                    </div>
-                                                </div>
-
-                                                <div class="form-group">
-                                                    <div class="controls">
-                                                        <label>หมายเลขโทรศัพท์ญาติ : </label>
-                                                        <input type="text" class="form-control" placeholder="Phone number" name="txtRPhone" id="txtRPhone" value="<?php echo $selected_user['relative_phone'];?>">
-                                                    </div>
-                                                </div>
 
                                             </div>
                                             <div class="col-12 col-sm-6">
 
                                                 <div class="form-group">
-                                                    <label>หน่วย/สถานบริการที่ขึ้นทะเบียนผู้ป่วย : <span class="text-danger">*</span></label>
-                                                    <div class="select-error">
-                                                        <select name="txtHcodeReg" id="txtHcodeReg" data-required class="form-control select2">
-                                                            <option value="">-- เลือกหน่วยบริการที่ขึ้นทะเบียนผู้ป่วย --</option>
-                                                            <?php 
-                                                            $strSQL = "SELECT vot2_projecthospital.* FROM vot2_projecthospital 
-                                                            WHERE phosstatus = 'Y' ORDER BY hserv";
-                                                            $result_list = $db->fetch($strSQL, true, false);
-                                                            if($result_list['status']){
-                                                                $c = 1;
-                                                                foreach($result_list['data'] as $row){
-                                                                    ?>
-                                                                    <option value="<?php echo $row['phoscode'];?>" <?php if($row['phoscode'] == $selected_user['reg_hcode']){ echo "selected"; } ?>>[<?php echo $row['phoscode'];?>] <?php echo $row['hserv'];?></option>
-                                                                    <?php
-                                                                }
-                                                            }
-                                                            ?>
-                                                        </select>
-                                                    </div>
-                                                </div>
-
-                                                <div class="form-group">
-                                                    <label>หน่วย/สถานบริการสุขภาพที่ตรวจติดตาม : <span class="text-danger">*</span></label>
+                                                    <label>หน่วย/สถานบริการสุขภาพที่สังกัด : <span class="text-danger">*</span></label>
                                                     <div class="select-error">
                                                         <select name="txtHcodeManage" id="txtHcodeManage" data-required class="form-control select2">
-                                                            <option value="">-- เลือกหน่วยบริการที่ตรวจติดตาม --</option>
+                                                            <option value="">-- เลือกหน่วยบริการที่สังกัด --</option>
                                                             <?php 
                                                             $strSQL = "SELECT vot2_projecthospital.* FROM vot2_projecthospital 
                                                             WHERE phosstatus = 'Y' ORDER BY hserv";
@@ -399,103 +295,14 @@ $selected_location = $db->fetch($strSQL, false);
                                                 </div>
 
                                                 <div class="form-group">
-                                                    <label>หน่วย/สถานบริการสุขภาพของพี่เลี้ยง : <span class="text-danger">*</span></label>
-                                                    <div class="select-error">
-                                                        <select name="txtHcodeObs" id="txtHcodeObs" data-required class="form-control select2">
-                                                            <option value="">-- เลือกหน่วยบริการของพี่เลี้ยง --</option>
-                                                            <?php 
-                                                            $strSQL = "SELECT vot2_projecthospital.* FROM vot2_projecthospital 
-                                                            WHERE phosstatus = 'Y' ORDER BY hserv";
-                                                            $result_list = $db->fetch($strSQL, true, false);
-                                                            if($result_list['status']){
-                                                                $c = 1;
-                                                                foreach($result_list['data'] as $row){
-                                                                    ?>
-                                                                    <option value="<?php echo $row['phoscode'];?>" <?php if($row['phoscode'] == $selected_user['obs_hcode']){ echo "selected"; } ?>>[<?php echo $row['phoscode'];?>] <?php echo $row['hserv'];?></option>
-                                                                    <?php
-                                                                }
-                                                            }
-                                                            ?>
-                                                        </select>
+                                                    <div class="controls">
+                                                        <label>หมายเลขโทรศัพท์ : <span class="text-danger">*</span></label>
+                                                        <input type="text" class="form-control" placeholder="Phone number" name="txtPhone" id="txtPhone" value="<?php echo $selected_user['phone'];?>">
                                                     </div>
                                                 </div>
-
-                                               
-                                                
-                                                <div class="row">
-                                                    <div class="form-group col-12 col-sm-6">
-                                                        <label>สถานะการใช้งาน : <span class="text-danger">*</span></label>
-                                                        <select class="form-control" id="txtStatus" name="txtStatus">
-                                                            <option value="" selected>-- เลือกสถานะ --</option>
-                                                            <option value="1" <?php if($selected_user['active_status'] == '1'){ echo "selected"; } ?>>เปิดใช้งาน</option>
-                                                            <option value="0" <?php if($selected_user['active_status'] == '0'){ echo "selected"; } ?>>ปิดใช้งาน</option>
-                                                        </select>
-                                                    </div>
-                                                    <div class="form-group col-12 col-sm-6">
-                                                        <label>สถานะการตรวจสอบบัญชีผู้ใช้ : <span class="text-danger">*</span></label>
-                                                        <select class="form-control" id="txtVerify" name="txtVerify">
-                                                            <option value="" selected>-- เลือกสถานะ --</option>
-                                                            <option value="1" <?php if($selected_user['verify_status'] == '1'){ echo "selected"; } ?>>ยืนยันแล้ว</option>
-                                                            <option value="0" <?php if($selected_user['verify_status'] == '0'){ echo "selected"; } ?>>รอการยืนยัน</option>
-                                                        </select>
-                                                    </div>
-                                                </div>
-                                                
                                                 
                                             </div>
 
-                                            <div class="col-12">
-                                                <hr>
-                                                <h5 class="text-bold-600">ที่อยู่ของผู้ป่วย</h5>
-                                                <div class="row">
-                                                    <div class="form-group col-12 col-sm-4">
-                                                        <label>จังหวัด : <span class="text-danger">*</span></label>
-                                                        <select id="txtProvince" name="txtProvince" class="form-control">
-                                                            <option value="">-- เลือกจังหวัด --</option>
-                                                            <?php 
-                                                            $strSQL = "SELECT * FROM vot2_changwat 
-                                                            WHERE Changwat in (SELECT ap_code FROM vot2_active_province WHERE 1) ORDER BY Name ASC";
-                                                            $result_list = $db->fetch($strSQL, true, false);
-                                                            if($result_list['status']){
-                                                                $c = 1;
-                                                                foreach($result_list['data'] as $row){
-                                                                    ?>
-                                                                    <option value="<?php echo $row['Changwat'];?>" <?php if($selected_user['info_prov'] == $row['Changwat']){ echo "selected";} ?>>[<?php echo $row['Changwat'];?>] <?php echo $row['Name'];?></option>
-                                                                    <?php
-                                                                }
-                                                            }
-                                                            ?>
-                                                        </select>
-                                                    </div>
-
-                                                    <div class="form-group col-12 col-sm-4">
-                                                        <label>อำเภอ : <span class="text-danger">*</span></label>
-                                                        <select id="txtDist" name="txtDist" class="form-control">
-                                                            <option value="">-- เลือกอำเภอ --</option>
-                                                            <?php 
-                                                            $strSQL = "SELECT * FROM vot2_ampur 
-                                                            WHERE Changwat = '".$selected_user['info_prov']."' ORDER BY Name ASC";
-                                                            $result_list = $db->fetch($strSQL, true, false);
-                                                            if($result_list['status']){
-                                                                $c = 1;
-                                                                foreach($result_list['data'] as $row){
-                                                                    ?>
-                                                                    <option value="<?php echo $row['Ampur'];?>" <?php if($selected_user['info_district'] == $row['Ampur']){ echo "selected";} ?>>[<?php echo $row['Ampur'];?>] <?php echo $row['Name'];?></option>
-                                                                    <?php
-                                                                }
-                                                            }
-                                                            ?>
-                                                        </select>
-                                                    </div>
-
-                                                    <div class="form-group col-12 col-sm-4">
-                                                        <label>ตำบล : <span class="text-danger">*</span></label>
-                                                        <select id="txtSubdist" name="txtSubdist" class="form-control">
-                                                            <option value="">-- เลือกตำบล --</option>
-                                                        </select>
-                                                    </div>
-                                                </div>
-                                            </div>
 
 
                                             <div class="col-12 d-flex flex-sm-row flex-column justify-content-end mt-1">
@@ -655,54 +462,6 @@ $selected_location = $db->fetch($strSQL, false);
                     </div>
                 </section>
                 <!-- users edit ends -->
-                <h3><i class="bx bxs-videos mr-25"></i> บันทึกการส่งวีดีโอ</h3>
-                <div class="card">
-                    <div class="card-body">
-                        <!-- datatable start -->
-                        <div class="table-responsive">
-                            <table id="video-list-datatable" class="table">
-                                <thead>
-                                    <tr>
-                                        <th>วัน-เวลาที่ส่ง</th>
-                                        <th>สถานะการอัพโหลด</th>
-                                        <th>วัน - เวลาที่อัพโหลดสำเร็จ</th>
-                                        <th>Ref. video</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <?php 
-                                    $strSQL =  "SELECT * FROM vot2_videosession l INNER JOIN vot2_account a ON l.vs_uid = a.uid 
-                                                INNER JOIN vot2_userinfo b ON a.uid = b.info_uid 
-                                                WHERE 
-                                                a.delete_status = '0' 
-                                                AND b.info_use = '1'
-                                                AND a.uid = '$id'
-                                                ORDER BY vs_create DESC LIMIT 200
-                                            ";
-                                    $result_list = $db->fetch($strSQL, true, false);
-                                    if(($result_list) && ($result_list['status'])){
-                                        $c = 1;
-                                        foreach($result_list['data'] as $row){
-                                            ?>
-                                            <tr>
-                                                <td><?php echo $row['vs_create']; ?></td>
-                                                <td><?php echo $row['vs_upload']; ?></td>
-                                                <td><?php echo $row['vs_upload_datetime']; ?></td>
-                                                <td><?php echo $row['vs_vid']; ?></td>
-                                            </tr>
-                                            <?php
-                                            $c++;
-                                        }
-                                    }else{
-                                        // echo $strSQL;
-                                    }
-                                    ?>
-                                </tbody>
-                            </table>
-                        </div>
-                        <!-- datatable ends -->
-                    </div>
-                </div>
 
                 <h3><i class="bx bx-list-ul mr-25"></i>บันทึกการใช้งาน</h3>
                 <div class="card">
@@ -894,7 +653,6 @@ $selected_location = $db->fetch($strSQL, false);
 
             $(document).ready(function(){
                 preload.hide()
-                getPatientCalendar()
             })
 
             $('.pickadate').pickadate({
@@ -917,8 +675,8 @@ $selected_location = $db->fetch($strSQL, false);
             };
 
             $(".select2").select2({
-            dropdownAutoWidth: true,
-            width: '100%'
+                dropdownAutoWidth: true,
+                width: '100%'
             });
 
             $(function(){
@@ -926,10 +684,7 @@ $selected_location = $db->fetch($strSQL, false);
             })
 
             $(document).ready(function(){
-                $('#txtDist').trigger('change')
-                setTimeout(() => {
-                    $('#txtSubdist').val('<?php echo $selected_user['info_subdistrict'];?>')
-                }, 1000);
+
             })
     </script>
 

@@ -360,6 +360,9 @@ var admin_user = {
             uid: $('#txtCurrentUid').val()
         }
 
+        console.log(param);
+        return ;
+
         var jxr = $.post(api_url + 'patient?stage=patient_update_info', param, function(){}, 'json')
                    .always(function(snap){
                        console.log(snap);

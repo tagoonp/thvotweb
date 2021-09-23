@@ -652,15 +652,18 @@ if($stage == 'patient_register'){
         
         
         
-        if($check1 == '0'){
-            // 
-            // $message = 'โปรดทบทวนวิธีการจัดวางมุมมองกล้อง >> https://thvot.com/thvotweb/tutorial/checklist1.php';
-            // $textMessageBuilder = new \LINE\LINEBot\MessageBuilder\TextMessageBuilder($message);
-            // $response = $bot->pushMessage($puid, $textMessageBuilder);
+        // if($check1 == '0'){
+        //     // 
+        //     // $message = 'โปรดทบทวนวิธีการจัดวางมุมมองกล้อง >> https://thvot.com/thvotweb/tutorial/checklist1.php';
+        //     // $textMessageBuilder = new \LINE\LINEBot\MessageBuilder\TextMessageBuilder($message);
+        //     // $response = $bot->pushMessage($puid, $textMessageBuilder);
 
-            $textMessageBuilder = new \LINE\LINEBot\MessageBuilder\TextMessageBuilder('มีผู้ป่วย รหัส '. $username .' ถูกมอบหมายให้ท่านเป็นพี่เลี้ยงในการติดตามการกินยาวัณโรค กรุณาเข้าสู่ระบบเพื่อตรวจสอบ');
-            $response = $bot->pushMessage($obs_uid, $textMessageBuilder);
-        }
+        //     $textMessageBuilder = new \LINE\LINEBot\MessageBuilder\TextMessageBuilder('มีผู้ป่วย รหัส '. $username .' ถูกมอบหมายให้ท่านเป็นพี่เลี้ยงในการติดตามการกินยาวัณโรค กรุณาเข้าสู่ระบบเพื่อตรวจสอบ');
+        //     $response = $bot->pushMessage($obs_uid, $textMessageBuilder);
+        // }
+
+        $textMessageBuilder = new \LINE\LINEBot\MessageBuilder\TextMessageBuilder('มีผู้ป่วย รหัส '. $username .' ถูกมอบหมายให้ท่านเป็นพี่เลี้ยงในการติดตามการกินยาวัณโรค กรุณาเข้าสู่ระบบเพื่อตรวจสอบ');
+        $response = $bot->pushMessage($obs_uid, $textMessageBuilder);
 
         $return['status'] = 'Success';
         $return['pid'] = $patient_uid;

@@ -647,6 +647,21 @@ if($stage == 'patient_register'){
                    VALUES ('$patient_uid', '$username', 'non-response', '$date', '1')";
         $db->insert($strSQL, false);
 
+        $httpClient = new \LINE\LINEBot\HTTPClient\CurlHTTPClient('ky7UCr1R+Z02rgE4IUujkpubR5e1IOWMI72XpVGOVz94H9YbWEKfDbQnt8r9U08PbZYtSQHYT2jxFHUHNj6O5L8QgX81E4RcZ4mt8RMeruWvEDSnCwHmfHx1ocJbXshH9yPxOoWclP7b56ZGi9PgFQdB04t89/1O/w1cDnyilFU=');
+        $bot = new \LINE\LINEBot($httpClient, ['channelSecret' => 'ebbf7cf8ec444c1c9a61959b5cea83c8']);
+        
+        
+        
+        if($check1 == '0'){
+            // 
+            // $message = 'โปรดทบทวนวิธีการจัดวางมุมมองกล้อง >> https://thvot.com/thvotweb/tutorial/checklist1.php';
+            // $textMessageBuilder = new \LINE\LINEBot\MessageBuilder\TextMessageBuilder($message);
+            // $response = $bot->pushMessage($puid, $textMessageBuilder);
+
+            $textMessageBuilder = new \LINE\LINEBot\MessageBuilder\TextMessageBuilder('มีผู้ป่วย รหัส '. $username .' ถูกมอบหมายให้ท่านเป็นพี่เลี้ยงในการติดตามการกินยาวัณโรค กรุณาเข้าสู่ระบบเพื่อตรวจสอบ');
+            $response = $bot->pushMessage($obs_uid, $textMessageBuilder);
+        }
+
         $return['status'] = 'Success';
         $return['pid'] = $patient_uid;
         echo json_encode($return);

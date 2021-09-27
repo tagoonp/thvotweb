@@ -339,7 +339,7 @@ $selected_location = $db->fetch($strSQL, false);
                                                 <div class="form-group">
                                                     <div class="controls">
                                                         <label>หมายเลขโทรศัพท์ญาติ : <span class="text-danger">*</span></label>
-                                                        <input type="text" class="form-control" placeholder="Phone number" name="txtrPhone" id="txtrPhone" value="<?php echo $selected_user['relative_phone'];?>">
+                                                        <input type="text" class="form-control" placeholder="Phone number" name="txtRPhone" id="txtRPhone" value="<?php echo $selected_user['relative_phone'];?>">
                                                     </div>
                                                 </div>
 

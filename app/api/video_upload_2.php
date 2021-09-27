@@ -64,7 +64,7 @@ if (!empty($_FILES)) {
             shell_exec('ffmpeg -i /home/thvot/public_html/thvotweb/app/uploads/video/'.$generatedName.' /home/thvot/public_html/thvotweb/app/uploads/video/'.$uploadName_tmp.".mp4");
             // $fileUrl = 'https://thvot.com/thvotweb/app/uploads/video/'.$uploadName_tmp.".mp4";
 
-            $x = explode(".", $fileUrl);
+            $x = explode(".", 'https://thvot.com/thvotweb/app/uploads/video/'.$generatedName);
             if(sizeof($x) > 1){
                 if($x[sizeof($x) - 1] != 'mp4'){
                     $fileUrl = 'https://thvot.com/thvotweb/app/uploads/video/'.$x[0].".mp4";

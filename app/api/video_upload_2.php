@@ -23,7 +23,7 @@ $uid = mysqli_real_escape_string($conn, $_GET['uid']);
 if (!empty($_FILES)) {
     $path = '../uploads/video/';
     if (!file_exists($path)) {
-        mkdir($path, 0777, true);
+        mkdir($path, 0755, true);
     }
 
     $originalName = $_FILES['file']['name'];
@@ -45,6 +45,12 @@ if (!empty($_FILES)) {
     $hcode = '';
     if($res){
         $username = $res['username'];
+
+        $bx = explode("/", $username);
+        if(sizeof($bx) > 1){
+            $username = implode("", $bx);
+        }
+
         $hcode = $res['hcode'];
         $generatedName = $res['username'].'-'.$generatedName;
     }

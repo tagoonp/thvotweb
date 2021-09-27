@@ -46,6 +46,12 @@ if (!empty($_FILES)) {
     $hcode = '';
     if($res){
         $username = $res['username'];
+
+        $bx = explode("/", $username);
+        if(sizeof($bx) > 1){
+            $username = implode("", $bx);
+        }
+
         $hcode = $res['hcode'];
         $generatedName = $res['username'].'-'.$generatedName;
     }

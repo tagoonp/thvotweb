@@ -64,7 +64,16 @@ if (!empty($_FILES)) {
         if($origin_ext != 'mp4'){
             // shell_exec('ffmpeg -i /home/thvot/public_html/thvotweb/app/uploads/video/'.$generatedName.' /home/thvot/public_html/thvotweb/app/uploads/video/'.$uploadName);
             shell_exec('ffmpeg -i /home/thvot/public_html/thvotweb/app/uploads/video/'.$generatedName.' /home/thvot/public_html/thvotweb/app/uploads/video/'.$uploadName_tmp.".mp4");
-            $fileUrl = 'https://thvot.com/thvotweb/app/uploads/video/'.$uploadName_tmp.".mp4";
+
+
+            $x = explode(".", $fileUrl);
+            if(sizeof($x) > 1){
+                if($x[sizeof($x) - 1] != 'mp4'){
+                    $fileUrl = 'https://thvot.com/thvotweb/app/uploads/video/'.$x[0].".mp4";
+                }
+            }
+
+            
         }
 
         $strSQL = "INSERT INTO vot2_followup (`fu_uid`, `fu_username`, `fu_video`, `fu_hoscode`, `fu_date`, `fu_upload_datetime`)

@@ -82,7 +82,7 @@ if (!empty($_FILES)) {
         }
 
         $strSQL = "INSERT INTO vot2_followup (`fu_uid`, `fu_username`, `fu_video`, `fu_hoscode`, `fu_date`, `fu_upload_datetime`)
-                   VALUES ('$uid', '$username', '$fileUrl', '$hcode ', '$date', '$datetime')";
+                   VALUES ('$uid', '".$res['username']."', '$fileUrl', '$hcode ', '$date', '$datetime')";
         $db->insert($strSQL, false);
 
         $strSQLx = $strSQL;
@@ -93,7 +93,7 @@ if (!empty($_FILES)) {
             $strSQL = "UPDATE vot2_followup_dummy SET fud_status = 'in-complete' WHERE fud_uid = '$uid' AND fud_date = '$date'";
             $db->execute($strSQL);
         }else{
-            $strSQL = "INSERT INTO vot2_followup_dummy (`fud_uid`, `fud_username`, `fud_status`, `fud_date`, `fud_followstage`) VALUES ('$uid, '$username', 'non-response', '$date', '1')";
+            $strSQL = "INSERT INTO vot2_followup_dummy (`fud_uid`, `fud_username`, `fud_status`, `fud_date`, `fud_followstage`) VALUES ('$uid, '".$res['username']."', 'non-response', '$date', '1')";
             $db->insert($strSQL, false);
         }
 

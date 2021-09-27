@@ -63,15 +63,25 @@ if (!empty($_FILES)) {
 
         if($origin_ext != 'mp4'){
             // shell_exec('ffmpeg -i /home/thvot/public_html/thvotweb/app/uploads/video/'.$generatedName.' /home/thvot/public_html/thvotweb/app/uploads/video/'.$uploadName);
-            shell_exec('ffmpeg -i /home/thvot/public_html/thvotweb/app/uploads/video/'.$generatedName.' /home/thvot/public_html/thvotweb/app/uploads/video/'.$uploadName_tmp.".mp4");
+            // shell_exec('ffmpeg -i /home/thvot/public_html/thvotweb/app/uploads/video/'.$generatedName.' /home/thvot/public_html/thvotweb/app/uploads/video/'.$uploadName_tmp.".mp4");
 
 
-            $x = explode(".", 'https://thvot.com/thvotweb/app/uploads/video/'.$generatedName);
+            // $x = explode(".", 'https://thvot.com/thvotweb/app/uploads/video/'.$generatedName);
+            // if(sizeof($x) > 1){
+            //     if($x[sizeof($x) - 1] != 'mp4'){
+            //         $fileUrl = 'https://thvot.com/thvotweb/app/uploads/video/'.$x[0].".mp4";
+            //     }
+            // }
+
+            $x = explode(".", $uploadName_tmp);
             if(sizeof($x) > 1){
                 if($x[sizeof($x) - 1] != 'mp4'){
+                    $uploadName_tmp = $x[0];
                     $fileUrl = 'https://thvot.com/thvotweb/app/uploads/video/'.$x[0].".mp4";
                 }
             }
+
+            shell_exec('ffmpeg -i /home/thvot/public_html/thvotweb/app/uploads/video/'.$generatedName.' /home/thvot/public_html/thvotweb/app/uploads/video/'.$uploadName_tmp.".mp4");
 
             
         }

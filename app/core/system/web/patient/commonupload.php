@@ -280,8 +280,8 @@ $menu = 0;
             success: function(data, textStatus, jqXHR)
             {
                     console.log('Data->'.data);
-                    console.log(textStatus);
-                    console.log(jqXHR);
+                    console.log('ts ->' + textStatus);
+                    console.log('jxr ->' + jqXHR);
                     // setTimeout(function(){
                     //     window.location.reload()
                     // }, 1000)
@@ -312,9 +312,9 @@ $menu = 0;
 
                     // Handle errors here
                     console.log('ERRORS: ' + textStatus);
-                    console.log(jqXHR);
-                    console.log(textStatus);
-                    console.log(errorThrown);
+                    console.log('jxr ->' + jqXHR);
+                    console.log('ts ->' + textStatus);
+                    console.log('errt ->' + errorThrown);
                     setTimeout(function(){
                     $('#progressbar').addClass('dn')
                     }, 1000)

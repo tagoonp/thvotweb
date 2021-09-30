@@ -200,7 +200,7 @@ $menu = 0;
     <!-- BEGIN: Page JS-->
     <script src="../../../assets/js/scripts/core.js?v=<?php echo filemtime('../../../assets/js/scripts/core.js'); ?>"></script>
     <script src="../../../assets/js/scripts/authen.js?v=<?php echo filemtime('../../../assets/js/scripts/authen.js'); ?>"></script>
-    <script src="../../../assets/js/scripts/patient_web.js?v=<?php echo filemtime('../../../assets/js/scripts/patient_web.js'); ?>"></script>
+    <!-- <script src="../../../assets/js/scripts/patient_web.js?v=<?php //echo filemtime('../../../assets/js/scripts/patient_web.js'); ?>"></script> -->
 
     <!-- <script src="../../../app-assets/js/scripts/custom/dashboard-ecommerce.js"></script> -->
     <!-- END: Page JS-->
@@ -272,7 +272,7 @@ $menu = 0;
                 return xhr;
             },
             // url: conf.api + 'staff/upload_file_research_attach_backward.php?files',
-            var jxr = $.post("https://thvot.com/thvotweb/app/api/upload_video_backward?files", param, function(){}, 'json')
+            url: $.post("https://thvot.com/thvotweb/app/api/upload_video_backward?files"),
             type: 'POST',
             data: formData,
             processData: false, // Don't process the files
@@ -282,11 +282,11 @@ $menu = 0;
                     console.log(data);
                     console.log(textStatus);
                     console.log(jqXHR);
-                    setTimeout(function(){
-                        window.location.reload()
-                    }, 1000)
+                    // setTimeout(function(){
+                    //     window.location.reload()
+                    // }, 1000)
 
-                    $('#media').val('')
+                    // $('#media').val('')
                     return ;
             },
             error: function(jqXHR, textStatus, errorThrown)

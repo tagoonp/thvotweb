@@ -287,6 +287,15 @@ $menu = 0;
                     // }, 1000)
 
                     // $('#media').val('')
+
+                    if(textStatus == 'success'){
+                        Swal.fire({
+                        icon: "success",
+                        title: 'อัพโหลดสำเร็จ',
+                        text: 'วิดีโอของท่านถูกอัพโหลดเรียบร้อยแล้ว',
+                        confirmButtonClass: 'btn btn-danger',
+                    })
+                    }
                     return ;
             },
             error: function(jqXHR, textStatus, errorThrown)

@@ -135,9 +135,9 @@ $menu = 0;
                                     <div class="text-center pt-4">
                                         <form method="POST" enctype="multipart/form-data" id="uploadForm" onsubmit="return false;" >
 
-                                            <input type="hidden" id="txtUidUpload" value="<?php echo $_SESSION['thvot_uid']; ?>">
-                                            <input type="hidden" id="txtRoleUpload" value="<?php echo $_SESSION['thvot_role']; ?>">
-                                            <input type="hidden" id="txtHcodeUpload" value="<?php echo $_SESSION['thvot_hcode']; ?>">
+                                            <input type="hidden" id="txtUidUpload" name="txtUidUpload" value="<?php echo $_SESSION['thvot_uid']; ?>">
+                                            <input type="hidden" id="txtRoleUpload" name="txtRoleUpload" value="<?php echo $_SESSION['thvot_role']; ?>">
+                                            <input type="hidden" id="txtHcodeUpload" name="txtHcodeUpload" value="<?php echo $_SESSION['thvot_hcode']; ?>">
                                             <div class="form-group">
                                                 <label for="" class="f500 text-dark">เลือกไฟล์และกดปุ่มอัพโหลด <span class="text-danger">*</span> </label>
                                                 <div class="">

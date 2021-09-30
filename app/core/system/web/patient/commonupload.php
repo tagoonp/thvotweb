@@ -281,7 +281,7 @@ $menu = 0;
             {
                     console.log('Data->'.data);
                     console.log('ts ->' + textStatus);
-                    console.log('jxr ->' + jqXHR);
+                    console.log('jxr ->' + JSON.stringify(jqXHR));
                     // setTimeout(function(){
                     //     window.location.reload()
                     // }, 1000)

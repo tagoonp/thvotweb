@@ -255,80 +255,84 @@ $menu = 0;
             });
 
             $.ajax({
-            xhr: function(){
-                var xhr = new window.XMLHttpRequest();
-                xhr.upload.addEventListener('progress', function(e){
+                xhr: function(){
+                    var xhr = new window.XMLHttpRequest();
+                    xhr.upload.addEventListener('progress', function(e){
 
-                if(e.lengthComputable){
-                    console.log('Byte loaded : ' + e.loaded);
-                    console.log('Total size : ' + e.total);
-                    console.log('Percentage : ' + (e.loaded / e.total));
+                    if(e.lengthComputable){
+                        console.log('Byte loaded : ' + e.loaded);
+                        console.log('Total size : ' + e.total);
+                        console.log('Percentage : ' + (e.loaded / e.total));
 
-                    var percentage = Math.round((e.loaded / e.total) * 100);
+                        var percentage = Math.round((e.loaded / e.total) * 100);
 
-                    $('#progressUploadBar').attr('aria-valuenow', percentage).css('width', percentage + '%')
-                }
-                })
-                return xhr;
-            },
-            // url: conf.api + 'staff/upload_file_research_attach_backward.php?files',
-            url: "https://thvot.com/thvotweb/app/api/upload_video_backward.php?files",
-            type: 'POST',
-            data: formData,
-            processData: false, // Don't process the files
-            contentType: false, // Set content type to false as jQuery will tell the server its a query string request
-            success: function(data, textStatus, jqXHR)
-            {
-                    console.log('Data -> '.data);
-                    console.log('ts -> ' + textStatus);
-                    console.log('jxr -> ' + JSON.stringify(jqXHR));
-                    // setTimeout(function(){
-                    //     window.location.reload()
-                    // }, 1000)
+                        if(percentage == 100){
+                            console.log(JSON.stringify(xhr));
+                        }
 
-                    // $('#media').val('')
-
-                    if(textStatus == 'success'){
-                        Swal.fire({
-                        icon: "success",
-                        title: 'อัพโหลดสำเร็จ',
-                        text: 'วิดีโอของท่านถูกอัพโหลดเรียบร้อยแล้ว',
-                        confirmButtonClass: 'btn btn-danger',
-                    })
+                        $('#progressUploadBar').attr('aria-valuenow', percentage).css('width', percentage + '%')
                     }
-                    return ;
-            },
-            error: function(jqXHR, textStatus, errorThrown)
-            {
-                preload.hide()
-                    // swal({    title: "ไม่สามารถอัพโหลดไฟล์ได้",
-                    // text: "กรุณาลองใหม่ หรือส่งไฟล์ให้เจ้าหน้าที่ผ่านทางอีเมล์!",
-                    // type: "error",
-                    // showCancelButton: false,
-                    // confirmButtonColor: "#DD6B55",
-                    // confirmButtonText: "รับทราบ",
-                    // closeOnConfirm: true },
-                    // function(){
-
-                    // });
-
-                    Swal.fire({
-                        icon: "error",
-                        title: 'เกิดข้อผิดพลาด',
-                        text: 'ไม่สามารถอัพโหลดได้ กรุณาลองใหม่หรือติดต่อพี่เลี้ยง',
-                        confirmButtonClass: 'btn btn-danger',
                     })
+                    return xhr;
+                },
+                // url: conf.api + 'staff/upload_file_research_attach_backward.php?files',
+                url: "https://thvot.com/thvotweb/app/api/upload_video_backward.php?files",
+                type: 'POST',
+                data: formData,
+                processData: false, // Don't process the files
+                contentType: false, // Set content type to false as jQuery will tell the server its a query string request
+                success: function(data, textStatus, jqXHR)
+                {
+                        console.log('Data -> '.data);
+                        console.log('ts -> ' + textStatus);
+                        console.log('jxr -> ' + JSON.stringify(jqXHR));
+                        // setTimeout(function(){
+                        //     window.location.reload()
+                        // }, 1000)
 
-                    // Handle errors here
-                    console.log('ERRORS: ' + textStatus);
-                    console.log('jxr ->' + jqXHR);
-                    console.log('ts ->' + textStatus);
-                    console.log('errt ->' + errorThrown);
-                    setTimeout(function(){
-                    $('#progressbar').addClass('dn')
-                    }, 1000)
-                    $('#progressbar').addClass('dn')
-            }
+                        // $('#media').val('')
+
+                        if(textStatus == 'success'){
+                            Swal.fire({
+                            icon: "success",
+                            title: 'อัพโหลดสำเร็จ',
+                            text: 'วิดีโอของท่านถูกอัพโหลดเรียบร้อยแล้ว',
+                            confirmButtonClass: 'btn btn-danger',
+                        })
+                        }
+                        return ;
+                },
+                error: function(jqXHR, textStatus, errorThrown)
+                {
+                    preload.hide()
+                        // swal({    title: "ไม่สามารถอัพโหลดไฟล์ได้",
+                        // text: "กรุณาลองใหม่ หรือส่งไฟล์ให้เจ้าหน้าที่ผ่านทางอีเมล์!",
+                        // type: "error",
+                        // showCancelButton: false,
+                        // confirmButtonColor: "#DD6B55",
+                        // confirmButtonText: "รับทราบ",
+                        // closeOnConfirm: true },
+                        // function(){
+
+                        // });
+
+                        Swal.fire({
+                            icon: "error",
+                            title: 'เกิดข้อผิดพลาด',
+                            text: 'ไม่สามารถอัพโหลดได้ กรุณาลองใหม่หรือติดต่อพี่เลี้ยง',
+                            confirmButtonClass: 'btn btn-danger',
+                        })
+
+                        // Handle errors here
+                        console.log('ERRORS: ' + textStatus);
+                        console.log('jxr ->' + jqXHR);
+                        console.log('ts ->' + textStatus);
+                        console.log('errt ->' + errorThrown);
+                        setTimeout(function(){
+                        $('#progressbar').addClass('dn')
+                        }, 1000)
+                        $('#progressbar').addClass('dn')
+                }
             })
             return ;
             }

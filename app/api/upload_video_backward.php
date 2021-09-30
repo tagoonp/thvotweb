@@ -156,11 +156,11 @@ if(isset($_GET['files']))
         }
     }
 
-    $data = ($error) ? array('error' => 'There was an error uploading your files') : array('success' => 'Form was uploaded');
+    $data = ($error) ? array('error' => 'There was an error uploading your files') : array('Success' => 'Form was uploaded');
 }
 else
 {
-    $data = array('success' => 'Form was submitted', 'formData' => $_POST);
+    $data = array('Success' => 'Form was submitted', 'formData' => $_POST);
 }
 
 echo json_encode($data);

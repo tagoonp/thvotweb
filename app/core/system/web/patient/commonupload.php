@@ -274,7 +274,9 @@ $menu = 0;
 
                         if(percentage == 100){
                             console.log(JSON.stringify(xhr));
-                            $('#progress_div').addClass('dn')
+                            setTimeout(() => {
+                                $('#progress_div').addClass('dn')
+                            }, 2000);
                         }
 
                         $('#progressUploadBar').attr('aria-valuenow', percentage).css('width', percentage + '%')
@@ -300,12 +302,16 @@ $menu = 0;
                         // $('#media').val('')
 
                         if(textStatus == 'success'){
-                            Swal.fire({
-                            icon: "success",
-                            title: 'อัพโหลดสำเร็จ',
-                            text: 'วิดีโอของท่านถูกอัพโหลดเรียบร้อยแล้ว',
-                            confirmButtonClass: 'btn btn-danger',
-                        })
+                            
+
+                            setTimeout(() => {
+                                Swal.fire({
+                                    icon: "success",
+                                    title: 'อัพโหลดสำเร็จ',
+                                    text: 'วิดีโอของท่านถูกอัพโหลดเรียบร้อยแล้ว',
+                                    confirmButtonClass: 'btn btn-danger',
+                                })
+                            }, 2000);
                         }
                         return ;
                 },
@@ -329,6 +335,8 @@ $menu = 0;
                             text: 'ไม่สามารถอัพโหลดได้ กรุณาลองใหม่หรือติดต่อพี่เลี้ยง',
                             confirmButtonClass: 'btn btn-danger',
                         })
+
+                        $('#progress_div').addClass('dn')
 
                         // Handle errors here
                         console.log('ERRORS: ' + textStatus);

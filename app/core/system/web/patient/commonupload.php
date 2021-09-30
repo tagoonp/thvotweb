@@ -144,6 +144,12 @@ $menu = 0;
                                                     <input id="media" name="media" type="file" class="file_upload form-group">
                                                 </div>
                                             </div>
+
+                                            <div id="progress_div" class="dn">
+                                                <div class="progress progress-bar-success mb-2">
+                                                    <div class="progress-bar" id="progressUploadBar" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
+                                                </div>
+                                            </div>
                                         </form>
                                     </div>
 
@@ -258,7 +264,7 @@ $menu = 0;
                 xhr: function(){
                     var xhr = new window.XMLHttpRequest();
                     xhr.upload.addEventListener('progress', function(e){
-
+                    $('#progress_div').removeClass('dn')
                     if(e.lengthComputable){
                         console.log('Byte loaded : ' + e.loaded);
                         console.log('Total size : ' + e.total);
@@ -268,6 +274,7 @@ $menu = 0;
 
                         if(percentage == 100){
                             console.log(JSON.stringify(xhr));
+                            $('#progress_div').addClass('dn')
                         }
 
                         $('#progressUploadBar').attr('aria-valuenow', percentage).css('width', percentage + '%')

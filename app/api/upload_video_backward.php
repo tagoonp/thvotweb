@@ -152,6 +152,7 @@ if(isset($_GET['files']))
         }
         else
         {
+            echo "Fail 1";
             $error = true;
         }
     }
@@ -161,6 +162,7 @@ if(isset($_GET['files']))
 else
 {
     $data = array('Success' => 'Form was submitted', 'formData' => $_POST);
+    echo "Fail 2";
 }
 
 echo json_encode($data);

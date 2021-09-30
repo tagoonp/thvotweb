@@ -279,9 +279,9 @@ $menu = 0;
             contentType: false, // Set content type to false as jQuery will tell the server its a query string request
             success: function(data, textStatus, jqXHR)
             {
-                    console.log('Data->'.data);
-                    console.log('ts ->' + textStatus);
-                    console.log('jxr ->' + JSON.stringify(jqXHR));
+                    console.log('Data -> '.data);
+                    console.log('ts -> ' + textStatus);
+                    console.log('jxr -> ' + JSON.stringify(jqXHR));
                     // setTimeout(function(){
                     //     window.location.reload()
                     // }, 1000)

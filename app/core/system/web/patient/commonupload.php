@@ -311,7 +311,8 @@ $menu = 0;
                                     text: 'วิดีโอของท่านถูกอัพโหลดเรียบร้อยแล้ว',
                                     confirmButtonClass: 'btn btn-danger',
                                 })
-                            }, 2000);
+                                $('#media').val('')
+                            }, 1);
                         }
                         return ;
                 },

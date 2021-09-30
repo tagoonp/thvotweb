@@ -143,7 +143,7 @@ if(isset($_GET['files']))
             }
             //
 
-            // echo "Y";
+            echo "Y";
             // $data = array('success' => 'Form was submitted', 'formData' => $_POST);
             // echo json_encode($return);
             // $db->close(); 

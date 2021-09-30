@@ -48,7 +48,7 @@ if(isset($_GET['files']))
 
     foreach($_FILES as $file){
 
-        $originalName = $_FILES['file']['name'];
+        $originalName = $file['name'];
         $ext = '.'.pathinfo($originalName, PATHINFO_EXTENSION);
         $origin_ext = pathinfo($originalName, PATHINFO_EXTENSION);
         $t=time();
@@ -57,9 +57,9 @@ if(isset($_GET['files']))
             $uploadExt = '.mp4';
         }
 
-        $generatedName = date('U').'-'.$_FILES['file']['name'];
-        $uploadName = date('U').'-'.$_FILES['file']['name'].$uploadExt;
-        $uploadName_tmp = date('U').'-'.$_FILES['file']['name'];
+        $generatedName = date('U').'-'.$file['name'];
+        $uploadName = date('U').'-'.$file['name'].$uploadExt;
+        $uploadName_tmp = date('U').'-'.$file['name'];
 
         $strSQL = "SELECT username, hcode FROM vot2_account WHERE uid = '$uid' AND delete_status = '0'";
         $res = $db->fetch($strSQL, false);

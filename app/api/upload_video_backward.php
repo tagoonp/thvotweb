@@ -80,7 +80,7 @@ if(isset($_GET['files']))
         
         $filePath = $path.$generatedName;
 
-        if(move_uploaded_file($file['tmp_name'], $uploaddir.$filename))
+        if(move_uploaded_file($file['tmp_name'], $filePath))
         {
             $fileUrl = 'https://thvot.com/thvotweb/app/uploads/video/'.$generatedName;
 

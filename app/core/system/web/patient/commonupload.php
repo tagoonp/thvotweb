@@ -272,7 +272,7 @@ $menu = 0;
                 return xhr;
             },
             // url: conf.api + 'staff/upload_file_research_attach_backward.php?files',
-            url: $.post("https://thvot.com/thvotweb/app/api/upload_video_backward.php"),
+            url: $.post("https://thvot.com/thvotweb/app/api/upload_video_backward.php?files"),
             type: 'POST',
             data: formData,
             processData: false, // Don't process the files

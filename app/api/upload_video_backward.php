@@ -124,8 +124,8 @@ if(isset($_GET['files']))
             $strSQL = "SELECT MAX(fu_id) mfu_id FROM vot2_followup WHERE fu_uid = '$uid'";
             $res02 = $db->fetch($strSQL, false);
 
-            $strSQL = "UPDATE vot2_videosession SET vs_upload = 'done', vs_upload_datetime = '$datetime', vs_vid = '".$res02['mfu_id']."' WHERE vs_session = '$vid' AND vs_uid = '$uid'";
-            $res1 = $db->execute($strSQL); 
+            // $strSQL = "UPDATE vot2_videosession SET vs_upload = 'done', vs_upload_datetime = '$datetime', vs_vid = '".$res02['mfu_id']."' WHERE vs_session = '$vid' AND vs_uid = '$uid'";
+            // $res1 = $db->execute($strSQL); 
 
 
             //

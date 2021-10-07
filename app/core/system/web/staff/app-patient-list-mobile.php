@@ -201,7 +201,7 @@ $menu = 7;
                                         <div class="col-3">
                                             <div class="m-0" style="border-radius: 50%; width: 50px; height: 50px; background: url(<?php echo $row['profile_img']; ?>)  center center no-repeat; -webkit-background-size: cover; -moz-background-size: cover; -o-background-size: cover; background-size: cover;"></div>
                                         </div>
-                                        <div class="col-6 pl-0" style="padding-top: 5px;">
+                                        <div class="col-6 pl-0" style="padding-top: 5px;" onclick="window.location = 'app-patient-management-mobile?patient_id=<?php echo $row['uid']; ?>'">
                                             <div><span class="text-dark"><strong><?php echo $row['fname']." ".$row['lname']; ?></strong></span></div>
                                             <div style="font-size: 0.8em;"><span class="text-muted"><?php echo $row['username']; ?></span></div>
                                         </div>
@@ -216,10 +216,9 @@ $menu = 7;
                                             <div class="dropdown my-auto">
                                                 <i class="bx bx-dots-vertical-rounded font-medium-3 cursor-pointer dropdown-toggle nav-hide-arrow cursor-pointer" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" role="menu"></i>
                                                 <span class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton">
-                                                    <a class="dropdown-item" href="JavaScript:void(0);">ข้อมูลผู้ป่วย</a>
-                                                    <a class="dropdown-item" href="JavaScript:void(0);">โทรหาผู้ป่วย</a>
-                                                    <a class="dropdown-item" href="JavaScript:void(0);">จัดการยา</a>
-                                                    <a class="dropdown-item" href="JavaScript:void(0);">ปฏิทิน</a>
+                                                    <a class="dropdown-item" href="window.location = 'app-patient-management-mobile?patient_id=<?php echo $row['uid']; ?>'">จัดการข้อมูลผู้ป่วย</a>
+                                                    <a class="dropdown-item" href="window.location = 'app-patient-drug-mobile?patient_id=<?php echo $row['uid']; ?>'">จัดการยา</a>
+                                                    <a class="dropdown-item" href="window.location = 'app-patient-calendar-mobile?patient_id=<?php echo $row['uid']; ?>'">ดูปฏิทิน</a>
                                                 </span>
                                             </div>
                                         </div>

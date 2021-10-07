@@ -216,9 +216,9 @@ $menu = 7;
                                             <div class="btn btn-icon dropdown my-auto" style="padding-top: 10px; padding-left: 10px; margin-top: -20px; margin-left: -10px;">
                                                 <i class="bx bx-dots-vertical-rounded font-medium-3 cursor-pointer dropdown-toggle nav-hide-arrow cursor-pointer" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" role="menu"></i>
                                                 <span class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton">
-                                                    <a class="dropdown-item" href="window.location = 'app-patient-management-mobile?patient_id=<?php echo $row['uid']; ?>'">จัดการข้อมูลผู้ป่วย</a>
-                                                    <a class="dropdown-item" href="window.location = 'app-patient-drug-mobile?patient_id=<?php echo $row['uid']; ?>'">จัดการยา</a>
-                                                    <a class="dropdown-item" href="window.location = 'app-patient-calendar-mobile?patient_id=<?php echo $row['uid']; ?>'">ดูปฏิทิน</a>
+                                                    <a class="dropdown-item" href="app-patient-profile-mobile?patient_id=<?php echo $row['uid']; ?>">ข้อมูลผู้ป่วย</a>
+                                                    <a class="dropdown-item" href="app-patient-drug-mobile?patient_id=<?php echo $row['uid']; ?>">จัดการยา</a>
+                                                    <a class="dropdown-item" href="app-patient-calendar-mobile?patient_id=<?php echo $row['uid']; ?>">ดูปฏิทิน</a>
                                                 </span>
                                             </div>
                                         </div>

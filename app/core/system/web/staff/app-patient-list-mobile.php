@@ -139,143 +139,75 @@ $menu = 7;
     <div class="app-content content">
         <div class="content-overlay"></div>
         
-        <div class="content-wrapper">
+        <div class="content-wrapper pl-1 pr-1">
             <div class="content-header row">
 
             </div>
             <div class="content-body">
-                <!-- users list start -->
-                <section class="users-list-wrapper">
-                    <div class="users-list-table">
-                        <div class="card">
-                            <div class="card-body">
-                                <!-- datatable start -->
-                                <div class="table-responsive">
-                                    <table id="users-list-datatable-patient" class="table">
-                                        <thead>
-                                            <tr>
-                                                <th style="width: 40px;" class="th"></th>
-                                                <!-- <th class="th">บัญชีผู้ใช้งาน</th> -->
-                                                <th class="th" style="width: 360px;">ชื่อ - นามสกุล</th>
-                                                <th class="th" style="width: 150px;">การติดตาม</th>
-                                                <th class="th" style="width: 100px;">สถานะยา</th>
-                                                <th class="th" style="width: 100px;">วันที่เริ่มติดตาม</th>
-                                                <th class="th" style="width: 100px;">วันสิ้นสุดการติดตาม</th>
-                                                
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <?php 
-                                            $strSQL = "SELECT a.*, a.ID user_id, b.* , regh.hserv rhserve, obsh.hserv hhserve, menh.hserv mhserve
-                                                       FROM vot2_account a INNER JOIN vot2_userinfo b ON a.uid = b.info_uid 
-                                                       LEFT JOIN vot2_projecthospital regh ON a.reg_hcode = regh.phoscode
-                                                       LEFT JOIN vot2_projecthospital obsh ON a.reg_hcode = obsh.phoscode
-                                                       LEFT JOIN vot2_projecthospital menh ON a.reg_hcode = menh.phoscode
-                                                       WHERE 
-                                                       a.delete_status = '0' 
-                                                       AND b.info_use = '1'
-                                                       AND a.role = 'patient'
-                                                       AND a.obs_hcode = '".$_SESSION['thvot_hcode']."'
-                                            ";
-                                            $result_list = $db->fetch($strSQL, true, false);
-                                            if($result_list['status']){
-                                                $c = 1;
-                                                foreach($result_list['data'] as $row){
-                                                    ?>
-                                                    <tr>
-                                                        <td class="text-left" style="vertical-align:top;">
-                                                            <a class="btn btn-icon btn-success rounded-circle" style="height: 36px; width: 36px; margin-bottom: 2px;" href="app-patient-management?uid=<?php echo $user['uid']; ?>&role=<?php echo $user['role']; ?>&hcode=<?php echo $user['hcode']; ?>&id=<?php echo $row['uid'];?>" class="mr-1"><i class="bx bx-edit-alt"></i></a>
-                                                            <a class="btn btn-icon btn-success rounded-circle" style="height: 36px; width: 36px; margin-bottom: 2px;" href="app-patient-drug?uid=<?php echo $user['uid']; ?>&role=<?php echo $user['role']; ?>&hcode=<?php echo $user['hcode']; ?>&id=<?php echo $row['uid'];?>" class="mr-1"><i class="bx bxs-capsule"></i></a>
-                                                            <?php 
-                                                            if($row['role'] != 'admin'){
-                                                                ?>
-                                                                <a class="btn btn-icon btn-outline-danger rounded-circle mb-1" style="height: 36px; width: 36px; margin-bottom: 2px;" href="Javascript:admin_user.delete_user('<?php echo $row['uid'];?>')" clsas=""><i class="bx bx-trash-alt text-danger"></i></a>
-                                                                <?php
-                                                            }else{
-                                                                ?>
-                                                                <a class="btn btn-icon btn-success-danger rounded-circle mb-1" style="height: 36px; width: 36px; margin-bottom: 2px;" href="#" clsas="" disabled><i class="bx bx-trash-alt text-muted"></i></a>
-                                                                <?php
-                                                            }
-                                                            ?>
-                                                        </td>
-                                                        <td class="th" style="vertical-align:top;">
-                                                            <div>ID : <?php echo $row['username']; ?></div>
-                                                            <span class="text-dark"><?php echo $row['fname']." ".$row['lname']; ?></span>
-                                                            <div  style="padding-top: 4px; font-size: 0.8em; ">
-                                                                ลงทะเบียน : <a href="Javascript:void(0);"><?php if($row['rhserve'] != null){ echo $row['rhserve'];} else { echo "-"; }; ?></a><br>
-                                                                ติดตามรักษา : <a href="Javascript:void(0);"><?php if($row['rhserve'] != null){ echo $row['mhserve'];} else { echo "-"; }; ?></a><br>
-                                                                พี่เลี้ยง : <a href="Javascript:void(0);"><?php if($row['rhserve'] != null){ echo $row['hhserve'];} else { echo "-"; }; ?></a>
-                                                            </div>
-                                                            <div class="" style="padding-top: 4px;">
-                                                            <?php 
-                                                            $ptt = $row['patient_type'];
-                                                            if($row['patient_type'] == 'DOT'){
-                                                                ?>
-                                                                <span class="badge badge-warning"><?php echo $ptt; ?></span>
-                                                                <?php
-                                                            }else if($row['patient_type'] == 'VOT'){
-                                                                ?>
-                                                                <span class="badge badge-primary"><?php echo $ptt; ?></span>
-                                                                <?php
-                                                            }
-                                                            
-                                                            ?>
-                                                            </div>
-                                                        </td>
-                                                        <td class="th" style="vertical-align:top;">
-                                                            <?php 
-                                                            if($row['stop_drug'] == '1'){
-                                                                ?>
-                                                                <i class="bx bxs-circle text-danger"></i> หยุดยา/หยุดติดตาม
-                                                                <div>
-                                                                    <span class="btn btn-light-warning btn-sm round th" style="cursor: pointer; margin-top: 5px;" onclick="back2Follow('<?php echo $row['uid']; ?>', '<?php echo $row['fname']." ".$row['lname']; ?>')">กลับมาติดตาม</span>
-                                                                </div>
-                                                                <?php
-                                                            }else{
-                                                                ?>
-                                                                <i class="bx bxs-circle text-success"></i> กำลังติดตาม
-                                                                <div>
-                                                                    <span class="btn btn-light-danger btn-sm round th" style="cursor: pointer; margin-top: 5px;" onclick="window.location='app-patient-calendar?uid=<?php echo $_SESSION['thvot_uid']; ?>&role=<?php echo $_SESSION['thvot_role']; ?>&hcode=<?php echo $_SESSION['thvot_hcode']; ?>&id=<?php echo $row['uid']; ?>'">สั่งหยุดยา</span>
-                                                                </div>
-                                                                <?php
-                                                            }
-                                                            ?>
-                                                        </td>
-                                                        <td class="th" style="vertical-align:top; width: 100px;">
-                                                            <?php 
-                                                            $strSQL = "SELECT * FROM vot2_med_transaction WHERE mt_patient_uid = '".$row['uid']."' AND mt_status = 'Y' LIMIT 1";
-                                                            $resCheckDrug = $db->fetch($strSQL, true, true);
-                                                            if(($resCheckDrug) && ($resCheckDrug['count'] > 0)){
-                                                                ?>
-                                                                <i class="bx bxs-circle text-success"></i> ยืนยันแล้ว
-                                                                <?php
-                                                            }else{
-                                                                ?>
-                                                                <i class="bx bxs-circle text-danger"></i> ยังไม่ยืนยัน
-                                                                <div>
-                                                                    <span class="btn btn-light-danger btn-sm round th" style="cursor: pointer; margin-top: 5px;" onclick="window.location='app-patient-drug?uid=<?php echo $_SESSION['thvot_uid']; ?>&role=<?php echo $_SESSION['thvot_role']; ?>&hcode=<?php echo $_SESSION['thvot_hcode']; ?>&id=<?php echo $row['uid']; ?>'">ไปยืนยัน</span>
-                                                                </div>
-                                                                <?php
-                                                            }
-                                                            ?>
-                                                        </td>
-                                                        <td class="th" style="vertical-align:top;"><?php echo $row['start_obsdate']; ?></td>
-                                                        <td class="th" style="vertical-align:top;"><?php echo $row['end_obsdate']; ?></td>
-                                                    </tr>
-                                                    <?php
-                                                    $c++;
-                                                }
-                                            }
-                                            ?>
-                                        </tbody>
-                                    </table>
-                                </div>
-                                <!-- datatable ends -->
-                            </div>
-                        </div>
+
+                <div class="row">
+                    <div class="col-12 pb-2 pt-1">
+                        <input type="text" class="form-control round th" placeholder="ค้นหา">
                     </div>
-                </section>
-                <!-- users list ends -->
+                    <div class="col-12 pl-2 pr-2">
+                        <?php 
+                        $strSQL = "SELECT a.*, a.ID user_id, b.* , regh.hserv rhserve, obsh.hserv hhserve, menh.hserv mhserve
+                                    FROM vot2_account a INNER JOIN vot2_userinfo b ON a.uid = b.info_uid 
+                                    LEFT JOIN vot2_projecthospital regh ON a.reg_hcode = regh.phoscode
+                                    LEFT JOIN vot2_projecthospital obsh ON a.reg_hcode = obsh.phoscode
+                                    LEFT JOIN vot2_projecthospital menh ON a.reg_hcode = menh.phoscode
+                                    WHERE 
+                                    a.delete_status = '0' 
+                                    AND b.info_use = '1'
+                                    AND a.role = 'patient'
+                                    AND a.obs_hcode = '".$_SESSION['thvot_hcode']."' AND a.obs_uid = '".$_SESSION['thvot_uid']."'";
+                        if($_SESSION['thvot_role'] == 'manager'){
+                            $strSQL = "SELECT a.*, a.ID user_id, b.* , regh.hserv rhserve, obsh.hserv hhserve, menh.hserv mhserve
+                                        FROM vot2_account a INNER JOIN vot2_userinfo b ON a.uid = b.info_uid 
+                                        LEFT JOIN vot2_projecthospital regh ON a.reg_hcode = regh.phoscode
+                                        LEFT JOIN vot2_projecthospital obsh ON a.reg_hcode = obsh.phoscode
+                                        LEFT JOIN vot2_projecthospital menh ON a.reg_hcode = menh.phoscode
+                                        WHERE 
+                                        a.delete_status = '0' 
+                                        AND b.info_use = '1'
+                                        AND a.role = 'patient'
+                                        AND (a.hcode = '".$_SESSION['thvot_hcode']."' OR reg_hcode = '".$_SESSION['thvot_hcode']."') ";
+                        }
+
+                        $result_list = $db->fetch($strSQL, true, false);
+                        if(($result_list) && ($result_list['status'])){
+                            foreach ($result_list['data'] as $row) {
+                                ?>
+                                <div class="row mb-2">
+                                    <div class="col-3">
+                                        <div class="m-0" style="border-radius: 50%; width: 50px; height: 50px; background: url(<?php echo $row['profile_img']; ?>)  center center no-repeat; -webkit-background-size: cover; -moz-background-size: cover; -o-background-size: cover; background-size: cover;"></div>
+                                    </div>
+                                    <div class="col-6 pl-0" style="padding-top: 5px;">
+                                        <div><span class="text-dark"><?php echo $row['fname']." ".$row['lname']; ?></span></div>
+                                        <div style="font-size: 0.8em;"><span class="text-muted"><?php echo $row['username']; ?></span></div>
+                                    </div>
+                                    <div class="col-3 text-right pt-1">
+                                        <div class="dropdown my-auto">
+                                            <i class="bx bx-dots-vertical-rounded font-medium-3 cursor-pointer dropdown-toggle nav-hide-arrow cursor-pointer" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" role="menu"></i>
+                                            <span class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton">
+                                                <a class="dropdown-item" href="JavaScript:void(0);">ข้อมูลผู้ป่วย</a>
+                                                <a class="dropdown-item" href="JavaScript:void(0);">โทรหาผู้ป่วย</a>
+                                                <a class="dropdown-item" href="JavaScript:void(0);">จัดการยา</a>
+                                                <a class="dropdown-item" href="JavaScript:void(0);">ปฏิทิน</a>
+                                            </span>
+                                        </div>
+
+                                    </div>
+                                </div>
+                                <?php
+                            }
+                            ?>
+                            
+                            <?php
+                        }
+                        ?>
+                    </div>
+                </div>
 
             </div>
         </div>

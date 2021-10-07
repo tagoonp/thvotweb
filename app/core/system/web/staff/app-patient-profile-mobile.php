@@ -83,7 +83,7 @@ $menu = 7;
                 จัดการข้อมูลผู้ป่วย
                 </div>
                 <div class="col-3 th text-white text-right pr-3" >
-                <button class="btn btn-icon round pt-0 text-white" style="margin-right: -20px; background: #06c;"  onclick="window.location = 'app-patient-add-mobile'"><i class="bx bx-plus text-white" style="font-size: 1.4em; padding: 6px 0px;"></i></button>
+                <button class="btn btn-icon round pt-0 text-white" style="margin-right: -20px; background: #06c;"  onclick="window.location = 'app-patient-add-mobile'"><i class="bx bx-camera text-white" style="font-size: 1.4em; padding: 6px 0px;"></i></button>
                 </div>
             </div>
         </div>
@@ -155,7 +155,7 @@ $menu = 7;
                                     <!-- user timeline image -->
                                     <img src="../../../app-assets/images/profile/post-media/profile-banner.jpg" class="img-fluid rounded-top user-timeline-image" alt="user timeline image">
                                     <!-- user profile image -->
-                                    <img src="../../../app-assets/images/portrait/small/avatar-s-16.jpg" class="user-profile-image rounded" alt="user profile image" height="140" width="140">
+                                    <!-- <img src="../../../app-assets/images/portrait/small/avatar-s-16.jpg" class="user-profile-image rounded" alt="user profile image" height="140" width="140"> -->
                                 </div>
                                 <div class="user-profile-text">
                                     <h4 class="mb-0 text-bold-500 profile-text-color">Martina Ash</h4>
@@ -165,16 +165,16 @@ $menu = 7;
                                 <div class="card-body px-0">
                                     <ul class="nav user-profile-nav justify-content-center justify-content-md-start nav-pills border-bottom-0 mb-0" role="tablist">
                                         <li class="nav-item mb-0">
-                                            <a class=" nav-link d-flex px-1 active" id="feed-tab" data-toggle="tab" href="#feed" aria-controls="feed" role="tab" aria-selected="true"><i class="bx bx-home"></i><span class="d-none d-md-block">Feed</span></a>
+                                            <a class=" nav-link d-flex px-1 active" id="feed-tab" data-toggle="tab" href="#feed" aria-controls="feed" role="tab" aria-selected="true"><i class="bx bx-user"></i><span class="d-none d-md-block">Feed</span></a>
                                         </li>
                                         <li class="nav-item mb-0">
-                                            <a class="nav-link d-flex px-1" id="activity-tab" data-toggle="tab" href="#activity" aria-controls="activity" role="tab" aria-selected="false"><i class="bx bx-user"></i><span class="d-none d-md-block">Activity</span></a>
+                                            <a class="nav-link d-flex px-1" id="activity-tab" data-toggle="tab" href="#activity" aria-controls="activity" role="tab" aria-selected="false"><i class="bx bx-capsule"></i><span class="d-none d-md-block">Activity</span></a>
                                         </li>
                                         <li class="nav-item mb-0">
-                                            <a class="nav-link d-flex px-1" id="friends-tab" data-toggle="tab" href="#friends" aria-controls="friends" role="tab" aria-selected="false"><i class="bx bx-message-alt"></i><span class="d-none d-md-block">Friends</span></a>
+                                            <a class="nav-link d-flex px-1" id="friends-tab" data-toggle="tab" href="#friends" aria-controls="friends" role="tab" aria-selected="false"><i class="bx bx-calendar"></i><span class="d-none d-md-block">Friends</span></a>
                                         </li>
                                         <li class="nav-item mb-0 mr-0">
-                                            <a class="nav-link d-flex px-1" id="profile-tab" data-toggle="tab" href="#profile" aria-controls="profile" role="tab" aria-selected="false"><i class="bx bx-copy-alt"></i><span class="d-none d-md-block">Profile</span></a>
+                                            <a class="nav-link d-flex px-1" id="profile-tab" data-toggle="tab" href="#profile" aria-controls="profile" role="tab" aria-selected="false"><i class="bx bx-key"></i><span class="d-none d-md-block">Profile</span></a>
                                         </li>
                                     </ul>
                                 </div>

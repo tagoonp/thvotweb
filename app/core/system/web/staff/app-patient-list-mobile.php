@@ -145,6 +145,23 @@ $menu = 7;
             </div>
             <div class="content-body">
 
+            <div class="modal fade" id="callModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                <div class="modal-dialog modal-sm modal-dialog-centered modal-dialog-centered modal-dialog-scrollable">
+                    <div class="modal-content">
+                        <div class="modal-body">
+                            <div class="row">
+                                <div class="col-12 text-center mb-2">
+                                    <button class="btn btn-block btn-primary round btn-lg" onclick="callPhone('1')">โทรหาผู้ป่วย</button>
+                                </div>
+                                <div class="col-12 text-center">
+                                <button class="btn btn-block btn-secondary round btn-lg" onclick="callPhone('2')">โทรหาญาติผู้ป่วย</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
                 <div class="row">
                     <div class="col-12 pb-2 pt-1 pl-3 pr-3">
                         <input type="text" class="form-control round th" placeholder="ค้นหา" style="height: 45px;">
@@ -160,7 +177,7 @@ $menu = 7;
                                     a.delete_status = '0' 
                                     AND b.info_use = '1'
                                     AND a.role = 'patient'
-                                    AND a.obs_hcode = '".$_SESSION['thvot_hcode']."' AND a.obs_uid = '".$_SESSION['thvot_uid']."'";
+                                    AND a.obs_hcode = '".$_SESSION['thvot_hcode']."' AND a.obs_uid = '".$_SESSION['thvot_uid']."'  ORDER BY b.fname";
                         if($_SESSION['thvot_role'] == 'manager'){
                             $strSQL = "SELECT a.*, a.ID user_id, b.* , regh.hserv rhserve, obsh.hserv hhserve, menh.hserv mhserve
                                         FROM vot2_account a INNER JOIN vot2_userinfo b ON a.uid = b.info_uid 
@@ -171,7 +188,7 @@ $menu = 7;
                                         a.delete_status = '0' 
                                         AND b.info_use = '1'
                                         AND a.role = 'patient'
-                                        AND (a.hcode = '".$_SESSION['thvot_hcode']."' OR reg_hcode = '".$_SESSION['thvot_hcode']."') ";
+                                        AND (a.hcode = '".$_SESSION['thvot_hcode']."' OR reg_hcode = '".$_SESSION['thvot_hcode']."') ORDER BY b.fname ";
                         }
 
                         $result_list = $db->fetch($strSQL, true, false);
@@ -179,7 +196,7 @@ $menu = 7;
                             $c = 0;
                             foreach ($result_list['data'] as $row) {
                                 ?>
-                                <div style="border: solid; border-width: 0px 0px 0px 0px; border-color: #ccc; padding: 10px 20px;">
+                                <div style="border: solid; border-width: 0px 0px 0px 0px; border-color: #ccc; padding: 10px 20px 10px 20px;">
                                     <div class="row">
                                         <div class="col-3">
                                             <div class="m-0" style="border-radius: 50%; width: 50px; height: 50px; background: url(<?php echo $row['profile_img']; ?>)  center center no-repeat; -webkit-background-size: cover; -moz-background-size: cover; -o-background-size: cover; background-size: cover;"></div>
@@ -190,7 +207,9 @@ $menu = 7;
                                         </div>
 
                                         <div class="col-1 text-right pt-1 pr-2">
-                                            <i class="bx bx-phone-call"></i>
+                                            <input type="hidden" id="txtPhone" value="<?php echo $row['phone']; ?>">
+                                            <input type="hidden" id="txtRelativePhone" value="<?php echo $row['relative_phone']; ?>">
+                                            <button class="btn btn-icon" style="margin-top: -10px; margin-left: -10px;" onclick="callModal()"><i class="bx bx-phone-call"></i></button>
                                         </div>
 
                                         <div class="col-1 text-right pt-1 pr-2">
@@ -308,6 +327,27 @@ $menu = 7;
                                })
                 }
             })
+        }
+
+        function callPhone(s){
+            $('#callModal').modal('hide')
+            if(s == '1'){
+                if($('#txtPhone').val() == ''){
+                    alert('ไม่พบหมายเลขโทรศัพท์ผู้ป่วย')
+                }else{
+                    window.open('tel:$' + $('#txtPhone').val());
+                }
+            }else{
+                if($('#txtRelativePhone').val() == ''){
+                    alert('ไม่พบหมายเลขโทรศัพท์ญาติผู้ป่วย')
+                }else{
+                    window.open('tel:$' + $('#txtRelativePhone').val());
+                }
+            }
+        }
+
+        function callModal(){
+            $('#callModal').modal()
         }
     </script>
 </body>

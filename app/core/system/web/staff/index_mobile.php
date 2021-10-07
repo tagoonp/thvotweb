@@ -128,7 +128,7 @@ $menu = 0;
                     <div class="row">
                         <!-- Greetings Content Starts -->
                         <div class="col-xl-4 col-md-6 col-12">
-                            <div class="card"  style="background: transparent !important; box-shadow: none;" onclick="window.location = 'app-patient-list'">
+                            <div class="card"  style="background: transparent !important; box-shadow: none;" onclick="window.location = 'app-patient-list-mobile'">
                                 <div class="card-body pt-1 bg-primary round">
                                     <div class="row">
                                         <div class="col-8">

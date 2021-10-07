@@ -5,7 +5,9 @@ require('../../../../config/database.php');
 require('../../../../config/staff.role.php'); 
 
 if(isMobile()){
-    header('Location: ./index_mobile');
+    
+}else{
+    header('Location: ./index');
 }
 
 $db = new Database();

@@ -206,7 +206,7 @@ if($stage == 'unwatch24_number'){
                a.fu_view = '0' 
                AND a.fu_delete = '0'
                AND a.fu_username IN 
-               (SELECT username FROM vot2_account WHERE obs_hcode = '$hcode') 
+               (SELECT username FROM vot2_account WHERE obs_hcode = '$hcode' AND obs_uid = '$uid') 
               ";
     if($role == 'admin'){
         $strSQL = "SELECT COUNT(a.fu_id) cn FROM vot2_followup a

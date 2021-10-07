@@ -336,13 +336,13 @@ $menu = 7;
                 if($('#txtPhone').val() == ''){
                     alert('ไม่พบหมายเลขโทรศัพท์ผู้ป่วย')
                 }else{
-                    window.open('tel:$' + $('#txtPhone_' + $recentOrder).val());
+                    window.open('tel:' + $('#txtPhone_' + $recentOrder).val());
                 }
             }else{
                 if($('#txtRelativePhone').val() == ''){
                     alert('ไม่พบหมายเลขโทรศัพท์ญาติผู้ป่วย')
                 }else{
-                    window.open('tel:$' + $('#txtRelativePhone_' + $recentOrder).val());
+                    window.open('tel:' + $('#txtRelativePhone_' + $recentOrder).val());
                 }
             }
         }

@@ -10,6 +10,10 @@ $stage = '';
 if(isset($_GET['stage'])){ 
     $stage = mysqli_real_escape_string($conn, $_GET['stage']);
 }
+
+if((isset($_SESSION['thvot_uid'])) && (isset($_SESSION['thvot_hcode'])) && (isset($_SESSION['thvot_role']))){
+    header('Location: ./core/system/web/'.$_SESSION['thvot_role'].'/');
+}
 ?>
 <!DOCTYPE html>
 <html class="loading" lang="en" data-textdirection="ltr">

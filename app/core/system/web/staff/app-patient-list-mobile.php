@@ -75,10 +75,15 @@ $menu = 7;
     <nav class="header-navbar main-header-navbar navbar-expand-lg navbar navbar-with-menu fixed-top bg-primary">
         <div class="navbar-wrapper">
             <div class="row">
-                <div class="col-3 pl-1">
-                    <button class="btn pt-0"><i class="bx bx-left-arrow-alt text-white" style="font-size: 2em;"></i></button>
+                <div class="col-2 pl-0">
+                    <button class="btn pt-0 text-white" onclick="window.location = './index_mobile'"><i class="bx bx-left-arrow-alt text-white" style="font-size: 2em;"></i></button>
                 </div>
-                <div class="col-9 th text-white text-right pr-3" style="padding-top: 7px;">รายชื่อผู้ป่วยทั้งหมด</div>
+                <div class="col-7 th text-white" style="padding-top: 7px;">
+                รายชื่อผู้ป่วยทั้งหมด
+                </div>
+                <div class="col-3 th text-white text-right pr-3" >
+                <button class="btn btn-icon round pt-0 text-white" style="margin-right: -20px; background: #06c;"  onclick="window.location = 'app-patient-add-mobile'"><i class="bx bx-plus text-white" style="font-size: 1.4em; padding: 6px 0px;"></i></button>
+                </div>
             </div>
         </div>
     </nav>
@@ -142,11 +147,6 @@ $menu = 7;
                 <!-- users list start -->
                 <section class="users-list-wrapper">
                     <div class="users-list-table">
-                        <div class="row">
-                            <div class="col-12 pb-2">
-                                <button class="btn btn-primary" onclick="window.location = 'app-patient-add'"><i class="bx bx-plus"></i> ลงทะเบียนผู้ป่วยใหม่</button>
-                            </div>
-                        </div>
                         <div class="card">
                             <div class="card-body">
                                 <!-- datatable start -->

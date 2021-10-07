@@ -201,7 +201,7 @@ $menu = 7;
                                         <div class="col-3">
                                             <div class="m-0" style="border-radius: 50%; width: 50px; height: 50px; background: url(<?php echo $row['profile_img']; ?>)  center center no-repeat; -webkit-background-size: cover; -moz-background-size: cover; -o-background-size: cover; background-size: cover;"></div>
                                         </div>
-                                        <div class="col-6 pl-0" style="padding-top: 5px;" onclick="window.location = 'app-profile-mobile?patient_id=<?php echo $row['uid']; ?>'">
+                                        <div class="col-6 pl-0" style="padding-top: 5px;" onclick="window.location = 'app-patient-profile-mobile?patient_id=<?php echo $row['uid']; ?>'">
                                             <div><span class="text-dark"><strong><?php echo $row['fname']." ".$row['lname']; ?></strong></span></div>
                                             <div style="font-size: 0.8em;"><span class="text-muted"><?php echo $row['username']; ?></span></div>
                                         </div>

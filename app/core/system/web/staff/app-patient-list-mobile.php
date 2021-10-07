@@ -207,9 +207,9 @@ $menu = 7;
                                         </div>
 
                                         <div class="col-1 text-right pt-1 pr-2">
-                                            <input type="hidden" id="txtPhone" value="<?php echo $row['phone']; ?>">
-                                            <input type="hidden" id="txtRelativePhone" value="<?php echo $row['relative_phone']; ?>">
-                                            <button class="btn btn-icon" style="margin-top: -10px; margin-left: -10px;" onclick="callModal()"><i class="bx bx-phone-call"></i></button>
+                                            <input type="hidden" id="txtPhone_<?php echo $c; ?>" value="<?php echo $row['phone']; ?>">
+                                            <input type="hidden" id="txtRelativePhone_<?php echo $c; ?>" value="<?php echo $row['relative_phone']; ?>">
+                                            <button class="btn btn-icon" style="margin-top: -10px; margin-left: -10px;" onclick="callModal('<?php echo $c; ?>')"><i class="bx bx-phone-call"></i></button>
                                         </div>
 
                                         <div class="col-1 text-right pt-1 pr-2">
@@ -279,6 +279,7 @@ $menu = 7;
     <script src="../../../assets/js/scripts/patient.js?v=<?php echo filemtime('../../../assets/js/scripts/patient.js'); ?>"></script>
     <!-- END: Page JS-->
     <script>
+        $recentOrder = '';
         $(document).ready(function(){
             preload.hide();
 
@@ -335,18 +336,19 @@ $menu = 7;
                 if($('#txtPhone').val() == ''){
                     alert('ไม่พบหมายเลขโทรศัพท์ผู้ป่วย')
                 }else{
-                    window.open('tel:$' + $('#txtPhone').val());
+                    window.open('tel:$' + $('#txtPhone_' + $recentOrder).val());
                 }
             }else{
                 if($('#txtRelativePhone').val() == ''){
                     alert('ไม่พบหมายเลขโทรศัพท์ญาติผู้ป่วย')
                 }else{
-                    window.open('tel:$' + $('#txtRelativePhone').val());
+                    window.open('tel:$' + $('#txtRelativePhone_' + $recentOrder).val());
                 }
             }
         }
 
-        function callModal(){
+        function callModal(s){
+            $recentOrder = s;
             $('#callModal').modal()
         }
     </script>

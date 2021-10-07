@@ -178,7 +178,7 @@ $menu = 7;
                         if(($result_list) && ($result_list['status'])){
                             foreach ($result_list['data'] as $row) {
                                 ?>
-                                <div style="border: solid; border-width: 1px 0px 0px 0px; border-color: #ccc; padding: 10px 20px;">
+                                <div style="border: solid; border-width: 0px 0px 0px 0px; border-color: #ccc; padding: 10px 20px;">
                                     <div class="row">
                                         <div class="col-3">
                                             <div class="m-0" style="border-radius: 50%; width: 50px; height: 50px; background: url(<?php echo $row['profile_img']; ?>)  center center no-repeat; -webkit-background-size: cover; -moz-background-size: cover; -o-background-size: cover; background-size: cover;"></div>

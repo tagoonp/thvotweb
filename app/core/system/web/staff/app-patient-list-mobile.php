@@ -139,17 +139,17 @@ $menu = 7;
     <div class="app-content content">
         <div class="content-overlay"></div>
         
-        <div class="content-wrapper pl-1 pr-1">
+        <div class="content-wrapper pl-0 pr-0">
             <div class="content-header row">
 
             </div>
             <div class="content-body">
 
                 <div class="row">
-                    <div class="col-12 pb-2 pt-1">
-                        <input type="text" class="form-control round th" placeholder="ค้นหา">
+                    <div class="col-12 pb-2 pt-1 pl-3 pr-3">
+                        <input type="text" class="form-control round th" placeholder="ค้นหา" style="height: 45px;">
                     </div>
-                    <div class="col-12 pl-2 pr-2">
+                    <div class="col-12 pb-4">
                         <?php 
                         $strSQL = "SELECT a.*, a.ID user_id, b.* , regh.hserv rhserve, obsh.hserv hhserve, menh.hserv mhserve
                                     FROM vot2_account a INNER JOIN vot2_userinfo b ON a.uid = b.info_uid 
@@ -178,25 +178,27 @@ $menu = 7;
                         if(($result_list) && ($result_list['status'])){
                             foreach ($result_list['data'] as $row) {
                                 ?>
-                                <div class="row mb-2">
-                                    <div class="col-3">
-                                        <div class="m-0" style="border-radius: 50%; width: 50px; height: 50px; background: url(<?php echo $row['profile_img']; ?>)  center center no-repeat; -webkit-background-size: cover; -moz-background-size: cover; -o-background-size: cover; background-size: cover;"></div>
-                                    </div>
-                                    <div class="col-6 pl-0" style="padding-top: 5px;">
-                                        <div><span class="text-dark"><?php echo $row['fname']." ".$row['lname']; ?></span></div>
-                                        <div style="font-size: 0.8em;"><span class="text-muted"><?php echo $row['username']; ?></span></div>
-                                    </div>
-                                    <div class="col-3 text-right pt-1">
-                                        <div class="dropdown my-auto">
-                                            <i class="bx bx-dots-vertical-rounded font-medium-3 cursor-pointer dropdown-toggle nav-hide-arrow cursor-pointer" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" role="menu"></i>
-                                            <span class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton">
-                                                <a class="dropdown-item" href="JavaScript:void(0);">ข้อมูลผู้ป่วย</a>
-                                                <a class="dropdown-item" href="JavaScript:void(0);">โทรหาผู้ป่วย</a>
-                                                <a class="dropdown-item" href="JavaScript:void(0);">จัดการยา</a>
-                                                <a class="dropdown-item" href="JavaScript:void(0);">ปฏิทิน</a>
-                                            </span>
+                                <div style="border: solid; border-width: 1px 0px 0px 0px; border-color: #ccc; padding: 10px 20px;">
+                                    <div class="row">
+                                        <div class="col-3">
+                                            <div class="m-0" style="border-radius: 50%; width: 50px; height: 50px; background: url(<?php echo $row['profile_img']; ?>)  center center no-repeat; -webkit-background-size: cover; -moz-background-size: cover; -o-background-size: cover; background-size: cover;"></div>
                                         </div>
+                                        <div class="col-6 pl-0" style="padding-top: 5px;">
+                                            <div><span class="text-dark"><strong><?php echo $row['fname']." ".$row['lname']; ?></strong></span></div>
+                                            <div style="font-size: 0.8em;"><span class="text-muted"><?php echo $row['username']; ?></span></div>
+                                        </div>
+                                        <div class="col-3 text-right pt-1 pr-2">
+                                            <div class="dropdown my-auto">
+                                                <i class="bx bx-dots-vertical-rounded font-medium-3 cursor-pointer dropdown-toggle nav-hide-arrow cursor-pointer" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" role="menu"></i>
+                                                <span class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton">
+                                                    <a class="dropdown-item" href="JavaScript:void(0);">ข้อมูลผู้ป่วย</a>
+                                                    <a class="dropdown-item" href="JavaScript:void(0);">โทรหาผู้ป่วย</a>
+                                                    <a class="dropdown-item" href="JavaScript:void(0);">จัดการยา</a>
+                                                    <a class="dropdown-item" href="JavaScript:void(0);">ปฏิทิน</a>
+                                                </span>
+                                            </div>
 
+                                        </div>
                                     </div>
                                 </div>
                                 <?php
@@ -213,11 +215,6 @@ $menu = 7;
         </div>
     </div>
     <!-- END: Content-->
-
-
-    <?php 
-    require("./control/footer.php");
-    ?>
 
 
     <!-- BEGIN: Vendor JS-->

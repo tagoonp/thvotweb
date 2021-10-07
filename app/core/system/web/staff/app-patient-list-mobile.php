@@ -176,6 +176,7 @@ $menu = 7;
 
                         $result_list = $db->fetch($strSQL, true, false);
                         if(($result_list) && ($result_list['status'])){
+                            $c = 0;
                             foreach ($result_list['data'] as $row) {
                                 ?>
                                 <div style="border: solid; border-width: 0px 0px 0px 0px; border-color: #ccc; padding: 10px 20px;">
@@ -187,7 +188,12 @@ $menu = 7;
                                             <div><span class="text-dark"><strong><?php echo $row['fname']." ".$row['lname']; ?></strong></span></div>
                                             <div style="font-size: 0.8em;"><span class="text-muted"><?php echo $row['username']; ?></span></div>
                                         </div>
-                                        <div class="col-3 text-right pt-1 pr-2">
+
+                                        <div class="col-1 text-right pt-1 pr-2">
+                                            <i class="bx bx-phone-call"></i>
+                                        </div>
+
+                                        <div class="col-1 text-right pt-1 pr-2">
                                             <div class="dropdown my-auto">
                                                 <i class="bx bx-dots-vertical-rounded font-medium-3 cursor-pointer dropdown-toggle nav-hide-arrow cursor-pointer" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" role="menu"></i>
                                                 <span class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton">
@@ -197,11 +203,11 @@ $menu = 7;
                                                     <a class="dropdown-item" href="JavaScript:void(0);">ปฏิทิน</a>
                                                 </span>
                                             </div>
-
                                         </div>
                                     </div>
                                 </div>
                                 <?php
+                                $c++;
                             }
                             ?>
                             

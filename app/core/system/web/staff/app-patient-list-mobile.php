@@ -163,7 +163,7 @@ $menu = 7;
             </div>
             
                 <div class="row">
-                    <div class="col-12 pb-2 pt-1 pl-3 pr-3">
+                    <div class="col-12 pb-2" style="padding: 10px 30px;">
                         <input type="text" class="form-control round th" placeholder="ค้นหา" style="height: 45px;">
                     </div>
                     <div class="col-12 pb-4">
@@ -212,8 +212,8 @@ $menu = 7;
                                             <button class="btn btn-icon" style="margin-top: -10px; margin-left: -10px;" onclick="callModal('<?php echo $c; ?>')"><i class="bx bx-phone-call"></i></button>
                                         </div>
 
-                                        <div class="col-1 text-right pt-1 pr-2">
-                                            <div class="dropdown my-auto">
+                                        <div class="col-1 text-right pt-0 pr-2">
+                                            <div class="btn btn-icon dropdown my-auto" style="padding-top: 10px; padding-left: 10px; margin-top: -20px; margin-left: -10px;">
                                                 <i class="bx bx-dots-vertical-rounded font-medium-3 cursor-pointer dropdown-toggle nav-hide-arrow cursor-pointer" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" role="menu"></i>
                                                 <span class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton">
                                                     <a class="dropdown-item" href="window.location = 'app-patient-management-mobile?patient_id=<?php echo $row['uid']; ?>'">จัดการข้อมูลผู้ป่วย</a>

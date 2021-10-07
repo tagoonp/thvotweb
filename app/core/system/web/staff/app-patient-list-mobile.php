@@ -78,7 +78,7 @@ $menu = 7;
                 <div class="col-2 pl-0">
                     <button class="btn pt-0 text-white" onclick="window.location = './index_mobile'"><i class="bx bx-left-arrow-alt text-white" style="font-size: 2em;"></i></button>
                 </div>
-                <div class="col-7 th text-white" style="padding-top: 7px; font-size: 1.2em;">
+                <div class="col-7 th text-white pl-0" style="padding-top: 7px; font-size: 1.2em;">
                 รายชื่อผู้ป่วยทั้งหมด
                 </div>
                 <div class="col-3 th text-white text-right pr-3" >

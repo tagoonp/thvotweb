@@ -15,7 +15,23 @@ if(isset($_GET['stage'])){
 
 require('../../../../config/user.inc.php'); 
 
+$patient_id = '';
+if(isset($_GET['patient_id'])){ 
+    $patient_id = mysqli_real_escape_string($conn, $_GET['patient_id']);
+}else{
+    header('Location: ./app-patient-list-mobile');
+}
+
 $menu = 7;
+
+$patient_info = null;
+$strSQL = "SELECT * FROM vot2_account a INNER JOIN vot2_userinfo b ON a.username = b.info_username WHERE a.uid = '$patient_id' AND b.info_use = '1'";
+$res = $db->fetch($strSQL, false);
+if($res){
+    $patient_info = $res;
+}
+
+
 
 ?>
 <input type="hidden" id="txtCurrentUid" value="<?php echo $_SESSION['thvot_uid']; ?>">
@@ -153,17 +169,17 @@ $menu = 7;
                             <div class="card">
                                 <div class="user-profile-images">
                                     <!-- user timeline image -->
-                                    <img src="../../../app-assets/images/profile/post-media/profile-banner.jpg" class="img-fluid rounded-top user-timeline-image" alt="user timeline image">
+                                    <img src="<?php echo $patient_info['profile_img']; ?>" class="img-fluid rounded-top user-timeline-image" alt="user timeline image">
                                     <!-- user profile image -->
                                     <!-- <img src="../../../app-assets/images/portrait/small/avatar-s-16.jpg" class="user-profile-image rounded" alt="user profile image" height="140" width="140"> -->
                                 </div>
-                                <div class="user-profile-text">
-                                    <h4 class="mb-0 text-bold-500 profile-text-color">Martina Ash</h4>
-                                    <small>Devloper</small>
+                                <div class="text-center pt-3">
+                                    <h4 class="mb-0 text-bold-500 profile-text-color"><?php echo $patient_info['fname']." ".$patient_info['lname']; ?></h4>
+                                    <small><?php echo $patient_info['username']; ?></small>
                                 </div>
                                 <!-- user profile nav tabs start -->
-                                <div class="card-body px-0">
-                                    <ul class="nav user-profile-nav justify-content-center justify-content-md-start nav-pills border-bottom-0 mb-0" role="tablist">
+                                <div class="card-body">
+                                    <ul class="nav user-profile-nav justify-content-center justify-content-md-start nav-pills border-bottom-0 mb-0" role="tablist" style="padding-top: 0px !important;">
                                         <li class="nav-item mb-0">
                                             <a class=" nav-link d-flex px-1 active" id="feed-tab" data-toggle="tab" href="#feed" aria-controls="feed" role="tab" aria-selected="true"><i class="bx bx-user"></i><span class="d-none d-md-block">Feed</span></a>
                                         </li>
@@ -195,62 +211,67 @@ $menu = 7;
                                                     <!-- user profile nav tabs feed left section info card start -->
                                                     <div class="card">
                                                         <div class="card-body">
-                                                            <h5 class="card-title mb-1">Info
+                                                            <h5 class="card-title mb-1">ข้อมูลส่วนตัว
                                                                 <i class="cursor-pointer bx bx-dots-vertical-rounded float-right"></i>
                                                             </h5>
-                                                            <ul class="list-unstyled mb-0">
-                                                                <li class="d-flex align-items-center mb-25">
-                                                                    <i class="bx bx-briefcase mr-50 cursor-pointer"></i><span>UX
-                                                                        Designer at<a href="JavaScript:void(0);">&nbsp;google</a></span>
-                                                                </li>
-                                                                <li class="d-flex align-items-center mb-25">
-                                                                    <i class="bx bx-briefcase mr-50 cursor-pointer"></i> <span>Former
-                                                                        UI
-                                                                        Designer at<a href="JavaScript:void(0);">&nbsp;CBI</a></span>
-                                                                </li>
-                                                                <li class="d-flex align-items-center mb-25">
-                                                                    <i class="bx bx-receipt mr-50 cursor-pointer"></i> <span>Studied
-                                                                        <a href="JavaScript:void(0);">&nbsp;IT science</a> at<a href="JavaScript:void(0);">&nbsp;Torronto</a></span>
-                                                                </li>
-                                                                <li class="d-flex align-items-center mb-25">
-                                                                    <i class="bx bx-receipt mr-50 cursor-pointer"></i><span>Studied at
-                                                                        <a href="JavaScript:void(0);">&nbsp;College of new Jersey</a></span>
-                                                                </li>
-                                                                <li class="d-flex align-items-center">
-                                                                    <i class="bx bx-rss mr-50 cursor-pointer"></i> <span>Followed by<a href="JavaScript:void(0);">&nbsp;338 people</a></span>
-                                                                </li>
-                                                            </ul>
+
+                                                            <div class="form-group">
+                                                                <label for="">ชื่อ : <span class="text-danger">*</span></label>
+                                                                <input type="text" class="form-control" id="txtFname" value="<?php echo $patient_info['fname'];?>">
+                                                            </div>
+
+                                                            <div class="form-group">
+                                                                <label for="">นามสกุล : <span class="text-danger">*</span> </label>
+                                                                <input type="text" class="form-control" id="txtFname" value="<?php echo $patient_info['lname'];?>">
+                                                            </div>
+
+                                                            <div class="form-group">
+                                                                <label for="">หมายเลขโทรศัพท์ : <span class="text-danger">*</span> </label>
+                                                                <input type="text" class="form-control" id="txtPhone" value="<?php echo $patient_info['phone'];?>">
+                                                            </div>
+
+                                                            <div class="form-group">
+                                                                <label for="">หมายเลขโทรศัพท์ญาติ : </label>
+                                                                <input type="text" class="form-control" id="xtRelativePhone" value="<?php echo $patient_info['relative_phone'];?>">
+                                                            </div>
+
                                                         </div>
                                                     </div>
+
+                                                    <div class="card">
+                                                        <div class="card-body">
+                                                            <h5 class="card-title mb-1">สถานบริการและพี่เลี้ยง
+                                                                <i class="cursor-pointer bx bx-dots-vertical-rounded float-right"></i>
+                                                            </h5>
+
+                                                            <div class="form-group">
+                                                                <label for="">ชื่อ : <span class="text-danger">*</span></label>
+                                                                <input type="text" class="form-control" id="txtFname" value="<?php echo $patient_info['fname'];?>">
+                                                            </div>
+
+                                                            <div class="form-group">
+                                                                <label for="">นามสกุล : <span class="text-danger">*</span> </label>
+                                                                <input type="text" class="form-control" id="txtFname" value="<?php echo $patient_info['lname'];?>">
+                                                            </div>
+
+                                                            <div class="form-group">
+                                                                <label for="">หมายเลขโทรศัพท์ : <span class="text-danger">*</span> </label>
+                                                                <input type="text" class="form-control" id="txtPhone" value="<?php echo $patient_info['phone'];?>">
+                                                            </div>
+
+                                                            <div class="form-group">
+                                                                <label for="">หมายเลขโทรศัพท์ญาติ : </label>
+                                                                <input type="text" class="form-control" id="xtRelativePhone" value="<?php echo $patient_info['relative_phone'];?>">
+                                                            </div>
+
+                                                        </div>
+                                                    </div>
+
                                                     <!-- user profile nav tabs feed left section info card ends -->
                                                     <!-- user profile nav tabs feed left section trending card start -->
                                                     <div class="card">
                                                         <div class="card-body">
-                                                            <h5 class="card-title mb-1">What's trending<i class="cursor-pointer bx bx-dots-vertical-rounded float-right"></i></h5>
-                                                            <ul class="list-unstyled mb-0">
-                                                                <li class="d-flex mb-25">
-                                                                    <i class="cursor-pointer bx bx-trending-up text-primary mr-50 mt-25"></i><span>
-                                                                        <a href="JavaScript:void(0);" class="mr-50">#ManJonas:</a>Frest comes with built-in
-                                                                    </span>
-                                                                </li>
-                                                                <li class="d-flex mb-25">
-                                                                    <i class="cursor-pointer bx bx-trending-up text-primary mr-50 mt-25"></i><span>
-                                                                        <a href="JavaScript:void(0);" class="mr-50">LadyJonas:</a>dark layouts, select as</span>
-                                                                </li>
-                                                                <li class="d-flex mb-25">
-                                                                    <i class="cursor-pointer bx bx-trending-up text-primary mr-50 mt-25"></i><span>
-                                                                        <a href="JavaScript:void(0);" class="mr-50">#Germany:</a>Frest comes with built-in
-                                                                    </span>
-                                                                </li>
-                                                                <li class="d-flex mb-25">
-                                                                    <i class="cursor-pointer bx bx-trending-up text-primary mr-50 mt-25"></i><span>
-                                                                        <a href="JavaScript:void(0);" class="mr-50">#SundayNoon:</a>dark layouts, select as</span>
-                                                                </li>
-                                                                <li class="d-flex">
-                                                                    <i class="cursor-pointer bx bx-trending-up text-primary mr-50 mt-25"></i><span>
-                                                                        <a href="JavaScript:void(0);" class="mr-50">NoWorries:</a>heme navigation with you</span>
-                                                                </li>
-                                                            </ul>
+                                                            
                                                         </div>
                                                     </div>
                                                     <!-- user profile nav tabs feed left section trending card ends -->

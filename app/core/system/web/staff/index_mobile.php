@@ -146,9 +146,11 @@ $menu = 0;
                                                             AND a.active_status = '1'
                                                             AND a.verify_status = '1'
                                                             AND a.cal_end_obsdate >= '$date'
+                                                            AND a.patient_type IN ('TESTER', 'VOT')
                                                             AND a.obs_uid = '".$_SESSION['thvot_uid']."'
                                                         ";
                                                 if($_SESSION['thvot_role'] == 'manager'){
+
                                                     $strSQL = "SELECT a.uid
                                                             FROM vot2_account a INNER JOIN vot2_userinfo b ON a.uid = b.info_uid 
                                                             INNER JOIN vot2_chospital c ON a.hcode = c.hoscode 
@@ -160,6 +162,7 @@ $menu = 0;
                                                             AND a.active_status = '1'
                                                             AND a.verify_status = '1'
                                                             AND a.cal_end_obsdate >= '$date'
+                                                            AND a.patient_type IN ('TESTER', 'VOT')
                                                             AND a.obs_uid = '".$_SESSION['thvot_uid']."'
                                                         ";
                                                 }

@@ -168,16 +168,20 @@ $menu = 7;
                     </div>
                     <div class="col-12 pb-4">
                         <?php 
-                        $strSQL = "SELECT a.*, a.ID user_id, b.* , regh.hserv rhserve, obsh.hserv hhserve, menh.hserv mhserve
-                                    FROM vot2_account a INNER JOIN vot2_userinfo b ON a.uid = b.info_uid 
-                                    LEFT JOIN vot2_projecthospital regh ON a.reg_hcode = regh.phoscode
-                                    LEFT JOIN vot2_projecthospital obsh ON a.reg_hcode = obsh.phoscode
-                                    LEFT JOIN vot2_projecthospital menh ON a.reg_hcode = menh.phoscode
-                                    WHERE 
-                                    a.delete_status = '0' 
-                                    AND b.info_use = '1'
-                                    AND a.role = 'patient'
-                                    AND a.obs_hcode = '".$_SESSION['thvot_hcode']."' AND a.obs_uid = '".$_SESSION['thvot_uid']."'  ORDER BY b.fname";
+                        $strSQL = "SELECT *
+                        FROM vot2_account a INNER JOIN vot2_userinfo b ON a.uid = b.info_uid 
+                        INNER JOIN vot2_chospital c ON a.hcode = c.hoscode 
+                        WHERE 
+                        a.obs_hcode = '".$_SESSION['thvot_hcode']."' 
+                        AND b.info_use = '1' 
+                        AND a.delete_status = '0' 
+                        AND a.role = 'patient'
+                        AND a.active_status = '1'
+                        AND a.verify_status = '1'
+                        AND a.cal_end_obsdate >= '$date'
+                        AND a.patient_type IN ('TESTER', 'VOT')
+                        AND a.obs_uid = '".$_SESSION['thvot_uid']."' ORDER BY b.fname";
+
                         if($_SESSION['thvot_role'] == 'manager'){
                             $strSQL = "SELECT a.*, a.ID user_id, b.* , regh.hserv rhserve, obsh.hserv hhserve, menh.hserv mhserve
                                         FROM vot2_account a INNER JOIN vot2_userinfo b ON a.uid = b.info_uid 
@@ -186,6 +190,7 @@ $menu = 7;
                                         LEFT JOIN vot2_projecthospital menh ON a.reg_hcode = menh.phoscode
                                         WHERE 
                                         a.delete_status = '0' 
+                                        AND a.patient_type IN ('TESTER', 'VOT')
                                         AND b.info_use = '1'
                                         AND a.role = 'patient'
                                         AND (a.hcode = '".$_SESSION['thvot_hcode']."' OR reg_hcode = '".$_SESSION['thvot_hcode']."') ORDER BY b.fname ";

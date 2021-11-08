@@ -245,19 +245,32 @@ if($res){
                                                             </h5>
 
                                                             <div class="form-group">
-                                                                <label for="">ชื่อ : <span class="text-danger">*</span></label>
+                                                                <label for="">หน่วย/สถานบริการที่ขึ้นทะเบียนผู้ป่วย : <span class="text-danger">*</span></label>
                                                                 <input type="text" class="form-control" id="txtFname" value="<?php echo $patient_info['fname'];?>">
                                                             </div>
 
                                                             <div class="form-group">
-                                                                <label for="">นามสกุล : <span class="text-danger">*</span> </label>
+                                                                <label for="">หน่วย/สถานบริการสุขภาพที่ตรวจติดตาม : <span class="text-danger">*</span> </label>
                                                                 <input type="text" class="form-control" id="txtFname" value="<?php echo $patient_info['lname'];?>">
                                                             </div>
 
                                                             <div class="form-group">
-                                                                <label for="">หมายเลขโทรศัพท์ : <span class="text-danger">*</span> </label>
+                                                                <label for="">หน่วย/สถานบริการสุขภาพของพี่เลี้ยง : <span class="text-danger">*</span> </label>
                                                                 <input type="text" class="form-control" id="txtPhone" value="<?php echo $patient_info['phone'];?>">
                                                             </div>
+
+                                                            <?php 
+                                                            if($_SESSION['thvot_role'] == 'manager'){
+                                                                ?>
+                                                                <div class="form-group">
+                                                                    <label for="">พี่เลี้ยง : <span class="text-danger">*</span> </label>
+                                                                    <select name="txtStaff" id="txtStaff" class="form-control">
+                                                                        <option value="">-- เลือกพี่เลี้ยง --</option>
+                                                                    </select>
+                                                                </div>
+                                                                <?php
+                                                            }
+                                                            ?>
 
                                                             <div class="form-group">
                                                                 <label for="">หมายเลขโทรศัพท์ญาติ : </label>
@@ -267,34 +280,28 @@ if($res){
                                                         </div>
                                                     </div>
 
-                                                    <!-- user profile nav tabs feed left section info card ends -->
-                                                    <!-- user profile nav tabs feed left section trending card start -->
                                                     <div class="card">
                                                         <div class="card-body">
-                                                            
+                                                            <h5 class="card-title mb-1">ที่อยู่</h5>
+
+                                                            <div class="form-group">
+                                                                <label for="">จังหวัด : <span class="text-danger">*</span></label>
+                                                                <input type="text" class="form-control" id="txtFname" value="<?php echo $patient_info['fname'];?>">
+                                                            </div>
+
+                                                            <div class="form-group">
+                                                                <label for="">อำเภอ : <span class="text-danger">*</span> </label>
+                                                                <input type="text" class="form-control" id="txtFname" value="<?php echo $patient_info['lname'];?>">
+                                                            </div>
+
+                                                            <div class="form-group">
+                                                                <label for="">ตำบล : <span class="text-danger">*</span> </label>
+                                                                <input type="text" class="form-control" id="txtPhone" value="<?php echo $patient_info['phone'];?>">
+                                                            </div>
+
                                                         </div>
                                                     </div>
-                                                    <!-- user profile nav tabs feed left section trending card ends -->
-                                                    <!-- user profile nav tabs feed left section like page card start -->
-                                                    <div class="card">
-                                                        <div class="card-body">
-                                                            <h6><img src="../../../app-assets/images/profile/pages/pixinvent.jpg" class="mr-25 round" alt="logo" height="28">
-                                                                Pixinvent<span class="text-muted"> (Page)</span>
-                                                                <i class="cursor-pointer bx bx-dots-vertical-rounded float-right"></i></h6>
-                                                            <div class="mb-1 font-small-2">
-                                                                <i class="cursor-pointer bx bxs-star text-warning"></i>
-                                                                <i class="cursor-pointer bx bxs-star text-warning"></i>
-                                                                <i class="cursor-pointer bx bxs-star text-warning"></i>
-                                                                <i class="cursor-pointer bx bxs-star text-warning"></i>
-                                                                <i class="cursor-pointer bx bx-star text-muted"></i>
-                                                                <span class="ml-50 text-muted text-bold-500">4.6 (142 reviews)</span>
-                                                            </div>
-                                                            <div class="d-flex">
-                                                                <button class="btn btn-sm btn-light-primary d-flex mr-50"><i class="cursor-pointer bx bx-like font-small-3 mb-25 mr-sm-25"></i><span class="d-none d-sm-block">Like</span></button>
-                                                                <button class="btn btn-sm btn-light-primary d-flex"><i class="cursor-pointer bx bx-share-alt font-small-3 mb-25 mr-sm-25"></i><span class="d-none d-sm-block">Share</span></button>
-                                                            </div>
-                                                        </div>
-                                                    </div>
+                                                    
                                                     <!-- user profile nav tabs feed left section like page card ends -->
                                                     <!-- user profile nav tabs feed left section today's events card start -->
                                                     <div class="card">
@@ -1184,44 +1191,7 @@ if($res){
                                         </div>
                                     </div>
                                     <!-- user profile right side content related groups ends -->
-                                    <!-- user profile right side content gallery start -->
-                                    <div class="card">
-                                        <div class="card-body">
-                                            <h5 class="card-title mb-1">Gallery
-                                                <i class="cursor-pointer bx bx-dots-vertical-rounded align-top float-right"></i>
-                                            </h5>
-                                            <div class="row">
-                                                <div class="col-md-4 col-6 pl-25 pr-0 pb-25">
-                                                    <img src="../../../app-assets/images/profile/user-uploads/user-10.jpg" class="img-fluid" alt="gallery avtar img">
-                                                </div>
-                                                <div class="col-md-4 col-6 pl-25 pr-0 pb-25">
-                                                    <img src="../../../app-assets/images/profile/user-uploads/user-11.jpg" class="img-fluid" alt="gallery avtar img">
-                                                </div>
-                                                <div class="col-md-4 col-6 pl-25 pr-0 pb-25">
-                                                    <img src="../../../app-assets/images/profile/user-uploads/user-12.jpg" class="img-fluid" alt="gallery avtar img">
-                                                </div>
-                                                <div class="col-md-4 col-6 pl-25 pr-0 pb-25">
-                                                    <img src="../../../app-assets/images/profile/user-uploads/user-13.jpg" class="img-fluid" alt="gallery avtar img">
-                                                </div>
-                                                <div class="col-md-4 col-6 pl-25 pr-0 pb-25">
-                                                    <img src="../../../app-assets/images/profile/user-uploads/user-05.jpg" class="img-fluid" alt="gallery avtar img">
-                                                </div>
-                                                <div class="col-md-4 col-6 pl-25 pr-0 pb-25">
-                                                    <img src="../../../app-assets/images/profile/user-uploads/user-06.jpg" class="img-fluid" alt="gallery avtar img">
-                                                </div>
-                                                <div class="col-md-4 col-6 pl-25 pr-0 pb-25">
-                                                    <img src="../../../app-assets/images/profile/user-uploads/user-07.jpg" class="img-fluid" alt="gallery avtar img">
-                                                </div>
-                                                <div class="col-md-4 col-6 pl-25 pr-0 pb-25">
-                                                    <img src="../../../app-assets/images/profile/user-uploads/user-08.jpg" class="img-fluid" alt="gallery avtar img">
-                                                </div>
-                                                <div class="col-md-4 col-6 pl-25 pr-0 pb-25">
-                                                    <img src="../../../app-assets/images/profile/user-uploads/user-09.jpg" class="img-fluid" alt="gallery avtar img">
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <!-- user profile right side content gallery ends -->
+                                    
                                 </div>
                                 <!-- user profile right side content ends -->
                             </div>

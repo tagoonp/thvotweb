@@ -5,7 +5,7 @@ require('../../../../config/database.php');
 require('../../../../config/staff.role.php'); 
 
 if(isMobile()){
-    // header('Location: ./index_mobile');
+    header('Location: ./index_mobile');
 }
 
 $db = new Database();
@@ -144,9 +144,11 @@ $menu = 0;
                                                             AND a.active_status = '1'
                                                             AND a.verify_status = '1'
                                                             AND a.cal_end_obsdate >= '$date'
+                                                            AND a.patient_type IN ('TESTER', 'VOT')
                                                             AND a.obs_uid = '".$_SESSION['thvot_uid']."'
                                                         ";
                                                 if($_SESSION['thvot_role'] == 'manager'){
+
                                                     $strSQL = "SELECT a.uid
                                                             FROM vot2_account a INNER JOIN vot2_userinfo b ON a.uid = b.info_uid 
                                                             INNER JOIN vot2_chospital c ON a.hcode = c.hoscode 
@@ -158,15 +160,17 @@ $menu = 0;
                                                             AND a.active_status = '1'
                                                             AND a.verify_status = '1'
                                                             AND a.cal_end_obsdate >= '$date'
+                                                            AND a.patient_type IN ('TESTER', 'VOT')
                                                             AND a.obs_uid = '".$_SESSION['thvot_uid']."'
                                                         ";
                                                 }
                                                 $resCount = $db->fetch($strSQL, true, true);
                                                 if(($resCount) && ($resCount['status'])){
-                                                    echo $resCount['count'];
+                                                    echo sizeof($resCount['data']);
                                                 }else{
                                                     echo "0";
                                                 }
+                                                
                                                 ?>
                                                 คน
                                             </h2></div>
@@ -178,6 +182,8 @@ $menu = 0;
                                             <img src="https://thvot.com/img/patient_banner.png" alt="" class="img-fluid">
                                         </div>
                                     </div>
+
+                                    
                                     
                                 </div>
                             </div>
@@ -201,7 +207,7 @@ $menu = 0;
                                                                     AND a.fu_date = '$date'
                                                                     AND a.fu_status = 'non-verify'
                                                                     AND a.fu_username IN 
-                                                                    (SELECT username FROM vot2_account WHERE obs_hcode = '".$_SESSION['thvot_hcode']."' AND obs_uid = '".$_SESSION['thvot_uid']."' AND cal_end_obsdate >= '$date' AND delete_status = '0') 
+                                                                    (SELECT username FROM vot2_account WHERE obs_hcode = '".$_SESSION['thvot_hcode']."' AND obs_uid = '".$_SESSION['thvot_uid']."' AND cal_end_obsdate >= '$date' AND delete_status = '0' AND patient_type IN ('TESTER', 'VOT')) 
                                                                   ";
                                                         if($_SESSION['thvot_hcode'] == 'manager'){
                                                             $strSQL = "SELECT COUNT(a.fu_id) cn FROM vot2_followup a
@@ -211,7 +217,7 @@ $menu = 0;
                                                                         AND a.fu_date = '$date'
                                                                         AND a.fu_status = 'non-verify'
                                                                         AND a.fu_username IN 
-                                                                        (SELECT username FROM vot2_account WHERE (hcode = '".$_SESSION['thvot_hcode']."' OR reg_hcode = '".$_SESSION['thvot_hcode']."') AND cal_end_obsdate >= '$date' AND delete_status = '0') 
+                                                                        (SELECT username FROM vot2_account WHERE (hcode = '".$_SESSION['thvot_hcode']."' OR reg_hcode = '".$_SESSION['thvot_hcode']."') AND cal_end_obsdate >= '$date' AND delete_status = '0' AND patient_type IN ('TESTER', 'VOT')) 
                                                                     ";
                                                         }
                                                         $resCount = $db->fetch($strSQL, false);
@@ -249,7 +255,7 @@ $menu = 0;
                                                                     a.fu_view = '0' 
                                                                     AND a.fu_delete = '0'
                                                                     AND a.fu_username IN 
-                                                                    (SELECT username FROM vot2_account WHERE obs_hcode = '".$_SESSION['thvot_hcode']."' AND obs_uid = '".$_SESSION['thvot_uid']."' ) 
+                                                                    (SELECT username FROM vot2_account WHERE obs_hcode = '".$_SESSION['thvot_hcode']."' AND obs_uid = '".$_SESSION['thvot_uid']."'  AND patient_type IN ('TESTER', 'VOT')) 
                                                                   ";
                                                         if($_SESSION['thvot_role'] == 'manager'){
                                                             $strSQL = "SELECT COUNT(a.fu_id) cn FROM vot2_followup a
@@ -257,7 +263,7 @@ $menu = 0;
                                                                             a.fu_view = '0' 
                                                                             AND a.fu_delete = '0'
                                                                             AND a.fu_username IN 
-                                                                            (SELECT username FROM vot2_account WHERE (hcode = '".$_SESSION['thvot_hcode']."' OR reg_hcode = '".$_SESSION['thvot_hcode']."') ) 
+                                                                            (SELECT username FROM vot2_account WHERE (hcode = '".$_SESSION['thvot_hcode']."' OR reg_hcode = '".$_SESSION['thvot_hcode']."')  AND patient_type IN ('TESTER', 'VOT')) 
                                                                         ";
                                                         }
                                                         $resCount = $db->fetch($strSQL, false);
@@ -307,6 +313,7 @@ $menu = 0;
                                                                 AND delete_status = '0'
                                                                 AND stop_drug = '0'
                                                                 AND role = 'patient'
+                                                                AND patient_type IN ('TESTER', 'VOT')
                                                             ) 
                                                         ";
                                                 if($_SESSION['thvot_role'] == 'manager'){
@@ -324,6 +331,7 @@ $menu = 0;
                                                                     AND delete_status = '0'
                                                                     AND stop_drug = '0'
                                                                     AND role = 'patient'
+                                                                    AND patient_type IN ('TESTER', 'VOT')
                                                                 ) 
                                                             ";
                                                 }

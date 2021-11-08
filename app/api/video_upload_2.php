@@ -90,9 +90,11 @@ if (!empty($_FILES)) {
                 if($x[sizeof($x) - 1] != 'mp4'){
                     $uploadName_tmp = $x[0];
                     $fileUrl = 'https://thvot.com/thvotweb/app/uploads/video/'.$x[0].".mp4";
+                }else{
+                    $fileUrl = 'https://thvot.com/thvotweb/app/uploads/video/'.$x[0].".mp4";
                 }
             }
-            
+
             shell_exec('ffmpeg -i /home/thvot/public_html/thvotweb/app/uploads/video/'.$generatedName.' -vcodec h264 /home/thvot/public_html/thvotweb/app/uploads/video/'.$uploadName_tmp.".mp4");
         }
 

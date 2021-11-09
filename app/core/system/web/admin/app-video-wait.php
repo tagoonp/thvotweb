@@ -186,27 +186,10 @@ $menu = 8;
                                                        AND b.role = 'patient'
                                                        AND a.fu_verify_datetime IS NULL
                                                        AND c.info_use = '1'
-                                                       AND b.obs_hcode = '$hcode'
                                                        AND a.fu_upload_datetime >= '$last48hr'
                                                        AND b.uid = '$patient_id'
                                                        ORDER BY a.fu_upload_datetime ASC
                                             ";
-                                            if($_SESSION['thvot_role'] == 'manager'){
-                                                $strSQL = "SELECT *
-                                                       FROM vot2_followup a INNER JOIN vot2_account b ON a.fu_username = b.username
-                                                       INNER JOIN vot2_userinfo c ON b.username = c.info_username
-                                                       WHERE 
-                                                       b.delete_status = '0' 
-                                                       AND b.role = 'patient'
-                                                       AND a.fu_verify_datetime IS NULL
-                                                       AND c.info_use = '1'
-                                                       AND b.obs_hcode = '$hcode'
-                                                       AND a.fu_upload_datetime >= '$last48hr'
-                                                       AND b.uid = '$patient_id'
-                                                       AND (b.hcode = '$hcode' OR b.reg_hcode = '$hcode')
-                                                       ORDER BY a.fu_upload_datetime ASC
-                                                       ";
-                                            }
                                             $result_list = $db->fetch($strSQL, true, false);
                                             if($result_list['status']){
                                                 $c = 1;

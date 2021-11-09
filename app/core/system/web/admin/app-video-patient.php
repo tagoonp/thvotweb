@@ -179,25 +179,11 @@ $menu = 8;
                                                        a.delete_status = '0'
                                                        AND a.role = 'patient'
                                                        AND b.info_use = '1'
-                                                       AND a.obs_hcode = '$hcode'
                                                        AND a.username IN 
                                                        (
                                                            SELECT fu_username FROM vot2_followup WHERE fu_upload_datetime >= '$last48hr' AND fu_verify_datetime IS NULL
                                                        )
                                                       ";
-                                            if($_SESSION['thvot_role'] == 'manager'){
-                                                $strSQL = "SELECT * FROM vot2_account a INNER JOIN vot2_userinfo b ON a.username = b.info_username
-                                                       WHERE 
-                                                       a.delete_status = '0'
-                                                       AND a.role = 'patient'
-                                                       AND b.info_use = '1'
-                                                       AND (a.hcode = '$hcode' OR a.reg_hcode = '$hcode')
-                                                       AND a.username IN 
-                                                       (
-                                                           SELECT fu_username FROM vot2_followup WHERE fu_upload_datetime >= '$last48hr' AND fu_verify_datetime IS NULL
-                                                       )
-                                                      ";
-                                            }
                                             $result_list = $db->fetch($strSQL, true, false);
                                             if(($result_list) && ($result_list['status'])){
                                                 $c = 1;

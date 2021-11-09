@@ -179,20 +179,8 @@ $menu = 13;
                                                        WHERE 
                                                        b.delete_status = '0' 
                                                        AND b.role = 'patient'
-                                                       AND b.obs_hcode = '$hcode'
                                                        ORDER BY a.fu_upload_datetime DESC
                                             ";
-                                            if($_SESSION['thvot_role'] == 'manager'){
-                                                $strSQL = "SELECT *
-                                                       FROM vot2_followup a INNER JOIN vot2_account b ON a.fu_username = b.username
-                                                       INNER JOIN vot2_userinfo c ON b.username = c.info_username
-                                                       WHERE 
-                                                       b.delete_status = '0' 
-                                                       AND b.role = 'patient'
-                                                       AND (b.hcode = '$hcode' OR b.reg_hcode = '$hcode')
-                                                       ORDER BY a.fu_upload_datetime DESC
-                                            ";
-                                            }
                                             $result_list = $db->fetch($strSQL, true, false);
                                             if(($result_list) && ($result_list['status'])){
                                                 $c = 1;

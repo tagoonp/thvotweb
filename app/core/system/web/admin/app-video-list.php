@@ -194,7 +194,7 @@ $menu = 13;
                                             ";
                                             }
                                             $result_list = $db->fetch($strSQL, true, false);
-                                            if($result_list['status']){
+                                            if(($result_list) && ($result_list['status'])){
                                                 $c = 1;
                                                 foreach($result_list['data'] as $row){
                                                     ?>

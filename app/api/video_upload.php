@@ -58,6 +58,10 @@ if (!empty($_FILES)) {
     }
     
     $filePath = $path.$generatedName;
+
+    $strSQL = "INSERT INTO vot2_log (`log_datetime`, `log_info`, `log_message`, `log_ip`, `log_uid`) VALUES ('$datetime', 'อัพโหลดวีดีโอ', '', '$remote_ip', '$uid')";
+    $res1 = $db->insert($strSQL, false);
+
     if (move_uploaded_file($_FILES['file']['tmp_name'], $filePath)) {
         $fileUrl = 'https://thvot.com/thvotweb/app/uploads/video/'.$generatedName;
 
@@ -102,9 +106,6 @@ if (!empty($_FILES)) {
 
         $strSQL = "UPDATE vot2_followup_dummy SET fud_status = 'in-complete' WHERE fud_uid = '$uid' AND fud_date = '$date'";
         $db->execute($strSQL);
-
-        $strSQL = "INSERT INTO vot2_log (`log_datetime`, `log_info`, `log_message`, `log_ip`, `log_uid`) VALUES ('$datetime', 'อัพโหลดวีดีโอ', '', '$remote_ip', '$uid')";
-        $res1 = $db->insert($strSQL, false);
 
         $strSQL = "INSERT INTO vot2_notification 
                   (

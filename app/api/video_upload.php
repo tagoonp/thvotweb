@@ -88,6 +88,9 @@ if (!empty($_FILES)) {
             
         }
         // else{
+            // shell_exec('ffmpeg -i /home/thvot/public_html/thvotweb/app/uploads/video/'.$generatedName.' -vcodec h264 /home/thvot/public_html/thvotweb/app/uploads/video/'.$generatedName);
+        // }
+        // else{
         //     $x = explode(".", $uploadName_tmp);
         //     if(sizeof($x) > 1){
         //         if($x[sizeof($x) - 1] != 'mp4'){

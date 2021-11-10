@@ -149,10 +149,14 @@ if (!empty($_FILES)) {
         $db->close(); 
         die();
     }
+
 }else{
 
     // $strSQL = "UPDATE vot2_videosession SET vs_upload = 'fail' WHERE vs_session = '$vid' AND vs_uid = '$uid'";
     // $res1 = $db->execute($strSQL); 
+
+    $strSQL = "INSERT INTO vot2_log (`log_datetime`, `log_info`, `log_message`, `log_ip`, `log_uid`) VALUES ('$datetime', 'อัพโหลดวีดีโอไม่สำเร็จ', '', '$remote_ip', '$uid')";
+    $res1 = $db->insert($strSQL, false);
 
     // $return['status'] = 'Fail (x102)';
     echo "N";

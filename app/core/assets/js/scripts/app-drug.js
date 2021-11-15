@@ -60,6 +60,7 @@ function saveDrugForm(){
 
     var jxr = $.post(api_url + 'patient?stage=add_drug', param, function(){}, 'json')
                .always(function(snap){
+                   console.log(snap);
                    if(snap.status == 'Success'){
                         resetDrugForm()
                         $('#addDrugModal').modal('hide')

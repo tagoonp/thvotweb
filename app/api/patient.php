@@ -745,7 +745,7 @@ if($stage == 'add_drug'){
         die();
     }
 
-    if($drug_id == '99'){
+    if(($drug_id == '99') || ($drug_id == '100') || ($drug_id == '101') || ($drug_id == '102') || ($drug_id == '103') || ($drug_id == '104') || ($drug_id == '105')){
         $strSQL = "SELECT username FROM vot2_account WHERE uid = '$puid' LIMIT 1";
         $resU = $db->fetch($strSQL, false);
 

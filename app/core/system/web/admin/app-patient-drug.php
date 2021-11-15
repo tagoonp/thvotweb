@@ -631,7 +631,16 @@ $selected_location = $db->fetch($strSQL, false);
 
             $(function(){
                 $('#txtDrug').change(function(){
-                    if($('#txtDrug').val() == '99'){
+                    if(
+                        ($('#txtDrug').val() == '99') || 
+                        ($('#txtDrug').val() == '100') ||
+                        ($('#txtDrug').val() == '101') ||
+                        ($('#txtDrug').val() == '102') ||
+                        ($('#txtDrug').val() == '103') ||
+                        ($('#txtDrug').val() == '104') ||
+                        ($('#txtDrug').val() == '105')
+                    )
+                    {
                         $('#divOther').removeClass('dn')
                     }else{
                         $('#divOther').addClass('dn')

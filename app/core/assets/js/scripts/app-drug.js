@@ -66,6 +66,7 @@ function saveDrugForm(){
                         $('#addDrugModal').modal('hide')
                         loadDruglist()
                    }else{
+                        preload.hide();
                         Swal.fire({
                             icon: "error",
                             title: 'เกิดข้อผิดพลาด',

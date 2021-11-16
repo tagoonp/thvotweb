@@ -250,23 +250,23 @@ $menu = 0;
                         //     confirmButtonClass: 'btn btn-success',
                         // })
 
-                        Swal.fire({
-                            title: 'อัพโหลดสำเร็จ',
-                            text: 'วิดีโอถูกอัพโหลดเรียบร้อยแล้ว',
-                            icon: 'success',
-                            showCancelButton: false,
-                            confirmButtonColor: '#3085d6',
-                            confirmButtonText: 'รับทราบ',
-                            cancelButtonText: 'ยกเลิก',
-                            confirmButtonClass: 'btn btn-success mr-1',
-                            cancelButtonClass: 'btn btn-danger',
-                            buttonsStyling: false,
-                        }).then(function (result) {
-                            if (result.value) {
-                                // window.location.reload()
-                                this.removeAllFiles();
-                            }
-                        })
+                        // Swal.fire({
+                        //     title: 'อัพโหลดสำเร็จ',
+                        //     text: 'วิดีโอถูกอัพโหลดเรียบร้อยแล้ว',
+                        //     icon: 'success',
+                        //     showCancelButton: false,
+                        //     confirmButtonColor: '#3085d6',
+                        //     confirmButtonText: 'รับทราบ',
+                        //     cancelButtonText: 'ยกเลิก',
+                        //     confirmButtonClass: 'btn btn-success mr-1',
+                        //     cancelButtonClass: 'btn btn-danger',
+                        //     buttonsStyling: false,
+                        // }).then(function (result) {
+                        //     if (result.value) {
+                        //         // window.location.reload()
+                        //         this.removeAllFiles();
+                        //     }
+                        // })
                     }
                 });
                 this.on("sending", function(file) {
@@ -277,21 +277,21 @@ $menu = 0;
                     console.log(file);
                     this.removeFile(file);
                 // alert(file.xhr.responseText)
-                    // if(file.xhr.responseText == "Y"){
-                    //     Swal.fire({
-                    //                         icon: "success",
-                    //                         title: 'อัพโหลดสำเร็จ',
-                    //                         text: 'วิดีโอถูกอัพโหลดเรียบร้อยแล้ว',
-                    //                         confirmButtonClass: 'btn btn-success',
-                    //                 })
-                    // }else{
-                    //     Swal.fire({
-                    //                         icon: "error",
-                    //                         title: 'อัพโหลดไม่สำเร็จ กรุณาลองใหม่โดยเลือกอัพโหลดจากอัลบัมภาพ',
-                    //                         text: 'ไม่สามารถตั้งเวลาได้ กรุณาลองใหม่อีกครั้ง',
-                    //                         confirmButtonClass: 'btn btn-danger',
-                    //                 })
-                    // }
+                    if(file.xhr.responseText == "Y"){
+                        Swal.fire({
+                                            icon: "success",
+                                            title: 'อัพโหลดสำเร็จ',
+                                            text: 'วิดีโอถูกอัพโหลดเรียบร้อยแล้ว',
+                                            confirmButtonClass: 'btn btn-success',
+                                    })
+                    }else{
+                        Swal.fire({
+                                            icon: "error",
+                                            title: 'อัพโหลดไม่สำเร็จ กรุณาลองใหม่โดยเลือกอัพโหลดจากอัลบัมภาพ',
+                                            text: 'ไม่สามารถตั้งเวลาได้ กรุณาลองใหม่อีกครั้ง',
+                                            confirmButtonClass: 'btn btn-danger',
+                                    })
+                    }
 
                     // Swal.fire({
                     //         icon: "success",

@@ -236,7 +236,7 @@ $menu = 0;
             init: function(){
                 this.on("totaluploadprogress", function(progress){ 
                     this.removeFile(file);
-                    $v = progress.JSON.stringify(progress)
+                    $v = JSON.stringify(progress)
                     alert($v.parseInt())
                     if($v.parseInt() == 100){
                         Swal.fire({

@@ -69,7 +69,6 @@ if (!empty($_FILES)) {
         $fileUrl = 'https://thvot.com/thvotweb/app/uploads/video/'.$generatedName;
 
         if($origin_ext != 'mp4'){
-
             $x = explode(".", $uploadName_tmp);
             if(sizeof($x) > 1){
                 if($x[sizeof($x) - 1] != 'mp4'){

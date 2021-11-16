@@ -234,7 +234,7 @@ $menu = 0;
             maxFilesize: 100,
             // capture: "camera",
             init: function(){
-                this.on("complete", function(file) {
+                this.on("success", function(file) {
                     alert(file.xhr.responseText)
                 console.log(file);
                 this.removeFile(file);

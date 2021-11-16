@@ -234,10 +234,11 @@ $menu = 0;
             maxFilesize: 100,
             // capture: "camera",
             init: function(){
+                this.on("totaluploadprogress", function(progress){ alert(JSON.stringify(progress)) });
                 this.on("success", function(file) {
                     alert(file.xhr.responseText)
-                console.log(file);
-                this.removeFile(file);
+                    console.log(file);
+                    this.removeFile(file);
                 // alert(file.xhr.responseText)
                     // if(file.xhr.responseText == "Y"){
                     //     Swal.fire({

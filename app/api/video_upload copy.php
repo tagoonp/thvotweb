@@ -63,10 +63,6 @@ if (!empty($_FILES)) {
     $res1 = $db->insert($strSQL, false);
 
     if (move_uploaded_file($_FILES['file']['tmp_name'], $filePath)) {
-
-        $return['status'] = 'Success';
-        echo json_encode($return);
-        
         $fileUrl = 'https://thvot.com/thvotweb/app/uploads/video/'.$generatedName;
 
         if($origin_ext != 'mp4'){
@@ -144,8 +140,8 @@ if (!empty($_FILES)) {
         }
         //
 
-        // $return['status'] = 'Success';
-        // echo json_encode($return);
+        $return['status'] = 'Success';
+        echo json_encode($return);
         $db->close(); 
         die();
     }

@@ -21,6 +21,7 @@ if(
 $uid = mysqli_real_escape_string($conn, $_GET['uid']);
 
 if (!empty($_FILES)) {
+    
     $path = '../uploads/video/';
     if (!file_exists($path)) {
         mkdir($path, 0755, true);
@@ -62,6 +63,9 @@ if (!empty($_FILES)) {
         $res1 = $db->insert($strSQL, false);
         
     if (move_uploaded_file($_FILES['file']['tmp_name'], $filePath)) {
+
+        echo "Y";
+
         $fileUrl = 'https://thvot.com/thvotweb/app/uploads/video/'.$generatedName;
 
         if($origin_ext != 'mp4'){
@@ -73,20 +77,7 @@ if (!empty($_FILES)) {
                     $fileUrl = 'https://thvot.com/thvotweb/app/uploads/video/'.$x[0].".mp4";
                 }
             }
-
-            // ffmpeg -i  input.mp4  -vcodec h264  output.mp4
             shell_exec('ffmpeg -i /home/thvot/public_html/thvotweb/app/uploads/video/'.$generatedName.' -pix_fmt yuv420p -crf 18 /home/thvot/public_html/thvotweb/app/uploads/video/'.$uploadName_tmp.".mp4");
-
-            // shell_exec('ffmpeg -i /home/thvot/public_html/thvotweb/app/uploads/video/'.$generatedName.' -vcodec h264 /home/thvot/public_html/thvotweb/app/uploads/video/'.$uploadName_tmp.".mp4");
-
-            // $fileUrl = 'https://thvot.com/thvotweb/app/uploads/video/'.$uploadName_tmp.".mp4";
-
-            // $x = explode(".", 'https://thvot.com/thvotweb/app/uploads/video/'.$generatedName);
-            // if(sizeof($x) > 1){
-            //     if($x[sizeof($x) - 1] != 'mp4'){
-            //         $fileUrl = 'https://thvot.com/thvotweb/app/uploads/video/'.$x[0].".mp4";
-            //     }
-            // }
         }else{
             $x = explode(".", $uploadName_tmp);
             $uploadName_tmp = $x[0];
@@ -149,7 +140,7 @@ if (!empty($_FILES)) {
         //
 
         // $return['status'] = 'Success';
-        echo "Y";
+        // echo "Y";
         $db->close(); 
         die();
     }

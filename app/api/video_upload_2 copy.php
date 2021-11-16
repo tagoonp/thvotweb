@@ -19,7 +19,6 @@ if(
 }
 
 $uid = mysqli_real_escape_string($conn, $_GET['uid']);
-$vid = mysqli_real_escape_string($conn, $_GET['vid']);
 
 if (!empty($_FILES)) {
     $path = '../uploads/video/';
@@ -48,7 +47,7 @@ if (!empty($_FILES)) {
     if($res){
         $username = $res['username'];
 
-        $bx = explode("/", $username);
+        $bx = explode("/", $username); 
         if(sizeof($bx) > 1){
             $username = implode("", $bx);
         }
@@ -60,26 +59,12 @@ if (!empty($_FILES)) {
     $filePath = $path.$generatedName;
 
     $strSQL = "INSERT INTO vot2_log (`log_datetime`, `log_info`, `log_message`, `log_ip`, `log_uid`) VALUES ('$datetime', 'อัพโหลดวีดีโอ', '', '$remote_ip', '$uid')";
-    $res1 = $db->insert($strSQL, false);
-
-    if (move_uploaded_file($_FILES['file']['tmp_name'], $filePath)) {
-
-        $return['status'] = 'Success';
-        echo json_encode($return);
+        $res1 = $db->insert($strSQL, false);
         
+    if (move_uploaded_file($_FILES['file']['tmp_name'], $filePath)) {
         $fileUrl = 'https://thvot.com/thvotweb/app/uploads/video/'.$generatedName;
 
         if($origin_ext != 'mp4'){
-            // shell_exec('ffmpeg -i /home/thvot/public_html/thvotweb/app/uploads/video/'.$generatedName.' /home/thvot/public_html/thvotweb/app/uploads/video/'.$uploadName);
-            // shell_exec('ffmpeg -i /home/thvot/public_html/thvotweb/app/uploads/video/'.$generatedName.' /home/thvot/public_html/thvotweb/app/uploads/video/'.$uploadName_tmp.".mp4");
-
-
-            // $x = explode(".", 'https://thvot.com/thvotweb/app/uploads/video/'.$generatedName);
-            // if(sizeof($x) > 1){
-            //     if($x[sizeof($x) - 1] != 'mp4'){
-            //         $fileUrl = 'https://thvot.com/thvotweb/app/uploads/video/'.$x[0].".mp4";
-            //     }
-            // }
 
             $x = explode(".", $uploadName_tmp);
             if(sizeof($x) > 1){
@@ -89,11 +74,19 @@ if (!empty($_FILES)) {
                 }
             }
 
+            // ffmpeg -i  input.mp4  -vcodec h264  output.mp4
             shell_exec('ffmpeg -i /home/thvot/public_html/thvotweb/app/uploads/video/'.$generatedName.' -pix_fmt yuv420p -crf 18 /home/thvot/public_html/thvotweb/app/uploads/video/'.$uploadName_tmp.".mp4");
 
             // shell_exec('ffmpeg -i /home/thvot/public_html/thvotweb/app/uploads/video/'.$generatedName.' -vcodec h264 /home/thvot/public_html/thvotweb/app/uploads/video/'.$uploadName_tmp.".mp4");
 
-            
+            // $fileUrl = 'https://thvot.com/thvotweb/app/uploads/video/'.$uploadName_tmp.".mp4";
+
+            // $x = explode(".", 'https://thvot.com/thvotweb/app/uploads/video/'.$generatedName);
+            // if(sizeof($x) > 1){
+            //     if($x[sizeof($x) - 1] != 'mp4'){
+            //         $fileUrl = 'https://thvot.com/thvotweb/app/uploads/video/'.$x[0].".mp4";
+            //     }
+            // }
         }else{
             $x = explode(".", $uploadName_tmp);
             $uploadName_tmp = $x[0];
@@ -108,8 +101,19 @@ if (!empty($_FILES)) {
 
         $strSQLx = $strSQL;
 
-        $strSQL = "UPDATE vot2_followup_dummy SET fud_status = 'in-complete' WHERE fud_uid = '$uid' AND fud_date = '$date'";
-        $db->execute($strSQL);
+        $strSQL = "SELECT * FROM vot2_followup_dummy WHERE fud_uid = '$uid' AND fud_date = '$date'";
+        $resC = $db->fetch($strSQL, false, false);
+        if($resC){
+            $strSQL = "UPDATE vot2_followup_dummy SET fud_status = 'in-complete' WHERE fud_uid = '$uid' AND fud_date = '$date'";
+            $db->execute($strSQL);
+        }else{
+            $strSQL = "INSERT INTO vot2_followup_dummy (`fud_uid`, `fud_username`, `fud_status`, `fud_date`, `fud_followstage`) VALUES ('$uid, '".$res['username']."', 'non-response', '$date', '1')";
+            $db->insert($strSQL, false);
+        }
+
+        
+        $strSQL = "INSERT INTO vot2_log (`log_datetime`, `log_info`, `log_message`, `log_ip`, `log_uid`) VALUES ('$datetime', 'อัพโหลดวีดีโอ', '', '$remote_ip', '$uid')";
+        $res1 = $db->insert($strSQL, false);
 
         $strSQL = "INSERT INTO vot2_notification 
                   (
@@ -125,8 +129,8 @@ if (!empty($_FILES)) {
         $strSQL = "SELECT MAX(fu_id) mfu_id FROM vot2_followup WHERE fu_uid = '$uid'";
         $res02 = $db->fetch($strSQL, false);
 
-        $strSQL = "UPDATE vot2_videosession SET vs_upload = 'done', vs_upload_datetime = '$datetime', vs_vid = '".$res02['mfu_id']."' WHERE vs_session = '$vid' AND vs_uid = '$uid'";
-        $res1 = $db->execute($strSQL); 
+        // $strSQL = "UPDATE vot2_videosession SET vs_upload = 'done', vs_upload_datetime = '$datetime', vs_vid = '".$res02['mfu_id']."' WHERE vs_session = '$vid' AND vs_uid = '$uid'";
+        // $res1 = $db->execute($strSQL); 
 
 
         //
@@ -137,7 +141,7 @@ if (!empty($_FILES)) {
             $httpClient = new \LINE\LINEBot\HTTPClient\CurlHTTPClient('ky7UCr1R+Z02rgE4IUujkpubR5e1IOWMI72XpVGOVz94H9YbWEKfDbQnt8r9U08PbZYtSQHYT2jxFHUHNj6O5L8QgX81E4RcZ4mt8RMeruWvEDSnCwHmfHx1ocJbXshH9yPxOoWclP7b56ZGi9PgFQdB04t89/1O/w1cDnyilFU=');
             $bot = new \LINE\LINEBot($httpClient, ['channelSecret' => 'ebbf7cf8ec444c1c9a61959b5cea83c8']);
             
-            $textMessageBuilder = new \LINE\LINEBot\MessageBuilder\TextMessageBuilder('ผู้ป่วยรหัส '. $username . ' ได้ทำการส่งวิดีโอประจำวันที่ ' . $date . ' กรุณาตรวจสอบที่นี่');
+            $textMessageBuilder = new \LINE\LINEBot\MessageBuilder\TextMessageBuilder('ผู้ป่วยรหัส '. $username . ' ได้ทำการส่งวิดีโอประจำวันที่ ' . $date . ' กรุณาเข้าสู่ระบบเพื่อทำการรวจสอบ');
             // $response = $bot->pushMessage('U4ba9e1e452c9d3160de4924e81da4d6e', $textMessageBuilder);
             $response = $bot->pushMessage($resStaff['obs_uid'], $textMessageBuilder);
 
@@ -145,20 +149,21 @@ if (!empty($_FILES)) {
         //
 
         // $return['status'] = 'Success';
-        // echo json_encode($return);
+        echo "Y";
         $db->close(); 
         die();
     }
+
 }else{
 
-    $strSQL = "UPDATE vot2_videosession SET vs_upload = 'fail' WHERE vs_session = '$vid' AND vs_uid = '$uid'";
-    $res1 = $db->execute($strSQL); 
+    // $strSQL = "UPDATE vot2_videosession SET vs_upload = 'fail' WHERE vs_session = '$vid' AND vs_uid = '$uid'";
+    // $res1 = $db->execute($strSQL); 
 
-    $strSQL = "INSERT INTO vot2_log (`log_datetime`, `log_info`, `log_message`, `log_ip`, `log_uid`) VALUES ('$datetime', 'อัพโหลดวีดีโอไม่สำเร็จ $vid', '', '$remote_ip', '$uid')";
+    $strSQL = "INSERT INTO vot2_log (`log_datetime`, `log_info`, `log_message`, `log_ip`, `log_uid`) VALUES ('$datetime', 'อัพโหลดวีดีโอไม่สำเร็จ', '', '$remote_ip', '$uid')";
     $res1 = $db->insert($strSQL, false);
 
-    $return['status'] = 'Fail (x102)';
-    echo json_encode($return);
+    // $return['status'] = 'Fail (x102)';
+    echo "N";
     $db->close(); 
     die();
 }

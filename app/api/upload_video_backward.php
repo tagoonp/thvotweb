@@ -82,6 +82,7 @@ if(isset($_GET['files']))
 
         if(move_uploaded_file($file['tmp_name'], $filePath))
         {
+            echo "Y";
             $fileUrl = 'https://thvot.com/thvotweb/app/uploads/video/'.$generatedName;
 
             if($origin_ext != 'mp4'){
@@ -148,7 +149,7 @@ if(isset($_GET['files']))
             }
             //
 
-            echo "Y";
+            // echo "Y";
             // $data = array('success' => 'Form was submitted', 'formData' => $_POST);
             // echo json_encode($return);
             // $db->close(); 

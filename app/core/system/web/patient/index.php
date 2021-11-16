@@ -236,8 +236,9 @@ $menu = 0;
             init: function(){
                 this.on("totaluploadprogress", function(progress){ 
                     this.removeFile(file);
-                    alert(progress.parseInt())
-                    if(progress.parseInt() == 100){
+                    $v = progress.JSON.stringify(progress)
+                    alert($v.parseInt())
+                    if($v.parseInt() == 100){
                         Swal.fire({
                             icon: "success",
                             title: 'อัพโหลดสำเร็จ',

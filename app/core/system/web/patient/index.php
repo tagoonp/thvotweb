@@ -232,7 +232,7 @@ $menu = 0;
             url: '../../../../api/video_upload_2.php?uid=<?php echo $user['uid']; ?>',
             // acceptedFiles: 'application/pdf, .docx, .doc, image/*, .xls, .xlsx',
             maxFilesize: 100,
-            capture: "file",
+            capture: "camera",
             init: function(){
                 this.on("complete", function(file) {
                 console.log(file);

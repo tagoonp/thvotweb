@@ -235,6 +235,7 @@ $menu = 0;
             // capture: "camera",
             init: function(){
                 this.on("complete", function(file) {
+                    alert(file.xhr.responseText)
                 console.log(file);
                 this.removeFile(file);
                 // alert(file.xhr.responseText)
@@ -255,12 +256,12 @@ $menu = 0;
                     // }
 
                     Swal.fire({
-                                            icon: "success",
-                                            title: 'อัพโหลดสำเร็จ',
-                                            text: 'วิดีโอถูกอัพโหลดเรียบร้อยแล้ว',
-                                            confirmButtonClass: 'btn btn-success',
-                                    })
-                                    
+                            icon: "success",
+                            title: 'อัพโหลดสำเร็จ',
+                            text: 'วิดีโอถูกอัพโหลดเรียบร้อยแล้ว',
+                            confirmButtonClass: 'btn btn-success',
+                    })
+
                 });
             }
         });

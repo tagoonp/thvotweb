@@ -238,14 +238,14 @@ $menu = 0;
                     // this.removeFile(file);
                     $v = JSON.stringify(progress)
                     alert($v)
-                    // if($v.parseInt() == 100){
-                    //     Swal.fire({
-                    //         icon: "success",
-                    //         title: 'อัพโหลดสำเร็จ',
-                    //         text: 'วิดีโอถูกอัพโหลดเรียบร้อยแล้ว',
-                    //         confirmButtonClass: 'btn btn-success',
-                    //     })
-                    // }
+                    if(parseInt($v) == 100){
+                        Swal.fire({
+                            icon: "success",
+                            title: 'อัพโหลดสำเร็จ',
+                            text: 'วิดีโอถูกอัพโหลดเรียบร้อยแล้ว',
+                            confirmButtonClass: 'btn btn-success',
+                        })
+                    }
                 });
                 this.on("success", function(file) {
                     // alert(file.xhr.responseText)

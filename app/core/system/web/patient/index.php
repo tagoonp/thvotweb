@@ -234,9 +234,19 @@ $menu = 0;
             maxFilesize: 100,
             // capture: "camera",
             init: function(){
-                this.on("totaluploadprogress", function(progress){ alert(JSON.stringify(progress)) });
+                this.on("totaluploadprogress", function(progress){ 
+                    this.removeFile(file);
+                    if(progress == 100){
+                        Swal.fire({
+                            icon: "success",
+                            title: 'อัพโหลดสำเร็จ',
+                            text: 'วิดีโอถูกอัพโหลดเรียบร้อยแล้ว',
+                            confirmButtonClass: 'btn btn-success',
+                        })
+                    }
+                });
                 this.on("success", function(file) {
-                    alert(file.xhr.responseText)
+                    // alert(file.xhr.responseText)
                     console.log(file);
                     this.removeFile(file);
                 // alert(file.xhr.responseText)
@@ -256,12 +266,12 @@ $menu = 0;
                     //                 })
                     // }
 
-                    Swal.fire({
-                            icon: "success",
-                            title: 'อัพโหลดสำเร็จ',
-                            text: 'วิดีโอถูกอัพโหลดเรียบร้อยแล้ว',
-                            confirmButtonClass: 'btn btn-success',
-                    })
+                    // Swal.fire({
+                    //         icon: "success",
+                    //         title: 'อัพโหลดสำเร็จ',
+                    //         text: 'วิดีโอถูกอัพโหลดเรียบร้อยแล้ว',
+                    //         confirmButtonClass: 'btn btn-success',
+                    // })
 
                 });
             }

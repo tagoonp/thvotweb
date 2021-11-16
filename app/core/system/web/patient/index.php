@@ -239,13 +239,29 @@ $menu = 0;
                     $v = JSON.stringify(progress)
                     // alert($v)
                     if(parseInt($v) == 100){
+                        // Swal.fire({
+                        //     icon: "success",
+                        //     title: 'อัพโหลดสำเร็จ',
+                        //     text: 'วิดีโอถูกอัพโหลดเรียบร้อยแล้ว',
+                        //     confirmButtonClass: 'btn btn-success',
+                        // })
+
                         Swal.fire({
-                            icon: "success",
                             title: 'อัพโหลดสำเร็จ',
                             text: 'วิดีโอถูกอัพโหลดเรียบร้อยแล้ว',
-                            confirmButtonClass: 'btn btn-success',
+                            icon: 'success',
+                            showCancelButton: false,
+                            confirmButtonColor: '#3085d6',
+                            confirmButtonText: 'รับทราบ',
+                            cancelButtonText: 'ยกเลิก',
+                            confirmButtonClass: 'btn btn-success mr-1',
+                            cancelButtonClass: 'btn btn-danger',
+                            buttonsStyling: false,
+                        }).then(function (result) {
+                            if (result.value) {
+                                window.location.reload()
+                            }
                         })
-                        this.removeFile(progress);
                     }
                 });
                 this.on("addedfile", function(file) {

@@ -237,7 +237,7 @@ $menu = 0;
                 this.on("totaluploadprogress", function(progress){ 
                     // this.removeFile(file);
                     $v = JSON.stringify(progress)
-                    alert($v)
+                    // alert($v)
                     if(parseInt($v) == 100){
                         Swal.fire({
                             icon: "success",
@@ -247,6 +247,9 @@ $menu = 0;
                         })
                     }
                 });
+                this.on("addedfile", function(file) {
+                    this.removeFile(file);
+                })
                 this.on("success", function(file) {
                     // alert(file.xhr.responseText)
                     console.log(file);

@@ -63,7 +63,11 @@ $menu = 0;
 
 </head>
 <!-- END: Head-->
-
+<style>
+    .dz-progress{
+        display: none !important;
+    }
+</style>
 <!-- BEGIN: Body-->
 
 <body  style="background: #fff;" class="vertical-layout vertical-menu-modern 2-columns  navbar-sticky footer-static  " data-open="click" data-menu="vertical-menu-modern" data-col="2-columns" >
@@ -265,7 +269,7 @@ $menu = 0;
                         })
                     }
                 });
-                this.on("addedfile", function(file) {
+                this.on("sending", function(file) {
                     
                 })
                 this.on("success", function(file) {

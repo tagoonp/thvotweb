@@ -64,9 +64,9 @@ $menu = 0;
 </head>
 <!-- END: Head-->
 <style>
-    .dz-preview{
+    /* .dz-preview{
         display: none !important;
-    }
+    } */
 </style>
 <!-- BEGIN: Body-->
 

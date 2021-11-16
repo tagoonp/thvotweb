@@ -259,7 +259,8 @@ $menu = 0;
                             buttonsStyling: false,
                         }).then(function (result) {
                             if (result.value) {
-                                window.location.reload()
+                                // window.location.reload()
+                                this.removeAllFiles();
                             }
                         })
                     }

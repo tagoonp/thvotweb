@@ -64,7 +64,7 @@ $menu = 0;
 </head>
 <!-- END: Head-->
 <style>
-    .dz-progress{
+    #total-progess{
         display: none !important;
     }
 </style>

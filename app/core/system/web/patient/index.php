@@ -245,10 +245,11 @@ $menu = 0;
                             text: 'วิดีโอถูกอัพโหลดเรียบร้อยแล้ว',
                             confirmButtonClass: 'btn btn-success',
                         })
+                        this.removeFile(progress);
                     }
                 });
                 this.on("addedfile", function(file) {
-                    this.removeFile(file);
+                    
                 })
                 this.on("success", function(file) {
                     // alert(file.xhr.responseText)

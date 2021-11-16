@@ -238,21 +238,29 @@ $menu = 0;
                 console.log(file);
                 this.removeFile(file);
                 // alert(file.xhr.responseText)
-                if(file.xhr.responseText == "Y"){
+                    // if(file.xhr.responseText == "Y"){
+                    //     Swal.fire({
+                    //                         icon: "success",
+                    //                         title: 'อัพโหลดสำเร็จ',
+                    //                         text: 'วิดีโอถูกอัพโหลดเรียบร้อยแล้ว',
+                    //                         confirmButtonClass: 'btn btn-success',
+                    //                 })
+                    // }else{
+                    //     Swal.fire({
+                    //                         icon: "error",
+                    //                         title: 'อัพโหลดไม่สำเร็จ กรุณาลองใหม่โดยเลือกอัพโหลดจากอัลบัมภาพ',
+                    //                         text: 'ไม่สามารถตั้งเวลาได้ กรุณาลองใหม่อีกครั้ง',
+                    //                         confirmButtonClass: 'btn btn-danger',
+                    //                 })
+                    // }
+
                     Swal.fire({
-                                        icon: "success",
-                                        title: 'อัพโหลดสำเร็จ',
-                                        text: 'วิดีโอถูกอัพโหลดเรียบร้อยแล้ว',
-                                        confirmButtonClass: 'btn btn-success',
-                                })
-                }else{
-                    Swal.fire({
-                                        icon: "error",
-                                        title: 'อัพโหลดไม่สำเร็จ กรุณาลองใหม่โดยเลือกอัพโหลดจากอัลบัมภาพ',
-                                        text: 'ไม่สามารถตั้งเวลาได้ กรุณาลองใหม่อีกครั้ง',
-                                        confirmButtonClass: 'btn btn-danger',
-                                })
-                }
+                                            icon: "success",
+                                            title: 'อัพโหลดสำเร็จ',
+                                            text: 'วิดีโอถูกอัพโหลดเรียบร้อยแล้ว',
+                                            confirmButtonClass: 'btn btn-success',
+                                    })
+                                    
                 });
             }
         });

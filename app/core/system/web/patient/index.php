@@ -235,17 +235,17 @@ $menu = 0;
             // capture: "camera",
             init: function(){
                 this.on("totaluploadprogress", function(progress){ 
-                    this.removeFile(file);
+                    // this.removeFile(file);
                     $v = JSON.stringify(progress)
                     alert($v)
-                    // if($v.parseInt() == 100){
-                    //     Swal.fire({
-                    //         icon: "success",
-                    //         title: 'อัพโหลดสำเร็จ',
-                    //         text: 'วิดีโอถูกอัพโหลดเรียบร้อยแล้ว',
-                    //         confirmButtonClass: 'btn btn-success',
-                    //     })
-                    // }
+                    if($v.parseInt() == 100){
+                        Swal.fire({
+                            icon: "success",
+                            title: 'อัพโหลดสำเร็จ',
+                            text: 'วิดีโอถูกอัพโหลดเรียบร้อยแล้ว',
+                            confirmButtonClass: 'btn btn-success',
+                        })
+                    }
                 });
                 this.on("success", function(file) {
                     // alert(file.xhr.responseText)

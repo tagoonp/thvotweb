@@ -75,7 +75,7 @@ if(isset($_GET['files']))
             }
 
             $hcode = $res['hcode'];
-            $generatedName = $username.'-'.$generatedName;
+            $generatedName = trim($username).'-'.$generatedName;
         }
         
         $filePath = $path.$generatedName;

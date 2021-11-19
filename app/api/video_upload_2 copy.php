@@ -45,6 +45,7 @@ if (!empty($_FILES)) {
     $username = '';
     $hcode = '';
     if($res){
+        
         $username = $res['username'];
 
         $bx = explode("/", $username); 
@@ -53,7 +54,7 @@ if (!empty($_FILES)) {
         }
 
         $hcode = $res['hcode'];
-        $generatedName = $username.'-'.$generatedName;
+        $generatedName = trim($username).'-'.$generatedName;
     }
     
     $filePath = $path.$generatedName;
@@ -77,16 +78,6 @@ if (!empty($_FILES)) {
             // ffmpeg -i  input.mp4  -vcodec h264  output.mp4
             shell_exec('ffmpeg -i /home/thvot/public_html/thvotweb/app/uploads/video/'.$generatedName.' -pix_fmt yuv420p -crf 18 /home/thvot/public_html/thvotweb/app/uploads/video/'.$uploadName_tmp.".mp4");
 
-            // shell_exec('ffmpeg -i /home/thvot/public_html/thvotweb/app/uploads/video/'.$generatedName.' -vcodec h264 /home/thvot/public_html/thvotweb/app/uploads/video/'.$uploadName_tmp.".mp4");
-
-            // $fileUrl = 'https://thvot.com/thvotweb/app/uploads/video/'.$uploadName_tmp.".mp4";
-
-            // $x = explode(".", 'https://thvot.com/thvotweb/app/uploads/video/'.$generatedName);
-            // if(sizeof($x) > 1){
-            //     if($x[sizeof($x) - 1] != 'mp4'){
-            //         $fileUrl = 'https://thvot.com/thvotweb/app/uploads/video/'.$x[0].".mp4";
-            //     }
-            // }
         }else{
             $x = explode(".", $uploadName_tmp);
             $uploadName_tmp = $x[0];

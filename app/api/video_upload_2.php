@@ -54,7 +54,7 @@ if (!empty($_FILES)) {
         }
 
         $hcode = $res['hcode'];
-        $generatedName = $username.'-'.$generatedName;
+        $generatedName = trim($username).'-'.$generatedName;
     }
     
     $filePath = $path.$generatedName;

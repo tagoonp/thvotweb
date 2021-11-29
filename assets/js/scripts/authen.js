@@ -180,8 +180,8 @@ var auth = {
     if($('#txtPatientType').val() == ''){
       $check++; $('#txtPatientType').addClass('is-invalid')
     }else{
+      alert($('#txtPatientType').val())
       if($('#txtPatientType').val() == 'VOT'){
-          console.log($('#txtObserver').val());
           if($('#txtObserver').val() == ''){
             $check++; $('#txtObserver').addClass('is-invalid')
           }

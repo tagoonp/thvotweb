@@ -146,6 +146,13 @@ var auth = {
 
     if($('#txtPatientType').val() == ''){
       $check++; $('#txtPatientType').addClass('is-invalid')
+    }else{
+      if($('#txtPatientType').val() == 'VOT'){
+          console.log($('#txtObserver').val());
+          if($('#txtObserver').val() == ''){
+            $check++; $('#txtObserver').addClass('is-invalid')
+          }
+      }
     }
 
     if($('#txtPassword1').val() == ''){
@@ -156,10 +163,7 @@ var auth = {
       $check++; $('#txtPassword2').addClass('is-invalid')
     }
 
-    console.log($('#txtObserver').val());
-    if($('#txtObserver').val() == ''){
-      $check++; $('#txtObserver').addClass('is-invalid')
-    }
+    
 
     if($('#txtPassword1').val() != $('#txtPassword2').val()){
       $check++; $('#txtPassword2').addClass('is-invalid')

@@ -279,7 +279,7 @@ $photo = mysqli_real_escape_string($conn, $_GET['photo']);
                                                 </div>
 
                                                 <div class="form-group mb-50">
-                                                    <label class="" for="exampleInputPassword1">พี่เลี้ยง : <span class="text-danger">*</span></label>
+                                                    <label class="" for="exampleInputPassword1">พี่เลี้ยง : </label>
                                                     <div>
                                                         <select id="txtObserver" name="txtObserver" class="form-control">
                                                             <option value="">-- เลือกพี่เลี้ยง --</option>

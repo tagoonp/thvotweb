@@ -235,7 +235,7 @@ $menu = 12;
                                                     </div>
 
                                                     <div class="form-group col-12 col-sm-6">
-                                                        <label>ชื่อพี่เลี้ยง : <span class="text-danger">*</span></label>
+                                                        <label>ชื่อพี่เลี้ยง :</label>
                                                         <div class="select-error" id="staff">
                                                             <select name="txtStaff" id="txtStaff" data-required class="form-control select2">
                                                                 <option value="">-- เลือกพี่เลี้ยง --</option>

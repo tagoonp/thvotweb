@@ -222,12 +222,12 @@ var admin_user = {
                         });
                     }
 
-                    if(this.id == 'txtStaff'){ 
-                        $('#staff').css({
-                        'border': '1px solid #FF5B5C',
-                        'border-radius': '4px'
-                        });
-                    }
+                    // if(this.id == 'txtStaff'){ 
+                    //     $('#staff').css({
+                    //     'border': '1px solid #FF5B5C',
+                    //     'border-radius': '4px'
+                    //     });
+                    // }
             }
         }});
 

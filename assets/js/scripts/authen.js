@@ -185,6 +185,8 @@ var auth = {
           if($('#txtObserver').val() == ''){
             $check++; $('#txtObserver').addClass('is-invalid')
           }
+      }else{
+        $('#txtObserver').removeClass('is-invalid')
       }
     }
 

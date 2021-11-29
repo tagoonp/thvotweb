@@ -150,7 +150,6 @@ var auth = {
       if($('#txtPatientType').val() == 'VOT'){
           console.log($('#txtObserver').val());
           if($('#txtObserver').val() == ''){
-            alert('asd')
             $check++; $('#txtObserver').addClass('is-invalid')
           }
       }

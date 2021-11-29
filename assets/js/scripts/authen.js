@@ -173,8 +173,19 @@ var auth = {
       $check++; $('#txtSubdist').addClass('is-invalid')
     }
 
+    // if($('#txtPatientType').val() == ''){
+    //   $check++; $('#txtPatientType').addClass('is-invalid')
+    // }
+
     if($('#txtPatientType').val() == ''){
       $check++; $('#txtPatientType').addClass('is-invalid')
+    }else{
+      if($('#txtPatientType').val() == 'VOT'){
+          console.log($('#txtObserver').val());
+          if($('#txtObserver').val() == ''){
+            $check++; $('#txtObserver').addClass('is-invalid')
+          }
+      }
     }
 
     if($('#txtPassword1').val() == ''){

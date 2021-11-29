@@ -198,10 +198,10 @@ var auth = {
       $check++; $('#txtPassword2').addClass('is-invalid')
     }
 
-    console.log($('#txtObserver').val());
-    if($('#txtObserver').val() == ''){
-      $check++; $('#txtObserver').addClass('is-invalid')
-    }
+    // console.log($('#txtObserver').val());
+    // if($('#txtObserver').val() == ''){
+    //   $check++; $('#txtObserver').addClass('is-invalid')
+    // }
 
     if($('#txtPassword1').val() != $('#txtPassword2').val()){
       $check++; $('#txtPassword2').addClass('is-invalid')

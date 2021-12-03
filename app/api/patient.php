@@ -81,7 +81,7 @@ if($stage == 'listofpatientstaff'){
                 AND a.active_status = '1'
                 AND a.verify_status = '1'
                 AND a.cal_end_obsdate >= '$date'
-                AND a.obs_uid = '$uid'
+                -- AND a.obs_uid = '$uid'
                 LIMIT $page, $limit";
     
     if($role == 'manager'){

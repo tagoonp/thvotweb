@@ -200,7 +200,7 @@ $menu = 8;
                                                        AND b.role = 'patient'
                                                        AND a.fu_verify_datetime IS NULL
                                                        AND c.info_use = '1'
-                                                       AND b.obs_hcode = '$hcode'
+                                                       AND (b.obs_hcode = '$hcode' OR b.hcode = '$hcode')
                                                        AND a.fu_upload_datetime >= '$last48hr'
                                                        AND b.uid = '$patient_id'
                                                        AND (b.hcode = '$hcode' OR b.reg_hcode = '$hcode')

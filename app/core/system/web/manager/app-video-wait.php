@@ -242,7 +242,7 @@ $menu = 8;
                                             }else{
                                                 ?>
                                                 <tr>
-                                                    <td colspan="4" class="text-center th">ไม่มีรายการรอตรวจสอบ</td>
+                                                    <td colspan="4" class="text-center th">ไม่มีรายการรอตรวจสอบ <?php echo $strSQL; ?></td>
                                                 </tr>
                                                 <?php
                                             }

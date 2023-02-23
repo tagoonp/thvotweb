@@ -1,5 +1,5 @@
 <?php 
-require('../../../database_config/thvot/config.inc.php');
+require('../config/config.inc.php');
 require('../config/configuration.php');
 require('../config/database.php'); 
 
@@ -1176,7 +1176,6 @@ if($stage == 'videocheck'){
     $vid = mysqli_real_escape_string($conn, $_REQUEST['vid']);
     $uhcode = mysqli_real_escape_string($conn, $_REQUEST['uhcode']);
 
-
     $check1 = mysqli_real_escape_string($conn, $_REQUEST['check1']);
     $check2 = mysqli_real_escape_string($conn, $_REQUEST['check2']);
     $check3 = mysqli_real_escape_string($conn, $_REQUEST['check3']);
@@ -1218,6 +1217,8 @@ if($stage == 'videocheck'){
 
     $return['status'] = 'Success';
 
+    
+
 
     $strSQL = "SELECT * FROM vot2_account 
                WHERE 
@@ -1226,6 +1227,30 @@ if($stage == 'videocheck'){
                AND delete_status = '0'";
     $resUser = $db->fetch($strSQL, false, false);
     if($resUser){
+        
+        $patient_username = $resUser['username'];
+
+        $strSQL = "SELECT SUM(med_amount) sm
+               FROM vot2_patient_med 
+               WHERE 
+               med_delete = 'N' 
+               AND med_status = 'Y' 
+               AND med_cnf = 'Y'
+               AND med_username = '$patient_username'
+              ";
+        $resNumMed = $db->fetch($strSQL, false, false);
+        if($resNumMed){
+            $totalNumMed = $resNumMed['sm'];
+
+            $strSQL = "SELECT SUM(mt_med_take) sm 
+                       FROM vot2_patient_med_take 
+                       WHERE 
+                       mt_vid IN (
+                           SELECT fu_id FROM vot2_followup 
+                       )
+                       ";
+        }
+
         if($resUser['reg_type'] == 'line'){
 
             $httpClient = new \LINE\LINEBot\HTTPClient\CurlHTTPClient('ky7UCr1R+Z02rgE4IUujkpubR5e1IOWMI72XpVGOVz94H9YbWEKfDbQnt8r9U08PbZYtSQHYT2jxFHUHNj6O5L8QgX81E4RcZ4mt8RMeruWvEDSnCwHmfHx1ocJbXshH9yPxOoWclP7b56ZGi9PgFQdB04t89/1O/w1cDnyilFU=');

@@ -5,7 +5,7 @@ include '../vendor/autoload.php';
 use Hybridauth\Hybridauth;
 use Hybridauth\HttpClient;
 
-$_SESSION['reg_type'] = $_GET['type'];
+$_SESSION['reg_type'] = $_GET['t'];
 
 $config = [
     'callback' => HttpClient\Util::getCurrentUrl(),

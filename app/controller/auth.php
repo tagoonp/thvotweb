@@ -138,11 +138,11 @@ if($stage == 'line_login_mobile'){
         $_SESSION['thvot_role'] = 'patient';
         $_SESSION['thvot_hcode'] = $res['hcode'];
 
-        echo $_SESSION['thvot_session']."<br>";
-        echo $_SESSION['thvot_uid']."<br>";
-        echo $_SESSION['thvot_role']."<br>";
-        echo $_SESSION['thvot_hcode']."<br>";
-        die();
+        // echo $_SESSION['thvot_session']."<br>";
+        // echo $_SESSION['thvot_uid']."<br>";
+        // echo $_SESSION['thvot_role']."<br>";
+        // echo $_SESSION['thvot_hcode']."<br>";
+        // die();
 
         // header('Location: ../../app/core/system/web/patient/');
         header('Location: ./auth?stage=patient_session&uid='.$token.'&role=patient&hcode='.$res['hcode']);

@@ -124,7 +124,7 @@ if($stage == 'line_login_mobile'){
     $token = mysqli_real_escape_string($conn, $_GET['token']);
 
     $strSQL = "SELECT * FROM vot2_account WHERE uid = '$token' AND delete_status = '0' LIMIT 1";
-    $res = $db->fetch($strSQL, true, true);
+    $res = $db->fetch($strSQL, false, false);
     if($res){
 
 
@@ -134,7 +134,7 @@ if($stage == 'line_login_mobile'){
         $db->insert($strSQL, false);
 
         $_SESSION['thvot_session'] = session_id();
-        $_SESSION['thvot_uid'] = $uid;
+        $_SESSION['thvot_uid'] = $res['uid'];
         $_SESSION['thvot_role'] = 'patient';
         $_SESSION['thvot_hcode'] = $res['hcode'];
 
@@ -151,8 +151,8 @@ if($stage == 'line_login_mobile'){
 
     }else{
 
-        echo $strSQL;
-        die();
+        // echo $strSQL;
+        // die();
         mysqli_close($conn);
         header('Location: ../../patient/');
         die();

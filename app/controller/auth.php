@@ -150,6 +150,9 @@ if($stage == 'line_login_mobile'){
         die();
 
     }else{
+
+        echo $strSQL;
+        die();
         mysqli_close($conn);
         header('Location: ../../patient/');
         die();
